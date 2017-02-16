@@ -17,8 +17,8 @@
         var tempUrl = url.substring(0, url.length - tempName.length);
         url = tempUrl + ashxName + "?func=" + method;
 
-        var success = (options && options.success) ? options.success : $.answer.success;
-        var error = (options && options.error) ? options.error : $.answer.error;
+        var cusSuccess = (options && options.success) ? options.success : $.answer.success;
+        var cusError = (options && options.error) ? options.error : $.answer.error;
         
         $.ajax({
             url: url,
@@ -29,18 +29,27 @@
             beforeSend: function (request) {
                 request.setRequestHeader("SSOToken", ssoToken);
             },
-            success: success,
-            error: error
+            success: function (d) {
+                if (!d.success && d.errorcode == "E0001") {
+                    location.href = "Login";
+                } else {
+                    cusSuccess(d);
+                }
+            },
+            error: function (e) {
+                cusError(e);
+            }
         });        
     },
 
     "answer": {
-        "success": function () {
-            alert("Success");
+        "success": function (d) {
+            alert("Success");            
         },
 
         "failed": function () {
             alert("Error");
+
         }
     }
 });

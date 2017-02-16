@@ -18,11 +18,11 @@
 
     
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Name">
+        <input type="text" class="form-control" placeholder="Name" id="tbxName">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="Password" id="tbxPassword">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -43,8 +43,8 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-            <asp:Button ID="btnLogin" CssClass="btn btn-primary btn-block btn-flat" runat="server" Text="Login" lang="lang_login" OnClick="btnLogin_Click" />
-          <%--<button type="submit" class="btn btn-primary btn-block btn-flat" lang="lang_login">Login In</button>--%>
+            <%--<asp:Button ID="btnLogin" CssClass="btn btn-primary btn-block btn-flat" runat="server" Text="Login" lang="lang_login" OnClick="btnLogin_Click" />--%>
+          <input type="button" class="btn btn-primary btn-block btn-flat" lang="lang_login" value="Login" onclick="login()" />
         </div>
         <!-- /.col -->
       </div>
@@ -63,6 +63,26 @@
                 increaseArea: '20%' // optional
             });
         });
+
+        var login = function () {
+            var name = $("#tbxName").val();
+            var pwd = $("#tbxPassword").val();
+            var options = {
+                "success": function (d) {
+                    if (d.success) {
+                        var data = d.data;
+                    } else {
+                        if (d.errorcode == "E0001") {
+                            location.href = "Login";
+                        } else {
+                            alert(d.errorcode);
+                        }
+                    }
+                }
+            };
+
+            $.ask("login", null, options);
+        };
     </script>
 </asp:Content>
 

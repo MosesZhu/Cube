@@ -13,5 +13,10 @@ namespace Cube.DTO
         public string errorcode { get; set; }
         public string message { get; set; }
         public Object data { get; set; }
+
+        public ResultDTO()
+        {
+            success = true;
+        }
     }
 }

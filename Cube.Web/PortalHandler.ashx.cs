@@ -1,4 +1,5 @@
-﻿using Cube.Common;
+﻿using Cube.Base;
+using Cube.Common;
 using Cube.DTO;
 using System;
 using System.Collections.Generic;
@@ -11,22 +12,11 @@ namespace Cube.Web
     /// <summary>
     /// Summary description for PortalHandler
     /// </summary>
-    public class PortalHandler : IHttpHandler
-    {
-
-        public void ProcessRequest(HttpContext context)
+    public class PortalHandler : PageHandlerBase
+    {        
+        public ResultDTO getMenu()
         {
-            context.Response.ContentType = "text/json";
-            ResultDTO result = new ResultDTO() { success = true, data = "Hello Menu", message = "", errorcode = "" };
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-
-            if (string.IsNullOrEmpty(RequestUtility.GetQueryString<string>(SessionContents.SSO_TOKEN))
-                && string.IsNullOrEmpty(RequestUtility.GetHeader<string>(SessionContents.SSO_TOKEN)))
-            {
-                result.success = false;
-                result.errorcode = ErrorCode.NO_SSO_INFO;
-            }
-
+            ResultDTO result = new ResultDTO();
             //Test
             List<MenuDTO> menuList = new List<MenuDTO>();
             MenuDTO Domain_MFG = new MenuDTO();
@@ -52,16 +42,8 @@ namespace Cube.Web
             result.data = menuList;
             //Test
 
-            context.Response.Write(serializer.Serialize(result));
-            context.Response.End();
+            return result;
         }
-
-        public bool IsReusable
-        {
-            get
-            {
-                return false;
-            }
-        }
+        
     }
 }

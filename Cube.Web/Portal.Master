@@ -36,6 +36,7 @@
                 <asp:ScriptReference Name="respond" />
                 <asp:ScriptReference Name="framework" />
                 <asp:ScriptReference Name="icheck" />
+                <asp:ScriptReference Name="cookie" />
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>

@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,7 +44,18 @@
     <Compile Include="PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="PageHandlerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cube.Common\Cube.Common.csproj">
+      <Project>{202f0498-8d39-428b-9200-80a6b0f7f6de}</Project>
+      <Name>Cube.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cube.DTO\Cube.DTO.csproj">
+      <Project>{5a9f18e0-cb55-4df4-b976-7ee76a45a690}</Project>
+      <Name>Cube.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

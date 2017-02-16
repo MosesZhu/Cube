@@ -448,12 +448,6 @@
                         });
 
                         $("#_FunctionMenu").append(menuHtml);
-                    } else {
-                        if (d.errorcode == "E0001") {
-                            location.href = "Login";
-                        } else {
-                            alert(d.errorcode);
-                        }
                     }
                 }
             };

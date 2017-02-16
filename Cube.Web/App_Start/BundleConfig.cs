@@ -88,6 +88,13 @@ namespace Cube.Web
                 {
                     Path = "~/Content/iCheck/icheck.min.js",
                 });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "cookie",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/jquery.cookie.js",
+                });
             
         }
     }

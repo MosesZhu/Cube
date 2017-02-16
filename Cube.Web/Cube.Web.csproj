@@ -419,6 +419,7 @@
     <Content Include="Scripts\fastclick.min.js" />
     <Content Include="Scripts\framework.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.slimscroll.min.js" />
     <Content Include="Scripts\jquery.uriAnchor.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -457,6 +458,7 @@
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="PortalHandler.ashx" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="LoginHandler.ashx" />
     <None Include="Project_Readme.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -474,6 +476,9 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginHandler.ashx.cs">
+      <DependentUpon>LoginHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Portal.aspx.cs">
       <DependentUpon>Portal.aspx</DependentUpon>
