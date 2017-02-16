@@ -1,0 +1,47 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Portal.Master.cs" Inherits="Cube.Web.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Portal</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/Content/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <asp:ContentPlaceHolder ID="PageStyleContentHolder" runat="server">
+
+    </asp:ContentPlaceHolder>
+</head>
+<body class="skin-blue fixed" data-spy="scroll" data-target="#scrollspy">    
+    <form runat="server">               
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+
+        </asp:ContentPlaceHolder>
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="uriAnchor" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="fastclick" />
+                <asp:ScriptReference Name="AdminLTE" />
+                <asp:ScriptReference Name="slimscroll" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="framework" />
+                <asp:ScriptReference Name="icheck" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+    </form>
+    <asp:ContentPlaceHolder ID="PageScriptContentHolder" runat="server">
+
+    </asp:ContentPlaceHolder>       
+</body>
+</html>
