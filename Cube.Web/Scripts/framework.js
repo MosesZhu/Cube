@@ -1,9 +1,9 @@
 ﻿jQuery.extend({
     "ask": function (method, data, options) {
-        var ssoToken = getQueryStringByName("SSOToken");
-        if (!ssoToken) {
+        var ssoToken = getQueryStringByName("SSOToken") ? getQueryStringByName("SSOToken") : "";
+        if (!ssoToken) {            
             //return false;
-            ssoToken = "aaa";
+            //ssoToken = "aaa";
         }
 
         if (!method) {
@@ -135,3 +135,38 @@ function getQueryStringByIndex(index) {
     result = result.substring(startIndex);
     return result;
 }
+
+var changeSkin = function (themeName) {
+    $("body").removeClass().addClass("skin-" + themeName).addClass("fixed");
+};
+
+jQuery.extend({
+    "dialog": {
+        "dialog": {},
+        "closeDialog": function () {
+            $("#messageDialog").modal('hide');
+        },
+        "showDialog": function (title, content, warning, type) {
+            $("#messageDialogTitle").text("");
+            $("#messageDialogContent").html("");
+            $("#messageDialogWarningContent").html("");
+
+            if (title) {
+                $("#messageDialogTitle").text(title);
+            }
+
+            if (content) {
+                $("#messageDialogContent").html(content);
+            }
+
+            if (warning) {
+                $("#messageDialogWarningContent").html(warning);
+            }
+
+            $("#messageDialog").modal('show');
+        },
+        "showWarning": function (title, content, warning) {
+
+        },
+    }
+});

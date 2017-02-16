@@ -70,7 +70,11 @@
             var options = {
                 "success": function (d) {
                     if (d.success) {
-                        var data = d.data;
+                        var token = d.data;
+                        var lang = $("#ddlLanguage").val();
+                        $.cookie("SSOToken", token);
+                        $.cookie("Language", lang);
+                        window.location.href = "Portal?SSOToken=" + token + "#!lang=" + lang;
                     } else {
                         if (d.errorcode == "E0001") {
                             location.href = "Login";

@@ -44,6 +44,11 @@ namespace Cube.Web
 
             return result;
         }
+
+        public ResultDTO logout()
+        {
+            return new ResultDTO();
+        }
         
     }
 }

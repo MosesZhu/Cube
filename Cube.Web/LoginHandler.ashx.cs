@@ -17,6 +17,9 @@ namespace Cube.Web
         public ResultDTO login()
         {
             ResultDTO result = new ResultDTO();
+            //Test
+            result.data = "TestToken";
+            //Test
             return result;
         }
     }
