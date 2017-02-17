@@ -6,6 +6,10 @@
             cursor: pointer;
         }
 
+        .skin_button {
+            cursor: pointer;
+        }
+
         body {
             overflow: hidden;
         }
@@ -384,16 +388,16 @@
                             <div class="btn-group" style="width: 100%; padding: 20px;">
                                 <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
                                 <ul class="fc-color-picker" id="color-chooser">
-                                    <li><a class="text-blue" href="#" onclick="changeSkin('blue')"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-blue alpha60" href="#" onclick="changeSkin('blue-light')"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-orange" href="#" onclick="changeSkin('yellow')"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-orange alpha60" href="#" onclick="changeSkin('yellow-light')"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-green" href="#" onclick="changeSkin('green')"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-green alpha60" href="#" onclick="changeSkin('green-light')"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-red" href="#" onclick="changeSkin('red')"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-red alpha60" href="#" onclick="changeSkin('red-light')"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-purple" href="#" onclick="changeSkin('purple')"><i class="fa fa-square"></i></a></li>
-                                    <li><a class="text-purple alpha60" href="#" onclick="changeSkin('purple-light')"><i class="fa fa-square"></i></a></li>
+                                    <li><div class="text-blue skin_button" onclick="setSkin('blue')"><i class="fa fa-square skin_button"></i></div></li>
+                                    <li><div class="text-blue alpha60 skin_button" onclick="setSkin('blue-light')"><i class="fa fa-square"></i></div></li>
+                                    <li><div class="text-orange skin_button" onclick="setSkin('yellow')"><i class="fa fa-square"></i></div></li>
+                                    <li><div class="text-orange alpha60 skin_button" onclick="setSkin('yellow-light')"><i class="fa fa-square"></i></div></li>
+                                    <li><div class="text-green skin_button" onclick="setSkin('green')"><i class="fa fa-square"></i></div></li>
+                                    <li><div class="text-green alpha60 skin_button" onclick="setSkin('green-light')"><i class="fa fa-square"></i></div></li>
+                                    <li><div class="text-red skin_button" onclick="setSkin('red')"><i class="fa fa-square"></i></div></li>
+                                    <li><div class="text-red alpha60 skin_button" onclick="setSkin('red-light')"><i class="fa fa-square"></i></div></li>
+                                    <li><div class="text-purple skin_button" onclick="setSkin('purple')"><i class="fa fa-square"></i></div></li>
+                                    <li><div class="text-purple alpha60 skin_button" onclick="setSkin('purple-light')"><i class="fa fa-square"></i></div></li>
                                 </ul>
                             </div>
                         </li>
@@ -493,43 +497,6 @@
             alert($("#tbxSearchMenu").val());
         };
 
-        var changeLanguage = function () {
-            var selectedLanguage = $("#ddlLanguage").val();
-            var pMap = $.uriAnchor.makeAnchorMap();
-            pMap["lang"] = selectedLanguage;
-            $.uriAnchor.setAnchor(pMap);
-            _RefreshMultiLanguage(selectedLanguage);
-
-            $("iframe").each(function (i, f) {
-                var oldSrc = $(f).attr("src");
-                var oldUrl = oldSrc.split("#!")[0];
-                //var oldQuery = oldSrc.split("?")[1];
-                var map = {};
-                map = $.uriAnchor.makeAnchorMap(oldSrc);
-                //var exist = false;
-                //$.each(keyValueList, function (i, item) {
-                //    if (item.key == "lang") {
-                //        item.value = _Context.CurrentLang;
-                //        exist = true;
-                //        return false;
-                //    }
-                //});
-
-                //if (!exist) {
-                //    keyValueList.push({ "key": "lang", "value": _Context.CurrentLang });
-                //}
-                //var newSrc = oldUrl;
-                //$.each(keyValueList, function (i, item) {
-                //    newSrc += (i == 0 ? "?" : "&") + item.key + "=" + item.value;
-                //});
-                map["lang"] = _Context.CurrentLang;
-                var mapStr = $.uriAnchor.makeAnchorString(map);
-                //window.frames[$(f).attr("name")].location.hash = mapStr;
-                $(f).attr("src", oldUrl + "#!" + mapStr);
-                //$(f).attr("src", $(f).attr("src") + "?lang=" + _Context.CurrentLang);
-            });
-        };
-
         var openForm = function (menu) {
             var functionurl = $(menu).attr("functionurl");
             var functionname = $(menu).text();
@@ -581,6 +548,23 @@
             }
             $("section.content").height(tempHeight);
         };
+
+        var changeLanguage = function () {
+            setLanguage($("#ddlLanguage").val());
+            syncFramesState();
+        };
+
+        var syncFramesState = function() {
+            $("iframe").each(function (i, f) {                
+                var oldSrc = $(f).attr("src");
+                var oldUrl = oldSrc.split("#!")[0];
+                var map = {};
+                map = $.uriAnchor.makeAnchorMap(oldSrc);
+                map["lang"] = _Context.CurrentLang;
+                var mapStr = $.uriAnchor.makeAnchorString(map);
+                $(f).attr("src", oldUrl + "#!" + mapStr);
+            });
+        }
     </script>
 </asp:Content>
 

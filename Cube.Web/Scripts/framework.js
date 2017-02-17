@@ -57,88 +57,57 @@
 var _Context = {
     "CurrentFunctionId": "",
     "CurrentLang": "EnUS",
+    "CurrentSkin": "blue",
 };
 var _CurrentLang = _Lang_ZhCN ? _Lang_ZhCN : {};
-var _RefreshMultiLanguage = function (language) {
-    _Context.CurrentLang = language;
-    switch (_Context.CurrentLang) {
-        case "ZhCN":
-            _CurrentLang = _Lang_ZhCN;
-            break;
-        case "ZhTW":
-            _CurrentLang = _Lang_ZhTW;
-            break;
-            //case "EnUS":
-        default:
-            _CurrentLang = _Lang_EnUS;
-            break;
-    }
-    for (key in _CurrentLang) {
-        $("[lang=" + key + "]").text(_CurrentLang[key]);
-    }
-}
 
 $(function () {
-    $(window).bind('hashchange', onHashChange);
-    var qLang = getQueryStringByName("lang");
-    if (!qLang) {
-        qLang = "ZhCN";
+    $(window).bind('hashchange', $.CubeEvent.onHashChange);
+
+    var map = $.uriAnchor.makeAnchorMap();
+    var needSetAnchor = false;
+    if (!map["lang"]) {
+        map["lang"] = $.language.type.default;        
+        needSetAnchor = true;
     }
-    _RefreshMultiLanguage(qLang);
+
+    if (!map["skin"]) {
+        map["skin"] = $.skin.type.default;
+        needSetAnchor = true;
+    }
+
+    _Context.CurrentLang = map["lang"];
+    _Context.CurrentSkin = map["skin"];
+
+    if (needSetAnchor) {
+        $.uriAnchor.setAnchor(map);
+    }
+    //$.uriAnchor.setAnchor($.uriAnchor.makeAnchorMap());
 });
 
-var onHashChange = function () {
-    _RefreshMultiLanguage($.uriAnchor.makeAnchorMap()["lang"]);
-    //alert($.uriAnchor.makeAnchorMap()["lang"]);
+var setSkin = function (skinName) {
+    $.skin.set(skinName);
+    return false;
 }
 
-function getQueryString() {
-    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    for (var i = 0; i < result.length; i++) {
-        result[i] = result[i].substring(1);
-        result[i] = { "key": result[i].split("=")[0], "value": result[i].split("=")[2] };
-    }
-    return result;
+var setLanguage = function (languageName) {
+    $.language.set(languageName);
+    return false;
 }
 
-function getQueryStringFromSearch(url) {
-    var result = url.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
-    if (result != null) {
-        for (var i = 0; i < result.length; i++) {
-            result[i] = result[i].substring(1);
-            result[i] = { "key": result[i].split("=")[0], "value": result[i].split("=")[1] };
-        }
-    } else {
-        return [];
-    }
-    return result;
-}
-//根据QueryString参数名称获取值 
-function getQueryStringByName(name) {
-    var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
-    if (result == null || result.length < 1) {
-        return "";
-    }
-    return result[1];
-}
-//根据QueryString参数索引获取值 
-function getQueryStringByIndex(index) {
-    if (index == null) {
-        return "";
-    }
-    var queryStringList = getQueryString();
-    if (index >= queryStringList.length) {
-        return "";
-    }
-    var result = queryStringList[index];
-    var startIndex = result.indexOf("=") + 1;
-    result = result.substring(startIndex);
-    return result;
-}
+jQuery.extend({
+    "CubeEvent": {
+        "onHashChange": function () {
+            var map = $.uriAnchor.makeAnchorMap();
 
-var changeSkin = function (themeName) {
-    $("body").removeClass().addClass("skin-" + themeName).addClass("fixed");
-};
+            var languageName = map["lang"];
+            $.language.change(languageName);
+
+            var skinName = map["skin"];
+            $.skin.change(skinName);
+        },
+    }
+})
 
 jQuery.extend({
     "dialog": {
@@ -170,3 +139,122 @@ jQuery.extend({
         },
     }
 });
+
+jQuery.extend({
+    "language": {
+        "type": {
+            "default": "ZhCN",
+            "ZhCN": "ZhCN",
+            "ZhTW": "ZhTW",
+            "EnUS": "EnUS"
+        },
+        "set": function (languageName) {
+            if (!$.language.type[languageName]) {
+                languageName = $.language.type.default;
+            }
+
+            var map = $.uriAnchor.makeAnchorMap();
+            if (map["lang"] != languageName) {
+                map["lang"] = languageName;
+                $.uriAnchor.setAnchor(map);
+            }           
+        },
+        "change": function (languageName) {
+            _Context.CurrentLang = languageName;
+            switch (_Context.CurrentLang) {
+                case "ZhCN":
+                    _CurrentLang = _Lang_ZhCN;
+                    break;
+                case "ZhTW":
+                    _CurrentLang = _Lang_ZhTW;
+                    break;
+                default:
+                    _CurrentLang = _Lang_EnUS;
+                    break;
+            }
+            for (key in _CurrentLang) {
+                $("[lang=" + key + "]").text(_CurrentLang[key]);
+            }
+        }
+    }
+});
+
+jQuery.extend({
+    "skin": {
+        "type": {
+            "default": "blue",
+            "blue": "blue",
+            "blue-light": "blue-light",
+            "yellow": "yellow",
+            "yellow-light": "yellow-light",
+            "green": "green",
+            "green-light": "green-light",
+            "red": "red",
+            "red-light": "red-light",
+            "purple": "purple",
+            "purple-light": "purple-light"
+        },
+        "set": function (skinName) {
+            if (!$.skin.type[skinName]) {
+                skinName = $.skin.type.default;
+            }
+
+            var map = $.uriAnchor.makeAnchorMap();
+            if (map["skin"] != skinName) {
+                map["skin"] = skinName;
+                $.uriAnchor.setAnchor(map);
+            }
+        },
+        "change": function (skinName) {
+            _Context.CurrentSkin = skinName;
+            $("body").removeClass().addClass("skin-" + skinName).addClass("fixed");
+        }
+    }
+});
+
+//Common Function
+function getQueryString() {
+    var result = location.search.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    for (var i = 0; i < result.length; i++) {
+        result[i] = result[i].substring(1);
+        result[i] = { "key": result[i].split("=")[0], "value": result[i].split("=")[2] };
+    }
+    return result;
+}
+
+function getQueryStringFromSearch(url) {
+    var result = url.match(new RegExp("[\?\&][^\?\&]+=[^\?\&]+", "g"));
+    if (result != null) {
+        for (var i = 0; i < result.length; i++) {
+            result[i] = result[i].substring(1);
+            result[i] = { "key": result[i].split("=")[0], "value": result[i].split("=")[1] };
+        }
+    } else {
+        return [];
+    }
+    return result;
+}
+
+//根据QueryString参数名称获取值 
+function getQueryStringByName(name) {
+    var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+    if (result == null || result.length < 1) {
+        return "";
+    }
+    return result[1];
+}
+//根据QueryString参数索引获取值 
+
+function getQueryStringByIndex(index) {
+    if (index == null) {
+        return "";
+    }
+    var queryStringList = getQueryString();
+    if (index >= queryStringList.length) {
+        return "";
+    }
+    var result = queryStringList[index];
+    var startIndex = result.indexOf("=") + 1;
+    result = result.substring(startIndex);
+    return result;
+}

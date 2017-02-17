@@ -25,7 +25,7 @@ namespace Cube.Base
                 }
             }
 
-            this.Load += PageBase_PreInit;
+            this.PreInit += PageBase_PreInit;
         }
 
 
