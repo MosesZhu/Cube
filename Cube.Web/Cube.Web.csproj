@@ -410,10 +410,12 @@
     <Content Include="img\user7-128x128.jpg" />
     <Content Include="img\user8-128x128.jpg" />
     <Content Include="Login.aspx" />
+    <Content Include="LoginService.asmx" />
     <Content Include="packages.config" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="PortalService.asmx" />
     <Content Include="Scripts\AdminLTE.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\fastclick.min.js" />
@@ -480,6 +482,10 @@
     <Compile Include="LoginHandler.ashx.cs">
       <DependentUpon>LoginHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="LoginService.asmx.cs">
+      <DependentUpon>LoginService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Portal.aspx.cs">
       <DependentUpon>Portal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -492,6 +498,10 @@
     </Compile>
     <Compile Include="PortalHandler.ashx.cs">
       <DependentUpon>PortalHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="PortalService.asmx.cs">
+      <DependentUpon>PortalService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Portal.Master.cs">
@@ -512,6 +522,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="WebService\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cube.Base\Cube.Base.csproj">

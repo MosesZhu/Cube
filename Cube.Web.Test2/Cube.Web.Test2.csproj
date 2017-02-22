@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Forms\TestDataMaintainForm.aspx" />
+    <Content Include="Forms\TestDataMaintainFormService.asmx" />
     <Content Include="SyncLanguage.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -76,6 +77,10 @@
     </Compile>
     <Compile Include="Forms\TestDataMaintainForm.aspx.designer.cs">
       <DependentUpon>TestDataMaintainForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TestDataMaintainFormService.asmx.cs">
+      <DependentUpon>TestDataMaintainFormService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

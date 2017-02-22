@@ -8,9 +8,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div lang="lang_BaseDataMaintain">
-        Base Data Maintain
-    </div>
+        <div lang="lang_BaseDataMaintain">
+            Base Data Maintain
+        </div>    
+        <input type="button" value="Get Data" onclick="return getData()" />
     </form>    
     <script src="http://localhost/CubePortal/Scripts/jquery-2.2.3.min.js" ></script>    
     <script src="http://localhost/CubePortal/Scripts/jquery.uriAnchor.js" ></script>

@@ -1,7 +1,8 @@
 ﻿jQuery.extend({
     "ask": function (method, data, options) {
         var ssoToken = getQueryStringByName("SSOToken") ? getQueryStringByName("SSOToken") : "";
-        if (!ssoToken) {            
+        if (!ssoToken) {
+            window.location.href = "Login";
             //return false;
             //ssoToken = "aaa";
         }
@@ -13,9 +14,13 @@
         var url = (location.href + "").split("#")[0].split("?")[0];
         var tempList = url.split("/");
         var tempName = tempList[tempList.length - 1];
-        var ashxName = tempName.split(".")[0] + "Handler.ashx";
         var tempUrl = url.substring(0, url.length - tempName.length);
-        url = tempUrl + ashxName + "?func=" + method;
+
+        //var ashxName = tempName.split(".")[0] + "Handler.ashx";        
+        //url = tempUrl + ashxName + "?func=" + method;
+
+        var serviceName = tempName.split(".")[0] + "Service.asmx";
+        url = tempUrl + serviceName + "/" + method;
 
         var cusSuccess = (options && options.success) ? options.success : $.answer.success;
         var cusError = (options && options.error) ? options.error : $.answer.error;
@@ -28,12 +33,14 @@
             data: {},
             beforeSend: function (request) {
                 request.setRequestHeader("SSOToken", ssoToken);
+                request.setRequestHeader("Language", _Context.CurrentLang);
             },
             success: function (d) {
-                if (!d.success && d.errorcode == "E0001") {
+                var resultData = d.d;
+                if (!resultData.success && resultData.errorcode == "E0001") {
                     location.href = "Login";
                 } else {
-                    cusSuccess(d);
+                    cusSuccess(resultData);
                 }
             },
             error: function (e) {
@@ -101,9 +108,15 @@ jQuery.extend({
             var map = $.uriAnchor.makeAnchorMap();
 
             var languageName = map["lang"];
+            if (!languageName) {
+                languageName = $.language.type.default;
+            }
             $.language.change(languageName);
 
             var skinName = map["skin"];
+            if (!skinName) {
+                skinName = $.skin.type.default;
+            }
             $.skin.change(skinName);
         },
     }

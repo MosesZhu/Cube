@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="FunctionDTO.cs" />
     <Compile Include="MenuDTO.cs" />
+    <Compile Include="PreferenceDTO.cs" />
     <Compile Include="ResultDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemDTO.cs" />
