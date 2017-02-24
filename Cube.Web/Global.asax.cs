@@ -17,5 +17,15 @@ namespace Cube.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        void Session_Start(object sender, EventArgs e) 
+        {
+            string s = "";
+        }
+
+        void Application_Error(object sender, EventArgs e) 
+        { 
+
+        }
     }
 }

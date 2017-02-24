@@ -1,5 +1,4 @@
 ﻿using Cube.Base;
-using Cube.Business;
 using Cube.DTO;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ namespace Cube.Web
         {
             ResultDTO result = new ResultDTO();            
             
-            result.data = (new PortalBusiness()).getMenu();            
+            //result.data = (new PortalBusiness()).getMenu();
 
             return result;
         }

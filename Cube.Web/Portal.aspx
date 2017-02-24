@@ -17,6 +17,16 @@
         .alpha60 {
             opacity: 0.6;
         }
+        
+        .nav-tabs > li > a {
+            border: 1px solid #ddd;
+            border-bottom-color: transparent;
+        }
+        
+        .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
+            border: 1px solid #ddd;
+            border-bottom-color: transparent;
+        }            
     </style>
     >
 </asp:Content>
@@ -77,9 +87,8 @@
                             </ul>
                         </li>
                         <!-- /.messages-menu -->
-                        <!-- Notifications Menu -->
+                        <!--                       
                         <li class="dropdown notifications-menu">
-                            <!-- Menu toggle button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
                                 <span class="label label-warning">10</span>
@@ -87,23 +96,20 @@
                             <ul class="dropdown-menu">
                                 <li class="header">You have 10 notifications</li>
                                 <li>
-                                    <!-- Inner Menu: contains the notifications -->
                                     <ul class="menu">
                                         <li>
-                                            <!-- start notification -->
                                             <a href="#">
                                                 <i class="fa fa-users text-aqua"></i>5 new members joined today
                                             </a>
                                         </li>
-                                        <!-- end notification -->
                                     </ul>
                                 </li>
                                 <li class="footer"><a href="#">View all</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                         <!-- Tasks Menu -->
+                        <!--
                         <li class="dropdown tasks-menu">
-                            <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-flag-o"></i>
                                 <span class="label label-danger">9</span>
@@ -111,32 +117,27 @@
                             <ul class="dropdown-menu">
                                 <li class="header">You have 9 tasks</li>
                                 <li>
-                                    <!-- Inner menu: contains the tasks -->
                                     <ul class="menu">
                                         <li>
-                                            <!-- Task item -->
                                             <a href="#">
-                                                <!-- Task title and progress text -->
                                                 <h3>Design some buttons
                             <small class="pull-right">20%</small>
                                                 </h3>
-                                                <!-- The progress bar -->
                                                 <div class="progress xs">
-                                                    <!-- Change the css width attribute to simulate progress -->
                                                     <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                                                         <span class="sr-only">20% Complete</span>
                                                     </div>
                                                 </div>
                                             </a>
                                         </li>
-                                        <!-- end task item -->
                                     </ul>
-                                </li>
+                                </li>                            
                                 <li class="footer">
                                     <a href="#">View all tasks</a>
                                 </li>
                             </ul>
                         </li>
+                            -->
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
@@ -283,11 +284,11 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>QML Maintain Form
-            <small>QML基础数据维护</small>
-                </h1>
-                <ol class="breadcrumb">
+            <section class="content-header" >
+                <!--<h1>QML Maintain Form
+                    <small>QML基础数据维护</small>
+                </h1>-->
+                <ol class="breadcrumb" style="top:-20px;">
                     <li><a href="#"><i class="fa fa-dashboard"></i>MFG</a></li>
                     <li><a href="#">QML</a></li>
                     <li class="active">QML Maintain Form</li>
@@ -295,21 +296,30 @@
             </section>
 
             <!-- Main content -->
-            <section class="content body">
+            <section class="content body" style="padding-top:0px;margin-top:-12px;">
 
-                <ul class="nav nav-tabs" role="tablist" id="_FormTabs">
+                <ul class="nav nav-tabs" role="tablist" id="_FormTabs"
+                     style="display:-webkit-inline-box;height:42px;">
 
                     <li class="nav-item active">
-                        <a class="nav-link" data-toggle="tab" href="#aaa" role="tab" aria-controls="home" functionid="aaa">QML Maintain Form 
-                  <span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span>
+                        <a class="nav-link" data-toggle="tab" href="#aaa" role="tab" aria-controls="home" functionid="aaa">
+                            QML Maintain Form 
+                            <span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="bbb">RSO Base Data Maintain
-                  <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
+                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="bbb">
+                            RSO Base Data Maintain
+                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
                         </a>
                     </li>
-                    <li class="dropdown">
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="bbb">
+                            Test
+                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
+                        </a>
+                    </li>
+                    <!-- <li class="dropdown">
                         <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown">BTP<b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
@@ -325,6 +335,7 @@
                             </li>
                         </ul>
                     </li>
+                        -->
 
                 </ul>
                 <div class="tab-content" style="height: 100%;" id="_FormTabContent">
@@ -343,7 +354,7 @@
         <!-- /.content-wrapper -->
 
         <!-- Main Footer -->
-        <footer class="main-footer" style="">
+        <footer class="main-footer" style="position:fixed;bottom:0px;width:100%;padding:8px;">
             <!-- To the right -->
             <div class="pull-right hidden-xs">
                 Anything you want
@@ -535,7 +546,7 @@
             //alert($(window).height());
             var isMenuVisible = ($('.main-sidebar').first().css('transform') === "none");
             var isBreadCrumbBlock = ($('.breadcrumb').first().css("position") === 'relative');
-            var baseHeight = $(window).height() - 160;
+            var baseHeight = $(window).height() - 110;
             var tempHeight = baseHeight;
             if (isBreadCrumbBlock) {
                 tempHeight = baseHeight - 140;

@@ -178,6 +178,8 @@ $(function () {
       alwaysVisible: false,
       size: o.navbarMenuSlimscrollWidth
     }).css("width", "100%");
+
+      
   }
 
   //Activate sidebar push menu

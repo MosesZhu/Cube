@@ -1,4 +1,5 @@
-﻿using Cube.DTO;
+﻿using Cube.Base;
+using Cube.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cube.Business
 {
-    public class PortalBusiness
+    public class PortalBusiness : BusinessBase
     {
         public List<MenuDTO> getMenu()
         {

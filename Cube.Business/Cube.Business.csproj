@@ -39,8 +39,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="PortalBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cube.Base\Cube.Base.csproj">
+      <Project>{2c361061-da48-4a57-8db5-a16a52beacf9}</Project>
+      <Name>Cube.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cube.DTO\Cube.DTO.csproj">
+      <Project>{5a9f18e0-cb55-4df4-b976-7ee76a45a690}</Project>
+      <Name>Cube.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

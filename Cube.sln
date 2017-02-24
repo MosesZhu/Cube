@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.SSO", "Cube.SSO\Cube.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Common", "Cube.Common\Cube.Common.csproj", "{202F0498-8D39-428B-9200-80A6B0F7F6DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Business", "Cube.Business\Cube.Business.csproj", "{1BC4DA1C-6FF1-479F-97AA-FE17DE8420C5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Plugin", "Cube.Plugin\Cube.Plugin.csproj", "{B4804B18-7A9C-46FC-B358-8C71F715CA34}"
 EndProject
 Global
@@ -55,10 +53,6 @@ Global
 		{202F0498-8D39-428B-9200-80A6B0F7F6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{202F0498-8D39-428B-9200-80A6B0F7F6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{202F0498-8D39-428B-9200-80A6B0F7F6DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BC4DA1C-6FF1-479F-97AA-FE17DE8420C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BC4DA1C-6FF1-479F-97AA-FE17DE8420C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BC4DA1C-6FF1-479F-97AA-FE17DE8420C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BC4DA1C-6FF1-479F-97AA-FE17DE8420C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B4804B18-7A9C-46FC-B358-8C71F715CA34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B4804B18-7A9C-46FC-B358-8C71F715CA34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4804B18-7A9C-46FC-B358-8C71F715CA34}.Release|Any CPU.ActiveCfg = Release|Any CPU

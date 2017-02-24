@@ -46,7 +46,6 @@
     <Compile Include="Base\PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Base\PageHandlerBase.cs" />
     <Compile Include="Base\PageServiceBase.cs">
       <SubType>Component</SubType>
     </Compile>

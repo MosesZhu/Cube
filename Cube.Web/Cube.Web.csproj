@@ -41,6 +41,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>\\10.85.10.2\bach30\Common\bin\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -458,9 +461,7 @@
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="PortalHandler.ashx" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="LoginHandler.ashx" />
     <None Include="Project_Readme.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -479,9 +480,6 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="LoginHandler.ashx.cs">
-      <DependentUpon>LoginHandler.ashx</DependentUpon>
-    </Compile>
     <Compile Include="LoginService.asmx.cs">
       <DependentUpon>LoginService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -495,9 +493,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="PortalHandler.ashx.cs">
-      <DependentUpon>PortalHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="PortalService.asmx.cs">
       <DependentUpon>PortalService.asmx</DependentUpon>
