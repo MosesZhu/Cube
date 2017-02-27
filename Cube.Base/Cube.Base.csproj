@@ -49,7 +49,9 @@
     <Compile Include="Base\PageServiceBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\CobeConfig.cs" />
+    <Compile Include="CubeConstants.cs" />
+    <Compile Include="CubeHttpModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
