@@ -50,7 +50,6 @@ F:\Cube\Cube.Web.Test2\bin\Cube.DTO.dll
 F:\Cube\Cube.Web.Test2\bin\Owin.dll
 F:\Cube\Cube.Web.Test2\bin\Microsoft.Owin.dll
 F:\Cube\Cube.Web.Test2\bin\Microsoft.AspNet.FriendlyUrls.dll
-F:\Cube\Cube.Web.Test2\bin\Cube.Common.dll
 F:\Cube\Cube.Web.Test2\bin\Microsoft.Owin.Host.SystemWeb.dll
 F:\Cube\Cube.Web.Test2\bin\Cube.Base.pdb
 F:\Cube\Cube.Web.Test2\bin\Cube.Web.pdb
@@ -58,7 +57,6 @@ F:\Cube\Cube.Web.Test2\bin\System.Web.Optimization.xml
 F:\Cube\Cube.Web.Test2\bin\Cube.DTO.pdb
 F:\Cube\Cube.Web.Test2\bin\Microsoft.Owin.xml
 F:\Cube\Cube.Web.Test2\bin\Microsoft.AspNet.FriendlyUrls.xml
-F:\Cube\Cube.Web.Test2\bin\Cube.Common.pdb
 F:\Cube\Cube.Web.Test2\bin\Microsoft.Owin.Host.SystemWeb.xml
 F:\Cube\Cube.Web.Test2\obj\Debug\Cube.Web.Test2.csprojResolveAssemblyReference.cache
 F:\Cube\Cube.Web.Test2\obj\Debug\Cube.Web.Test2.dll
