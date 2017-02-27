@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cube.Base.Config;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,7 +26,8 @@ namespace Cube.Base
             
             string token = context.Request["SSOToken"];
             string extensionName = Path.GetExtension(context.Request.Url.LocalPath);
-            if (extensionName == ".aspx" || extensionName == ".asmx" && !context.Request.Url.ToString().ToUpper().Contains(CubeConfig.LoginUrl.ToUpper()))
+            if (extensionName == ".aspx" || extensionName == ".asmx" 
+                && !context.Request.Url.ToString().ToUpper().Contains(CubeConfig.LoginUrl.ToUpper()))
             {
                 if (String.IsNullOrEmpty(token))
                 {

@@ -525,10 +525,6 @@
       <Project>{2c361061-da48-4a57-8db5-a16a52beacf9}</Project>
       <Name>Cube.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Cube.Common\Cube.Common.csproj">
-      <Project>{202f0498-8d39-428b-9200-80a6b0f7f6de}</Project>
-      <Name>Cube.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Cube.DTO\Cube.DTO.csproj">
       <Project>{5a9f18e0-cb55-4df4-b976-7ee76a45a690}</Project>
       <Name>Cube.DTO</Name>

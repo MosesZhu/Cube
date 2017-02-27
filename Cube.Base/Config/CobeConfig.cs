@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cube.Base
+namespace Cube.Base.Config
 {
     public static class CubeConfig
     {

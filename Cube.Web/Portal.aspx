@@ -296,7 +296,7 @@
             </section>
 
             <!-- Main content -->
-            <section class="content body" style="padding-top:0px;margin-top:-12px;">
+            <section class="content body" style="padding-top:0px;margin-top:-5px;">
                 <div id="_FormTabsContainer">
                     <ul class="nav nav-tabs" role="tablist" id="_FormTabs"
                      style="display:-webkit-inline-box;">
@@ -578,7 +578,7 @@
             //alert($(window).height());
             var isMenuVisible = ($('.main-sidebar').first().css('transform') === "none");
             var isBreadCrumbBlock = ($('.breadcrumb').first().css("position") === 'relative');
-            var baseHeight = $(window).height() - 110;
+            var baseHeight = $(window).height() - 115;
             var tempHeight = baseHeight;
             if (isBreadCrumbBlock) {
                 tempHeight = baseHeight - 140;
