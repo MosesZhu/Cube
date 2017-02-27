@@ -90,6 +90,15 @@ $(function () {
         $.uriAnchor.setAnchor(map);
     }
     //$.uriAnchor.setAnchor($.uriAnchor.makeAnchorMap());
+
+    $('#_FormTabsContainer').slimscroll({
+        height: '43px',
+        width: '100%',
+        axis: 'x',
+        alwaysVisible: false,
+        opacity: .2, //滚动条透明度
+        borderRadius: '7px', //滚动条圆角
+    });
 });
 
 var setSkin = function (skinName) {

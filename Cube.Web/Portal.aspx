@@ -297,9 +297,9 @@
 
             <!-- Main content -->
             <section class="content body" style="padding-top:0px;margin-top:-12px;">
-
-                <ul class="nav nav-tabs" role="tablist" id="_FormTabs"
-                     style="display:-webkit-inline-box;height:42px;">
+                <div id="_FormTabsContainer">
+                    <ul class="nav nav-tabs" role="tablist" id="_FormTabs"
+                     style="display:-webkit-inline-box;">
 
                     <li class="nav-item active">
                         <a class="nav-link" data-toggle="tab" href="#aaa" role="tab" aria-controls="home" functionid="aaa">
@@ -314,8 +314,38 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="bbb">
+                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="eee">
                             Test
+                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="fff">
+                            Test2
+                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="ggg">
+                            Test3333
+                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="hhh">
+                            测试测试测试测试测试测试测试测试测试
+                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="iii">
+                            测试测试测试测试测试测试测试测试测试
+                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="jjj">
+                            测试测试测试测试测试测试测试测试测试
                             <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
                         </a>
                     </li>
@@ -338,6 +368,8 @@
                         -->
 
                 </ul>
+                </div>
+                
                 <div class="tab-content" style="height: 100%;" id="_FormTabContent">
                     <div class="tab-pane active" id="aaa" role="tabpanel" style="height: 100%; padding: 0px;">
                         <iframe name="frm_aaa" src="http://localhost:8084/qplay/public/auth/login" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width: 100%; padding: 0px; border: 0px;"></iframe>

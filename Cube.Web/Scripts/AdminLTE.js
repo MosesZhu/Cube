@@ -179,14 +179,14 @@ $(function () {
       size: o.navbarMenuSlimscrollWidth
     }).css("width", "100%");
 
-      $(".nav-tabs").slimscroll({
-          width: '100%', //可滚动区域宽度
-          height: '42px',
-          alwaysVisible: true,
-          opacity: .4, //滚动条透明度
-          borderRadius: '7px', //滚动条圆角
-          axis: 'x'
-      }).css("width", "100%");
+      //$(".nav-tabs").slimscroll({
+      //    width: '100%', //可滚动区域宽度
+      //    height: '42px',
+      //    alwaysVisible: true,
+      //    opacity: .4, //滚动条透明度
+      //    borderRadius: '7px', //滚动条圆角
+      //    axis: 'x'
+      //}).css("width", "100%");
   }
 
   //Activate sidebar push menu

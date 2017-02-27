@@ -425,6 +425,7 @@
     <Content Include="Scripts\framework.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\bak-jquery.slimscroll.min.js" />
     <Content Include="Scripts\jquery.slimscroll.min.js" />
     <Content Include="Scripts\jquery.uriAnchor.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
