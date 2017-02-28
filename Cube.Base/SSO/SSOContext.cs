@@ -1,4 +1,6 @@
-﻿using Cube.DTO;
+﻿using Cube.Base.Utility;
+using Cube.Common;
+using Cube.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Cube.SSO
+namespace Cube.Base.SSO
 {
     public class SSOContext
     {

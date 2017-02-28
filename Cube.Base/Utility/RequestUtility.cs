@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Cube.Common
+namespace Cube.Base.Utility
 {
     public class RequestUtility
     {

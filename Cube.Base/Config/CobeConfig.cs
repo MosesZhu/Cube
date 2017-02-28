@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cube.Base
+namespace Cube.Base.Config
 {
-    public static class Config
+    public static class CubeConfig
     {
         private static void InitCache() 
         {
@@ -52,14 +52,14 @@ namespace Cube.Base
         public static bool IsDebugMode 
         {
             get {
-                return String.Equals(FindCacheValue(ConfigContents.IS_DEBUG_MODE), "true", StringComparison.CurrentCultureIgnoreCase);
+                return String.Equals(FindCacheValue(ConfigContents.CUBE_IS_DEBUG_MODE), "true", StringComparison.CurrentCultureIgnoreCase);
             }
         }
 
-        public static string DebugPortalUrl
+        public static string LoginUrl
         {
             get {
-                return FindCacheValue(ConfigContents.DEBUG_PORTAL_URL);
+                return FindCacheValue(ConfigContents.CUBE_LOGIN_URL);
             }
         }
 

@@ -17,8 +17,8 @@ namespace Cube.Common
 
     public class ConfigContents
     {
-        public static readonly string IS_DEBUG_MODE = "IsDebugMode";
-        public static readonly string DEBUG_PORTAL_URL = "DebugPortalUrl";
+        public static readonly string CUBE_IS_DEBUG_MODE = "CubeIsDebugMode";
+        public static readonly string CUBE_LOGIN_URL = "CubeLoginUrl";
     }
 
     public class ErrorCode
