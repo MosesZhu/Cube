@@ -26,5 +26,17 @@ namespace Cube.Web
         {
             return new ResultDTO();
         }
+
+        [WebMethod]
+        public ResultDTO getUserPreference()
+        {
+            return new ResultDTO();
+        }
+
+        [WebMethod]
+        public ResultDTO getUserInfo()
+        {
+            return new ResultDTO();
+        }
     }
 }
