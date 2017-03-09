@@ -14,6 +14,8 @@ namespace Cube.Base.Config
         {
             //ConfigurationManager.AppSettings[];
             LastCacheTime = DateTime.Now;
+            _cache = new Dictionary<string, string>();
+            _cache[ConfigContents.CUBE_LOGIN_URL] = ConfigurationManager.AppSettings[ConfigContents.CUBE_LOGIN_URL];
         }
 
 
@@ -29,7 +31,8 @@ namespace Cube.Base.Config
         }
         private static string FindCacheValue(string key, string defaultValue = null)
         {
-            return Cache[key] == null ? Cache[key] : defaultValue;
+            return ConfigurationManager.AppSettings[key];
+            //return Cache[key] == null ? Cache[key] : defaultValue;
             //return Cache.FirstOrDefault(kv => kv.Key == key) == null ? Cache.FirstOrDefault(kv => kv.Key == key).Value : defaultValue;
         }
 

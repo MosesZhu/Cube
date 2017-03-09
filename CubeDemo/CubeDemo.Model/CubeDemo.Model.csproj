@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2C361061-DA48-4A57-8DB5-A16A52BEACF9}</ProjectGuid>
+    <ProjectGuid>{01E6359A-3286-45B3-B7AE-7AC4D5786413}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Base</RootNamespace>
-    <AssemblyName>Cube.Base</AssemblyName>
+    <RootNamespace>CubeDemo.Model</RootNamespace>
+    <AssemblyName>CubeDemo.Model</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,21 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ITS.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=49bcf0ef5ccc9012, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ITS.Data">
       <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\10.85.10.2\bach30\Common\bin\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Extensions.Design" />
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,26 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\PageBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Base\PageServiceBase.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Config\CobeConfig.cs" />
-    <Compile Include="CubeConstants.cs" />
-    <Compile Include="CubeHttpModule.cs" />
+    <Compile Include="Entity\Item.cs" />
+    <Compile Include="Entity\ItemType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SSO\SSOContext.cs" />
-    <Compile Include="Utility\RequestUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cube.Model\Cube.Model.csproj">
-      <Project>{5a9f18e0-cb55-4df4-b976-7ee76a45a690}</Project>
-      <Name>Cube.Model</Name>
-    </ProjectReference>
+    <Folder Include="DTO\" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cube.Base.Config;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -15,6 +16,12 @@ namespace Cube.Base
 
         public PageBase()
         {
+            //string token = HttpContext.Current.Request["SSOToken"];
+            //if(string.IsNullOrEmpty(token))
+            //{
+            //    Response.Redirect(CubeConfig.LoginUrl);
+            //}
+
             this.MultiLanguageKeyList = new List<string>();
             List<string> formMultiLanguageKeyList = GetFormMultiLanguageKeyList();
             if (formMultiLanguageKeyList != null)
@@ -54,7 +61,7 @@ namespace Cube.Base
             _lang.Add(new Lang() { Key = "lang_Language", Value_EnUS = "English", Value_ZhCN = "中文简体", Value_ZhTW = "中文繁體" });
             _lang.Add(new Lang() { Key = "lang_Confirm", Value_EnUS = "Confirm", Value_ZhCN = "确定", Value_ZhTW = "確認" });
             _lang.Add(new Lang() { Key = "lang_Themes", Value_EnUS = "Themes", Value_ZhCN = "皮肤", Value_ZhTW = "皮膚" });
-            _lang.Add(new Lang() { Key = "lang_menu_aaa", Value_EnUS = "QML Maintain Form", Value_ZhCN = "QML基础数据维护", Value_ZhTW = "QML基礎數據維護" });
+            _lang.Add(new Lang() { Key = "lang_item_no", Value_EnUS = "Item NO.", Value_ZhCN = "料号", Value_ZhTW = "料號" });
             //End Test
 
             //List<string> langKeyList = new List<string>();
@@ -76,9 +83,9 @@ namespace Cube.Base
                 }
             }
 
-            string langJsStr_ZhCN = "var _Lang_ZhCN = {";
-            string langJsStr_ZhTW = "var _Lang_ZhTW = {";
-            string langJsStr_EnUS = "var _Lang_EnUS = {";
+            string langJsStr_ZhCN = "window._Lang_ZhCN = {";
+            string langJsStr_ZhTW = "window._Lang_ZhTW = {";
+            string langJsStr_EnUS = "window._Lang_EnUS = {";
             foreach (string langKey in MultiLanguageKeyList)
             {
                 Lang thisLang = _lang.FirstOrDefault(l => l.Key == langKey);

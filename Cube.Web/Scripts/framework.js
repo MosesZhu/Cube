@@ -24,13 +24,14 @@
 
         var cusSuccess = (options && options.success) ? options.success : $.answer.success;
         var cusError = (options && options.error) ? options.error : $.answer.error;
-        
+
         $.ajax({
             url: url,
             dataType: "json",
             type: "POST",
             contentType: "application/json",
-            data: {},
+            data: JSON.stringify(data),
+            async: true,
             beforeSend: function (request) {
                 request.setRequestHeader("SSOToken", ssoToken);
                 request.setRequestHeader("Language", _Context.CurrentLang);
@@ -46,7 +47,7 @@
             error: function (e) {
                 cusError(e);
             }
-        });        
+        });
     },
 
     "answer": {
@@ -55,7 +56,13 @@
         },
 
         "failed": function () {
-            alert("Error");
+            alert("Failed");
+
+        },
+
+        "error": function (e) {
+            $.dialog.showDialog("error", e.responseText);
+            //alert("Error");
 
         }
     }
@@ -66,7 +73,7 @@ var _Context = {
     "CurrentLang": "EnUS",
     "CurrentSkin": "blue",
 };
-var _CurrentLang = _Lang_ZhCN ? _Lang_ZhCN : {};
+var _CurrentLang = window._Lang_ZhCN ? window._Lang_ZhCN : {};
 
 $(function () {
     $(window).bind('hashchange', $.CubeEvent.onHashChange);
@@ -185,13 +192,13 @@ jQuery.extend({
             _Context.CurrentLang = languageName;
             switch (_Context.CurrentLang) {
                 case "ZhCN":
-                    _CurrentLang = _Lang_ZhCN;
+                    _CurrentLang = window._Lang_ZhCN;
                     break;
                 case "ZhTW":
-                    _CurrentLang = _Lang_ZhTW;
+                    _CurrentLang = window._Lang_ZhTW;
                     break;
                 default:
-                    _CurrentLang = _Lang_EnUS;
+                    _CurrentLang = window._Lang_EnUS;
                     break;
             }
             for (key in _CurrentLang) {

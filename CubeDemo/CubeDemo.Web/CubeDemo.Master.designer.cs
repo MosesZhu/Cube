@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cube.Web {
+namespace CubeDemo.Web {
     
     
-    public partial class SiteMaster {
+    public partial class CubeDemo {
         
         /// <summary>
         /// PageStyleContentHolder control.
@@ -20,6 +20,15 @@ namespace Cube.Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder PageStyleContentHolder;
+        
+        /// <summary>
+        /// form1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
         /// MainContentHolder control.

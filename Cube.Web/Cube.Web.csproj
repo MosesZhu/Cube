@@ -41,10 +41,18 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ITS.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=49bcf0ef5ccc9012, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>\\10.85.10.2\bach30\Common\bin\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Oracle.DataAccess, Version=2.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Moses.Zhu\Desktop\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -52,6 +60,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions.Design" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -186,6 +195,7 @@
     <Content Include="Content\AdminLTE\skins\skin-yellow.min.css" />
     <Content Include="Content\AdminLTE\skins\_all-skins.css" />
     <Content Include="Content\AdminLTE\skins\_all-skins.min.css" />
+    <Content Include="Content\bootstrap-table.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
@@ -420,6 +430,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="PortalService.asmx" />
     <Content Include="Scripts\AdminLTE.js" />
+    <Content Include="Scripts\bootstrap-table.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\fastclick.min.js" />
     <Content Include="Scripts\framework.js" />
