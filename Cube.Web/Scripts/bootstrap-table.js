@@ -661,6 +661,7 @@
                     titleTooltip: $(this).attr('title'),
                     rowspan: $(this).attr('rowspan') ? +$(this).attr('rowspan') : undefined,
                     colspan: $(this).attr('colspan') ? +$(this).attr('colspan') : undefined
+                    , 'lang': $(this).attr('lang') ? $(this).attr('lang') : undefined//Added by Moses Zhu on 20170309
                 }, $(this).data()));
             });
             columns.push(column);
@@ -817,8 +818,10 @@
                     "tabindex='0'",
                     '>');
 
-                html.push(sprintf('<div class="th-inner %s">', that.options.sortable && column.sortable ?
-                    'sortable both' : ''));
+                //Modified by Moses Zhu on 20170309 html.push(sprintf('<div class="th-inner %s">', that.options.sortable && column.sortable ?
+                //    'sortable both' : ''));
+                html.push(sprintf('<div class="th-inner %s" lang="%s">', that.options.sortable && column.sortable ?
+                    'sortable both' : '', column.lang ? column.lang : ''));
 
                 text = column.title;
 

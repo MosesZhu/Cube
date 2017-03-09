@@ -109,11 +109,13 @@ $(function () {
 });
 
 var setSkin = function (skinName) {
+    _Context.CurrentSkin = skinName;
     $.skin.set(skinName);
     return false;
 }
 
 var setLanguage = function (languageName) {
+    _Context.CurrentLang = languageName;
     $.language.set(languageName);
     return false;
 }
@@ -145,6 +147,9 @@ jQuery.extend({
             $("#messageDialog").modal('hide');
         },
         "showDialog": function (title, content, warning, type) {
+            //if (parent.$.dialog) {
+            //    parent.$.dialog.showDialog(title, content, warning, type);
+            //}
             $("#messageDialogTitle").text("");
             $("#messageDialogContent").html("");
             $("#messageDialogWarningContent").html("");

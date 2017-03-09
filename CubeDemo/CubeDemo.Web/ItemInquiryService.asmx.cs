@@ -24,5 +24,18 @@ namespace CubeDemo.Web
             List<Item> result = _Db.From<Item>().Where(Item._.Item_No.Contain(itemNo)).Select().ToList();
             return result;
         }
+
+        [WebMethod(EnableSession = true)]
+        public bool SaveItem(string id, string itemNo, string description)
+        {
+            Item item = _Db.From<Item>().Where(Item._.Id == id).Select().ToList().FirstOrDefault();
+            if (item != null)
+            {
+                item.Item_No = itemNo;
+                item.Description = description;
+            }
+            _Db.Update<Item>(item);
+            return true;
+        }
     }
 }

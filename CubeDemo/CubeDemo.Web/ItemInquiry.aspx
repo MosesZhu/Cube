@@ -46,46 +46,61 @@
                             <th data-field="Id" data-sortable="true" data-visible="false" data-searchable="false">ID</th>
                             <th data-field="Item_No" data-sortable="true" data-formatter="itemNoFormatter" data-search-formatter="false" lang="lang_item_no">Item NO.</th>
                             <th data-field="Description" data-sortable="true" lang="lang_description">Description</th>
-                            <th data-field="item_type" data-sortable="true">Item Type</th>
                         </tr>
                     </thead>
                 </table>
             </div>
 
-            <div id="ItemMaintainDialog" class="modal fade">
+            <div id="itemMaintainDialog" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h1 class="modal-title" id="roleDetailMaintainDialogTitle"></h1>
+                            <h1 class="modal-title" lang="lang_edit"></h1>
                         </div>
                         <div class="modal-body">
                             <table style="width: 100%">
                                 <tr>
-                                    <td>{{trans("messages.USER_COMPANY")}}:</td>
+                                    <td lang="lang_item_no"></td>
                                     <td style="padding: 10px;">
-                                        <select placeholder="Company" name="ddlCompany" id="ddlCompany" class="form-control">
-                                            @foreach($allCompanyList as $company)
-                                        <option value="{{$company->company}}">{{$company->company}}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>{{trans("messages.ROLE_NAME")}}:</td>
-                                    <td style="padding: 10px;">
-
-                                        <input type="text" data-clear-btn="true" name="tbxRoleName" class="form-control"
-                                            id="tbxRoleName" value="" required="required" />
+                                        <input type="text" data-clear-btn="true" name="tbxItemNo" class="form-control"
+                                            id="tbxItemNo" value="" required="required" />
                                     </td>
                                     <td><span style="color: red;">*</span></td>
+                                </tr>
+                                <tr>
+                                    <td lang="lang_description"></td>
+                                    <td style="padding: 10px;">
+
+                                        <input type="text" data-clear-btn="true" name="tbxDescription" class="form-control"
+                                            id="tbxDescription" value=""  />
+                                    </td>
+                                    <td></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" onclick="SaveRoleMaintain()">{{trans("messages.SAVE")}}</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">{{trans("messages.CLOSE")}}</button>
+                            <button type="button" class="btn btn-danger" onclick="saveItemMaintain()" lang="lang_save">Save</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" lang="lang_cancel">Cancel</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="messageDialog" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h1 class="modal-title" id="messageDialogTitle"></h1>
+                    </div>
+                    <div class="modal-body">
+                        <p id="messageDialogContent"></p>
+                        <p class="text-warning"><small id="messageDialogWarningContent"></small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"  class="btn btn-primary" data-dismiss="modal" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -100,12 +115,50 @@
 
         <script>
             function itemNoFormatter(value, row) {
-                return '<a href="#" onclick="updateItem(' + row.Id + ')">' + value + '</a>';
+                return '<a onclick="updateItem(\'' + row.Id + '\')">' + value + '</a>';
             };
 
-            function updateItem() {
-                //$("#roleDetailMaintainDialogTitle").text("{{trans("messages.MSG_EDIT_ROLE")}}");
-                //$("#roleDetailMaintainDialog").modal('show');
+            var currentMaintainItemId = null;
+            var updateItem = function (itemId) {
+                var allItemList = $("#gridItem").bootstrapTable('getData');
+                $.each(allItemList, function(i, item) {
+                    if(item.Id == itemId) {
+                        $("#tbxItemNo").val(item.Item_No);
+                        $("#tbxDescription").val(item.Description);
+                        return false;
+                    }
+                });
+
+                //$("#itemMaintainDialogTitle").text("{{trans("messages.MSG_EDIT_ROLE")}}");
+                $("#itemMaintainDialog").modal('show');
+                currentMaintainItemId = itemId;
+            };
+
+            var saveItemMaintain = function () {
+                var itemNo = $("#tbxItemNo").val();
+                var description = $("#tbxDescription").val();
+                if (itemNo == "") {
+                    $.dialog.showDialog('Error', 'Item No can not be null');
+                    return false;
+                }
+
+                
+                var options = {
+                    "success": function (d) {
+                        $("#itemMaintainDialog").modal('hide');
+                        $.dialog.showDialog('Success', 'Update success');
+                        inquiryItem();
+                    }
+                };
+
+                var mydata = {
+                    'id': currentMaintainItemId,
+                    'itemNo': itemNo,
+                    'description': description
+                };
+
+                $.ask("SaveItem", mydata, options);
+                return true;
             }
 
             function inquiryItem() {

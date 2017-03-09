@@ -62,6 +62,12 @@ namespace Cube.Base
             _lang.Add(new Lang() { Key = "lang_Confirm", Value_EnUS = "Confirm", Value_ZhCN = "确定", Value_ZhTW = "確認" });
             _lang.Add(new Lang() { Key = "lang_Themes", Value_EnUS = "Themes", Value_ZhCN = "皮肤", Value_ZhTW = "皮膚" });
             _lang.Add(new Lang() { Key = "lang_item_no", Value_EnUS = "Item NO.", Value_ZhCN = "料号", Value_ZhTW = "料號" });
+            _lang.Add(new Lang() { Key = "lang_description", Value_EnUS = "Description", Value_ZhCN = "描述", Value_ZhTW = "描述" });
+            _lang.Add(new Lang() { Key = "lang_inquiry", Value_EnUS = "Inquiry", Value_ZhCN = "查询", Value_ZhTW = "查詢" });
+            _lang.Add(new Lang() { Key = "lang_edit", Value_EnUS = "Edit", Value_ZhCN = "编辑", Value_ZhTW = "編輯" });
+            _lang.Add(new Lang() { Key = "lang_save", Value_EnUS = "Save", Value_ZhCN = "保存", Value_ZhTW = "保存" });
+            _lang.Add(new Lang() { Key = "lang_cancel", Value_EnUS = "Cancel", Value_ZhCN = "取消", Value_ZhTW = "取消" });
+
             //End Test
 
             //List<string> langKeyList = new List<string>();

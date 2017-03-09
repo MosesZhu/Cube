@@ -76,7 +76,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CubeDemo.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -86,31 +85,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ItemInquiry.aspx" />
-    <Content Include="ItemInquiry2.aspx" />
     <Content Include="ItemInquiryService.asmx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CubeDemo.Master.cs">
-      <DependentUpon>CubeDemo.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CubeDemo.Master.designer.cs">
-      <DependentUpon>CubeDemo.Master</DependentUpon>
-    </Compile>
     <Compile Include="ItemInquiry.aspx.cs">
       <DependentUpon>ItemInquiry.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ItemInquiry.aspx.designer.cs">
       <DependentUpon>ItemInquiry.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ItemInquiry2.aspx.cs">
-      <DependentUpon>ItemInquiry2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ItemInquiry2.aspx.designer.cs">
-      <DependentUpon>ItemInquiry2.aspx</DependentUpon>
     </Compile>
     <Compile Include="ItemInquiryService.asmx.cs">
       <DependentUpon>ItemInquiryService.asmx</DependentUpon>
