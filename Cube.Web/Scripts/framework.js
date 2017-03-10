@@ -209,6 +209,11 @@ jQuery.extend({
             for (key in _CurrentLang) {
                 $("[lang=" + key + "]").text(_CurrentLang[key]);
             }
+            if (this.onchanged) {
+                this.onchanged();
+            }
+        },
+        "onchanged": function () {
         }
     }
 });

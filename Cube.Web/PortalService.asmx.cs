@@ -19,7 +19,7 @@ namespace Cube.Web
         {
             ResultDTO result = new ResultDTO();
             string userID = User.Id.ToString();
-            List<Cb_User_Function> userFunctionList = _Db.From<Cb_User_Function>().Where(Cb_User_Function._.User_Id == userID)
+            List<Cb_User_Function> userFunctionList = Db.From<Cb_User_Function>().Where(Cb_User_Function._.User_Id == userID)
                 .Select(Cb_User_Function._.All).ToList();
             List<FunctionDTO> functionList = new List<FunctionDTO>();
             List<SystemDTO> systemList = new List<SystemDTO>();
@@ -27,7 +27,7 @@ namespace Cube.Web
             foreach (Cb_User_Function userFunction in userFunctionList)
             {
                 string functionId = userFunction.Function_Id.ToString();
-                Cb_Function functionEntity = _Db.From<Cb_Function>().Where(Cb_Function._.Id == functionId)
+                Cb_Function functionEntity = Db.From<Cb_Function>().Where(Cb_Function._.Id == functionId)
                     .Select(Cb_Function._.All).ToList().FirstOrDefault();
                 if (functionEntity != null)
                 {
@@ -37,7 +37,7 @@ namespace Cube.Web
                         string systemId = functionEntity.System_Id;
                         if (!systemList.Exists(s => s.Id.Equals(systemId, StringComparison.CurrentCultureIgnoreCase)))
                         {
-                            Cb_System systemEntity = _Db.From<Cb_System>().Where(Cb_System._.Id == systemId).Select(Cb_System._.All)
+                            Cb_System systemEntity = Db.From<Cb_System>().Where(Cb_System._.Id == systemId).Select(Cb_System._.All)
                                 .ToList().FirstOrDefault();
                             SystemDTO system = new SystemDTO() {
                                 Id = systemEntity.Id.ToString(),
@@ -81,7 +81,7 @@ namespace Cube.Web
                 string domainId = system.Domain_Id;
                 if (!string.IsNullOrEmpty(domainId) && !domainList.Exists(d => d.Id.Equals(domainId, StringComparison.CurrentCultureIgnoreCase)))
                 {
-                    Cb_Domain domainEntity = _Db.From<Cb_Domain>().Where(Cb_Domain._.Id == domainId).Select(Cb_Domain._.All).ToList().FirstOrDefault();
+                    Cb_Domain domainEntity = Db.From<Cb_Domain>().Where(Cb_Domain._.Id == domainId).Select(Cb_Domain._.All).ToList().FirstOrDefault();
                     if (domainEntity != null)
                     {
                         DomainDTO domain = new DomainDTO()

@@ -531,7 +531,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="WebService\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cube.Base\Cube.Base.csproj">

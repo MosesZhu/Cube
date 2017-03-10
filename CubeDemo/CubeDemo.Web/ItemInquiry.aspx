@@ -11,6 +11,7 @@
 <body>
     <form id="form1" runat="server">
         <div class="content-wrapper" style="padding: 20px;">
+            <!--inquiry area & toolbar-->
             <div class="row">
                 <div class="col-lg-6 col-xs-6">
                     <table>
@@ -33,6 +34,7 @@
                 </div>
             </div>
 
+            <!--inquiry result grid-->
             <div class="row" style="padding: 15px;">
                 <table id="gridItem" class="bootstrapTable" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
                     data-url="" data-height="398" data-pagination="true"
@@ -51,6 +53,7 @@
                 </table>
             </div>
 
+            <!--edit dialog-->
             <div id="itemMaintainDialog" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -88,6 +91,7 @@
             </div>
         </div>
 
+        <!--message dialog-->
         <div id="messageDialog" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -114,11 +118,17 @@
         <script src="http://10.85.129.44/CubePortal/Scripts/bootstrap-table.js"></script>
 
         <script>
+            /**
+             * item no formatter
+             */
             function itemNoFormatter(value, row) {
                 return '<a onclick="updateItem(\'' + row.Id + '\')">' + value + '</a>';
             };
-
+            
             var currentMaintainItemId = null;
+            /**
+             * open edit item dialog
+             */
             var updateItem = function (itemId) {
                 var allItemList = $("#gridItem").bootstrapTable('getData');
                 $.each(allItemList, function(i, item) {
@@ -129,11 +139,13 @@
                     }
                 });
 
-                //$("#itemMaintainDialogTitle").text("{{trans("messages.MSG_EDIT_ROLE")}}");
                 $("#itemMaintainDialog").modal('show');
                 currentMaintainItemId = itemId;
             };
 
+            /**
+             * save item
+             */
             var saveItemMaintain = function () {
                 var itemNo = $("#tbxItemNo").val();
                 var description = $("#tbxDescription").val();
@@ -161,6 +173,9 @@
                 return true;
             }
 
+            /**
+             * inquiry item
+             */
             function inquiryItem() {
                 var options = {
                     "success": function (d) {
