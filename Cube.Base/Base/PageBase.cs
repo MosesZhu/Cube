@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using ITS.Data;
 using Cube.Model.DTO;
 using Cube.Model.Entity;
+using Cube.Base.Utility;
 
 namespace Cube.Base
 {
@@ -165,7 +166,7 @@ namespace Cube.Base
         /// <returns></returns>
         private List<Cb_Language> GetLanguageData()
         {
-            PageServiceBase _b = new PageServiceBase();
+            DBUtility _b = new DBUtility();
             List<Cb_Language> list = _b.Db.From<Cb_Language>()
                .Select(
                      Cb_Language._.Language_Key.As("language_key")
@@ -203,7 +204,7 @@ namespace Cube.Base
                 Zh_Cn = d,
                 Zh_Tw = d
             }));
-            PageServiceBase _b = new PageServiceBase();
+            DBUtility _b = new DBUtility();
             _b.Db.Insert<Cb_Language>(list);
         }
 

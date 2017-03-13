@@ -24,7 +24,7 @@ namespace Cube.Base.Utility
             {
                 if (_DBSession == null)
                 {
-                    _DBSession = CreateDbSession("cube");
+                  _DBSession = CreateDbSession("cube");
                 }
                 return _DBSession;
             }
