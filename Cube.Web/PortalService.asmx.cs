@@ -49,7 +49,7 @@ namespace Cube.Web
                                 system.FunctionList.Add(new FunctionDTO() {
                                     Id = functionEntity.Id.ToString(),
                                     Code = functionEntity.Code, 
-                                    Lang_Key = functionEntity.Lang_Key, 
+                                    Lang_Key = functionEntity.Language_Key, 
                                     System_Id = systemId, 
                                     Url = functionEntity.Url
                                 });
@@ -67,7 +67,7 @@ namespace Cube.Web
                             {
                                 Id = functionEntity.Id.ToString(),
                                 Code = functionEntity.Code,
-                                Lang_Key = functionEntity.Lang_Key,
+                                Lang_Key = functionEntity.Language_Key,
                                 System_Id = systemId,
                                 Url = functionEntity.Url
                             });

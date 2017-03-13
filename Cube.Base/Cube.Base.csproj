@@ -30,13 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ITS.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=49bcf0ef5ccc9012, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
+    <Reference Include="ITS.Data">
+      <HintPath>\\10.85.17.209\Share\bach30 (10.85.10.2)\Common\bin\ITS.Data.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>\\10.85.10.2\bach30\Common\bin\log4net.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>\\10.85.17.209\Share\bach30 (10.85.10.2)\Common\bin\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

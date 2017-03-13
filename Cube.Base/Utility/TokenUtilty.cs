@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Cube.Base.Utility
 {
-    public class TokenUtilty
+    public static class TokenUtilty
     {
         public static string GenerateToken(TokenDTO tokenInfo)
         {
