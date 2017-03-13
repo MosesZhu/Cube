@@ -11,8 +11,8 @@ namespace Cube.Web
 {
     public partial class Portal : PageBase
     {
-        override
-        protected List<string> GetFormMultiLanguageKeyList()
+
+        public override List<string> GetFormMultiLanguageKeyList()
         {
             List<string> _multyKeyArray = new List<string>();
             _multyKeyArray.Add("lang_Language");
