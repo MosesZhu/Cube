@@ -300,84 +300,10 @@
                 <div id="_FormTabsContainer">
                     <ul class="nav nav-tabs" role="tablist" id="_FormTabs"
                      style="display:-webkit-inline-box;">
-
-                    <%--<li class="nav-item active">
-                        <a class="nav-link" data-toggle="tab" href="#aaa" role="tab" aria-controls="home" functionid="aaa">
-                            QML Maintain Form 
-                            <span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="bbb">
-                            RSO Base Data Maintain
-                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="eee">
-                            Test
-                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="fff">
-                            Test2
-                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="ggg">
-                            Test3333
-                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="hhh">
-                            测试测试测试测试测试测试测试测试测试
-                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="iii">
-                            测试测试测试测试测试测试测试测试测试
-                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" functionid="jjj">
-                            测试测试测试测试测试测试测试测试测试
-                            <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
-                        </a>
-                    </li>--%>
-                    <!-- <li class="dropdown">
-                        <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown">BTP<b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
-                            <li>
-                                <a href="#jmeter" tabindex="-1" data-toggle="tab">BTP Data Inquiry
-                        <span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#ejb" tabindex="-1" data-toggle="tab">BTP Base Data Maintain
-                        <span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                        -->
-
                 </ul>
                 </div>
                 
                 <div class="tab-content" style="height: 100%;" id="_FormTabContent">
-                    <%--<div class="tab-pane active" id="aaa" role="tabpanel" style="height: 100%; padding: 0px;">
-                        <iframe name="frm_aaa" src="http://localhost:8084/qplay/public/auth/login" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width: 100%; padding: 0px; border: 0px;"></iframe>
-                    </div>
-                    <div class="tab-pane" id="profile" role="tabpanel" style="height: 100%; padding: 0px;">
-                        <iframe name="frm_bbb" src="" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width: 100%; padding: 0px; border: 0px;"></iframe>
-                    </div>--%>
-
                 </div>
 
             </section>
@@ -576,7 +502,7 @@
                     + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
                     + functionname + '<span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span></a></li>');
                 $("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
-                    + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=fd265fac-87fb-4145-ad72-bc102c912436'
+                    + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
                     + "#!lang=" + _Context.CurrentLang 
                     + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
                 $("#_FormTabs a[functionid=" + functionid + "]").tab("show");

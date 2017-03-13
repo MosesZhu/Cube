@@ -31,7 +31,7 @@
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(data),
-            async: true,
+            async: options.async ? options.async : true,
             beforeSend: function (request) {
                 request.setRequestHeader("SSOToken", ssoToken);
                 request.setRequestHeader("Language", _Context.CurrentLang);
