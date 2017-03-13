@@ -1,5 +1,7 @@
 ﻿using Cube.Base;
+using Cube.Base.Utility;
 using Cube.DTO;
+using Cube.Model.DTO;
 using Cube.Model.Entity;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,7 @@ namespace Cube.Web
             }
             else
             {
-                string newToken = Guid.NewGuid().ToString();
+                string secretKey = Guid.NewGuid().ToString();
                 Cb_User user = userList.FirstOrDefault();
                 Cb_Token tokenInfo = Db.From<Cb_Token>().Where(Cb_Token._.User_Id == user.Id).ToList().FirstOrDefault();
                 if (tokenInfo == null)
@@ -33,17 +35,22 @@ namespace Cube.Web
                     tokenInfo = new Cb_Token();
                     tokenInfo.User_Id = user.Id;
                     tokenInfo.Login_Time = DateTime.Now;
-                    tokenInfo.Token = newToken;
+                    tokenInfo.Secret_Key = secretKey;
                     Db.Insert<Cb_Token>(tokenInfo);
                 }
                 else 
                 {
                     tokenInfo.Login_Time = DateTime.Now;
-                    tokenInfo.Token = newToken;
+                    tokenInfo.Secret_Key = secretKey;
                     Db.Update<Cb_Token>(tokenInfo);
                 }
                 result.success = true;
-                result.data = tokenInfo.Token;
+                TokenDTO token = new TokenDTO() {
+                    LoginName = user.Login_Name,
+                    LoginTime = tokenInfo.Login_Time,
+                    SecretKey = Guid.Parse(secretKey)
+                };
+                result.data = TokenUtilty.GenerateToken(token);
             }
             //Test
             //result.data = "TestToken";

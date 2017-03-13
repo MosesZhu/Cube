@@ -1,7 +1,7 @@
 ﻿//------------------------------------------------------------------------------
 // File Name   : Cb_Token.cs
 // Creator     : Moses.Zhu
-// Create Date : 2017-03-09
+// Create Date : 2017-03-13
 // Description : 此代码由工具生成，请不要人为更改代码，如果重新生成代码后，这些更改将会丢失。
 // Copyright (C) 2017 Qisda Corporation. All rights reserved.
 //------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ namespace Cube.Model.Entity
         #region Model
         private Guid _User_Id;
         private DateTime _Login_Time;
-        private string _Token;
+        private string _Secret_Key;
         /// <summary>
         /// 
         /// </summary>
@@ -55,13 +55,13 @@ namespace Cube.Model.Entity
         /// <summary>
         /// 
         /// </summary>
-        public string Token
+        public string Secret_Key
         {
-            get { return _Token; }
+            get { return _Secret_Key; }
             set
             {
-                this.OnPropertyValueChange(_.Token, _Token, value);
-                this._Token = value;
+                this.OnPropertyValueChange(_.Secret_Key, _Secret_Key, value);
+                this._Secret_Key = value;
             }
         }
         #endregion
@@ -83,7 +83,7 @@ namespace Cube.Model.Entity
             return new Field[] {
 				_.User_Id,
 				_.Login_Time,
-				_.Token};
+				_.Secret_Key};
         }
         /// <summary>
         /// 获取值信息
@@ -93,7 +93,7 @@ namespace Cube.Model.Entity
             return new object[] {
 				this._User_Id,
 				this._Login_Time,
-				this._Token};
+				this._Secret_Key};
         }
         /// <summary>
         /// 给当前实体赋值
@@ -102,7 +102,7 @@ namespace Cube.Model.Entity
         {
             this._User_Id = DataUtils.ConvertValue<Guid>(reader["user_id"]);
             this._Login_Time = DataUtils.ConvertValue<DateTime>(reader["login_time"]);
-            this._Token = DataUtils.ConvertValue<string>(reader["token"]);
+            this._Secret_Key = DataUtils.ConvertValue<string>(reader["secret_key"]);
         }
         /// <summary>
         /// 给当前实体赋值
@@ -111,7 +111,7 @@ namespace Cube.Model.Entity
         {
             this._User_Id = DataUtils.ConvertValue<Guid>(row["user_id"]);
             this._Login_Time = DataUtils.ConvertValue<DateTime>(row["login_time"]);
-            this._Token = DataUtils.ConvertValue<string>(row["token"]);
+            this._Secret_Key = DataUtils.ConvertValue<string>(row["secret_key"]);
         }
         #endregion
 
@@ -136,7 +136,7 @@ namespace Cube.Model.Entity
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Token = new Field("token", "cb_token", DbType.String, 100, "token");
+            public readonly static Field Secret_Key = new Field("secret_key", "cb_token", DbType.String, 1000, "secret_key");
         }
         #endregion
 

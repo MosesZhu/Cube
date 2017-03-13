@@ -49,6 +49,7 @@
     <Compile Include="DTO\PreferenceDTO.cs" />
     <Compile Include="DTO\ResultDTO.cs" />
     <Compile Include="DTO\SystemGroupDTO.cs" />
+    <Compile Include="DTO\TokenDTO.cs" />
     <Compile Include="Entity\Cb_Bookmark.cs" />
     <Compile Include="Entity\Cb_Domain.cs" />
     <Compile Include="Entity\Cb_Function.cs" />
