@@ -64,6 +64,7 @@
     <Compile Include="CubeHttpModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSO\SSOContext.cs" />
+    <Compile Include="Utility\DBUtility.cs" />
     <Compile Include="Utility\RequestUtility.cs" />
     <Compile Include="Utility\TokenUtility.cs" />
   </ItemGroup>
