@@ -38,9 +38,9 @@ namespace Cube.Base
             get {
                 if (_user == null)
                 {
-                    string userId = Db.From<Cb_Token>().Where(Cb_Token._.Token == Token)
-                        .Select(Cb_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
-                    _user = Db.From<Cb_User>().Where(Cb_User._.Id == userId).Select(Cb_User._.All).FirstDefault();
+                    //string userId = Db.From<Cb_Token>().Where(Cb_Token._.Token == Token)
+                    //    .Select(Cb_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
+                    //_user = Db.From<Cb_User>().Where(Cb_User._.Id == userId).Select(Cb_User._.All).FirstDefault();
                 }
                 return _user;
             }
