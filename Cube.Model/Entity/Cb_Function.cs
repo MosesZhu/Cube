@@ -1,7 +1,7 @@
 ﻿//------------------------------------------------------------------------------
 // File Name   : Cb_Function.cs
 // Creator     : Moses.Zhu
-// Create Date : 2017-03-08
+// Create Date : 2017-03-13
 // Description : 此代码由工具生成，请不要人为更改代码，如果重新生成代码后，这些更改将会丢失。
 // Copyright (C) 2017 Qisda Corporation. All rights reserved.
 //------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ namespace Cube.Model.Entity
         private string _Code;
         private string _System_Id;
         private string _Parent_Function_Id;
-        private string _Lang_Key;
+        private string _Language_Key;
         private string _Url;
         private DateTime? _Created_At;
         private string _Created_By;
@@ -86,13 +86,13 @@ namespace Cube.Model.Entity
         /// <summary>
         /// 
         /// </summary>
-        public string Lang_Key
+        public string Language_Key
         {
-            get { return _Lang_Key; }
+            get { return _Language_Key; }
             set
             {
-                this.OnPropertyValueChange(_.Lang_Key, _Lang_Key, value);
-                this._Lang_Key = value;
+                this.OnPropertyValueChange(_.Language_Key, _Language_Key, value);
+                this._Language_Key = value;
             }
         }
         /// <summary>
@@ -176,7 +176,7 @@ namespace Cube.Model.Entity
 				_.Code,
 				_.System_Id,
 				_.Parent_Function_Id,
-				_.Lang_Key,
+				_.Language_Key,
 				_.Url,
 				_.Created_At,
 				_.Created_By,
@@ -193,7 +193,7 @@ namespace Cube.Model.Entity
 				this._Code,
 				this._System_Id,
 				this._Parent_Function_Id,
-				this._Lang_Key,
+				this._Language_Key,
 				this._Url,
 				this._Created_At,
 				this._Created_By,
@@ -209,7 +209,7 @@ namespace Cube.Model.Entity
             this._Code = DataUtils.ConvertValue<string>(reader["code"]);
             this._System_Id = DataUtils.ConvertValue<string>(reader["system_id"]);
             this._Parent_Function_Id = DataUtils.ConvertValue<string>(reader["parent_function_id"]);
-            this._Lang_Key = DataUtils.ConvertValue<string>(reader["lang_key"]);
+            this._Language_Key = DataUtils.ConvertValue<string>(reader["language_key"]);
             this._Url = DataUtils.ConvertValue<string>(reader["url"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(reader["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(reader["created_by"]);
@@ -225,7 +225,7 @@ namespace Cube.Model.Entity
             this._Code = DataUtils.ConvertValue<string>(row["code"]);
             this._System_Id = DataUtils.ConvertValue<string>(row["system_id"]);
             this._Parent_Function_Id = DataUtils.ConvertValue<string>(row["parent_function_id"]);
-            this._Lang_Key = DataUtils.ConvertValue<string>(row["lang_key"]);
+            this._Language_Key = DataUtils.ConvertValue<string>(row["language_key"]);
             this._Url = DataUtils.ConvertValue<string>(row["url"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(row["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(row["created_by"]);
@@ -263,7 +263,7 @@ namespace Cube.Model.Entity
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Lang_Key = new Field("lang_key", "cb_function", DbType.String, 500, "lang_key");
+            public readonly static Field Language_Key = new Field("language_key", "cb_function", DbType.String, 500, "language_key");
             /// <summary>
             /// 
             /// </summary>
