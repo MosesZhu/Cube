@@ -30,7 +30,7 @@
     </style>
     >
 </asp:Content>
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
 
     <div class="wrapper" style="height: 100%; background-color: transparent;">
 
@@ -215,7 +215,7 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu" id="_FunctionMenu">
-                    <li class="header"><i class="fa fa-bank"></i>MFG</li>
+                    <%--<li class="header"><i class="fa fa-bank"></i>MFG</li>
                     <li class="treeview active">
                         <a href="#">
                             <i class="fa fa-laptop text-blue"></i>
@@ -274,7 +274,7 @@
                         <ul class="treeview-menu">
                             <li><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i>BTP Data Inquiry</a></li>
                         </ul>
-                    </li>
+                    </li>--%>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -301,7 +301,7 @@
                     <ul class="nav nav-tabs" role="tablist" id="_FormTabs"
                      style="display:-webkit-inline-box;">
 
-                    <li class="nav-item active">
+                    <%--<li class="nav-item active">
                         <a class="nav-link" data-toggle="tab" href="#aaa" role="tab" aria-controls="home" functionid="aaa">
                             QML Maintain Form 
                             <span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span>
@@ -348,7 +348,7 @@
                             测试测试测试测试测试测试测试测试测试
                             <span class="fa fa-times icon_close_form icon_close_form" onclick="return closeForm(this);"></span>
                         </a>
-                    </li>
+                    </li>--%>
                     <!-- <li class="dropdown">
                         <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown">BTP<b class="caret"></b>
                         </a>
@@ -371,12 +371,12 @@
                 </div>
                 
                 <div class="tab-content" style="height: 100%;" id="_FormTabContent">
-                    <div class="tab-pane active" id="aaa" role="tabpanel" style="height: 100%; padding: 0px;">
+                    <%--<div class="tab-pane active" id="aaa" role="tabpanel" style="height: 100%; padding: 0px;">
                         <iframe name="frm_aaa" src="http://localhost:8084/qplay/public/auth/login" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width: 100%; padding: 0px; border: 0px;"></iframe>
                     </div>
                     <div class="tab-pane" id="profile" role="tabpanel" style="height: 100%; padding: 0px;">
                         <iframe name="frm_bbb" src="" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width: 100%; padding: 0px; border: 0px;"></iframe>
-                    </div>
+                    </div>--%>
 
                 </div>
 
@@ -513,7 +513,23 @@
                         $.each(menuList, function (i, domainMenu) {
                             menuHtml += '<li class="header"><i class="fa fa-bank"></i><span lang="'
                                 + domainMenu.LanguageID + '">'
-                                + domainMenu.Code + '</span></li>';
+                                + domainMenu.Name + '</span></li>';
+                            $.each(domainMenu.SystemList, function (j, systemMenu) {
+                                menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><span>'
+                                + systemMenu.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
+                                + '<ul class="treeview-menu">'
+                                $.each(systemMenu.FunctionList, function (k, functionMenu) {
+                                    menuHtml += '<li class="active" onclick="return openForm(this);" functionid="'
+                                              + functionMenu.Id
+                                              + '" functionurl="http://'
+                                              + functionMenu.Url
+                                              + '"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
+                                              + functionMenu.LanguageKey
+                                              + '">' + functionMenu.Code + '</span></a></li>';
+                                });                            
+                                + '</ul></li>';
+                    
+                            });
                         });
 
                         $("#_FunctionMenu").append(menuHtml);
@@ -521,7 +537,7 @@
                 }
             };
 
-            $.ask("getMenu", null, options);
+            $.ask("getMenu", {}, options);
         };
 
         var logout = function () {
@@ -533,7 +549,7 @@
                     }
                 }
             };
-            $.ask("getMenu", null, options);
+            $.ask("logout", {}, options);
         };
 
         var searchMenu = function () {
@@ -560,7 +576,9 @@
                     + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
                     + functionname + '<span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span></a></li>');
                 $("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
-                    + '<iframe name="frm_' + functionid + '" src="' + functionurl + "#!lang=" + _Context.CurrentLang + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
+                    + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=fd265fac-87fb-4145-ad72-bc102c912436'
+                    + "#!lang=" + _Context.CurrentLang 
+                    + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
                 $("#_FormTabs a[functionid=" + functionid + "]").tab("show");
             }
         };

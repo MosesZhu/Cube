@@ -6,15 +6,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Cube.Web
+namespace CubeDemo.Web
 {
-    public partial class Login : PageBase
+    public partial class ItemInquiry2 : PageBase
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-        }
-
-        protected void btnLogin_Click(object sender, EventArgs e)
         {
 
         }

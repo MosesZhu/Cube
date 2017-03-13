@@ -8,7 +8,7 @@
     </style>
 </asp:Content>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
 <div class="login-box">
   <div class="login-logo">
     <b style="color:blue">C</b><b style="color:yellow">u</b><b style="color:red">b</b><b style="color:green" />e</b>Framework
@@ -65,8 +65,10 @@
         });
 
         var login = function () {
-            var name = $("#tbxName").val();
-            var pwd = $("#tbxPassword").val();
+            var param = {
+                userName: $("#tbxName").val(),
+                password: $("#tbxPassword").val()
+            }
             var options = {
                 "success": function (d) {
                     if (d.success) {
@@ -85,7 +87,7 @@
                 }
             };
 
-            $.ask("login", null, options);
+            $.ask("login", param, options);
         };
     </script>
 </asp:Content>

@@ -20,7 +20,7 @@
 </head>
 <body class="skin-blue fixed" data-spy="scroll" data-target="#scrollspy">    
     <form runat="server">               
-        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        <asp:ContentPlaceHolder ID="MainContentHolder" runat="server">
 
         </asp:ContentPlaceHolder>
 

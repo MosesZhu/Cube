@@ -23,15 +23,18 @@ namespace Cube.Base
             HttpApplication application = (HttpApplication)source;
 
             HttpContext context = application.Context;
-            
-            string token = context.Request["SSOToken"];
+
+            string token = context.Request["SSOToken"] == null ? context.Request.Headers["SSOToken"] : context.Request["SSOToken"];
+
             string extensionName = Path.GetExtension(context.Request.Url.LocalPath);
-            if (extensionName == ".aspx" || extensionName == ".asmx" 
-                && !context.Request.Url.ToString().ToUpper().Contains(CubeConfig.LoginUrl.ToUpper()))
+            string loginUrl = CubeConfig.LoginUrl;
+            if (extensionName == ".aspx" || extensionName == ".asmx" ||
+               context.Request.CurrentExecutionFilePathExtension == ".aspx" || context.Request.CurrentExecutionFilePathExtension == ".asmx"
+                && !context.Request.Url.ToString().ToUpper().Contains(loginUrl.ToUpper()))
             {
                 if (String.IsNullOrEmpty(token))
                 {
-                    context.Response.Redirect(CubeConfig.LoginUrl);
+                    context.Response.Redirect(loginUrl);
                 }
             }            
         }
