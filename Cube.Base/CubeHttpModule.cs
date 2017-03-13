@@ -1,4 +1,5 @@
 ﻿using Cube.Base.Config;
+using Cube.Base.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +33,7 @@ namespace Cube.Base
                context.Request.CurrentExecutionFilePathExtension == ".aspx" || context.Request.CurrentExecutionFilePathExtension == ".asmx"
                 && !context.Request.Url.ToString().ToUpper().Contains(loginUrl.ToUpper()))
             {
-                if (String.IsNullOrEmpty(token))
+                if (String.IsNullOrEmpty(token) || !TokenUtility.ValidToken(System.Web.HttpUtility.UrlDecode(token)))
                 {
                     context.Response.Redirect(loginUrl);
                 }

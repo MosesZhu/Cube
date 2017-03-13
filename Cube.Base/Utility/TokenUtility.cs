@@ -1,7 +1,10 @@
-﻿using Cube.Model.DTO;
+﻿using Cube.Base.Config;
+using Cube.Model.DTO;
 using Cube.Model.Entity;
+using ITS.Data;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,17 +15,100 @@ using System.Threading.Tasks;
 
 namespace Cube.Base.Utility
 {
-    public static class TokenUtilty
+    public static class TokenUtility
     {
+        public static DbSession _DBSession;
+        public static DbSession Db
+        {
+            get
+            {
+                if (_DBSession == null)
+                {
+                    _DBSession = CreateDbSession("system");
+                }
+                return _DBSession;
+            }
+            set
+            {
+                _DBSession = value;
+            }
+        }
+        public static DbSession CreateDbSession(string settingName)
+        {
+            //读取config文件，并解析连接字符串            
+            string connString = ConfigurationManager.ConnectionStrings[settingName].ConnectionString;
+            string providerName = ConfigurationManager.ConnectionStrings[settingName].ProviderName;
+
+            ConnectionStringSettings connectionStringSettings = new ConnectionStringSettings();
+            connectionStringSettings.ConnectionString = connString;
+            connectionStringSettings.ProviderName = providerName;
+            connectionStringSettings.Name = settingName;
+
+            return new DbSession(connectionStringSettings);
+        }
+
         public static string GenerateToken(TokenDTO tokenInfo)
         {
-            string tokenJson = GetJson<TokenDTO>(tokenInfo);
-            return Base64Encrypt(tokenJson);
+            return Base64Encrypt(tokenInfo.ToString());
         }
 
         public static TokenDTO GetTokenInfo(string token)
         {
-            return JsonDeserialize<TokenDTO>(Base64Decrypt(token));
+            return TokenDTO.Decode(Base64Decrypt(token));
+        }
+
+        private static int mTokenOverdueMiniute = -1;
+        public static int TokenOverdueMiniute {
+            get 
+            {
+                if (mTokenOverdueMiniute <= 0)
+                {
+                    mTokenOverdueMiniute = CubeConfig.TokenOverdueMiniute;
+                }
+
+                if (mTokenOverdueMiniute <= 0)
+                {
+                    mTokenOverdueMiniute = 120;
+                }
+
+                return mTokenOverdueMiniute;
+            }
+        }
+        public static bool ValidToken(string token)
+        {
+            try 
+            {
+                TokenDTO tokenInfo = GetTokenInfo(token);
+                Cb_Token tokenEntity = Db.From<Cb_Token>().Where(Cb_Token._.Secret_Key == tokenInfo.SecretKey).Select(Cb_Token._.All).ToList().FirstOrDefault();
+                if(tokenEntity == null)
+                {
+                    return false;
+                }
+
+                Cb_User userEntity = Db.From<Cb_User>().Where(Cb_User._.Id == tokenEntity.User_Id).FirstDefault();
+                if(userEntity == null)
+                {
+                    return false;
+                }
+
+                if(!tokenInfo.LoginName.Equals(userEntity.Login_Name, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return false;
+                }
+
+                TimeSpan span = DateTime.Now - tokenInfo.LoginTime;
+                if (span.TotalMinutes > TokenOverdueMiniute)
+                {
+                    return false;
+                }
+
+            } 
+            catch(Exception ex)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         #region Json
@@ -66,6 +152,7 @@ namespace Cube.Base.Utility
         /// <returns></returns>
         public static string Base64Decrypt(string ciphervalue)
         {
+            ciphervalue = System.Web.HttpUtility.UrlDecode(ciphervalue);
             return System.Text.Encoding.Default.GetString(System.Convert.FromBase64String(ciphervalue));
         }
 
