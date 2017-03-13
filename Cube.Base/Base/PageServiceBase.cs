@@ -1,4 +1,6 @@
-﻿using Cube.Model.Entity;
+﻿using Cube.Base.Utility;
+using Cube.Model.DTO;
+using Cube.Model.Entity;
 using ITS.Data;
 using System;
 using System.Collections.Generic;
@@ -38,9 +40,10 @@ namespace Cube.Base
             get {
                 if (_user == null)
                 {
-                    //string userId = Db.From<Cb_Token>().Where(Cb_Token._.Token == Token)
-                    //    .Select(Cb_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
-                    //_user = Db.From<Cb_User>().Where(Cb_User._.Id == userId).Select(Cb_User._.All).FirstDefault();
+                    TokenDTO tokenInfo = TokenUtility.GetTokenInfo(Token);
+                    string userId = Db.From<Cb_Token>().Where(Cb_Token._.Secret_Key == tokenInfo.SecretKey)
+                        .Select(Cb_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
+                    _user = Db.From<Cb_User>().Where(Cb_User._.Id == userId).Select(Cb_User._.All).FirstDefault();
                 }
                 return _user;
             }

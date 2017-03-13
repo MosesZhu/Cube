@@ -47,10 +47,10 @@
       <HintPath>..\CubeDemo.Model\bin\Debug\CubeDemo.Model.dll</HintPath>
     </Reference>
     <Reference Include="ITS.Data">
-      <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
+      <HintPath>\\10.85.17.209\Share\bach30 (10.85.10.2)\Common\bin\ITS.Data.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>\\10.85.10.2\bach30\Common\bin\log4net.dll</HintPath>
+      <HintPath>\\10.85.17.209\Share\bach30 (10.85.10.2)\Common\bin\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Oracle.DataAccess, Version=2.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">

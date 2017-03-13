@@ -50,7 +50,7 @@ namespace Cube.Web
                     LoginTime = tokenInfo.Login_Time,
                     SecretKey = Guid.Parse(secretKey)
                 };
-                result.data = TokenUtilty.GenerateToken(token);
+                result.data = TokenUtility.GenerateToken(token);
             }
             //Test
             //result.data = "TestToken";

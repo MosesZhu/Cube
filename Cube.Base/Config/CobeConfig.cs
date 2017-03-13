@@ -66,6 +66,12 @@ namespace Cube.Base.Config
             }
         }
 
-        
+        public static int TokenOverdueMiniute
+        {
+            get
+            {
+                return Convert.ToInt32(FindCacheValue(ConfigContents.TOKEN_OVERDUE_MINIUTE));
+            }
+        }
     }
 }
