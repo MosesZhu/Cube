@@ -1,6 +1,8 @@
 ﻿using Cube.Base.Utility;
 using Cube.Common;
 using Cube.DTO;
+using Cube.Model.DTO;
+using Cube.Model.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,76 +15,50 @@ namespace Cube.Base.SSO
 {
     public class SSOContext
     {
-        public long LastLoginTime { get; set; }
-        public UserDTO User { get; set; }
-        private static readonly Dictionary<string, SSOContext> _clientContextList = 
+        private static readonly Dictionary<string, SSOContext> _clientContextList =
             new Dictionary<string, SSOContext>();
-        public SSOContext() 
-        {
-
-
-        }
-
-        private void Init() 
-        { 
-        
-        }
-
-        public static SSOContext Instance 
-        {
-            get 
-            {
-                if (!_clientContextList.ContainsKey(SessionID))
-                {
-                    SSOContext context = new SSOContext();
-                    lock (_clientContextList)
-                    {
-                        if (!_clientContextList.ContainsKey(SessionID))
-                        {
-                            _clientContextList.Add(SessionID, context);
-                        }
-                    }
-                }
-                return _clientContextList[SessionID];
-            }
-        }
-
-        public static string SessionID
+        public static SSOContext Current
         {
             get
             {
-                string token = null;         
-                if (HttpContext.Current != null)
+                if (!_clientContextList.ContainsKey(Token))
                 {
-                    token = RequestUtility.GetQueryString<string>(SessionContents.SSO_TOKEN);
-                    if (string.IsNullOrEmpty(token))
+                    SSOContext context = new SSOContext(Token);
+                    lock (_clientContextList)
                     {
-                        if (HttpContext.Current.Request.UrlReferrer != null)
+                        if (!_clientContextList.ContainsKey(Token))
                         {
-                            token = RequestUtility.GetQueryString<string>(HttpContext.Current.Request.UrlReferrer, SessionContents.SSO_TOKEN);
-                        }
-
-                        if (string.IsNullOrEmpty(token)
-                            && HttpContext.Current.Session[SessionContents.SESSION_ID] != null)
-                        {
-                            token = HttpContext.Current.Session[SessionContents.SESSION_ID].ToString();
-                        }
-                    }
-                    if (!string.IsNullOrEmpty(token))
-                    {
-                        if (HttpContext.Current.Session[SessionContents.SESSION_ID] == null
-                            || HttpContext.Current.Session[SessionContents.SESSION_ID] != token)
-                        {
-                            HttpContext.Current.Session[SessionContents.SESSION_ID] = token;
+                            _clientContextList.Add(Token, context);
                         }
                     }
                 }
-                else
-                {
-                    token = (CallContext.GetData(SessionContents.SESSION_ID) ?? string.Empty) as string;
-                }
-                return token;
+                return _clientContextList[Token];
             }
         }
+
+        public static string Token
+        {
+            get
+            {
+                return string.IsNullOrEmpty(HttpContext.Current.Request["SSOToken"]) ? HttpContext.Current.Request.Headers["SSOToken"] : HttpContext.Current.Request["SSOToken"];
+            }
+        }
+        public static string Language
+        {
+            get
+            {
+                return string.IsNullOrEmpty(HttpContext.Current.Request["Language"]) ? HttpContext.Current.Request.Headers["Language"] : HttpContext.Current.Request["Language"];
+            }
+        }
+
+        public Cb_User User { get; set; }
+        public TokenDTO TokenInfo { get; set; }
+        public SSOContext(string token) 
+        {
+            TokenInfo = TokenUtility.GetTokenInfo(Token);
+            string userId = DBUtility.CubeDb.From<Cb_Token>().Where(Cb_Token._.Secret_Key == TokenInfo.SecretKey)
+                .Select(Cb_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
+            User = DBUtility.CubeDb.From<Cb_User>().Where(Cb_User._.Id == userId).Select(Cb_User._.All).FirstDefault();
+        }            
     }
 }

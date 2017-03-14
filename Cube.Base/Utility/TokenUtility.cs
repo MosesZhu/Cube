@@ -17,20 +17,6 @@ namespace Cube.Base.Utility
 {
     public static class TokenUtility
     {        
-        public static DbSession CreateDbSession(string settingName)
-        {
-            //读取config文件，并解析连接字符串            
-            string connString = ConfigurationManager.ConnectionStrings[settingName].ConnectionString;
-            string providerName = ConfigurationManager.ConnectionStrings[settingName].ProviderName;
-
-            ConnectionStringSettings connectionStringSettings = new ConnectionStringSettings();
-            connectionStringSettings.ConnectionString = connString;
-            connectionStringSettings.ProviderName = providerName;
-            connectionStringSettings.Name = settingName;
-
-            return new DbSession(connectionStringSettings);
-        }
-
         public static string GenerateToken(TokenDTO tokenInfo)
         {
             return Base64Encrypt(tokenInfo.ToString());

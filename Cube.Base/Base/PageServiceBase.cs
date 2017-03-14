@@ -1,4 +1,5 @@
-﻿using Cube.Base.Utility;
+﻿using Cube.Base.SSO;
+using Cube.Base.Utility;
 using Cube.Model.DTO;
 using Cube.Model.Entity;
 using ITS.Data;
@@ -20,76 +21,47 @@ namespace Cube.Base
     [System.Web.Script.Services.ScriptService]
     public class PageServiceBase : WebService
     {
-        public static DbSession _DBSession;
+        public static DbSession mDBSession;
         public DbSession Db 
         {
             get {
-                if (_DBSession == null)
+                if (mDBSession == null)
                 {
-                    _DBSession = CreateDbSession("system");
+                    mDBSession = DBUtility.Db;
                 }
-                return _DBSession;
+                return mDBSession;
             }
             set
             {
-                _DBSession = value;
-            }
-        }
-        public Cb_User _user;
-        public Cb_User User {
-            get {
-                if (_user == null)
-                {
-                    TokenDTO tokenInfo = TokenUtility.GetTokenInfo(Token);
-                    string userId = Db.From<Cb_Token>().Where(Cb_Token._.Secret_Key == tokenInfo.SecretKey)
-                        .Select(Cb_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
-                    _user = Db.From<Cb_User>().Where(Cb_User._.Id == userId).Select(Cb_User._.All).FirstDefault();
-                }
-                return _user;
+                mDBSession = value;
             }
         }
 
-        public string Token {
+        public Cb_User User {
             get {
-                return HttpContext.Current.Request["SSOToken"];
+                return SSOContext.Current.User;
+            }
+        }        
+
+        public string Language {
+            get
+            {
+                return SSOContext.Language;
             }
         }
 
         public PageServiceBase()
         {
-            //_Db = CreateDbSession("system");
-
-            string token = HttpContext.Current.Request["SSOToken"];
-            string language = HttpContext.Current.Request["Language"];
-            if(!ValidateToken(token)) {
+            if (!Context.Request.Url.ToString().ToUpper().Contains(UNCHECK_URL.ToUpper()) && !ValidateToken())
+            {
                 throw new Exception("");
             }
-
-            
         }
 
-        /// <summary>
-        /// Create a DB session
-        /// </summary>
-        /// <param name="settingName"></param>
-        /// <returns>DbSession</returns>
-        public DbSession CreateDbSession(string settingName)
+        public static string UNCHECK_URL = "LoginService.asmx/login";
+        public bool ValidateToken()
         {
-            //读取config文件，并解析连接字符串            
-            string connString = ConfigurationManager.ConnectionStrings[settingName].ConnectionString;
-            string providerName = ConfigurationManager.ConnectionStrings[settingName].ProviderName;
-
-            ConnectionStringSettings connectionStringSettings = new ConnectionStringSettings();
-            connectionStringSettings.ConnectionString = connString;
-            connectionStringSettings.ProviderName = providerName;
-            connectionStringSettings.Name = settingName;
-
-            return new DbSession(connectionStringSettings);
-        }
-
-        public bool ValidateToken(string token)
-        {
-            return true;
+            return TokenUtility.ValidToken(SSOContext.Token);
         }
     }
 }
