@@ -108,6 +108,7 @@ $(function () {
     });
 });
 
+//start proxy function
 var setSkin = function (skinName) {
     _Context.CurrentSkin = skinName;
     $.skin.set(skinName);
@@ -119,6 +120,15 @@ var setLanguage = function (languageName) {
     $.language.set(languageName);
     return false;
 }
+
+var showDialog = function (title, content, warning, type, times) {
+    $.dialog.showDialog(title, content, warning, type, times);
+}
+
+var closeDialog = function (times) {
+    $.dialog.closeDialog(times);
+}
+//end proxy function
 
 jQuery.extend({
     "CubeEvent": {
@@ -143,13 +153,24 @@ jQuery.extend({
 jQuery.extend({
     "dialog": {
         "dialog": {},
-        "closeDialog": function () {
+        "closeDialog": function (times) {
+            if (parent && parent.closeDialog) {
+                if (!times) {
+                    var times = 1;
+                    parent.closeDialog(times);
+                    return;
+                }
+            }
             $("#messageDialog").modal('hide');
         },
-        "showDialog": function (title, content, warning, type) {
-            //if (parent.$.dialog) {
-            //    parent.$.dialog.showDialog(title, content, warning, type);
-            //}
+        "showDialog": function (title, content, warning, type, times) {
+            if (parent && parent.showDialog) {
+                if (!times) {
+                    var times = 1;
+                    parent.showDialog(title, content, warning, type, times);
+                    return;
+                }             
+            }
             $("#messageDialogTitle").text("");
             $("#messageDialogContent").html("");
             $("#messageDialogWarningContent").html("");

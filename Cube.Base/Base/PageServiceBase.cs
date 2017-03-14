@@ -26,7 +26,7 @@ namespace Cube.Base
             get {
                 if (_DBSession == null)
                 {
-                    _DBSession = CreateDbSession("system");
+                    _DBSession = DBUtility.Db;
                 }
                 return _DBSession;
             }
@@ -35,13 +35,14 @@ namespace Cube.Base
                 _DBSession = value;
             }
         }
+
         public Cb_User _user;
         public Cb_User User {
             get {
                 if (_user == null)
                 {
                     TokenDTO tokenInfo = TokenUtility.GetTokenInfo(Token);
-                    string userId = Db.From<Cb_Token>().Where(Cb_Token._.Secret_Key == tokenInfo.SecretKey)
+                    string userId = DBUtility.CubeDb.From<Cb_Token>().Where(Cb_Token._.Secret_Key == tokenInfo.SecretKey)
                         .Select(Cb_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
                     _user = Db.From<Cb_User>().Where(Cb_User._.Id == userId).Select(Cb_User._.All).FirstDefault();
                 }
@@ -51,43 +52,25 @@ namespace Cube.Base
 
         public string Token {
             get {
-                return HttpContext.Current.Request["SSOToken"];
+                return string.IsNullOrEmpty(HttpContext.Current.Request["SSOToken"]) ? HttpContext.Current.Request.Headers["SSOToken"] : HttpContext.Current.Request["SSOToken"];
+            }
+        }
+
+        public string Language {
+            get
+            {
+                return string.IsNullOrEmpty(HttpContext.Current.Request["Language"]) ? HttpContext.Current.Request.Headers["Language"] : HttpContext.Current.Request["Language"];
             }
         }
 
         public PageServiceBase()
         {
-            //_Db = CreateDbSession("system");
-
-            string token = HttpContext.Current.Request["SSOToken"];
-            string language = HttpContext.Current.Request["Language"];
-            if(!ValidateToken(token)) {
+            if(!ValidateToken()) {
                 throw new Exception("");
             }
-
-            
         }
 
-        /// <summary>
-        /// Create a DB session
-        /// </summary>
-        /// <param name="settingName"></param>
-        /// <returns>DbSession</returns>
-        public DbSession CreateDbSession(string settingName)
-        {
-            //读取config文件，并解析连接字符串            
-            string connString = ConfigurationManager.ConnectionStrings[settingName].ConnectionString;
-            string providerName = ConfigurationManager.ConnectionStrings[settingName].ProviderName;
-
-            ConnectionStringSettings connectionStringSettings = new ConnectionStringSettings();
-            connectionStringSettings.ConnectionString = connString;
-            connectionStringSettings.ProviderName = providerName;
-            connectionStringSettings.Name = settingName;
-
-            return new DbSession(connectionStringSettings);
-        }
-
-        public bool ValidateToken(string token)
+        public bool ValidateToken()
         {
             return true;
         }
