@@ -91,25 +91,6 @@
             </div>
         </div>
 
-        <!--message dialog-->
-        <div id="messageDialog" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h1 class="modal-title" id="messageDialogTitle"></h1>
-                    </div>
-                    <div class="modal-body">
-                        <p id="messageDialogContent"></p>
-                        <p class="text-warning"><small id="messageDialogWarningContent"></small></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button"  class="btn btn-primary" data-dismiss="modal" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <script src="http://10.85.129.44/CubePortal/Scripts/jquery-2.2.3.min.js"></script>
         <script src="http://10.85.129.44/CubePortal/Scripts/jquery.uriAnchor.js"></script>
         <script src="http://10.85.129.44/CubePortal/Scripts/framework.js"></script>

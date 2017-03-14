@@ -67,7 +67,9 @@
 <icon BUILTIN="button_ok"/>
 </node>
 <node CREATED="1489125178890" ID="ID_1313115917" MODIFIED="1489125368919" TEXT="Portal API -- John"/>
-<node CREATED="1489125193275" ID="ID_794589319" MODIFIED="1489453167835" TEXT="Portal&#x4e0b;ShowMessage&#x5171;&#x7528; -- Moses"/>
+<node CREATED="1489125193275" ID="ID_794589319" MODIFIED="1489455600926" TEXT="Portal&#x4e0b;ShowMessage&#x5171;&#x7528; -- Moses">
+<icon BUILTIN="button_ok"/>
+</node>
 </node>
 </node>
 <node CREATED="1489368790199" ID="ID_144115660" MODIFIED="1489368801035" POSITION="right" TEXT="Token&#x5305;&#x542b;&#x4fe1;&#x606f;">
