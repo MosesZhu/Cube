@@ -10,8 +10,8 @@ namespace Cube.Base.Utility
 {
     public class DBUtility
     {
-        public static DbSession _DBSession;
-        public DbSession Db
+        private static DbSession _DBSession;
+        public static DbSession Db
         {
             get
             {
@@ -27,12 +27,29 @@ namespace Cube.Base.Utility
             }
         }
 
+        private static DbSession _CubeDBSession;
+        public static DbSession CubeDb
+        {
+            get
+            {
+                if (_CubeDBSession == null)
+                {
+                    _CubeDBSession = CreateDbSession("cube");
+                }
+                return _CubeDBSession;
+            }
+            set
+            {
+                _CubeDBSession = value;
+            }
+        }
+
         /// <summary>
         /// Create a DB session
         /// </summary>
         /// <param name="settingName"></param>
         /// <returns>DbSession</returns>
-        public DbSession CreateDbSession(string settingName)
+        public static DbSession CreateDbSession(string settingName)
         {
             //读取config文件，并解析连接字符串            
             string connString = ConfigurationManager.ConnectionStrings[settingName].ConnectionString;

@@ -16,23 +16,7 @@ using System.Threading.Tasks;
 namespace Cube.Base.Utility
 {
     public static class TokenUtility
-    {
-        public static DbSession _DBSession;
-        public static DbSession Db
-        {
-            get
-            {
-                if (_DBSession == null)
-                {
-                  _DBSession = CreateDbSession("cube");
-                }
-                return _DBSession;
-            }
-            set
-            {
-                _DBSession = value;
-            }
-        }
+    {        
         public static DbSession CreateDbSession(string settingName)
         {
             //读取config文件，并解析连接字符串            
@@ -79,13 +63,13 @@ namespace Cube.Base.Utility
             try 
             {
                 TokenDTO tokenInfo = GetTokenInfo(token);
-                Cb_Token tokenEntity = Db.From<Cb_Token>().Where(Cb_Token._.Secret_Key == tokenInfo.SecretKey).Select(Cb_Token._.All).ToList().FirstOrDefault();
+                Cb_Token tokenEntity = DBUtility.CubeDb.From<Cb_Token>().Where(Cb_Token._.Secret_Key == tokenInfo.SecretKey).Select(Cb_Token._.All).ToList().FirstOrDefault();
                 if(tokenEntity == null)
                 {
                     return false;
                 }
 
-                Cb_User userEntity = Db.From<Cb_User>().Where(Cb_User._.Id == tokenEntity.User_Id).FirstDefault();
+                Cb_User userEntity = DBUtility.CubeDb.From<Cb_User>().Where(Cb_User._.Id == tokenEntity.User_Id).FirstDefault();
                 if(userEntity == null)
                 {
                     return false;

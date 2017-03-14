@@ -166,8 +166,7 @@ namespace Cube.Base
         /// <returns></returns>
         private List<Cb_Language> GetLanguageData()
         {
-            DBUtility _b = new DBUtility();
-            List<Cb_Language> list = _b.Db.From<Cb_Language>()
+            List<Cb_Language> list = DBUtility.CubeDb.From<Cb_Language>()
                .Select(
                      Cb_Language._.Language_Key.As("language_key")
                    , Cb_Language._.En_Us.As("en_us")
@@ -204,8 +203,7 @@ namespace Cube.Base
                 Zh_Cn = d,
                 Zh_Tw = d
             }));
-            DBUtility _b = new DBUtility();
-            _b.Db.Insert<Cb_Language>(list);
+            DBUtility.CubeDb.Insert<Cb_Language>(list);
         }
 
         /// <summary>
