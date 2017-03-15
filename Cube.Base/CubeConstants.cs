@@ -25,6 +25,6 @@ namespace Cube.Common
     public class ErrorCode
     {
         public static readonly string NO_SSO_INFO = "E0001";
-        public static readonly string PWD_AUTH_FAILED = "E0002";
+        public static readonly string USER_AUTH_FAILED = "E0002";
     }
 }

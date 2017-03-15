@@ -32,7 +32,7 @@ namespace Cube.Web
             else if (!CheckUserAuthencationInfo(user,password))
             {
                 result.success = false;
-                result.data = ErrorCode.PWD_AUTH_FAILED;
+                result.data = ErrorCode.USER_AUTH_FAILED;
             }
             else
             {
