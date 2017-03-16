@@ -37,14 +37,13 @@
           <div class="checkbox icheck">
             <label>
 
-              <input type="checkbox" lang="lang_remember_me"> Remember Me
+              <input id="cbxRememberMe" type="checkbox" lang="lang_remember_me"> Remember Me
             </label>
           </div>
         </div>
         <!-- /.col -->
-        <div class="col-xs-4">
-            <%--<asp:Button ID="btnLogin" CssClass="btn btn-primary btn-block btn-flat" runat="server" Text="Login" lang="lang_login" OnClick="btnLogin_Click" />--%>
-          <input type="button" class="btn btn-primary btn-block btn-flat" lang="lang_login" value="Login" onclick="login()" />
+        <div class="col-xs-4">            
+          <a href="#" class="btn btn-primary btn-block btn-flat" lang="lang_login" onclick="login()" >Login</a>
         </div>
         <!-- /.col -->
       </div>
@@ -57,7 +56,7 @@
 <asp:Content ID="PageScriptContent" ContentPlaceHolderID="PageScriptContentHolder" runat="server">
     <script>
         $(function () {
-            $('input').iCheck({
+            $('#cbxRememberMe').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
@@ -76,7 +75,12 @@
                         var lang = $("#ddlLanguage").val();
                         $.cookie("SSOToken", token);
                         $.cookie("Language", lang);
-                        window.location.href = "Portal?SSOToken=" + token + "#!lang=" + lang;
+                        var portalUrl = "Portal?SSOToken=" + token;
+                        if (getQueryStringByName('IsDebug') == "Y") {
+                            portalUrl += "&IsDebug=Y&LocalDebugUrl=" + getQueryStringByName('LocalDebugUrl');
+                        }
+                        portalUrl += "#!lang=" + lang;
+                        window.location.href = portalUrl; //"Portal?SSOToken=" + token + "#!lang=" + lang;
                     } else {
                         if (d.errorcode == "E0001") {
                             location.href = "Login";

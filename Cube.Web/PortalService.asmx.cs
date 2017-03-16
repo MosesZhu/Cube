@@ -1,4 +1,5 @@
 ﻿using Cube.Base;
+using Cube.Base.SSO;
 using Cube.DTO;
 using Cube.Model.DTO;
 using Cube.Model.Entity;
@@ -93,6 +94,29 @@ namespace Cube.Web
                         domainList.Add(domain);
                     }
                 }
+            }
+
+            if (SSOContext.IsDebug)
+            {
+                string debugUrl = System.Web.HttpUtility.UrlDecode(SSOContext.LocalDebugUrl).Replace("http://", "").Replace("https://", "");
+                DomainDTO debugDomain = new DomainDTO();
+                debugDomain.Id = Guid.NewGuid().ToString();
+                debugDomain.Name = "Debug";
+
+                SystemDTO debugSystem = new SystemDTO();
+                debugSystem.Code = "DEBUG";
+                debugSystem.Id = Guid.NewGuid().ToString();
+
+                FunctionDTO debugFunction = new FunctionDTO();
+                debugFunction.Code = "DEBUG";
+                debugFunction.Id = Guid.NewGuid().ToString();
+                debugFunction.Lang_Key = "lang_debug";
+                debugFunction.Url = debugUrl;
+
+                debugSystem.FunctionList.Add(debugFunction);
+                debugDomain.SystemList.Add(debugSystem);
+                domainList.Add(debugDomain);
+
             }
             result.data = domainList;
 

@@ -35,6 +35,11 @@ namespace Cube.Base
             {
                 if (String.IsNullOrEmpty(token) || !TokenUtility.ValidToken(System.Web.HttpUtility.UrlDecode(token)))
                 {
+                    #if DEBUG
+                    loginUrl += loginUrl.Contains("?") ? "&" : "?" + "IsDebug=Y&LocalDebugUrl=" + System.Web.HttpUtility.UrlEncode(context.Request.Url.ToString());
+                    //context.Request.Headers.Add("IsDebug", "Y");
+                    //context.Request.Headers.Add("LocalDebugUrl", context.Request.Url.ToString());
+                    #endif
                     context.Response.Redirect(loginUrl);
                 }
             }            
