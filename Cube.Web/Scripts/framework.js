@@ -35,6 +35,10 @@
             beforeSend: function (request) {
                 request.setRequestHeader("SSOToken", ssoToken);
                 request.setRequestHeader("Language", _Context.CurrentLang);
+                if (getQueryStringByName("IsDebug") == "Y") {
+                    request.setRequestHeader("IsDebug", "Y");
+                    request.setRequestHeader("LocalDebugUrl", getQueryStringByName("LocalDebugUrl"));
+                }
             },
             success: function (d) {
                 var resultData = d.d;
@@ -96,7 +100,6 @@ $(function () {
     if (needSetAnchor) {
         $.uriAnchor.setAnchor(map);
     }
-    //$.uriAnchor.setAnchor($.uriAnchor.makeAnchorMap());
 
     $('#_FormTabsContainer').slimscroll({
         height: '43px',

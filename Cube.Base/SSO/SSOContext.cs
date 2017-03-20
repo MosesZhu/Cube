@@ -43,6 +43,28 @@ namespace Cube.Base.SSO
                 return string.IsNullOrEmpty(HttpContext.Current.Request["SSOToken"]) ? HttpContext.Current.Request.Headers["SSOToken"] : HttpContext.Current.Request["SSOToken"];
             }
         }
+        public static bool IsDebug
+        {
+            get
+            {
+                return (!string.IsNullOrEmpty(HttpContext.Current.Request["IsDebug"]) && HttpContext.Current.Request["IsDebug"] == "Y")
+                    || !string.IsNullOrEmpty(HttpContext.Current.Request.Headers["IsDebug"]) && HttpContext.Current.Request.Headers["IsDebug"] == "Y";
+            }
+        }
+        public static string LocalDebugUrl
+        {
+            get
+            {
+                if (IsDebug)
+                {
+                    return string.IsNullOrEmpty(HttpContext.Current.Request["LocalDebugUrl"]) ? HttpContext.Current.Request.Headers["LocalDebugUrl"] : HttpContext.Current.Request["LocalDebugUrl"];
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
         public static string Language
         {
             get
