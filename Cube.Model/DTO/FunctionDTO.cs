@@ -13,6 +13,7 @@ namespace Cube.Model.DTO
         public string Lang_Key { get; set; }
         public string Url { get; set; }
         public string System_Id { get; set; }
+        public string Parent_Function_Id { get; set; }
         public List<FunctionDTO> SubFunctionList { get; set; }
         public FunctionDTO()
         {

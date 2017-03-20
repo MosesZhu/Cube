@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ITS.Data">
-      <HintPath>\\10.85.17.209\Share\bach30 (10.85.10.2)\Common\bin\ITS.Data.dll</HintPath>
+      <HintPath>\\10.85.17.209\Share\bach30 - Copy\Backup\common_bin\ITS.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,12 +47,16 @@
     <Compile Include="DTO\MenuDTO.cs" />
     <Compile Include="DTO\PreferenceDTO.cs" />
     <Compile Include="DTO\ResultDTO.cs" />
+    <Compile Include="DTO\RoleDTO.cs" />
     <Compile Include="DTO\SystemGroupDTO.cs" />
     <Compile Include="DTO\TokenDTO.cs" />
+    <Compile Include="DTO\UserBasicInfoDTO.cs" />
+    <Compile Include="DTO\UserInfoDTO.cs" />
     <Compile Include="Entity\Cb_Bookmark.cs" />
     <Compile Include="Entity\Cb_Domain.cs" />
     <Compile Include="Entity\Cb_Function.cs" />
     <Compile Include="Entity\Cb_Language.cs" />
+    <Compile Include="Entity\Cb_Preference.cs" />
     <Compile Include="Entity\Cb_Role.cs" />
     <Compile Include="Entity\Cb_Role_Function.cs" />
     <Compile Include="Entity\Cb_System.cs" />
