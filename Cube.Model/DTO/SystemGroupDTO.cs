@@ -8,9 +8,9 @@ namespace Cube.Model.DTO
 {
     public class SystemGroupDTO
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Code { get; set; }
-        public string Domain_Id { get; set; }
+        public Guid Domain_Id { get; set; }
         public string Language_Key { get; set; }
         public List<SystemDTO> SystemList { get; set; }
         public SystemGroupDTO()

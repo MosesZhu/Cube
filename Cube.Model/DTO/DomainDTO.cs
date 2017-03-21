@@ -9,7 +9,7 @@ namespace Cube.Model.DTO
     [Serializable]
     public class DomainDTO
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public List<SystemDTO> SystemList { get; set; }
         public List<SystemGroupDTO> SystemGropList { get; set; }
