@@ -119,21 +119,26 @@ namespace Cube.Web
                 .Where(Cb_Role_Function._.Role_Id.In(roleList))
                 .Select(Cb_Role_Function._.All)
                 .ToList();
-            IEnumerable<Guid> functionm_id_list =
+            List<Guid> functionm_id_list =
                 userFunctionList.Select(x => x.Function_Id).ToList()
                 .Union(
                     (roleFunctionList.Select(x => x.Function_Id).ToList())
-                );
+                ).ToList();
 
-            List<FunctionDTO> functionList = Db.From<Cb_Function>()
+            List<FunctionDTO> functionList = functionList = new List<FunctionDTO>();
+            if (functionm_id_list != null)
+            {
+                functionList = Db.From<Cb_Function>()
                 .Where(Cb_Function._.Id.In(functionm_id_list))
                 .Select(Cb_Function._.All)
+                .OrderBy(Cb_Function._.Code.Asc)
                 .ToList<FunctionDTO>();
+            }
 
             List<DomainDTO> domainList = new List<DomainDTO>();
             domainList.Add(new DomainDTO()
             {
-                Id = Guid.Empty.ToString()
+                Id = Guid.Empty
                 ,
                 Name = "Others"
             });
@@ -143,9 +148,9 @@ namespace Cube.Web
             //2.组装function_tree
             foreach (FunctionDTO function in functionList)
             {
-                string parent_function_id = function.Parent_Function_Id;
+                string parent_function_id = function.Parent_Function_Id.ToString();
                 //(1)向上查找：parent_function
-                if (parent_function_id != null)
+                if (parent_function_id != null && parent_function_id != Guid.Empty.ToString())
                 {
                     //(1.1)先在现有的root_function中查找
                     FunctionDTO current_parent_function = null;
@@ -153,18 +158,26 @@ namespace Cube.Web
                     {
                         current_parent_function = FindInFunctionTree(x, parent_function_id);
                     });
-                    if (current_parent_function != null)
+                    if (current_parent_function != null && parent_function_id != Guid.Empty.ToString())
                     {
                         current_parent_function.SubFunctionList.Add(function);
                     }
                     else
                     {
                         //(1.2)在还剩下的所有function_list里面查找
-                        current_parent_function = functionList.Find(x => x.Id == parent_function_id);
-                        current_parent_function.SubFunctionList.Add(function);
-                        rootFunctionList.Add(current_parent_function);
-                        functionList.Remove(current_parent_function);//需要将未循环到的parent_function删除
+                        current_parent_function = functionList.Find(x => x.Id.ToString() == parent_function_id);
+                        if (current_parent_function != null)
+                        {
+                            current_parent_function.SubFunctionList.Add(function);
+                            rootFunctionList.Add(current_parent_function);
+                            functionList.Remove(current_parent_function);//需要将未循环到的parent_function删除
+                        }
+
                     }
+                }
+                else
+                {
+                    rootFunctionList.Add(function);
                 }
             }
 
@@ -173,38 +186,42 @@ namespace Cube.Web
             {
                 string current_system_id = root_function.System_Id;
                 //3.1 现有的systemlist中查找
-                SystemDTO system = systemList.Find(x => x.Id == current_system_id);
+                SystemDTO system = systemList.Find(x => x.Id.ToString() == current_system_id);
                 if (system != null)
                 {
                     system.FunctionList.Add(root_function);
                 }
                 else
                 {
-                    if (current_system_id != null)
+                    if (current_system_id != null && current_system_id != Guid.Empty.ToString())
                     {
                         SystemDTO newSystem = Db.From<Cb_System>()
                         .Where(Cb_System._.Id == current_system_id)
                         .Select(Cb_System._.All)
                         .First<SystemDTO>();
-                        newSystem.FunctionList.Add(root_function);
-                        systemList.Add(newSystem);
+                        if (newSystem != null)
+                        {
+                            newSystem.FunctionList.Add(root_function);
+                            systemList.Add(newSystem);
+                        }
                     }
                 }
-
             }
+            //System排序
+            systemList = systemList.OrderBy(x => x.Code).ToList();
 
             //4.system-system_group-domain
             foreach (SystemDTO system in systemList)
             {
-                string group_id = system.Group_Id;
-                string domain_id = system.Domain_Id;
-                if (group_id == null && domain_id == null) //system直接挂到Others下
+                string group_id = system.Group_Id.ToString();
+                string domain_id = system.Domain_Id.ToString();
+                if ((group_id == null || group_id == Guid.Empty.ToString()) && (domain_id == null || domain_id == Guid.Empty.ToString())) //system直接挂到Others下
                 {
                     domainList[0].SystemList.Add(system); //[0]默认为Others
                 }
-                else if (group_id != null) //有group_id优先挂到group_id上
+                else if (group_id != null && group_id != Guid.Empty.ToString()) //有group_id优先挂到group_id上
                 {
-                    SystemGroupDTO group = systemGroupList.Find(x => x.Id == group_id);
+                    SystemGroupDTO group = systemGroupList.Find(x => x.Id.ToString() == group_id);
                     if (group != null)
                     {
                         group.SystemList.Add(system);
@@ -215,13 +232,17 @@ namespace Cube.Web
                             .Where(Cb_System_Group._.Id == group)
                             .Select(Cb_System_Group._.All)
                             .First<SystemGroupDTO>();
-                        newGroup.SystemList.Add(system);
-                        systemGroupList.Add(newGroup);
+                        if (newGroup != null)
+                        {
+                            newGroup.SystemList.Add(system);
+                            systemGroupList.Add(newGroup);
+                        }
+
                     }
                 }
-                else if (domain_id != null)
+                else if (domain_id != null && domain_id != Guid.Empty.ToString())
                 {
-                    DomainDTO domain = domainList.Find(x => x.Id == domain_id);
+                    DomainDTO domain = domainList.Find(x => x.Id.ToString() == domain_id);
                     if (domain != null)
                     {
                         domain.SystemList.Add(system);
@@ -232,19 +253,24 @@ namespace Cube.Web
                             .Where(Cb_Domain._.Id == domain_id)
                             .Select(Cb_Domain._.All)
                             .First<DomainDTO>();
-                        newDomain.SystemList.Add(system);
-                        domainList.Add(newDomain);
+                        if (newDomain != null)
+                        {
+                            newDomain.SystemList.Add(system);
+                            domainList.Add(newDomain);
+                        }
                     }
                 }
             }
+            //system_group排序
+            systemGroupList = systemGroupList.OrderBy(x => x.Code).ToList();
 
             //5.system_group-domain
             foreach (SystemGroupDTO group in systemGroupList)
             {
-                string domain_id = group.Domain_Id;
-                if (domain_id != null)
+                string domain_id = group.Domain_Id.ToString();
+                if (domain_id != null && domain_id != Guid.Empty.ToString())
                 {
-                    DomainDTO domain = domainList.Find(x => x.Id == domain_id);
+                    DomainDTO domain = domainList.Find(x => x.Id.ToString() == domain_id);
                     if (domain != null)
                     {
                         domain.SystemGropList.Add(group);
@@ -255,8 +281,11 @@ namespace Cube.Web
                             .Where(Cb_Domain._.Id == domain_id)
                             .Select(Cb_Domain._.All)
                             .First<DomainDTO>();
-                        newDomain.SystemGropList.Add(group);
-                        domainList.Add(newDomain);
+                        if (newDomain != null)
+                        {
+                            newDomain.SystemGropList.Add(group);
+                            domainList.Add(newDomain);
+                        }
                     }
                 }
             }
@@ -265,22 +294,29 @@ namespace Cube.Web
             if (domainList[0].SystemList.Count == 0 && domainList[0].SystemGropList.Count == 0)
             {
                 domainList.Remove(domainList[0]);
+                domainList = domainList.OrderBy(x => x.Name).ToList();
+            }
+            else
+            {
+                List<DomainDTO> needOrderDomainList = domainList.Skip(1).OrderBy(x => x.Name).ToList();
+                needOrderDomainList.Add(domainList[0]);
+                domainList = needOrderDomainList;
             }
 
             if (SSOContext.IsDebug)
             {
                 string debugUrl = System.Web.HttpUtility.UrlDecode(SSOContext.LocalDebugUrl).Replace("http://", "").Replace("https://", "");
                 DomainDTO debugDomain = new DomainDTO();
-                debugDomain.Id = Guid.NewGuid().ToString();
+                debugDomain.Id = Guid.NewGuid();
                 debugDomain.Name = "Debug";
 
                 SystemDTO debugSystem = new SystemDTO();
                 debugSystem.Code = "DEBUG";
-                debugSystem.Id = Guid.NewGuid().ToString();
+                debugSystem.Id = Guid.NewGuid();
 
                 FunctionDTO debugFunction = new FunctionDTO();
                 debugFunction.Code = "DEBUG";
-                debugFunction.Id = Guid.NewGuid().ToString();
+                debugFunction.Id = Guid.NewGuid();
                 debugFunction.Lang_Key = "lang_debug";
                 debugFunction.Url = debugUrl;
 
@@ -301,7 +337,7 @@ namespace Cube.Web
         {
             if (current_function.SubFunctionList.Count == 0)
             {
-                if (current_function.Id == function_id)
+                if (current_function.Id.ToString() == function_id)
                 {
                     return current_function;
                 }
