@@ -43,7 +43,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">            
-          <a href="#" class="btn btn-primary btn-block btn-flat" lang="lang_login" onclick="login()" >Login</a>
+          <div class="btn btn-primary btn-block btn-flat" lang="lang_login" onclick="return login();" >Login</div>
         </div>
         <!-- /.col -->
       </div>
@@ -92,6 +92,8 @@
             };
 
             $.ask("login", param, options);
+
+            return false;
         };
     </script>
 </asp:Content>

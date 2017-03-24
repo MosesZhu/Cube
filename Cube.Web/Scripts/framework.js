@@ -16,9 +16,6 @@
         var tempName = tempList[tempList.length - 1];
         var tempUrl = url.substring(0, url.length - tempName.length);
 
-        //var ashxName = tempName.split(".")[0] + "Handler.ashx";        
-        //url = tempUrl + ashxName + "?func=" + method;
-
         var serviceName = tempName.split(".")[0] + "Service.asmx";
         url = tempUrl + serviceName + "/" + method;
 
