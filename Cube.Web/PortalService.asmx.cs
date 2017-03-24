@@ -50,7 +50,7 @@ namespace Cube.Web
                                 system.FunctionList.Add(new FunctionDTO() {
                                     Id = functionEntity.Id.ToString(),
                                     Code = functionEntity.Code, 
-                                    Lang_Key = functionEntity.Language_Key, 
+                                    Language_Key = functionEntity.Language_Key, 
                                     System_Id = systemId, 
                                     Url = functionEntity.Url
                                 });
@@ -68,7 +68,7 @@ namespace Cube.Web
                             {
                                 Id = functionEntity.Id.ToString(),
                                 Code = functionEntity.Code,
-                                Lang_Key = functionEntity.Language_Key,
+                                Language_Key = functionEntity.Language_Key,
                                 System_Id = systemId,
                                 Url = functionEntity.Url
                             });
@@ -110,7 +110,7 @@ namespace Cube.Web
                 FunctionDTO debugFunction = new FunctionDTO();
                 debugFunction.Code = "DEBUG";
                 debugFunction.Id = Guid.NewGuid().ToString();
-                debugFunction.Lang_Key = "lang_debug";
+                debugFunction.Language_Key = "lang_debug";
                 debugFunction.Url = debugUrl;
 
                 debugSystem.FunctionList.Add(debugFunction);

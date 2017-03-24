@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ITS.Data">
-      <HintPath>\\10.85.17.209\Share\bach30 (10.85.10.2)\Common\bin\ITS.Data.dll</HintPath>
+      <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

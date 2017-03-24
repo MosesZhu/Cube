@@ -450,7 +450,7 @@
                                               + '" functionurl="http://'
                                               + functionMenu.Url
                                               + '"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
-                                              + functionMenu.LanguageKey
+                                              + functionMenu.Language_Key
                                               + '">' + functionMenu.Code + '</span></a></li>';
                                 });                            
                                 + '</ul></li>';
