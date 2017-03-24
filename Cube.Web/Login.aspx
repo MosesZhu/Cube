@@ -26,7 +26,7 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <select class="form-control select2" style="width: 100%;" id="ddlLanguage">
+        <select class="form-control select2" style="width: 100%;" id="ddlLanguage" onchange="changeLanguage()">
             <option selected="selected" value="EnUS">English</option>
             <option value="ZhCN">中文简体</option>
             <option value="ZhTW">中文繁體</option>
@@ -44,6 +44,7 @@
         <!-- /.col -->
         <div class="col-xs-4">            
           <div class="btn btn-primary btn-block btn-flat" lang="lang_login" onclick="return login();" >Login</div>
+            <%--<div style="padding:10px; border:1px solid black;" lang="lang_login" onclick="return login();" >Login</div>--%>
         </div>
         <!-- /.col -->
       </div>
@@ -61,7 +62,14 @@
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
             });
+
+            $("#ddlLanguage").val($.uriAnchor.makeAnchorMap()["lang"]);
+            $.language.change($.uriAnchor.makeAnchorMap()["lang"]);
         });
+
+        var changeLanguage = function () {
+            setLanguage($("#ddlLanguage").val());
+        };
 
         var login = function () {
             var param = {

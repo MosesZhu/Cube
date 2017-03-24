@@ -49,7 +49,7 @@
                 <asp:ScriptReference Name="jquery" />
                 <asp:ScriptReference Name="uriAnchor" />
                 <asp:ScriptReference Name="bootstrap" />
-                <%--<asp:ScriptReference Name="fastclick" />--%>
+                <asp:ScriptReference Name="fastclick" />
                 <asp:ScriptReference Name="AdminLTE" />
                 <asp:ScriptReference Name="slimscroll" />
                 <asp:ScriptReference Name="respond" />

@@ -15,10 +15,10 @@ namespace Cube.Base.Utility
         {
             get
             {
-                if (_DBSession == null)
-                {
+                //if (_DBSession == null)
+                //{
                     _DBSession = CreateDbSession("system");
-                }
+                //}
                 return _DBSession;
             }
             set
@@ -32,10 +32,10 @@ namespace Cube.Base.Utility
         {
             get
             {
-                if (_CubeDBSession == null)
-                {
+                //if (_CubeDBSession == null)
+                //{
                     _CubeDBSession = CreateDbSession("cube");
-                }
+                //}
                 return _CubeDBSession;
             }
             set

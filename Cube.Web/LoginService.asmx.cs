@@ -20,7 +20,7 @@ namespace Cube.Web
         public ResultDTO login(string userName, string password)
         {
             ResultDTO result = new ResultDTO();
-            Cb_User user = Db
+            Cb_User user = DBUtility.CubeDb
                 .From<Cb_User>()
                 .Where(Cb_User._.Login_Name == userName)
                 .First();
@@ -62,7 +62,7 @@ namespace Cube.Web
         private string RenewToken(ResultDTO result, Cb_User user)
         {
             string secretKey = Guid.NewGuid().ToString();
-            Cb_Token tokenInfo = Db.From<Cb_Token>()
+            Cb_Token tokenInfo = DBUtility.CubeDb.From<Cb_Token>()
                 .Where(Cb_Token._.User_Id == user.Id)
                 .ToList()
                 .FirstOrDefault();
@@ -72,13 +72,13 @@ namespace Cube.Web
                 tokenInfo.User_Id = user.Id;
                 tokenInfo.Login_Time = DateTime.Now;
                 tokenInfo.Secret_Key = secretKey;
-                Db.Insert<Cb_Token>(tokenInfo);
+                DBUtility.CubeDb.Insert<Cb_Token>(tokenInfo);
             }
             else
             {
                 tokenInfo.Login_Time = DateTime.Now;
                 tokenInfo.Secret_Key = secretKey;
-                Db.Update<Cb_Token>(tokenInfo);
+                DBUtility.CubeDb.Update<Cb_Token>(tokenInfo);
             }
             result.success = true;
             TokenDTO token = new TokenDTO()

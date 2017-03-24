@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
 using ITS.Data;
+using Cube.Base.Utility;
 
 namespace Cube.Web
 {
@@ -72,7 +73,7 @@ namespace Cube.Web
         [WebMethod]
         public ResultDTO logout()
         {
-            Db.Delete<Cb_Token>(Cb_Token._.User_Id == User.Id);
+            DBUtility.CubeDb.Delete<Cb_Token>(Cb_Token._.User_Id == User.Id);
             ResultDTO result = new ResultDTO() { success = true };
             return result;
         }
@@ -110,12 +111,12 @@ namespace Cube.Web
         private List<DomainDTO> GetMenuImp()
         {
             //1.当前user的所有function_id_list(并集)
-            List<Cb_User_Function> userFunctionList = Db.From<Cb_User_Function>()
+            List<Cb_User_Function> userFunctionList = DBUtility.CubeDb.From<Cb_User_Function>()
                 .Where(Cb_User_Function._.User_Id == User.Id)
                 .Select(Cb_User_Function._.All)
                 .ToList();
             List<Guid> roleList = GetRoleList().Select(x => x.Role_Id).ToList();
-            List<Cb_Role_Function> roleFunctionList = Db.From<Cb_Role_Function>()
+            List<Cb_Role_Function> roleFunctionList = DBUtility.CubeDb.From<Cb_Role_Function>()
                 .Where(Cb_Role_Function._.Role_Id.In(roleList))
                 .Select(Cb_Role_Function._.All)
                 .ToList();
@@ -128,7 +129,7 @@ namespace Cube.Web
             List<FunctionDTO> functionList = functionList = new List<FunctionDTO>();
             if (functionm_id_list != null)
             {
-                functionList = Db.From<Cb_Function>()
+                functionList = DBUtility.CubeDb.From<Cb_Function>()
                 .Where(Cb_Function._.Id.In(functionm_id_list))
                 .Select(Cb_Function._.All)
                 .OrderBy(Cb_Function._.Code.Asc)
@@ -195,7 +196,7 @@ namespace Cube.Web
                 {
                     if (current_system_id != null && current_system_id != Guid.Empty.ToString())
                     {
-                        SystemDTO newSystem = Db.From<Cb_System>()
+                        SystemDTO newSystem = DBUtility.CubeDb.From<Cb_System>()
                         .Where(Cb_System._.Id == current_system_id)
                         .Select(Cb_System._.All)
                         .First<SystemDTO>();
@@ -228,7 +229,7 @@ namespace Cube.Web
                     }
                     else
                     {
-                        SystemGroupDTO newGroup = Db.From<Cb_System_Group>()
+                        SystemGroupDTO newGroup = DBUtility.CubeDb.From<Cb_System_Group>()
                             .Where(Cb_System_Group._.Id == group)
                             .Select(Cb_System_Group._.All)
                             .First<SystemGroupDTO>();
@@ -249,7 +250,7 @@ namespace Cube.Web
                     }
                     else
                     {
-                        DomainDTO newDomain = Db.From<Cb_Domain>()
+                        DomainDTO newDomain = DBUtility.CubeDb.From<Cb_Domain>()
                             .Where(Cb_Domain._.Id == domain_id)
                             .Select(Cb_Domain._.All)
                             .First<DomainDTO>();
@@ -277,7 +278,7 @@ namespace Cube.Web
                     }
                     else
                     {
-                        DomainDTO newDomain = Db.From<Cb_Domain>()
+                        DomainDTO newDomain = DBUtility.CubeDb.From<Cb_Domain>()
                             .Where(Cb_Domain._.Id == domain_id)
                             .Select(Cb_Domain._.All)
                             .First<DomainDTO>();
@@ -358,7 +359,7 @@ namespace Cube.Web
         /// <returns></returns>
         private List<RoleDTO> GetRoleList()
         {
-            List<RoleDTO> list = Db.From<Cb_User_Role>()
+            List<RoleDTO> list = DBUtility.CubeDb.From<Cb_User_Role>()
                 .LeftJoin<Cb_Role>(Cb_Role._.Id == Cb_User_Role._.Role_Id)
                 .Where(Cb_User_Role._.User_Id == User.Id)
                 .Select(
@@ -376,7 +377,7 @@ namespace Cube.Web
         /// <returns></returns>
         private PreferenceDTO GetUserPreferenceImp()
         {
-            PreferenceDTO preference = Db.From<Cb_Preference>()
+            PreferenceDTO preference = DBUtility.CubeDb.From<Cb_Preference>()
                 .Where(Cb_Preference._.User_Id == User.Id)
                 .Select(
                     Cb_Preference._.Skin.As("theme")
@@ -393,7 +394,7 @@ namespace Cube.Web
         /// <returns></returns>
         private UserBasicInfoDTO GetUserBasicInfo()
         {
-            UserBasicInfoDTO user = Db.From<Cb_User>()
+            UserBasicInfoDTO user = DBUtility.CubeDb.From<Cb_User>()
                 .Where(Cb_User._.Id == User.Id)
                 .Select(Cb_User._.All)
                 .First<UserBasicInfoDTO>();

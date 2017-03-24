@@ -1,5 +1,5 @@
 ﻿jQuery.extend({
-    "ask": function (method, data, options) {
+    "ask": function (method, data, options, not_self_service) {
         var ssoToken = getQueryStringByName("SSOToken") ? getQueryStringByName("SSOToken") : "";
         if (!ssoToken) {
             window.location.href = "Login";
@@ -11,13 +11,17 @@
             //return false;
         }
 
-        var url = (location.href + "").split("#")[0].split("?")[0];
-        var tempList = url.split("/");
-        var tempName = tempList[tempList.length - 1];
-        var tempUrl = url.substring(0, url.length - tempName.length);
-
-        var serviceName = tempName.split(".")[0] + "Service.asmx";
-        url = tempUrl + serviceName + "/" + method;
+        var url = "";
+        if (not_self_service) {
+            url = method;
+        } else {
+            url = (location.href + "").split("#")[0].split("?")[0];
+            var tempList = url.split("/");
+            var tempName = tempList[tempList.length - 1];
+            var tempUrl = url.substring(0, url.length - tempName.length);
+            var serviceName = tempName.split(".")[0] + "Service.asmx";
+            url = tempUrl + serviceName + "/" + method;
+        }
 
         var cusSuccess = (options && options.success) ? options.success : $.answer.success;
         var cusError = (options && options.error) ? options.error : $.answer.error;
@@ -66,6 +70,21 @@
             //alert("Error");
 
         }
+    }
+});
+
+jQuery.extend({
+    "goto": function (url, useCurrentMap, map) {
+        var finalUrl = url;
+        if (useCurrentMap) {
+            var currentMap = $.uriAnchor.makeAnchorMap();
+            finalUrl += "#!lang=" + currentMap["lang"] + "&skin=" + currentMap["skin"];            
+        } else {
+            if (map) {
+                finalUrl += "#!lang=" + map["lang"] + "&skin=" + map["skin"];
+            }
+        }
+        window.location.href = finalUrl;
     }
 });
 

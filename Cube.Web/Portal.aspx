@@ -511,7 +511,8 @@
                 "success": function (d) {
                     if (d.success) {
                         $.cookie("SSOToken", null);
-                        window.location.href = "Login";
+                        $.goto("Login");
+                        //window.location.href = "Login";
                     }
                 }
             };
