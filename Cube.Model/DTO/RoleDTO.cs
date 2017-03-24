@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cube.Base
+namespace Cube.Model.DTO
 {
-    public interface IMultiLanguage
+    public class RoleDTO
     {
-        List<string> GetFormMultiLanguageKeyList();
+        public Guid Role_Id { get; set; }
+        public string Name { get; set; }
     }
 }

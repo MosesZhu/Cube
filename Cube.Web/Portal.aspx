@@ -17,16 +17,16 @@
         .alpha60 {
             opacity: 0.6;
         }
-        
+
         .nav-tabs > li > a {
             border: 1px solid #ddd;
             border-bottom-color: transparent;
         }
-        
-        .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
-            border: 1px solid #ddd;
-            border-bottom-color: transparent;
-        }            
+
+            .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
+                border: 1px solid #ddd;
+                border-bottom-color: transparent;
+            }
     </style>
     >
 </asp:Content>
@@ -284,11 +284,11 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <section class="content-header" >
+            <section class="content-header">
                 <!--<h1>QML Maintain Form
                     <small>QML基础数据维护</small>
                 </h1>-->
-                <ol class="breadcrumb" style="top:-20px;">
+                <ol class="breadcrumb" style="top: -20px;">
                     <li><a href="#"><i class="fa fa-dashboard"></i>MFG</a></li>
                     <li><a href="#">QML</a></li>
                     <li class="active">QML Maintain Form</li>
@@ -296,13 +296,13 @@
             </section>
 
             <!-- Main content -->
-            <section class="content body" style="padding-top:0px;margin-top:-5px;">
+            <section class="content body" style="padding-top: 0px; margin-top: -5px;">
                 <div id="_FormTabsContainer">
                     <ul class="nav nav-tabs" role="tablist" id="_FormTabs"
-                     style="display:-webkit-inline-box;">
-                </ul>
+                        style="display: -webkit-inline-box;">
+                    </ul>
                 </div>
-                
+
                 <div class="tab-content" style="height: 100%;" id="_FormTabContent">
                 </div>
 
@@ -312,7 +312,7 @@
         <!-- /.content-wrapper -->
 
         <!-- Main Footer -->
-        <footer class="main-footer" style="position:fixed;bottom:0px;width:100%;padding:8px;">
+        <footer class="main-footer" style="position: fixed; bottom: 0px; width: 100%; padding: 8px;">
             <!-- To the right -->
             <div class="pull-right hidden-xs">
                 Anything you want
@@ -357,16 +357,36 @@
                             <div class="btn-group" style="width: 100%; padding: 20px;">
                                 <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
                                 <ul class="fc-color-picker" id="color-chooser">
-                                    <li><div class="text-blue skin_button" onclick="setSkin('blue')"><i class="fa fa-square skin_button"></i></div></li>
-                                    <li><div class="text-blue alpha60 skin_button" onclick="setSkin('blue-light')"><i class="fa fa-square"></i></div></li>
-                                    <li><div class="text-orange skin_button" onclick="setSkin('yellow')"><i class="fa fa-square"></i></div></li>
-                                    <li><div class="text-orange alpha60 skin_button" onclick="setSkin('yellow-light')"><i class="fa fa-square"></i></div></li>
-                                    <li><div class="text-green skin_button" onclick="setSkin('green')"><i class="fa fa-square"></i></div></li>
-                                    <li><div class="text-green alpha60 skin_button" onclick="setSkin('green-light')"><i class="fa fa-square"></i></div></li>
-                                    <li><div class="text-red skin_button" onclick="setSkin('red')"><i class="fa fa-square"></i></div></li>
-                                    <li><div class="text-red alpha60 skin_button" onclick="setSkin('red-light')"><i class="fa fa-square"></i></div></li>
-                                    <li><div class="text-purple skin_button" onclick="setSkin('purple')"><i class="fa fa-square"></i></div></li>
-                                    <li><div class="text-purple alpha60 skin_button" onclick="setSkin('purple-light')"><i class="fa fa-square"></i></div></li>
+                                    <li>
+                                        <div class="text-blue skin_button" onclick="setSkin('blue')"><i class="fa fa-square skin_button"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-blue alpha60 skin_button" onclick="setSkin('blue-light')"><i class="fa fa-square"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-orange skin_button" onclick="setSkin('yellow')"><i class="fa fa-square"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-orange alpha60 skin_button" onclick="setSkin('yellow-light')"><i class="fa fa-square"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-green skin_button" onclick="setSkin('green')"><i class="fa fa-square"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-green alpha60 skin_button" onclick="setSkin('green-light')"><i class="fa fa-square"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-red skin_button" onclick="setSkin('red')"><i class="fa fa-square"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-red alpha60 skin_button" onclick="setSkin('red-light')"><i class="fa fa-square"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-purple skin_button" onclick="setSkin('purple')"><i class="fa fa-square"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-purple alpha60 skin_button" onclick="setSkin('purple-light')"><i class="fa fa-square"></i></div>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -430,17 +450,38 @@
             });
         });
 
+        //TODO:function 现在还不是递归的
         var initMenu = function () {
             var options = {
                 "success": function (d) {
                     if (d.success) {
                         var menuList = d.data;
                         var menuHtml = "";
-                        $.each(menuList, function (i, domainMenu) {
-                            menuHtml += '<li class="header"><i class="fa fa-bank"></i><span lang="'
-                                + domainMenu.LanguageID + '">'
-                                + domainMenu.Name + '</span></li>';
-                            $.each(domainMenu.SystemList, function (j, systemMenu) {
+                        $.each(menuList, function (i, domain) {
+                            menuHtml += '<li class="header"><i class="fa fa-bank"></i><span lang="' + domain.LanguageID + '">' + domain.Name + '</span></li>';
+                            $.each(domain.SystemGropList, function (j, group) {
+                                menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><spanlang="' + group.Language_Key + '">'
+                                + group.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
+                                + '<ul class="treeview-menu">'
+                                $.each(group.SystemList, function (j, systemMenu) {
+                                    menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><span>'
+                                    + systemMenu.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
+                                    + '<ul class="treeview-menu">'
+                                    $.each(systemMenu.FunctionList, function (k, functionMenu) {
+                                        menuHtml += '<li class="active" onclick="return openForm(this);" functionid="'
+                                                  + functionMenu.Id
+                                                  + '" functionurl="http://'
+                                                  + functionMenu.Url
+                                                  + '"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
+                                                  + functionMenu.LanguageKey
+                                                  + '">' + functionMenu.Code + '</span></a></li>';
+                                    });
+                                    + '</ul></li>';
+                                });
+
+                            });
+
+                            $.each(domain.SystemList, function (j, systemMenu) {
                                 menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><span>'
                                 + systemMenu.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
                                 + '<ul class="treeview-menu">'
@@ -452,9 +493,8 @@
                                               + '"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
                                               + functionMenu.LanguageKey
                                               + '">' + functionMenu.Code + '</span></a></li>';
-                                });                            
+                                });
                                 + '</ul></li>';
-                    
                             });
                         });
 
@@ -503,7 +543,7 @@
                     + functionname + '<span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span></a></li>');
                 $("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
                     + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
-                    + "#!lang=" + _Context.CurrentLang 
+                    + "#!lang=" + _Context.CurrentLang
                     + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
                 $("#_FormTabs a[functionid=" + functionid + "]").tab("show");
             }
@@ -541,8 +581,8 @@
             syncFramesState();
         };
 
-        var syncFramesState = function() {
-            $("iframe").each(function (i, f) {                
+        var syncFramesState = function () {
+            $("iframe").each(function (i, f) {
                 var oldSrc = $(f).attr("src");
                 var oldUrl = oldSrc.split("#!")[0];
                 var map = {};
