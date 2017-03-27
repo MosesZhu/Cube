@@ -6,7 +6,7 @@
 <head runat="server">
     <title></title>
     <script src="Scripts/jquery-2.2.3.min.js" type="text/javascript"></script>
-    <%--<script src="Scripts/framework.js" type="text/javascript"></script>--%>
+    <script src="Scripts/framework.js" type="text/javascript"></script>
 </head>
 <body>
     <form id="form1" runat="server">

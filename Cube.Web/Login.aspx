@@ -76,8 +76,43 @@
                 userName: $("#tbxName").val(),
                 password: $("#tbxPassword").val()
             }
-            var options = {
-                "success": function (d) {
+            //var options = {
+            //    "success": function (d) {
+            //        alert(s);
+            //        //if (d.success) {
+            //        //    var token = d.data;
+            //        //    var lang = $("#ddlLanguage").val();
+            //        //    $.cookie("SSOToken", token);
+            //        //    $.cookie("Language", lang);
+            //        //    var portalUrl = "Portal?SSOToken=" + token;
+            //        //    if (getQueryStringByName('IsDebug') == "Y") {
+            //        //        portalUrl += "&IsDebug=Y&LocalDebugUrl=" + getQueryStringByName('LocalDebugUrl');
+            //        //    }
+            //        //    portalUrl += "#!lang=" + lang;
+            //        //    window.location.href = portalUrl; //"Portal?SSOToken=" + token + "#!lang=" + lang;
+            //        //} else {
+            //        //    if (d.errorcode == "E0001") {
+            //        //        location.href = "Login";
+            //        //    } else {
+            //        //        alert(d.errorcode);
+            //        //    }
+            //        //}
+            //    },
+            //    "error": function (e) {
+            //        alert(e);
+            //    }
+            //};
+
+            //$.ask("login", param, options);
+
+            $.ajax({
+                url: "LoginService.asmx/login",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(param),
+                success: function (data) {
+                    var d = data.d;
                     if (d.success) {
                         var token = d.data;
                         var lang = $("#ddlLanguage").val();
@@ -88,18 +123,19 @@
                             portalUrl += "&IsDebug=Y&LocalDebugUrl=" + getQueryStringByName('LocalDebugUrl');
                         }
                         portalUrl += "#!lang=" + lang;
-                        window.location.href = portalUrl; //"Portal?SSOToken=" + token + "#!lang=" + lang;
+                        window.location.href = portalUrl;
                     } else {
                         if (d.errorcode == "E0001") {
                             location.href = "Login";
                         } else {
-                            alert(d.errorcode);
+                            $.dialog.showDialog(d.errorcode);
                         }
                     }
+                },
+                error: function (e) {
+                    $.dialog.showDialog("error", e.responseText);
                 }
-            };
-
-            $.ask("login", param, options);
+            });
 
             return false;
         };
