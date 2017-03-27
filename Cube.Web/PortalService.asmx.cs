@@ -100,7 +100,7 @@ namespace Cube.Web
             //(3)Role列表
             user.RoleList = GetRoleList();
             //(4)菜单
-            user.MenuList = GetMenuImp();
+            user.MenuList = GetMenuImp().DomainList;
             return user;
         }
 
@@ -108,8 +108,9 @@ namespace Cube.Web
         /// 获得用户菜单
         /// </summary>
         /// <returns></returns>
-        private List<DomainDTO> GetMenuImp()
+        private MenuDTO GetMenuImp()
         {
+            MenuDTO result = new MenuDTO();
             //1.当前user的所有function_id_list(并集)
             List<Cb_User_Function> userFunctionList = DBUtility.CubeDb.From<Cb_User_Function>()
                 .Where(Cb_User_Function._.User_Id == User.Id)
@@ -180,6 +181,17 @@ namespace Cube.Web
                 {
                     rootFunctionList.Add(function);
                 }
+                if (function.Language_Key != null && !result.LanguageList.Exists(l => l.Language_Key == function.Language_Key))
+                {
+                    Cb_Language l = DBUtility.CubeDb.From<Cb_Language>()
+                        .Where(Cb_Language._.Language_Key == function.Language_Key)
+                        .Select(Cb_Language._.All)
+                        .ToList().FirstOrDefault();
+                    if (l != null)
+                    {
+                        result.LanguageList.Add(l);
+                    }
+                }
             }
 
             //3.function-system
@@ -205,6 +217,17 @@ namespace Cube.Web
                             newSystem.FunctionList.Add(root_function);
                             systemList.Add(newSystem);
                         }
+                    }
+                }
+                if (root_function.Language_Key != null && !result.LanguageList.Exists(l => l.Language_Key == root_function.Language_Key))
+                {
+                    Cb_Language l = DBUtility.CubeDb.From<Cb_Language>()
+                        .Where(Cb_Language._.Language_Key == root_function.Language_Key)
+                        .Select(Cb_Language._.All)
+                        .ToList().FirstOrDefault();
+                    if (l != null)
+                    {
+                        result.LanguageList.Add(l);
                     }
                 }
             }
@@ -261,6 +284,17 @@ namespace Cube.Web
                         }
                     }
                 }
+                if (system.Language_Key != null && !result.LanguageList.Exists(l => l.Language_Key == system.Language_Key))
+                {
+                    Cb_Language l = DBUtility.CubeDb.From<Cb_Language>()
+                        .Where(Cb_Language._.Language_Key == system.Language_Key)
+                        .Select(Cb_Language._.All)
+                        .ToList().FirstOrDefault();
+                    if (l != null)
+                    {
+                        result.LanguageList.Add(l);
+                    }
+                }
             }
             //system_group排序
             systemGroupList = systemGroupList.OrderBy(x => x.Code).ToList();
@@ -287,6 +321,17 @@ namespace Cube.Web
                             newDomain.SystemGropList.Add(group);
                             domainList.Add(newDomain);
                         }
+                    }
+                }
+                if (group.Language_Key != null && !result.LanguageList.Exists(l => l.Language_Key == group.Language_Key))
+                {
+                    Cb_Language l = DBUtility.CubeDb.From<Cb_Language>()
+                        .Where(Cb_Language._.Language_Key == group.Language_Key)
+                        .Select(Cb_Language._.All)
+                        .ToList().FirstOrDefault();
+                    if (l != null)
+                    {
+                        result.LanguageList.Add(l);
                     }
                 }
             }
@@ -318,14 +363,15 @@ namespace Cube.Web
                 FunctionDTO debugFunction = new FunctionDTO();
                 debugFunction.Code = "DEBUG";
                 debugFunction.Id = Guid.NewGuid();
-                debugFunction.Lang_Key = "lang_debug";
+                debugFunction.Language_Key = "lang_debug";
                 debugFunction.Url = debugUrl;
 
                 debugSystem.FunctionList.Add(debugFunction);
                 debugDomain.SystemList.Add(debugSystem);
                 domainList.Add(debugDomain);
             }
-            return domainList;
+            result.DomainList = domainList;
+            return result;
         }
 
         /// <summary>

@@ -75,35 +75,7 @@
             var param = {
                 userName: $("#tbxName").val(),
                 password: $("#tbxPassword").val()
-            }
-            //var options = {
-            //    "success": function (d) {
-            //        alert(s);
-            //        //if (d.success) {
-            //        //    var token = d.data;
-            //        //    var lang = $("#ddlLanguage").val();
-            //        //    $.cookie("SSOToken", token);
-            //        //    $.cookie("Language", lang);
-            //        //    var portalUrl = "Portal?SSOToken=" + token;
-            //        //    if (getQueryStringByName('IsDebug') == "Y") {
-            //        //        portalUrl += "&IsDebug=Y&LocalDebugUrl=" + getQueryStringByName('LocalDebugUrl');
-            //        //    }
-            //        //    portalUrl += "#!lang=" + lang;
-            //        //    window.location.href = portalUrl; //"Portal?SSOToken=" + token + "#!lang=" + lang;
-            //        //} else {
-            //        //    if (d.errorcode == "E0001") {
-            //        //        location.href = "Login";
-            //        //    } else {
-            //        //        alert(d.errorcode);
-            //        //    }
-            //        //}
-            //    },
-            //    "error": function (e) {
-            //        alert(e);
-            //    }
-            //};
-
-            //$.ask("login", param, options);
+            }         
 
             $.ajax({
                 url: "LoginService.asmx/login",
@@ -125,11 +97,7 @@
                         portalUrl += "#!lang=" + lang;
                         window.location.href = portalUrl;
                     } else {
-                        if (d.errorcode == "E0001") {
-                            location.href = "Login";
-                        } else {
-                            $.dialog.showDialog(d.errorcode);
-                        }
+                        $.dialog.showDialog(_CurrentLang.lang_error, _CurrentLang.lang_msg_login_failed);
                     }
                 },
                 error: function (e) {

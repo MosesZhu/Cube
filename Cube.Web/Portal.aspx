@@ -455,7 +455,7 @@
             var options = {
                 "success": function (d) {
                     if (d.success) {
-                        var menuList = d.data;
+                        var menuList = d.data.DomainList;
                         var menuHtml = "";
                         $.each(menuList, function (i, domain) {
                             menuHtml += '<li class="header"><i class="fa fa-bank"></i><span lang="' + domain.LanguageID + '">' + domain.Name + '</span></li>';
@@ -473,7 +473,7 @@
                                                   + '" functionurl="http://'
                                                   + functionMenu.Url
                                                   + '"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
-                                                  + functionMenu.LanguageKey
+                                                  + functionMenu.Language_Key
                                                   + '">' + functionMenu.Code + '</span></a></li>';
                                     });
                                     + '</ul></li>';
@@ -482,20 +482,26 @@
                             });
 
                             $.each(domain.SystemList, function (j, systemMenu) {
-                                menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><span>'
+                                menuHtml += '<li class="treeview"><a href="#"><i class="fa fa-laptop text-blue"></i><span>'
                                 + systemMenu.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
-                                + '<ul class="treeview-menu">'
+                                + '<ul class="treeview-menu">';
                                 $.each(systemMenu.FunctionList, function (k, functionMenu) {
-                                    menuHtml += '<li class="active" onclick="return openForm(this);" functionid="'
+                                    menuHtml += '<li onclick="return openForm(this);" functionid="'
                                               + functionMenu.Id
                                               + '" functionurl="http://'
                                               + functionMenu.Url
                                               + '"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
-                                              + functionMenu.LanguageKey
+                                              + functionMenu.Language_Key
                                               + '">' + functionMenu.Code + '</span></a></li>';
                                 });
-                                + '</ul></li>';
-                            });
+                                menuHtml += '</ul></li>';
+                            });                            
+                        });
+
+                        $.each(d.data.LanguageList, function (i, lang) {
+                            _Lang_ZhCN[lang.Language_Key] = lang.Zh_Cn;
+                            _Lang_ZhTW[lang.Language_Key] = lang.Zh_Tw;
+                            _Lang_EnUS[lang.Language_Key] = lang.En_Us;
                         });
 
                         $("#_FunctionMenu").append(menuHtml);

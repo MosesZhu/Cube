@@ -18,5 +18,14 @@ namespace Cube.Web
         {
 
         }
+
+        override
+        public List<string> GetFormMultiLanguageKeyList() 
+        {
+            List<string> keyList = new List<string>();
+            keyList.Add("lang_error");
+            keyList.Add("lang_msg_login_failed");
+            return keyList;
+        }
     }
 }

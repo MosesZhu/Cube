@@ -10,7 +10,7 @@ namespace Cube.Model.DTO
     {
         public Guid Id { get; set; }
         public string Code { get; set; }
-        public string Lang_Key { get; set; }
+        public string Language_Key { get; set; }
         public string Url { get; set; }
         public string System_Id { get; set; }
         public Guid Parent_Function_Id { get; set; }
