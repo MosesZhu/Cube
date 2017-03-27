@@ -467,16 +467,20 @@
                                     menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><span>'
                                     + systemMenu.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
                                     + '<ul class="treeview-menu">'
-                                    $.each(systemMenu.FunctionList, function (k, functionMenu) {
-                                        menuHtml += '<li class="active" onclick="return openForm(this);" functionid="'
-                                                  + functionMenu.Id
-                                                  + '" functionurl="http://'
-                                                  + functionMenu.Url
-                                                  + '"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
+                                    $.each(systemMenu.FunctionList, function (k, functionMenu) {                                        
+                                        menuHtml += '<li onclick="return openForm(this);" functionid="'
+                                              + functionMenu.Id + '" ';
+                                        if (functionMenu.Url) {
+                                            menuHtml += ' functionurl="http://'
+                                                      + functionMenu.Url + '" ';
+                                        }
+
+                                        menuHtml += '><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
                                                   + functionMenu.Language_Key
                                                   + '">' + functionMenu.Code + '</span></a></li>';
+                                        
                                     });
-                                    + '</ul></li>';
+                                    + '</ul></li>';                                    
                                 });
 
                             });
@@ -487,12 +491,17 @@
                                 + '<ul class="treeview-menu">';
                                 $.each(systemMenu.FunctionList, function (k, functionMenu) {
                                     menuHtml += '<li onclick="return openForm(this);" functionid="'
-                                              + functionMenu.Id
-                                              + '" functionurl="http://'
-                                              + functionMenu.Url
-                                              + '"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
+                                              + functionMenu.Id + '" ';
+                                    if (functionMenu.Url)
+                                    {
+                                        menuHtml += ' functionurl="http://'
+                                                  + functionMenu.Url + '" ';
+                                    }
+                                              
+                                    menuHtml += '><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
                                               + functionMenu.Language_Key
                                               + '">' + functionMenu.Code + '</span></a></li>';
+
                                 });
                                 menuHtml += '</ul></li>';
                             });                            
@@ -505,6 +514,9 @@
                         });
 
                         $("#_FunctionMenu").append(menuHtml);
+
+                        //setLanguage(_Context.CurrentLang);
+                        $.language.change(_Context.CurrentLang);
                     }
                 }
             };
@@ -531,34 +543,45 @@
 
         var openForm = function (menu) {
             var functionurl = $(menu).attr("functionurl");
-            var functionname = $(menu).text();
-            var functionid = $(menu).attr("functionid");
-            $("#_FunctionMenu .treeview li").removeClass("active");
-            $(menu).addClass("active");
+            if (functionurl) {
+                var functionname = $(menu).text();
+                var functionid = $(menu).attr("functionid");
+                $("#_FunctionMenu .treeview li").removeClass("active");
+                $(menu).addClass("active");
 
-            var opend = false;
-            $("#_FormTabs a").each(function (i, tab) {
-                if ($(tab).attr("functionid") == functionid) {
-                    opend = true;
-                    $(tab).tab("show");
+                var opend = false;
+                $("#_FormTabs a").each(function (i, tab) {
+                    if ($(tab).attr("functionid") == functionid) {
+                        opend = true;
+                        $(tab).tab("show");
+                    }
+                });
+
+                if (!opend) {
+                    var tabHtml = '<li class="nav-item">'
+                        + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '"><table><tr><td><div';
+
+                    var tabLang = $(menu).find('span').attr('lang');
+                    if (tabLang) {
+                        tabHtml += ' lang="' + tabLang + '"';
+                    }
+                    tabHtml += ">" + functionname + '</div></td><td style="padding-left:5px;"><span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span></td></tr></table></a></li>';
+                    $("#_FormTabs").append(tabHtml);
+
+                    $("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
+                        + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
+                        + "#!lang=" + _Context.CurrentLang
+                        + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
+
+                    $("#_FormTabs a[functionid=" + functionid + "]").tab("show");
                 }
-            });
-
-            if (!opend) {
-                $("#_FormTabs").append('<li class="nav-item">'
-                    + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
-                    + functionname + '<span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span></a></li>');
-                $("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
-                    + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
-                    + "#!lang=" + _Context.CurrentLang
-                    + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
-                $("#_FormTabs a[functionid=" + functionid + "]").tab("show");
             }
+            return false;
         };
 
         var closeForm = function (ctrl) {
             $.dialog.showDialog("aa", "bb", "cc");
-            var functionid = $(ctrl).parent().attr("functionid");
+            var functionid = $(ctrl).parents('a').attr("functionid");//$(ctrl).parent().attr("functionid");
             $("a[functionid=" + functionid + "]").parent().remove();
             $("#" + functionid).remove();
             return false;

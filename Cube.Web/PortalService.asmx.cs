@@ -112,26 +112,29 @@ namespace Cube.Web
         {
             MenuDTO result = new MenuDTO();
             //1.当前user的所有function_id_list(并集)
-            List<Cb_User_Function> userFunctionList = DBUtility.CubeDb.From<Cb_User_Function>()
+            //List<Cb_User_Function> userFunctionList = DBUtility.CubeDb.From<Cb_User_Function>()
+            //    .Where(Cb_User_Function._.User_Id == User.Id)
+            //    .Select(Cb_User_Function._.All)
+            //    .ToList();
+            //List<Guid> roleList = GetRoleList().Select(x => x.Role_Id).ToList();
+            //List<Cb_Role_Function> roleFunctionList = DBUtility.CubeDb.From<Cb_Role_Function>()
+            //    .Where(Cb_Role_Function._.Role_Id.In(roleList))
+            //    .Select(Cb_Role_Function._.All)
+            //    .ToList();
+            //List<Guid> functionm_id_list =
+            //    userFunctionList.Select(x => x.Function_Id).ToList()
+            //    .Union(
+            //        (roleFunctionList.Select(x => x.Function_Id).ToList())
+            //    ).ToList();
+            List<Guid> function_id_list = CubeDb.From<Cb_User_Function>()
                 .Where(Cb_User_Function._.User_Id == User.Id)
-                .Select(Cb_User_Function._.All)
-                .ToList();
-            List<Guid> roleList = GetRoleList().Select(x => x.Role_Id).ToList();
-            List<Cb_Role_Function> roleFunctionList = DBUtility.CubeDb.From<Cb_Role_Function>()
-                .Where(Cb_Role_Function._.Role_Id.In(roleList))
-                .Select(Cb_Role_Function._.All)
-                .ToList();
-            List<Guid> functionm_id_list =
-                userFunctionList.Select(x => x.Function_Id).ToList()
-                .Union(
-                    (roleFunctionList.Select(x => x.Function_Id).ToList())
-                ).ToList();
-
+                .Select(Cb_User_Function._.Function_Id)
+                .ToList<Guid>();
             List<FunctionDTO> functionList = functionList = new List<FunctionDTO>();
-            if (functionm_id_list != null)
+            if (function_id_list != null)
             {
-                functionList = DBUtility.CubeDb.From<Cb_Function>()
-                .Where(Cb_Function._.Id.In(functionm_id_list))
+                functionList = CubeDb.From<Cb_Function>()
+                .Where(Cb_Function._.Id.In(function_id_list))
                 .Select(Cb_Function._.All)
                 .OrderBy(Cb_Function._.Code.Asc)
                 .ToList<FunctionDTO>();
@@ -183,7 +186,7 @@ namespace Cube.Web
                 }
                 if (function.Language_Key != null && !result.LanguageList.Exists(l => l.Language_Key == function.Language_Key))
                 {
-                    Cb_Language l = DBUtility.CubeDb.From<Cb_Language>()
+                    Cb_Language l = CubeDb.From<Cb_Language>()
                         .Where(Cb_Language._.Language_Key == function.Language_Key)
                         .Select(Cb_Language._.All)
                         .ToList().FirstOrDefault();
@@ -208,7 +211,7 @@ namespace Cube.Web
                 {
                     if (current_system_id != null && current_system_id != Guid.Empty.ToString())
                     {
-                        SystemDTO newSystem = DBUtility.CubeDb.From<Cb_System>()
+                        SystemDTO newSystem = CubeDb.From<Cb_System>()
                         .Where(Cb_System._.Id == current_system_id)
                         .Select(Cb_System._.All)
                         .First<SystemDTO>();
@@ -221,7 +224,7 @@ namespace Cube.Web
                 }
                 if (root_function.Language_Key != null && !result.LanguageList.Exists(l => l.Language_Key == root_function.Language_Key))
                 {
-                    Cb_Language l = DBUtility.CubeDb.From<Cb_Language>()
+                    Cb_Language l = CubeDb.From<Cb_Language>()
                         .Where(Cb_Language._.Language_Key == root_function.Language_Key)
                         .Select(Cb_Language._.All)
                         .ToList().FirstOrDefault();
@@ -252,7 +255,7 @@ namespace Cube.Web
                     }
                     else
                     {
-                        SystemGroupDTO newGroup = DBUtility.CubeDb.From<Cb_System_Group>()
+                        SystemGroupDTO newGroup = CubeDb.From<Cb_System_Group>()
                             .Where(Cb_System_Group._.Id == group)
                             .Select(Cb_System_Group._.All)
                             .First<SystemGroupDTO>();
@@ -273,7 +276,7 @@ namespace Cube.Web
                     }
                     else
                     {
-                        DomainDTO newDomain = DBUtility.CubeDb.From<Cb_Domain>()
+                        DomainDTO newDomain = CubeDb.From<Cb_Domain>()
                             .Where(Cb_Domain._.Id == domain_id)
                             .Select(Cb_Domain._.All)
                             .First<DomainDTO>();
@@ -286,7 +289,7 @@ namespace Cube.Web
                 }
                 if (system.Language_Key != null && !result.LanguageList.Exists(l => l.Language_Key == system.Language_Key))
                 {
-                    Cb_Language l = DBUtility.CubeDb.From<Cb_Language>()
+                    Cb_Language l = CubeDb.From<Cb_Language>()
                         .Where(Cb_Language._.Language_Key == system.Language_Key)
                         .Select(Cb_Language._.All)
                         .ToList().FirstOrDefault();
@@ -312,7 +315,7 @@ namespace Cube.Web
                     }
                     else
                     {
-                        DomainDTO newDomain = DBUtility.CubeDb.From<Cb_Domain>()
+                        DomainDTO newDomain = CubeDb.From<Cb_Domain>()
                             .Where(Cb_Domain._.Id == domain_id)
                             .Select(Cb_Domain._.All)
                             .First<DomainDTO>();
@@ -325,7 +328,7 @@ namespace Cube.Web
                 }
                 if (group.Language_Key != null && !result.LanguageList.Exists(l => l.Language_Key == group.Language_Key))
                 {
-                    Cb_Language l = DBUtility.CubeDb.From<Cb_Language>()
+                    Cb_Language l = CubeDb.From<Cb_Language>()
                         .Where(Cb_Language._.Language_Key == group.Language_Key)
                         .Select(Cb_Language._.All)
                         .ToList().FirstOrDefault();

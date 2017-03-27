@@ -37,6 +37,23 @@ namespace Cube.Base
             }
         }
 
+        public static DbSession mCubeDBSession;
+        public DbSession CubeDb
+        {
+            get
+            {
+                if (mCubeDBSession == null)
+                {
+                    mCubeDBSession = DBUtility.CubeDb;
+                }
+                return mCubeDBSession;
+            }
+            set
+            {
+                mCubeDBSession = value;
+            }
+        }
+
         public Cb_User User {
             get {
                 return SSOContext.Current.User;
