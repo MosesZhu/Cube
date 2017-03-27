@@ -450,7 +450,62 @@
             });
         });
 
-        //TODO:function 现在还不是递归的
+        var getSystemMenuHtml = function (systemMenu) {
+            var menuHtml
+                = '<li class="treeview">'
+                +   '<a href="#">'
+                +     '<i class="fa fa-laptop text-blue"></i>'
+                +     '<span lang="' + systemMenu.Language_Key+ '">' + systemMenu.Code + '</span>'
+                +     '<span class="pull-right-container">'
+                +         '<i class="fa fa-angle-left pull-right"></i>'
+                +     '</span>'
+                + '</a>';
+            menuHtml += '<ul class="treeview-menu">';
+            $.each(systemMenu.FunctionList, function (k, functionMenu) {
+                menuHtml += getFunctionMenuHtml(functionMenu);
+            });
+            menuHtml += '</ul></li>';
+            return menuHtml;
+        };
+
+        var getFunctionMenuHtml = function (functionMenu) {
+            if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
+
+            } else {
+            }
+
+            var menuHtml =
+                '<ul class="treeview-menu">'
+                + '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
+            if (functionMenu.Url) {
+                menuHtml += ' functionurl="http://'
+                          + functionMenu.Url + '" ';
+            }
+           
+            if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
+                menuHtml += '>'
+                      + '<a href="#">'
+                      +   '<i class="fa fa-puzzle-piece text-light-blue">'
+                      +   '</i>'
+                      +   '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                      +   '<span class="pull-right-container">'
+                      +     '<i class="fa fa-angle-left pull-right"></i>'
+                      +   '</span>'
+                      + '</a>';
+                $.each(functionMenu.SubFunctionList, function (i, subFunction) {
+                    menuHtml += getFunctionMenuHtml(subFunction);
+                });
+            } else {
+                menuHtml += '><a href="#"><i class="fa fa-circle-o text-light-blue"></i><span lang="'
+                      + functionMenu.Language_Key
+                      + '">' + functionMenu.Code + '</span>';
+                menuHtml += '</a>';
+            }
+
+            menuHtml += '</li></ul>';
+            return menuHtml;
+        };
+        
         var initMenu = function () {
             var options = {
                 "success": function (d) {
@@ -458,52 +513,24 @@
                         var menuList = d.data.DomainList;
                         var menuHtml = "";
                         $.each(menuList, function (i, domain) {
-                            menuHtml += '<li class="header"><i class="fa fa-bank"></i><span lang="' + domain.LanguageID + '" style="padding-left:5px;">' + domain.Name + '</span></li>';
-                            $.each(domain.SystemGropList, function (j, group) {
-                                menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><spanlang="' + group.Language_Key + '">'
-                                + group.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
-                                + '<ul class="treeview-menu">'
-                                $.each(group.SystemList, function (j, systemMenu) {
-                                    menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><span>'
-                                    + systemMenu.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
-                                    + '<ul class="treeview-menu">'
-                                    $.each(systemMenu.FunctionList, function (k, functionMenu) {                                        
-                                        menuHtml += '<li onclick="return openForm(this);" functionid="'
-                                              + functionMenu.Id + '" ';
-                                        if (functionMenu.Url) {
-                                            menuHtml += ' functionurl="http://'
-                                                      + functionMenu.Url + '" ';
-                                        }
-
-                                        menuHtml += '><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
-                                                  + functionMenu.Language_Key
-                                                  + '">' + functionMenu.Code + '</span></a></li>';
-                                        
-                                    });
-                                    + '</ul></li>';                                    
-                                });
+                            menuHtml
+                                += '<li class="header">'
+                                +     '<i class="fa fa-bank"></i>'
+                                +     '<span lang="' + domain.LanguageID + '" style="padding-left:5px;">' + domain.Name + '</span>'
+                                +  '</li>';
+                            $.each(domain.SystemGroupList, function (j, group) {
+                                //TODO error exist
+                                //menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><spanlang="' + group.Language_Key + '">'
+                                //+ group.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
+                                //+ '<ul class="treeview-menu">'
+                                //$.each(group.SystemList, function (j, systemMenu) {
+                                //    menuHtml += getSystemMenuHtml(systemMenu);
+                                //});
 
                             });
 
                             $.each(domain.SystemList, function (j, systemMenu) {
-                                menuHtml += '<li class="treeview"><a href="#"><i class="fa fa-laptop text-blue"></i><span>'
-                                + systemMenu.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
-                                + '<ul class="treeview-menu">';
-                                $.each(systemMenu.FunctionList, function (k, functionMenu) {
-                                    menuHtml += '<li onclick="return openForm(this);" functionid="'
-                                              + functionMenu.Id + '" ';
-                                    if (functionMenu.Url)
-                                    {
-                                        menuHtml += ' functionurl="http://'
-                                                  + functionMenu.Url + '" ';
-                                    }
-                                              
-                                    menuHtml += '><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="'
-                                              + functionMenu.Language_Key
-                                              + '">' + functionMenu.Code + '</span></a></li>';
-
-                                });
-                                menuHtml += '</ul></li>';
+                                menuHtml += getSystemMenuHtml(systemMenu);
                             });                            
                         });
 
