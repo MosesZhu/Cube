@@ -458,7 +458,7 @@
                         var menuList = d.data.DomainList;
                         var menuHtml = "";
                         $.each(menuList, function (i, domain) {
-                            menuHtml += '<li class="header"><i class="fa fa-bank"></i><span lang="' + domain.LanguageID + '">' + domain.Name + '</span></li>';
+                            menuHtml += '<li class="header"><i class="fa fa-bank"></i><span lang="' + domain.LanguageID + '" style="padding-left:5px;">' + domain.Name + '</span></li>';
                             $.each(domain.SystemGropList, function (j, group) {
                                 menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><spanlang="' + group.Language_Key + '">'
                                 + group.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
