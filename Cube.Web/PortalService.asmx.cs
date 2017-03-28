@@ -104,10 +104,30 @@ namespace Cube.Web
             return user;
         }
 
+
+        private void FoundParentFunctionWithoutRight(FunctionDTO currentFunction, List<FunctionDTO> opFunctionList, List<FunctionDTO> baseFunctionList)
+        {
+            FunctionDTO parentFunction = CubeDb.From<Cb_Function>()
+                    .Where(Cb_Function._.Id == currentFunction.Parent_Function_Id)
+                    .Select(Cb_Function._.All)
+                    .ToList<FunctionDTO>().FirstOrDefault();
+            if (parentFunction != null)
+            {
+                if (!opFunctionList.Exists(f => f.Id == currentFunction.Parent_Function_Id))
+                {
+                    opFunctionList.Add(parentFunction);
+                }
+                if (parentFunction.Parent_Function_Id != null && parentFunction.Parent_Function_Id != Guid.Empty
+                     && !baseFunctionList.Exists(f => f.Id == parentFunction.Parent_Function_Id))
+                {
+                    FoundParentFunctionWithoutRight(parentFunction, opFunctionList, baseFunctionList);
+                }  
+            }
+        }
         /// <summary>
         /// 获得用户菜单
         /// </summary>
-        /// <returns></returns>
+        /// <returns></returns>        
         private MenuDTO GetMenuImp()
         {
             MenuDTO result = new MenuDTO();
@@ -125,6 +145,18 @@ namespace Cube.Web
                 .OrderBy(Cb_Function._.Code.Asc)
                 .ToList<FunctionDTO>();
             }
+
+            //应为子功能有权限而父功能没有权限的情况
+            List<FunctionDTO> parentFunctionList = new List<FunctionDTO>();
+            foreach(FunctionDTO function in functionList)
+            {
+                if (function.Parent_Function_Id != null && function.Parent_Function_Id != Guid.Empty
+                     && !functionList.Exists(f => f.Id == function.Parent_Function_Id))
+                {
+                    FoundParentFunctionWithoutRight(function, parentFunctionList, functionList);
+                }                
+            }
+            functionList.AddRange(parentFunctionList);
 
             List<string> system_id_list = functionList.Where(f => f.System_Id != null).Select(f => f.System_Id).ToList();
             List<SystemDTO> systemList = CubeDb.From<Cb_System>()
@@ -208,7 +240,7 @@ namespace Cube.Web
             //5.组装domain
             foreach (DomainDTO domain in domainList)
             {
-                domain.SystemGropList = systemGroupList.FindAll(sg => sg.Domain_Id != null
+                domain.SystemGroupList = systemGroupList.FindAll(sg => sg.Domain_Id != null
                     && sg.Domain_Id.ToString().Equals(domain.Id.ToString(), StringComparison.CurrentCultureIgnoreCase));
                 domain.SystemList = systemList.FindAll(s => (s.Group_Id == null || s.Group_Id == Guid.Empty) && s.Domain_Id != null
                     && s.Domain_Id.ToString().Equals(domain.Id.ToString(), StringComparison.CurrentCultureIgnoreCase));
@@ -222,8 +254,8 @@ namespace Cube.Web
             };
             othersDomain.SystemList = systemList.FindAll(s => (s.Group_Id == null || s.Group_Id == Guid.Empty)
                 && (s.Domain_Id == null || s.Domain_Id == Guid.Empty));
-            othersDomain.SystemGropList = systemGroupList.FindAll(sg => sg.Domain_Id == null || sg.Domain_Id == Guid.Empty);
-            if (othersDomain.SystemList.Count() > 0 || othersDomain.SystemGropList.Count() > 0)
+            othersDomain.SystemGroupList = systemGroupList.FindAll(sg => sg.Domain_Id == null || sg.Domain_Id == Guid.Empty);
+            if (othersDomain.SystemList.Count() > 0 || othersDomain.SystemGroupList.Count() > 0)
             {
                 domainList.Add(othersDomain);
             }            

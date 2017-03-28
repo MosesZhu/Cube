@@ -46,6 +46,7 @@ namespace Cube.Base
                 {
                     mCubeDBSession = DBUtility.CubeDb;
                 }
+               
                 return mCubeDBSession;
             }
             set

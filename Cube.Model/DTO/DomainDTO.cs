@@ -12,11 +12,11 @@ namespace Cube.Model.DTO
         public Guid Id { get; set; }
         public string Name { get; set; }
         public List<SystemDTO> SystemList { get; set; }
-        public List<SystemGroupDTO> SystemGropList { get; set; }
+        public List<SystemGroupDTO> SystemGroupList { get; set; }
         public DomainDTO()
         {
             SystemList = new List<SystemDTO>();
-            SystemGropList = new List<SystemGroupDTO>();
+            SystemGroupList = new List<SystemGroupDTO>();
         }
     }
 }

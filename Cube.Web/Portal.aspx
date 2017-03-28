@@ -72,8 +72,7 @@
                                                     <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                                 </div>
                                                 <!-- Message title and timestamp -->
-                                                <h4>Support Team
-                            <small><i class="fa fa-clock-o"></i>5 mins</small>
+                                                <h4>Support Team<small><i class="fa fa-clock-o"></i>5 mins</small>
                                                 </h4>
                                                 <!-- The message -->
                                                 <p>Why not buy a new awesome theme?</p>
@@ -86,58 +85,7 @@
                                 <li class="footer"><a href="#">See All Messages</a></li>
                             </ul>
                         </li>
-                        <!-- /.messages-menu -->
-                        <!--                       
-                        <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning">10</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 10 notifications</li>
-                                <li>
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-users text-aqua"></i>5 new members joined today
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">View all</a></li>
-                            </ul>
-                        </li>-->
-                        <!-- Tasks Menu -->
-                        <!--
-                        <li class="dropdown tasks-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-flag-o"></i>
-                                <span class="label label-danger">9</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 9 tasks</li>
-                                <li>
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <h3>Design some buttons
-                            <small class="pull-right">20%</small>
-                                                </h3>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">20% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>                            
-                                <li class="footer">
-                                    <a href="#">View all tasks</a>
-                                </li>
-                            </ul>
-                        </li>
-                            -->
+                       
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
@@ -157,29 +105,9 @@
                       <small>tel: +88861873</small>
                                     </p>
                                 </li>
-                                <!-- Menu Body -->
-                                <!--
-                  <li class="user-body">
-                    <div class="row">
-                      <div class="col-xs-4 text-center">
-                        <a href="#">Followers</a>
-                      </div>
-                      <div class="col-xs-4 text-center">
-                        <a href="#">Sales</a>
-                      </div>
-                      <div class="col-xs-4 text-center">
-                        <a href="#">Friends</a>
-                      </div>
-                    </div>
-                  </li>
-                  -->
+                                
                                 <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <!--
-                    <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Profile</a>
-                    </div>
-                    -->
+                                <li class="user-footer">                                    
                                     <div class="pull-right">
                                         <a href="#" class="btn btn-default btn-flat" lang="lang_logout" onclick="logout()">Logout</a>
                                     </div>
@@ -215,66 +143,7 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu" id="_FunctionMenu">
-                    <%--<li class="header"><i class="fa fa-bank"></i>MFG</li>
-                    <li class="treeview active">
-                        <a href="#">
-                            <i class="fa fa-laptop text-blue"></i>
-                            <span>QML</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li class="active" onclick="return openForm(this);" functionid="aaa" functionurl="http://localhost:28937/Forms/TestDataMaintainForm.aspx"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i><span lang="lang_menu_aaa">QML Maintain Form</span></a></li>
-                            <li onclick="return openForm(this);" functionid="bbb" functionurl="http://localhost:28937/Forms/TestDataMaintainForm.aspx"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i>QML Inquiry By PO Data</a></li>
-                            <li onclick="return openForm(this);" functionid="ccc" functionurl="http://localhost:28937/Forms/TestDataMaintainForm.aspx"><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i>QML Vendor Inquiry</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-laptop text-blue"></i>
-                            <span>RSO</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i>Level One</a></li>
-                            <li>
-                                <a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i>Level One
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li>
-                                        <a href="#"><i class="fa fa-circle-o"></i>Level Two</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-circle-o"></i>Level Two<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                                        <ul class="treeview-menu">
-                                            <li><a href="#"><i class="fa fa-circle-o"></i>Level Three</a></li>
-                                            <li><a href="#"><i class="fa fa-circle-o"></i>Level Three</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i>Level One</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="header"><i class="fa fa-bank"></i>FIN</li>
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-laptop text-blue"></i>
-                            <span>BTP</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-puzzle-piece text-light-blue"></i>BTP Data Inquiry</a></li>
-                        </ul>
-                    </li>--%>
+                   
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -441,14 +310,30 @@
 
             //Tabs Event
             $('#_FormTabs').on('shown.bs.tab', function (e) {
-                //var previousTabText = $(e.relatedTarget).text();
                 var actionFunctionId = $(e.target).attr("functionid");
-                //alert(actionFunctionId);
                 $("#_FunctionMenu li").removeClass("active");
                 $("#_FunctionMenu li[functionid=" + actionFunctionId + "]").parents(".treeview").addClass("active");
                 $("#_FunctionMenu li[functionid=" + actionFunctionId + "]").addClass("active");
             });
         });
+
+        var getSystemGroupMenuHtml = function (groupMenu) {
+            var menuHtml
+                = '<li class="treeview">'
+                + '<a href="#">'
+                + '<i class="fa fa-bank text-blue"></i>'
+                + '<span lang="' + groupMenu.Language_Key + '">' + groupMenu.Code + '</span>'
+                + '<span class="pull-right-container">'
+                + '<i class="fa fa-angle-left pull-right"></i>'
+                + '</span>'
+                + '</a>';
+            menuHtml += '<ul class="treeview-menu">';
+            $.each(groupMenu.SystemList, function (k, systemMenu) {
+                menuHtml += getSystemMenuHtml(systemMenu);
+            });
+            menuHtml += '</ul></li>';
+            return menuHtml;
+        };
 
         var getSystemMenuHtml = function (systemMenu) {
             var menuHtml
@@ -513,14 +398,8 @@
                                 +     '<i class="fa fa-bank"></i>'
                                 +     '<span lang="' + domain.LanguageID + '" style="padding-left:5px;">' + domain.Name + '</span>'
                                 +  '</li>';
-                            $.each(domain.SystemGroupList, function (j, group) {
-                                //TODO error exist
-                                //menuHtml += '<li class="treeview active"><a href="#"><i class="fa fa-laptop text-blue"></i><spanlang="' + group.Language_Key + '">'
-                                //+ group.Code + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>'
-                                //+ '<ul class="treeview-menu">'
-                                //$.each(group.SystemList, function (j, systemMenu) {
-                                //    menuHtml += getSystemMenuHtml(systemMenu);
-                                //});
+                            $.each(domain.SystemGroupList, function (j, groupMenu) {
+                                menuHtml += getSystemGroupMenuHtml(groupMenu);
 
                             });
 
@@ -609,8 +488,6 @@
         };
 
         var resetContentSize = function () {
-            //$("section.content")
-            //alert($(window).height());
             var isMenuVisible = ($('.main-sidebar').first().css('transform') === "none");
             var isBreadCrumbBlock = ($('.breadcrumb').first().css("position") === 'relative');
             var baseHeight = $(window).height() - 115;
