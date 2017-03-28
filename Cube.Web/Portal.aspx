@@ -459,7 +459,7 @@
                 +     '<span class="pull-right-container">'
                 +         '<i class="fa fa-angle-left pull-right"></i>'
                 +     '</span>'
-                + '</a>';
+                +   '</a>';
             menuHtml += '<ul class="treeview-menu">';
             $.each(systemMenu.FunctionList, function (k, functionMenu) {
                 menuHtml += getFunctionMenuHtml(functionMenu);
@@ -469,41 +469,36 @@
         };
 
         var getFunctionMenuHtml = function (functionMenu) {
+            var menuHtml = '';
             if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
-
-            } else {
-            }
-
-            var menuHtml =
-                '<ul class="treeview-menu">'
-                + '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
-            if (functionMenu.Url) {
-                menuHtml += ' functionurl="http://'
-                          + functionMenu.Url + '" ';
-            }
-           
-            if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
-                menuHtml += '>'
-                      + '<a href="#">'
-                      +   '<i class="fa fa-puzzle-piece text-light-blue">'
-                      +   '</i>'
-                      +   '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                      +   '<span class="pull-right-container">'
-                      +     '<i class="fa fa-angle-left pull-right"></i>'
-                      +   '</span>'
-                      + '</a>';
-                $.each(functionMenu.SubFunctionList, function (i, subFunction) {
-                    menuHtml += getFunctionMenuHtml(subFunction);
+                menuHtml += '<li class="treeview">'
+                          + '<a href="#">'
+                          + '<i class="fa fa-puzzle-piece text-blue"></i>'
+                          + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                          + '<span class="pull-right-container">'
+                          + '<i class="fa fa-angle-left pull-right"></i>'
+                          + '</span>'
+                          + '</a>';
+                menuHtml += '<ul class="treeview-menu">';
+                $.each(functionMenu.SubFunctionList, function (k, subFunctionMenu) {
+                    menuHtml += getFunctionMenuHtml(subFunctionMenu);
                 });
+                menuHtml += '</ul></li>';
             } else {
-                menuHtml += '><a href="#"><i class="fa fa-circle-o text-light-blue"></i><span lang="'
-                      + functionMenu.Language_Key
-                      + '">' + functionMenu.Code + '</span>';
-                menuHtml += '</a>';
+                menuHtml += '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
+                if (functionMenu.Url) {
+                    menuHtml += ' functionurl="http://'
+                              + functionMenu.Url + '" ';
+                }
+                menuHtml += '>'
+                          +   '<a href="#">'
+                          +     '<i class="fa fa-circle-o text-light-blue"></i>'
+                          +     '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                          +   '</a>'
+                          + '</li>';
             }
 
-            menuHtml += '</li></ul>';
-            return menuHtml;
+            return menuHtml;           
         };
         
         var initMenu = function () {
@@ -531,18 +526,17 @@
 
                             $.each(domain.SystemList, function (j, systemMenu) {
                                 menuHtml += getSystemMenuHtml(systemMenu);
-                            });                            
-                        });
+                            });
+                        });                        
 
+                        $("#_FunctionMenu").append(menuHtml);
+
+                        //menu muliti language
                         $.each(d.data.LanguageList, function (i, lang) {
                             _Lang_ZhCN[lang.Language_Key] = lang.Zh_Cn;
                             _Lang_ZhTW[lang.Language_Key] = lang.Zh_Tw;
                             _Lang_EnUS[lang.Language_Key] = lang.En_Us;
                         });
-
-                        $("#_FunctionMenu").append(menuHtml);
-
-                        //setLanguage(_Context.CurrentLang);
                         $.language.change(_Context.CurrentLang);
                     }
                 }
