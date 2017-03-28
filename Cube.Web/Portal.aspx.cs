@@ -15,10 +15,10 @@ namespace Cube.Web
         public override List<string> GetFormMultiLanguageKeyList()
         {
             List<string> _multyKeyArray = new List<string>();
-            _multyKeyArray.Add("lang_Language");
-            _multyKeyArray.Add("lang_Confirm");
-            _multyKeyArray.Add("lang_Themes");
-            _multyKeyArray.Add("lang_menu_aaa");
+            //_multyKeyArray.Add("lang_language");
+            //_multyKeyArray.Add("lang_confirm");
+            //_multyKeyArray.Add("lang_themes");
+            _multyKeyArray.Add("msg_confirm_close_tab");
             return _multyKeyArray;
         }
 

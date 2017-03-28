@@ -201,7 +201,7 @@
             <div class="tab-content">
                 <!-- Home tab content -->
                 <div class="tab-pane active" id="control-sidebar-home-tab">
-                    <h3 class="control-sidebar-heading" lang="lang_Language">Language</h3>
+                    <h3 class="control-sidebar-heading" lang="lang_language">Language</h3>
                     <ul class="control-sidebar-menu">
                         <li>
                             <a href="javascript:;">
@@ -212,7 +212,7 @@
                                         <option value="ZhTW">中文繁體</option>
                                     </select>
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-success" onclick="return changeLanguage();" lang="lang_Confirm">Confirm</button>
+                                        <button type="button" class="btn btn-success" onclick="return changeLanguage();" lang="lang_confirm">Confirm</button>
                                     </div>
                                 </div>
                             </a>
@@ -220,7 +220,7 @@
                     </ul>
                     <!-- /.control-sidebar-menu -->
 
-                    <h3 class="control-sidebar-heading" lang="lang_Themes">Themes</h3>
+                    <h3 class="control-sidebar-heading" lang="lang_themes">Themes</h3>
                     <ul class="control-sidebar-menu">
                         <li>
                             <div class="btn-group" style="width: 100%; padding: 20px;">
@@ -319,6 +319,15 @@
                 $("#_FunctionMenu li[functionid=" + actionFunctionId + "]").parents(".treeview").addClass("active");
                 $("#_FunctionMenu li[functionid=" + actionFunctionId + "]").addClass("active");
             });
+
+            $('#tbxSearchMenu').on('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    searchMenu();
+                    return false;
+                }
+                return true;
+            });
+
         });
 
         var getSystemGroupMenuHtml = function (groupMenu) {
@@ -511,7 +520,7 @@
 
         var refreshSearchMenu = function (menuList) {
             var menuHtml = "";
-            $.each(_PortalContext.MenuList, function (i, domain) {
+            $.each(menuList, function (i, domain) {
                 if (domain.bingo) {
                     menuHtml
                         += '<li class="header">'
@@ -560,7 +569,7 @@
             if ($("#tbxSearchMenu").val().length > 0) {
                 var search = $("#tbxSearchMenu").val();
 
-                var tempMenuList = $.extend(_PortalContext.MenuList, {});
+                var tempMenuList = $.extend(true, {}, _PortalContext.MenuList);
                 $.each(tempMenuList, function (i, domain) {
                     if (domain.Name.indexOf(search) >= 0) {
                         domain.bingo = true;
@@ -630,7 +639,6 @@
                                 || (_Lang_ZhTW[functionMenu.Language_Key] && _Lang_ZhTW[functionMenu.Language_Key].indexOf(search) >= 0)
                                 || (_Lang_EnUS[functionMenu.Language_Key] && _Lang_EnUS[functionMenu.Language_Key].indexOf(search) >= 0)) {
                                 domain.bingo = true;
-                                groupMenu.bingo = true;
                                 systemMenu.bingo = true;
                                 functionMenu.bingo = true;
                             }
@@ -703,10 +711,16 @@
         };
 
         var closeForm = function (ctrl) {
-            $.dialog.showDialog("aa", "bb", "cc");
-            var functionid = $(ctrl).parents('a').attr("functionid");//$(ctrl).parent().attr("functionid");
-            $("a[functionid=" + functionid + "]").parent().remove();
-            $("#" + functionid).remove();
+            $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
+                function () {
+                    var functionid = $(ctrl).parents('a').attr("functionid");//$(ctrl).parent().attr("functionid");
+                    $("a[functionid=" + functionid + "]").parent().remove();
+                    $("#" + functionid).remove();
+                },
+                function () {
+
+                });
+            
             return false;
         };
 

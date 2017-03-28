@@ -36,7 +36,26 @@
                         <p class="text-warning"><small id="messageDialogWarningContent"></small></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button"  class="btn btn-primary" data-dismiss="modal" data-dismiss="modal">Close</button>
+                        <button type="button"  class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" lang="lang_close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="confirmDialog" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h1 class="modal-title" id="confirmDialogTitle" lang="lang_confirm">Confirm</h1>
+                    </div>
+                    <div class="modal-body">
+                        <p id="confirmDialogContent"></p>
+                        <p class="text-warning"><small id="confirmDialogWarningContent"></small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"  class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" lang="lang_confirm" id="btnConfirmDialogConfirm">Confirm</button>
+                        <button type="button"  class="btn" data-dismiss="modal" data-dismiss="modal" lang="lang_cancel" id="btnConfirmDialogCancel">Cancel</button>
                     </div>
                 </div>
             </div>

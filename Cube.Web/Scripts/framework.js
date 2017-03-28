@@ -142,11 +142,20 @@ var setLanguage = function (languageName) {
 
 var showDialog = function (title, content, warning, type, times) {
     $.dialog.showDialog(title, content, warning, type, times);
-}
+};
+
+var showConfirm = function (title, content, warning, type, oktodo, canceltodo, times) {
+    $.dialog.showConfirm(title, content, warning, type, oktodo, canceltodo, times);
+};
 
 var closeDialog = function (times) {
     $.dialog.closeDialog(times);
 }
+
+var closeConfirm = function (times) {
+    $.dialog.closeConfirm(times);
+}
+
 //end proxy function
 
 jQuery.extend({
@@ -210,6 +219,49 @@ jQuery.extend({
         },
         "showWarning": function (title, content, warning) {
 
+        },
+        "showConfirm": function (content, warning, type, oktodo, canceltodo, times) {
+            if (parent && parent.showConfirm) {
+                if (!times) {
+                    var times = 1;
+                    parent.showConfirm(content, warning, type, oktodo, canceltodo, times);
+                    return;
+                }
+            } 
+            
+            $("#confirmDialogContent").html("");
+            $("#confirmDialogWarningContent").html("");
+
+            if (content) {
+                $("#confirmDialogContent").html(content);
+            }
+
+            if (warning) {
+                $("#confirmDialogWarningContent").html(warning);
+            }
+
+            $("#btnConfirmDialogConfirm").off('click');
+            $("#btnConfirmDialogCancel").off('click');
+
+            if (oktodo) {
+                $("#btnConfirmDialogConfirm").on('click', oktodo);
+            }
+
+            if (canceltodo) {
+                $("#btnConfirmDialogCancel").on('click', canceltodo);
+            }
+
+            $("#confirmDialog").modal('show');
+        },
+        "closeConfirm": function (times) {
+            if (parent && parent.closeConfirm) {
+                if (!times) {
+                    var times = 1;
+                    parent.closeConfirm(times);
+                    return;
+                }
+            }
+            $("#confirmDialog").modal('hide');
         },
     }
 });
