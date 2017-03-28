@@ -38,7 +38,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cube.Base">
+      <HintPath>..\Cube.Base\bin\Debug\Cube.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="ITS.Data">
+      <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>\\10.85.10.2\bach30\Common\bin\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Oracle.DataAccess, Version=2.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Moses.Zhu\Desktop\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -57,6 +70,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccountMaintain\UserMaintain.aspx" />
+    <Content Include="AccountMaintain\UserMaintainService.asmx" />
+    <Content Include="Master.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -68,10 +84,34 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountMaintain\UserMaintain.aspx.cs">
+      <DependentUpon>UserMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AccountMaintain\UserMaintain.aspx.designer.cs">
+      <DependentUpon>UserMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AccountMaintain\UserMaintainService.asmx.cs">
+      <DependentUpon>UserMaintainService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Master.Master.cs">
+      <DependentUpon>Master.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Master.Master.designer.cs">
+      <DependentUpon>Master.Master</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Language\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cube.Model\Cube.Model.csproj">
+      <Project>{5a9f18e0-cb55-4df4-b976-7ee76a45a690}</Project>
+      <Name>Cube.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

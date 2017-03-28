@@ -1,0 +1,186 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="UserMaintain.aspx.cs" Inherits="Cube.Management.AccountMaintain.UserMaintain" %>
+
+<asp:Content ID="PageStyleContent" ContentPlaceHolderID="PageStyleContentHolder" runat="server">
+</asp:Content>
+<asp:Content ID="MainContent" ContentPlaceHolderID="MainContentHolder" runat="server">
+    <!--inquiry area & toolbar-->
+    <div class="row">
+        <div class="col-lg-6 col-xs-6">
+            <table>
+                <tr>
+                    <td lang="lang_login_id">Login ID</td>
+                    <td class="text-bold" style="padding: 10px;">
+                        <input type="text" data-clear-btn="true" name="tbxLoginNameInquiry" class="form-control"
+                            id="tbxLoginNameInquiry" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td lang="lang_name">Name</td>
+                    <td class="text-bold" style="padding: 10px;">
+                        <input type="text" data-clear-btn="true" name="tbxNameInquiry" class="form-control"
+                            id="tbxNameInquiry" value="" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-lg-6 col-xs-6">
+            <div class="btn-toolbar" role="toolbar" style="float: right;">
+                <button type="button" class="btn btn-primary" onclick="return inquiryUser();" lang="lang_inquiry">
+                    Inquiry
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--inquiry result grid-->
+    <div class="row" style="padding: 15px;">
+        <table id="gridUser" class="bootstrapTable" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
+            data-url="" data-height="398" data-pagination="true"
+            data-show-refresh="true" data-row-style="rowStyle" data-search="false"
+            data-show-toggle="true" data-sortable="true"
+            data-striped="true" data-page-size="10" data-page-list="[5,10,20]"
+            data-click-to-select="false" data-single-select="false">
+            <thead>
+                <tr>
+                    <th data-field="state" data-checkbox="true"></th>
+                    <th data-field="Id" data-sortable="true" data-visible="false" data-searchable="false">ID</th>
+                    <th data-field="Login_Name" data-width="200" data-sortable="true" data-formatter="loginNameFormatter" data-search-formatter="false" lang="lang_login_id">Login ID.</th>
+                    <th data-field="Name" data-width="200" data-sortable="true" lang="lang_name">Name</th>
+                    <th data-field="Mail" data-sortable="true" lang="lang_mail">Mail</th>
+                    <th data-field="Id" data-width="80" data-sortable="false" data-formatter="editColumnFormatter" data-search-formatter="false" lang="lang_edit">Edit</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <!--edit dialog-->
+    <div id="userBaseMaintainDialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h1 class="modal-title" lang="lang_edit"></h1>
+                </div>
+                <div class="modal-body">
+                    <table style="width: 100%">
+                        <tr>
+                            <td lang="lang_login_id"></td>
+                            <td style="padding: 10px;">
+                                <input type="text" data-clear-btn="true" name="tbxLoginName" class="form-control"
+                                    id="tbxLoginName" value="" required="required" />
+                            </td>
+                            <td><span style="color: red;">*</span></td>
+                        </tr>
+                        <tr>
+                            <td lang="lang_name"></td>
+                            <td style="padding: 10px;">
+                                <input type="text" data-clear-btn="true" name="tbxName" class="form-control"
+                                    id="tbxName" value="" required="required" />
+                            </td>
+                            <td><span style="color: red;">*</span></td>
+                        </tr>
+                        <tr>
+                            <td lang="lang_mail"></td>
+                            <td style="padding: 10px;">
+
+                                <input type="text" data-clear-btn="true" name="tbxMail" class="form-control"
+                                    id="tbxMail" value="" />
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="saveUserBaseMaintain()" lang="lang_save">Save</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" lang="lang_cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>
+<asp:Content ID="PageScriptContent" ContentPlaceHolderID="PageScriptContentHolder" runat="server">
+    <script>
+        /**
+         * login id formatter
+         */
+        function loginNameFormatter(value, row) {
+            return '<a style="cursor:pointer;" onclick="updateUser(\'' + row.id + '\')">' + value + '</a>';
+        };
+
+        /**
+         * edit column formatter
+         */
+        function editColumnFormatter(value, row) {
+            return '<a style="cursor:pointer;" onclick="editUserRole(\'' + row.id + '\')" lang="lang_edit">' + _CurrentLang['lang_edit'] + '</a>';
+        };
+
+        var currentMaintainUserId = null;
+        /**
+         * open edit user dialog
+         */
+        var updateUser = function (itemId) {
+            //var allItemList = $("#gridItem").bootstrapTable('getData');
+            //$.each(allItemList, function (i, item) {
+            //    if (item.Id == itemId) {
+            //        $("#tbxItemNo").val(item.Item_No);
+            //        $("#tbxDescription").val(item.Description);
+            //        return false;
+            //    }
+            //});
+
+            //$("#itemMaintainDialog").modal('show');
+            //currentMaintainItemId = itemId;
+        };
+
+        /**
+         * save user
+         */
+        var saveUserMaintain = function () {
+            //var itemNo = $("#tbxItemNo").val();
+            //var description = $("#tbxDescription").val();
+            //if (itemNo == "") {
+            //    $.dialog.showDialog('Error', 'Item No can not be null');
+            //    return false;
+            //}
+
+
+            //var options = {
+            //    "success": function (d) {
+            //        $("#itemMaintainDialog").modal('hide');
+            //        $.dialog.showDialog('Success', 'Update success');
+            //        inquiryItem();
+            //    }
+            //};
+
+            //var mydata = {
+            //    'id': currentMaintainItemId,
+            //    'itemNo': itemNo,
+            //    'description': description
+            //};
+
+            //$.ask("SaveItem", mydata, options);
+            //return true;
+        }
+
+        /**
+         * inquiry item
+         */
+        function inquiryUser() {
+            var options = {
+                "success": function (d) {
+                    $("#gridUser").bootstrapTable("load", d);
+                }
+            };
+
+            var itemNo = $('#tbxItemNoInquiry').val();
+            var data = {
+                'login_name': $('#tbxLoginNameInquiry').val(),
+                'name': $('#tbxNameInquiry').val()
+            };
+            $.ask("Inquiry", data, options);
+            return true;
+        }
+
+    </script>
+</asp:Content>
