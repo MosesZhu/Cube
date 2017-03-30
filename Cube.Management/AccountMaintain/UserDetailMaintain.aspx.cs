@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace Cube.Management.AccountMaintain
 {
-    public partial class UserMaintain : PageBase
+    public partial class UserDetailMaintain : PageBase
     {
         protected void Page_Load(object sender, EventArgs e)
         {

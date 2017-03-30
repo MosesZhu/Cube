@@ -1,4 +1,5 @@
 ﻿using Cube.Base;
+using Cube.DTO;
 using Cube.Model.Entity;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,25 @@ namespace Cube.Management.AccountMaintain
     {
 
         [WebMethod(EnableSession = true)]
-        public List<Cb_User> Inquiry(string login_name, string name)
+        public ResultDTO Inquiry(string login_name, string name)
         {
             List<Cb_User> result = Db.From<Cb_User>().Where(Cb_User._.Login_Name.Contain(login_name)
                 && Cb_User._.Name.Contain(name)).Select().ToList();
-            return result;
+            return new ResultDTO() { 
+                success = true,
+                data = result
+            };
+        }
+
+        [WebMethod(EnableSession = true)]
+        public ResultDTO Update(Guid id, string loginName, string name, string mail)
+        {
+            Cb_User user = new Cb_User() { Id = id, Login_Name = loginName, Name = name, Mail = mail };
+            Db.Update<Cb_User>(user);
+            return new ResultDTO()
+            {
+                success = true
+            };
         }
     }
 }

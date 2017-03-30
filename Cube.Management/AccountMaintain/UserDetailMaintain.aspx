@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="UserMaintain.aspx.cs" Inherits="Cube.Management.AccountMaintain.UserMaintain" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="UserDetailMaintain.aspx.cs" Inherits="Cube.Management.AccountMaintain.UserDetailMaintain" %>
 
 <asp:Content ID="PageStyleContent" ContentPlaceHolderID="PageStyleContentHolder" runat="server">
 </asp:Content>
@@ -112,7 +112,7 @@
          * edit column formatter
          */
         var editColumnFormatter = function (value, row) {
-            return '<a style="cursor:pointer;" onclick="userDetailMaintain(\'' + row.Id + '\')" lang="lang_edit">' + _CurrentLang['lang_edit'] + '</a>';
+            return '<a style="cursor:pointer;" onclick="editUserRole(\'' + row.Id + '\')" lang="lang_edit">' + _CurrentLang['lang_edit'] + '</a>';
         };
 
         var currentMaintainUserId = null;
@@ -171,9 +171,9 @@
         }
 
         /**
-         * inquiry user
+         * inquiry item
          */
-        var inquiryUser = function () {
+        function inquiryUser() {
             var options = {
                 "success": function (d) {
                     $("#gridUser").bootstrapTable("load", d);
@@ -192,10 +192,6 @@
         $(function () {
             inquiryUser();
         });
-
-        var userDetailMaintain = function (userId) {
-            $.goto("UserDetailMaintain.aspx", true);
-        }
 
     </script>
 </asp:Content>

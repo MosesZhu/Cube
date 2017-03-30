@@ -3,12 +3,10 @@
         var ssoToken = getQueryStringByName("SSOToken") ? getQueryStringByName("SSOToken") : "";
         if (!ssoToken) {
             window.location.href = "Login";
-            //return false;
-            //ssoToken = "aaa";
         }
 
         if (!method) {
-            //return false;
+            return false;
         }
 
         var url = "";
@@ -66,9 +64,7 @@
         },
 
         "error": function (e) {
-            $.dialog.showDialog("error", e.responseText);
-            //alert("Error");
-
+            $.dialog.showMessage("error", e.responseText);
         }
     }
 });
@@ -76,6 +72,9 @@
 jQuery.extend({
     "goto": function (url, useCurrentMap, map) {
         var finalUrl = url;
+        var ssoToken = getQueryStringByName("SSOToken") ? getQueryStringByName("SSOToken") : "";
+        finalUrl += (finalUrl.indexOf("?") >= 0 ? "&" : "?") + "SSOToken=" + ssoToken;
+
         if (useCurrentMap) {
             var currentMap = $.uriAnchor.makeAnchorMap();
             finalUrl += "#!lang=" + currentMap["lang"] + "&skin=" + currentMap["skin"];            
@@ -140,21 +139,25 @@ var setLanguage = function (languageName) {
     return false;
 }
 
-var showDialog = function (title, content, warning, type, times) {
-    $.dialog.showDialog(title, content, warning, type, times);
+var showMessage = function (title, content, warning, type, times) {
+    $.dialog.showMessage(title, content, warning, type, times);
 };
 
 var showConfirm = function (title, content, warning, type, oktodo, canceltodo, times) {
     $.dialog.showConfirm(title, content, warning, type, oktodo, canceltodo, times);
 };
 
-var closeDialog = function (times) {
-    $.dialog.closeDialog(times);
-}
+var closeMessage = function (times) {
+    $.dialog.closeMessage(times);
+};
 
 var closeConfirm = function (times) {
     $.dialog.closeConfirm(times);
-}
+};
+
+var showCustomerDialog = function (dialogId, dialogHtml, times) {
+    $.dialog.showCustomerDialog(dialogId, dialogHtml, times);
+};
 
 //end proxy function
 
@@ -180,22 +183,12 @@ jQuery.extend({
 
 jQuery.extend({
     "dialog": {
-        "dialog": {},
-        "closeDialog": function (times) {
-            if (parent && parent.closeDialog) {
+        "dialog": {},        
+        "showMessage": function (title, content, warning, type, times) {
+            if (parent && parent.showMessage) {
                 if (!times) {
                     var times = 1;
-                    parent.closeDialog(times);
-                    return;
-                }
-            }
-            $("#messageDialog").modal('hide');
-        },
-        "showDialog": function (title, content, warning, type, times) {
-            if (parent && parent.showDialog) {
-                if (!times) {
-                    var times = 1;
-                    parent.showDialog(title, content, warning, type, times);
+                    parent.showMessage(title, content, warning, type, times);
                     return;
                 }             
             }
@@ -217,8 +210,15 @@ jQuery.extend({
 
             $("#messageDialog").modal('show');
         },
-        "showWarning": function (title, content, warning) {
-
+        "closeMessage": function (times) {
+            if (parent && parent.closeMessage) {
+                if (!times) {
+                    var times = 1;
+                    parent.closeMessage(times);
+                    return;
+                }
+            }
+            $("#messageDialog").modal('hide');
         },
         "showConfirm": function (content, warning, type, oktodo, canceltodo, times) {
             if (parent && parent.showConfirm) {
@@ -263,8 +263,34 @@ jQuery.extend({
             }
             $("#confirmDialog").modal('hide');
         },
+        "showDialog": function (dialogId) {
+            $("#" + dialogId).modal('show');
+        },
+        "closeDialog": function (dialogId) {
+            $("#" + dialogId).modal('hide');
+        },
+        "showCustomerDialog": function (dialogId, dialogHtml, times) {
+            if (parent && parent.showCustomerDialog) {
+                if (!dialogHtml) {
+                    dialogHtml = $("<div></div>").append($("#" + dialogId).clone()).html();
+                }
+                if (!times) {
+                    var times = 1;
+                    parent.showCustomerDialog(dialogId, dialogHtml, times);
+                    return;
+                }
+            }
+            $("#customerDialogContainer").html(dialogHtml);
+            $("#" + dialogId).modal('show');
+        },
     }
 });
+
+var CustomerDialogOption = function () {
+    this.ElementId = null,
+    this.ElementType = null,
+    this.ElementAction = null
+};
 
 jQuery.extend({
     "language": {

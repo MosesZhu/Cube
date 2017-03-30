@@ -97,11 +97,11 @@
                         portalUrl += "#!lang=" + lang;
                         window.location.href = portalUrl;
                     } else {
-                        $.dialog.showDialog(_CurrentLang.lang_error, _CurrentLang.lang_msg_login_failed);
+                        $.dialog.showMessage(_CurrentLang.lang_error, _CurrentLang.lang_msg_login_failed);
                     }
                 },
                 error: function (e) {
-                    $.dialog.showDialog("error", e.responseText);
+                    $.dialog.showMessage("error", e.responseText);
                 }
             });
 
