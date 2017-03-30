@@ -1,0 +1,296 @@
+﻿20170330
+Framework:
+1. 已完成内容:
+	1.1 后端管道权限管控，前端提供方法ask、goto
+	1.2 多级别菜单，domain、system group、system、function
+	1.3 Debug模式
+2. 已知待处理Bug:
+	2.1 切换多语言和皮肤，由于是通过anchor实现，如iframe中有挑战，会回退到src设定的初始页，跨域实现
+3. 待讨论内容:
+	3.1 showCustomerDialog必要性
+	3.2 加强：单系统使用case
+	菜单层级mapping bach3.0
+	DB前缀cube
+	名称->magic cube
+	showCustomerDialog -> showDialogOnTop
+	Message Plugin 先实现
+	Tab全屏
+	密码管理方式分两种，可配置
+	Tab refresh
+	全部展开、收起菜单
+	上次登录时间
+	Loading
+	新窗口打开
+	加入我的最爱
+	tab右键菜单
+	浏览器或tab关闭时通知
+	login、portal titile可定制
+	菜单icon设定
+4. 开发中：
+	4.1 管理后台
+	4.2 Plugin
+	4.3 封装控件
+	4.4 我的最爱
+	4.5 开发UI建议
+---------------------------------------
+议题20170206
+1. 任务跟踪：
+	--1.1 Oracle性能规范培训事宜 - Arthur
+	1.2 SharePoint搜索功能修复(2月中旬完成) - Tim
+2. New Web Framework后台选型讨论
+	2.1 UI Demo(Core UI与AdminLTE选择/多语言) - Moses
+	2.2 权限系统 - Jenny
+	--2.3 多语言 - Tim
+	2.4 错误处理/日志 - Fun
+	
+3. 任务：
+	3.1 多语言完善 - John
+	3.2 easyUI/AdminLTE/Bootstrap 控件规范 - Moses
+	3.3 权限 - Moses
+	3.4 开发调试学习BACH3.0 - Moses
+	3.5 代码维护
+4. 备注：3.2完成后出Demo页面
+
+-----------------------------------
+议题20170120
+C#进阶语法	          2	2017-2-23	Tim Zhang
+高性能sql规范培训	RD	1.5	2017-3-16	　
+高性能sql实践	RD	1.5	2017-3-30	　
+JavaScript開發進階	RD	1.5	2017-4-13	Moses Zhu
+EasyUI开发	RD	2	2017-4-27	Jenny Gao
+Oracle Workflow	RD	2	2017-5-11	Arthur Zh Wang
+Biztalk开发(实例）	All	2	2017-5-25	Sunny 
+IOS开发基礎 	RD	2	2017-6-15	John ZC Zhuang
+ASP .Net MVC开发基礎	RD	2	2017-7-13	Fun QH Zeng
+VB开发	RD	1.5	2017-7-27	Betty C Feng
+ASP开发	RD	1.5	2017-8-10	Benjemin Deng
+Android 基礎 	RD	2	2017-8-24	Moses Zhu
+Android進階	RD	2	2017-9-14	Jenny Gao
+Html5	RD	1.5	2017-9-28	Arty Yu
+Ibatis开发	RD	2	2017-10-19	Rita
+Bootstrap介绍	RD	1.5	2017-11-16	Moses Zhu
+FrameWSC 框架	RD	1.5	2017-11-30	Yoyo Ji
+PHP开发	RD	1.5	2017-12-14	　
+
+------------------------------------
+议题20170118
+1. Bug Analysis
+2. 新增培训：
+	Oracle性能规范培训事宜 - Arthur
+	Android基礎 – Moses
+	Android進階 – Jenny
+	iOs基礎 – John
+	MVC基礎 - Fun
+	HTML5新特性 - Arty
+	PHP - JOhn
+	
+	C#进阶语法            Tim Zhang
+    Oracle Workflow/EBS   Arthur Zh Wang
+    EasyUI开发            Jenny Gao
+    Biztalk开发           Willie W Xu        -> Sunny
+    JavaScript開發進階    Moses Zhu
+    VB开发                Betty C Feng
+    ASP开发               Benjemin Deng
+    Ibatis开发            John ZC Zhuang     -> Rita
+    Bootstrap介绍         Arty Yu            -> Moses
+    FrameWSC 框架         Fun QH Zeng        -> Yoyo
+    --EPS框架               Nicole Sun
+2. 任务跟踪：
+	2.1 Oracle性能规范培训事宜 - Arthur
+	2.2 SharePoint搜索功能修复 - Tim
+		预估2月中旬完成
+3. New Web Framework后台选型讨论
+	3.1 Bootstrap/JqueryEasyui与老系统控件对应整理 - Moses
+	3.2 MVC/WebForm/混合 细化对比 - Arthur/John
+		使用难易度
+		定制化成本
+		开发人员学习成本
+		锦上添花难易度
+		升级成本
+		技术前景
+		框架开发成本
+		基本功能支持度-多语言、权限等
+		考量升级到.Net Core可能性/成本
+	3.3 权限系统 - Jenny
+	3.4 多语言 - Tim
+	3.5 错误处理/日志 - Fun
+	
+----------------------
+议题20170111
+1.	Oracle性能规范培训事宜
+	1.1 人员：Arthur
+	1.2 时间：2017-1-19
+2.	技术文档整理进程以及未来技术文档/分享管理方案讨论
+	2.0 上周任务：Wordpress日历等插件介绍，但没有合适的文档分享功能
+	2.1 任务指派：Tim
+	2.2 设想：
+	    Wordpress用于发布规范、共享小技术点
+		Seafile或其他文件共享用于存储
+		SharePoint搜索功能修复后沿用(Y) --先出Schedule
+3.	新一代Web框架及对应JS Common Function头脑风暴
+	3.1 框架名称/项目代号
+	3.2 架构规划
+		a. 权限系统？--沿用FlowER AM_Employee_V?
+		
+		b. 多语言，WSC引用资源文件
+		
+		c. 部署，一键发布？目前导出SQL，
+		d. 安装包
+		e. 页面快速生成
+		f. 前端选型，Bootstrap(支持移动端响应式)、Easyui(熟悉)
+		   后端
+		g. 浏览器兼容-HTML5
+		h. LESS，皮肤
+		日志、控件统一
+		
+	3.3 开发时程规划
+	
+	3.4 代码管控/Git
+
+后端选型
+.NET WebForm (MVP?类似BACH3.0)
+MVC - 适合熟悉前端开发？
+Moses\Tim\Fun\Jenny 周末熟悉一下MVC
+NodeJS?
+评估维度：
+使用难易度
+定制化成本
+开发人员学习成本
+锦上添花难易度
+升级成本
+技术前景
+向前兼容
+框架开发成本
+基本功能支持度-多语言、权限。。
+
+
+前端选型
+控件框架：Bootstrap、Easyui
+前端类似AdminLTE FineUI
+评估维度：
+使用难易度
+开发人员学习成本
+平台支持
+基本功能支持度-多语言。。
+技术前景
+浏览器兼容
+
+----------------------
+议题20170104
+1. SQL性能
+ 1.1 Fun之Exist/IN
+	--写在文档附录中注明没有差别  -Fun
+ 1.2 driving_site                 -Moses
+2. 文档归类任务讨论
+   Fun已经完成大部分，下周三前完成
+3. Gitblit应用于CommonFunction维护之可行性讨论
+   --比对SVN，重点在文档 --Moses
+4. DokuWiki或者WordPress应用于知识管理之可行性讨论
+
+----------------------
+议题20161230
+1. key对应多个value1,value2的case
+2. 隐式转换再加上一个
+https://docs.oracle.com/cd/B19306_01/server.102/b14200/sql_elements002.htm
+3. EXISTS/IN 按 ask tom制造数据后验证
+4. 下周发布
+
+----------------------
+议题20161221
+1. Bug分析
+2. SQL规范
+3. SQL性能
+----------------------
+议题20161214
+1. SQL规范/性能付梓审阅  --待定，下午
+	1.1 SQL规范
+	1.2 性能
+	
+2. 部门培训
+	2.1 本月培训大纲
+		C# Common Function Library	2016-12-15 John
+			a. 主要功能介绍
+			b. 引用使用
+			c. 需求流程
+		GridView应用	            2016-12-22 Arty
+			a. 初级功能
+				增删改查
+				绑定模式
+			b. 高级功能
+				分页、全选等
+				样式
+		Mail                        2016-12-29 Moses
+			a. Mail模型，POP、SMTP
+			b. PHP、C#、VB基本Mail介绍
+			c. 组件介绍
+			
+	2.2 明年培训计划讨论
+		C#进阶语法	         SE/SD	     Tim
+		Oracle Workflow      OracleEBS   Arthur
+		JavaScript開發進階	 SE/SD	     Moses
+		EasyUI开发	         资浅SE      Jenny
+		Ibatis		         资浅SE      John
+		ASP	                 资浅SE      Benjemin
+		VB开发	             资浅SE      Betty
+		Bootstrap介绍        资浅SE      Arty
+		FrameWSC框架         SE/SD       Fun
+		EPS框架              SE/SD       Nicole
+	
+3. Portal Tech文档整理
+	3.1 Jenny整理文档路径:\\10.85.10.2\Tech\技术文档
+	3.2 Fun整理Tag, demo:
+	（Asp）VBScript中根據申请人Site調用不同Flower WS获取签核人	ASP	FlowER	VBScript	
+	
+4. Common Function整理进度
+	4.1 Fun演示jsDoc
+	4.2 Github版本控制可行性讨论 
+		Tech搭建Git库，学习--Moses
+
+	
+-------------------------------------------------------------
+议题20161207
+1. SQL规范/性能付梓审阅 -- John, 规范周五发布，直送PMO；性能下周三
+	1.1 规范：3.2.1 准备一个最全的例子
+	1.2 规范：更多的优化选项参看SQL性能文档
+	1.3 性能：加入例子
+	1.4 性能：减少DB访问，循环
+	1.5 性能：Oracle数据库中的优化方式和优化模式 放入前言章节
+	
+2. Portal Tech文档整理
+	2.1 第一步先将Portal文档全部归整至本地，周五讨论分类 -- Jenny
+	
+3. SVN规则最后审阅 --Moses归档发布
+	3.1 文档要添加附录，包括安装、IDE绑定、IDE svn/tfs切换
+	3.2 Jenny、Yoyo将原文档发给Moses
+	
+4. Common Function整理进度，Github维护可行性讨论
+	4.1 连接不稳定问题
+	4.2 jsDoc可直接使用，Fun将Js规范中的例子试一下，周五review
+	4.3 优点：RD都可参与修改扩展，进行pull request，merge、tag会有邮件提示
+
+-------------------------------------------------------------
+议题20161130
+1. SQL规范进度
+	1.1 第八条不录入规范
+	1.2 增加大章节:1.减少访问次数 2.语句替换建议
+	1.3 附录再加上John总结的Oracle SQL优化计划
+
+2. SVN Rule
+	2.1 commit/checkin的代码必须本地能够编译通过
+	2.2 引用的第三方jar、dll，不能放在bin目录下，建议添加library目录
+	2.3 项目必须在IDE中进行绑定，修改前必须lock
+	2.4 必须添加规则，以下目录不允许commit/checkin: bin、obj、build、.suo
+	2.5 项目目录结构需要统一，以trunk/tags/branch开始
+
+3. Common Function整理
+	3.1 JS Common Function
+		1. 如何组织？
+			a. 分控件和公共方法, 文件组织: 控件单独一个js以及其所需的css和图片，公共方法则压缩一个js
+			c. Lodash引入，分析重复的方法--Moses
+		2. 版本如何控制？
+			a. 压缩版本？开发版本？混淆？--Jenny
+		3. 文档--Fun，主要看jsDoc对特殊写法的支持,
+			如: a = function() {
+			}以及jquery插件的支持程度
+		
+

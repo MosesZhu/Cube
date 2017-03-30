@@ -6,7 +6,7 @@
     <!--inquiry area & toolbar-->
     <div class="row">
         <div class="col-lg-6 col-xs-6">
-            <table>
+            <table class="col-lg-12 col-xs-12">
                 <tr>
                     <td lang="lang_login_id">Login ID</td>
                     <td class="text-bold" style="padding: 10px;">
@@ -130,8 +130,8 @@
                 }
             });
 
-            $.dialog.showDialog("userBaseMaintainDialog");
-            //$.dialog.showCustomerDialog("userBaseMaintainDialog");
+            //$.dialog.showDialog("userBaseMaintainDialog");
+            $.dialog.showCustomerDialog("userBaseMaintainDialog");
             currentMaintainUserId = userId;
         };
 
@@ -194,7 +194,7 @@
         });
 
         var userDetailMaintain = function (userId) {
-            $.goto("UserDetailMaintain.aspx", true);
+            $.goto("UserDetailMaintain.aspx?id=" + userId, true);
         }
 
     </script>

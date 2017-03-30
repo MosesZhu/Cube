@@ -73,6 +73,7 @@
     <Content Include="AccountMaintain\UserDetailMaintain.aspx" />
     <Content Include="AccountMaintain\UserMaintain.aspx" />
     <Content Include="AccountMaintain\UserMaintainService.asmx" />
+    <Content Include="AccountMaintain\UserDetailMaintainService.asmx" />
     <Content Include="Master.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -101,6 +102,10 @@
     </Compile>
     <Compile Include="AccountMaintain\UserMaintainService.asmx.cs">
       <DependentUpon>UserMaintainService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AccountMaintain\UserDetailMaintainService.asmx.cs">
+      <DependentUpon>UserDetailMaintainService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Master.Master.cs">
