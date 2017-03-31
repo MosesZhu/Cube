@@ -15,7 +15,8 @@ namespace Cube.Web
         public override List<string> GetFormMultiLanguageKeyList()
         {
             List<string> _multyKeyArray = new List<string>();
-            _multyKeyArray.Add("msg_confirm_close_tab");                        
+            _multyKeyArray.Add("msg_confirm_close_tab");
+            _multyKeyArray.Add("msg_confirm_close_window");            
             return _multyKeyArray;
         }
 

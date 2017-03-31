@@ -95,6 +95,13 @@ namespace Cube.Web
                 {
                     Path = "~/Scripts/jquery.cookie.js",
                 });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "bootstrap-contextmenu",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/bootstrap-contextmenu.js",
+                });
             
         }
     }

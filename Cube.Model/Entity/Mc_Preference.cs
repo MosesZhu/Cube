@@ -1,7 +1,7 @@
 ﻿//------------------------------------------------------------------------------
-// File Name   : Cb_Role.cs
+// File Name   : Mc_Preference.cs
 // Creator     : Moses.Zhu
-// Create Date : 2017-03-08
+// Create Date : 2017-03-31
 // Description : 此代码由工具生成，请不要人为更改代码，如果重新生成代码后，这些更改将会丢失。
 // Copyright (C) 2017 Qisda Corporation. All rights reserved.
 //------------------------------------------------------------------------------
@@ -17,16 +17,17 @@ namespace Cube.Model.Entity
 {
 
     /// <summary>
-    /// 实体类Cb_Role
+    /// 实体类Mc_Preference
     /// </summary>
     [Serializable]
-    public class Cb_Role : ITS.Data.EntityBase
+    public class Mc_Preference : ITS.Data.EntityBase
     {
-        public Cb_Role() : base("cb_role") { }
+        public Mc_Preference() : base("mc_preference") { }
 
         #region Model
-        private Guid _Id;
-        private string _Name;
+        private Guid _User_Id;
+        private string _Language_Key;
+        private string _Skin;
         private DateTime? _Created_At;
         private string _Created_By;
         private DateTime? _Modified_At;
@@ -34,25 +35,37 @@ namespace Cube.Model.Entity
         /// <summary>
         /// 
         /// </summary>
-        public Guid Id
+        public Guid User_Id
         {
-            get { return _Id; }
+            get { return _User_Id; }
             set
             {
-                this.OnPropertyValueChange(_.Id, _Id, value);
-                this._Id = value;
+                this.OnPropertyValueChange(_.User_Id, _User_Id, value);
+                this._User_Id = value;
             }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string Name
+        public string Language_Key
         {
-            get { return _Name; }
+            get { return _Language_Key; }
             set
             {
-                this.OnPropertyValueChange(_.Name, _Name, value);
-                this._Name = value;
+                this.OnPropertyValueChange(_.Language_Key, _Language_Key, value);
+                this._Language_Key = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Skin
+        {
+            get { return _Skin; }
+            set
+            {
+                this.OnPropertyValueChange(_.Skin, _Skin, value);
+                this._Skin = value;
             }
         }
         /// <summary>
@@ -112,7 +125,7 @@ namespace Cube.Model.Entity
         public override Field[] GetPrimaryKeyFields()
         {
             return new Field[] {
-				_.Id};
+				_.User_Id};
         }
         /// <summary>
         /// 获取列信息
@@ -120,8 +133,9 @@ namespace Cube.Model.Entity
         public override Field[] GetFields()
         {
             return new Field[] {
-				_.Id,
-				_.Name,
+				_.User_Id,
+				_.Language_Key,
+				_.Skin,
 				_.Created_At,
 				_.Created_By,
 				_.Modified_At,
@@ -133,8 +147,9 @@ namespace Cube.Model.Entity
         public override object[] GetValues()
         {
             return new object[] {
-				this._Id,
-				this._Name,
+				this._User_Id,
+				this._Language_Key,
+				this._Skin,
 				this._Created_At,
 				this._Created_By,
 				this._Modified_At,
@@ -145,8 +160,9 @@ namespace Cube.Model.Entity
         /// </summary>
         public override void SetPropertyValues(IDataReader reader)
         {
-            this._Id = DataUtils.ConvertValue<Guid>(reader["id"]);
-            this._Name = DataUtils.ConvertValue<string>(reader["name"]);
+            this._User_Id = DataUtils.ConvertValue<Guid>(reader["user_id"]);
+            this._Language_Key = DataUtils.ConvertValue<string>(reader["language_key"]);
+            this._Skin = DataUtils.ConvertValue<string>(reader["skin"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(reader["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(reader["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(reader["modified_at"]);
@@ -157,8 +173,9 @@ namespace Cube.Model.Entity
         /// </summary>
         public override void SetPropertyValues(DataRow row)
         {
-            this._Id = DataUtils.ConvertValue<Guid>(row["id"]);
-            this._Name = DataUtils.ConvertValue<string>(row["name"]);
+            this._User_Id = DataUtils.ConvertValue<Guid>(row["user_id"]);
+            this._Language_Key = DataUtils.ConvertValue<string>(row["language_key"]);
+            this._Skin = DataUtils.ConvertValue<string>(row["skin"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(row["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(row["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(row["modified_at"]);
@@ -175,31 +192,35 @@ namespace Cube.Model.Entity
             /// <summary>
             /// * 
             /// </summary>
-            public readonly static Field All = new Field("*", "cb_role");
+            public readonly static Field All = new Field("*", "mc_preference");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Id = new Field("id", "cb_role", DbType.Guid, 16, "id");
+            public readonly static Field User_Id = new Field("user_id", "mc_preference", DbType.Guid, 16, "user_id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Name = new Field("name", "cb_role", DbType.String, 100, "name");
+            public readonly static Field Language_Key = new Field("language_key", "mc_preference", DbType.String, 400, "language_key");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_At = new Field("created_at", "cb_role", DbType.DateTime, 8, "created_at");
+            public readonly static Field Skin = new Field("skin", "mc_preference", DbType.String, 400, "skin");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_By = new Field("created_by", "cb_role", DbType.String, 100, "created_by");
+            public readonly static Field Created_At = new Field("created_at", "mc_preference", DbType.DateTime, 8, "created_at");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Modified_At = new Field("modified_at", "cb_role", DbType.DateTime, 8, "modified_at");
+            public readonly static Field Created_By = new Field("created_by", "mc_preference", DbType.String, 100, "created_by");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Modified_By = new Field("modified_by", "cb_role", DbType.String, 100, "modified_by");
+            public readonly static Field Modified_At = new Field("modified_at", "mc_preference", DbType.DateTime, 8, "modified_at");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field Modified_By = new Field("modified_by", "mc_preference", DbType.String, 100, "modified_by");
         }
         #endregion
 

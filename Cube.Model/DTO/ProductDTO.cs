@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace Cube.Model.DTO
 {
-    public class SystemGroupDTO
+    [Serializable]
+    public class ProductDTO
     {
         public Guid Id { get; set; }
-        public string Code { get; set; }
-        public Guid Domain_Id { get; set; }
-        public string Language_Key { get; set; }
+        public string Name { get; set; }
         public List<SystemDTO> SystemList { get; set; }
-        public SystemGroupDTO()
+        public List<DomainDTO> DomainList { get; set; }
+        public ProductDTO()
         {
             SystemList = new List<SystemDTO>();
+            DomainList = new List<DomainDTO>();
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Cube.Web
         public ResultDTO login(string userName, string password)
         {
             ResultDTO result = new ResultDTO();
-            Cb_User user = DBUtility.CubeDb
-                .From<Cb_User>()
-                .Where(Cb_User._.Login_Name == userName)
+            Mc_User user = DBUtility.CubeDb
+                .From<Mc_User>()
+                .Where(Mc_User._.Login_Name == userName)
                 .First();
             if (user == null)
             {
@@ -48,7 +48,7 @@ namespace Cube.Web
         /// <param name="user"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        private bool CheckUserAuthencationInfo(Cb_User user, string password)
+        private bool CheckUserAuthencationInfo(Mc_User user, string password)
         {
             return true;
         }
@@ -59,26 +59,26 @@ namespace Cube.Web
         /// <param name="result"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        private string RenewToken(ResultDTO result, Cb_User user)
+        private string RenewToken(ResultDTO result, Mc_User user)
         {
             string secretKey = Guid.NewGuid().ToString();
-            Cb_Token tokenInfo = DBUtility.CubeDb.From<Cb_Token>()
-                .Where(Cb_Token._.User_Id == user.Id)
+            Mc_Token tokenInfo = DBUtility.CubeDb.From<Mc_Token>()
+                .Where(Mc_Token._.User_Id == user.Id)
                 .ToList()
                 .FirstOrDefault();
             if (tokenInfo == null)
             {
-                tokenInfo = new Cb_Token();
+                tokenInfo = new Mc_Token();
                 tokenInfo.User_Id = user.Id;
                 tokenInfo.Login_Time = DateTime.Now;
                 tokenInfo.Secret_Key = secretKey;
-                DBUtility.CubeDb.Insert<Cb_Token>(tokenInfo);
+                DBUtility.CubeDb.Insert<Mc_Token>(tokenInfo);
             }
             else
             {
                 tokenInfo.Login_Time = DateTime.Now;
                 tokenInfo.Secret_Key = secretKey;
-                DBUtility.CubeDb.Update<Cb_Token>(tokenInfo);
+                DBUtility.CubeDb.Update<Mc_Token>(tokenInfo);
             }
             result.success = true;
             TokenDTO token = new TokenDTO()

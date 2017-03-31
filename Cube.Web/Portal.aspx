@@ -85,7 +85,7 @@
                                 <li class="footer"><a href="#">See All Messages</a></li>
                             </ul>
                         </li>
-                       
+
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
@@ -105,9 +105,9 @@
                       <small>tel: +88861873</small>
                                     </p>
                                 </li>
-                                
+
                                 <!-- Menu Footer-->
-                                <li class="user-footer">                                    
+                                <li class="user-footer">
                                     <div class="pull-right">
                                         <a href="#" class="btn btn-default btn-flat" lang="lang_logout" onclick="logout()">Logout</a>
                                     </div>
@@ -143,7 +143,6 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu" id="_FunctionMenu">
-                   
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -290,6 +289,15 @@
            immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div>
+    <div id="context-menu2">
+        <ul class="dropdown-menu" role="menu">
+            <li><a tabindex="-1">Action</a></li>
+            <li><a tabindex="-1">Another action</a></li>
+            <li><a tabindex="-1">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a tabindex="-1">Separated link</a></li>
+        </ul>
+    </div>
 </asp:Content>
 <asp:Content ID="PageScriptContent" ContentPlaceHolderID="PageScriptContentHolder" runat="server">
     <script>
@@ -330,18 +338,18 @@
 
         });
 
-        var getSystemGroupMenuHtml = function (groupMenu) {
+        var getDomainMenuHtml = function (domainMenu) {
             var menuHtml
                 = '<li class="treeview">'
                 + '<a href="#">'
                 + '<i class="fa fa-bank text-blue"></i>'
-                + '<span lang="' + groupMenu.Language_Key + '">' + groupMenu.Code + '</span>'
+                + '<span lang="' + domainMenu.Language_Key + '">' + domainMenu.Code + '</span>'
                 + '<span class="pull-right-container">'
                 + '<i class="fa fa-angle-left pull-right"></i>'
                 + '</span>'
                 + '</a>';
             menuHtml += '<ul class="treeview-menu">';
-            $.each(groupMenu.SystemList, function (k, systemMenu) {
+            $.each(domainMenu.SystemList, function (k, systemMenu) {
                 menuHtml += getSystemMenuHtml(systemMenu);
             });
             menuHtml += '</ul></li>';
@@ -351,13 +359,13 @@
         var getSystemMenuHtml = function (systemMenu) {
             var menuHtml
                 = '<li class="treeview">'
-                +   '<a href="#">'
-                +     '<i class="fa fa-laptop text-blue"></i>'
-                +     '<span lang="' + systemMenu.Language_Key+ '">' + systemMenu.Code + '</span>'
-                +     '<span class="pull-right-container">'
-                +         '<i class="fa fa-angle-left pull-right"></i>'
-                +     '</span>'
-                +   '</a>';
+                + '<a href="#">'
+                + '<i class="fa fa-laptop text-blue"></i>'
+                + '<span lang="' + systemMenu.Language_Key + '">' + systemMenu.Code + '</span>'
+                + '<span class="pull-right-container">'
+                + '<i class="fa fa-angle-left pull-right"></i>'
+                + '</span>'
+                + '</a>';
             menuHtml += '<ul class="treeview-menu">';
             $.each(systemMenu.FunctionList, function (k, functionMenu) {
                 menuHtml += getFunctionMenuHtml(functionMenu);
@@ -389,16 +397,16 @@
                               + functionMenu.Url + '" ';
                 }
                 menuHtml += '>'
-                          +   '<a href="#">'
-                          +     '<i class="fa fa-circle-o text-light-blue"></i>'
-                          +     '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                          +   '</a>'
+                          + '<a href="#">'
+                          + '<i class="fa fa-circle-o text-light-blue"></i>'
+                          + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                          + '</a>'
                           + '</li>';
             }
 
-            return menuHtml;           
+            return menuHtml;
         };
-        
+
         var initMenu = function () {
             var options = {
                 "success": function (d) {
@@ -410,7 +418,7 @@
                             _Lang_EnUS[lang.Language_Key] = lang.En_Us;
                         });
 
-                        _PortalContext.MenuList = d.data.DomainList;
+                        _PortalContext.MenuList = d.data.ProductList;
                         refreshMenu();
                     }
                 }
@@ -421,18 +429,18 @@
 
         var refreshMenu = function () {
             var menuHtml = "";
-            $.each(_PortalContext.MenuList, function (i, domain) {
+            $.each(_PortalContext.MenuList, function (i, product) {
                 menuHtml
                     += '<li class="header">'
                     + '<i class="fa fa-bank"></i>'
-                    + '<span lang="' + domain.LanguageID + '" style="padding-left:5px;">' + domain.Name + '</span>'
+                    + '<span lang="' + product.LanguageID + '" style="padding-left:5px;">' + product.Name + '</span>'
                     + '</li>';
-                $.each(domain.SystemGroupList, function (j, groupMenu) {
-                    menuHtml += getSystemGroupMenuHtml(groupMenu);
+                $.each(product.DomainList, function (j, domainMenu) {
+                    menuHtml += getDomainMenuHtml(domainMenu);
 
                 });
 
-                $.each(domain.SystemList, function (j, systemMenu) {
+                $.each(product.SystemList, function (j, systemMenu) {
                     menuHtml += getSystemMenuHtml(systemMenu);
                 });
             });
@@ -458,7 +466,7 @@
                 $.each(groupMenu.SystemList, function (k, systemMenu) {
                     menuHtml += getSystemMenuHtml(systemMenu);
                 });
-                menuHtml += '</ul></li>';                
+                menuHtml += '</ul></li>';
             }
             return menuHtml;
         };
@@ -479,14 +487,14 @@
                 $.each(systemMenu.FunctionList, function (k, functionMenu) {
                     menuHtml += getSearchFunctionMenuHtml(functionMenu);
                 });
-                menuHtml += '</ul></li>';                
+                menuHtml += '</ul></li>';
             }
             return menuHtml;
         };
 
         var getSearchFunctionMenuHtml = function (functionMenu) {
             var menuHtml = '';
-            if (functionMenu.bingo) {                
+            if (functionMenu.bingo) {
                 if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
                     menuHtml += '<li class="treeview">'
                               + '<a href="#">'
@@ -513,7 +521,7 @@
                               + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
                               + '</a>'
                               + '</li>';
-                }                
+                }
             }
             return menuHtml;
         };
@@ -535,7 +543,7 @@
                     $.each(domain.SystemList, function (j, systemMenu) {
                         menuHtml += getSearchSystemMenuHtml(systemMenu);
                     });
-                }                
+                }
             });
 
             $("#_FunctionMenu").html(menuHtml);
@@ -553,7 +561,7 @@
                 domain.bingo = true;
                 if (groupMenu) {
                     groupMenu.bingo = true;
-                }                
+                }
                 systemMenu.bingo = true;
                 functionMenu.bingo = true;
             }
@@ -583,7 +591,7 @@
                             || (_Lang_ZhTW[groupMenu.Language_Key] && _Lang_ZhTW[groupMenu.Language_Key].indexOf(search) >= 0)
                             || (_Lang_EnUS[groupMenu.Language_Key] && _Lang_EnUS[groupMenu.Language_Key].indexOf(search) >= 0)) {
                             domain.bingo = true;
-                            groupMenu.bingo = true;                            
+                            groupMenu.bingo = true;
                         }
 
                         $.each(groupMenu.SystemList, function (j, systemMenu) {
@@ -643,17 +651,16 @@
                                 functionMenu.bingo = true;
                             }
 
-                            if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0)
-                            {
+                            if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
                                 $.each(functionMenu.SubFunctionList, function (i, subFunction) {
                                     searchFunctionMenu(search, subFunction, functionMenu, domain, null, systemMenu);
-                                });                                
+                                });
                             }
                         });
                     });
                 });
 
-                refreshSearchMenu(tempMenuList);               
+                refreshSearchMenu(tempMenuList);
             } else {
                 refreshMenu();
             }
@@ -670,7 +677,7 @@
                 }
             };
             $.ask("logout", {}, options);
-        };        
+        };
 
         var openForm = function (menu) {
             var functionurl = $(menu).attr("functionurl");
@@ -689,25 +696,48 @@
                 });
 
                 if (!opend) {
-                    var tabHtml = '<li class="nav-item">'
-                        + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '"><table><tr><td><div';
+                    var tabHtml = '<li class="nav-item form-tab">'
+                        + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
+                        + '<table>'
+                        + '<tr>'
+                        + '<td>'
+                        + '<div';
 
                     var tabLang = $(menu).find('span').attr('lang');
                     if (tabLang) {
                         tabHtml += ' lang="' + tabLang + '"';
                     }
-                    tabHtml += ">" + functionname + '</div></td><td style="padding-left:5px;"><span class="fa fa-times icon_close_form" onclick="return closeForm(this);"></span></td></tr></table></a></li>';
+                    tabHtml += ">" + functionname + '</div>'
+                        + '</td>'
+                        + '<td style="padding-left:5px;">'
+                        + '<span class="fa fa-times icon_close_form" onclick="return closeForm(this);">'
+                        + '</span>'
+                        + '</td>'
+
+                        + '</tr>'
+                        + '</table>'
+                        + '</a>'
+                        + '</li>';
                     $("#_FormTabs").append(tabHtml);
 
                     $("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
                         + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
                         + "#!lang=" + _Context.CurrentLang
                         + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
-
+                    bindContextMenu();
                     $("#_FormTabs a[functionid=" + functionid + "]").tab("show");
                 }
             }
             return false;
+        };
+
+        var bindContextMenu = function () {
+            $('.form-tab').contextmenu({
+                target: '#context-menu2',
+                onItem: function (context, e) {
+                    alert($(e.target).text());
+                }
+            });
         };
 
         var closeForm = function (ctrl) {
@@ -720,7 +750,7 @@
                 function () {
 
                 });
-            
+
             return false;
         };
 

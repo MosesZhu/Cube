@@ -1,7 +1,7 @@
 ﻿//------------------------------------------------------------------------------
-// File Name   : Cb_Bookmark.cs
+// File Name   : Mc_System.cs
 // Creator     : Moses.Zhu
-// Create Date : 2017-03-08
+// Create Date : 2017-03-31
 // Description : 此代码由工具生成，请不要人为更改代码，如果重新生成代码后，这些更改将会丢失。
 // Copyright (C) 2017 Qisda Corporation. All rights reserved.
 //------------------------------------------------------------------------------
@@ -17,16 +17,20 @@ namespace Cube.Model.Entity
 {
 
     /// <summary>
-    /// 实体类Cb_Bookmark
+    /// 实体类Mc_System
     /// </summary>
     [Serializable]
-    public class Cb_Bookmark : ITS.Data.EntityBase
+    public class Mc_System : ITS.Data.EntityBase
     {
-        public Cb_Bookmark() : base("cb_bookmark") { }
+        public Mc_System() : base("mc_system") { }
 
         #region Model
-        private Guid _User_Id;
-        private Guid _Function_Id;
+        private Guid _Id;
+        private string _Code;
+        private string _Description;
+        private string _Product_Id;
+        private string _Domain_Id;
+        private string _Language_Key;
         private DateTime? _Created_At;
         private string _Created_By;
         private DateTime? _Modified_At;
@@ -34,25 +38,73 @@ namespace Cube.Model.Entity
         /// <summary>
         /// 
         /// </summary>
-        public Guid User_Id
+        public Guid Id
         {
-            get { return _User_Id; }
+            get { return _Id; }
             set
             {
-                this.OnPropertyValueChange(_.User_Id, _User_Id, value);
-                this._User_Id = value;
+                this.OnPropertyValueChange(_.Id, _Id, value);
+                this._Id = value;
             }
         }
         /// <summary>
         /// 
         /// </summary>
-        public Guid Function_Id
+        public string Code
         {
-            get { return _Function_Id; }
+            get { return _Code; }
             set
             {
-                this.OnPropertyValueChange(_.Function_Id, _Function_Id, value);
-                this._Function_Id = value;
+                this.OnPropertyValueChange(_.Code, _Code, value);
+                this._Code = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Description
+        {
+            get { return _Description; }
+            set
+            {
+                this.OnPropertyValueChange(_.Description, _Description, value);
+                this._Description = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Product_Id
+        {
+            get { return _Product_Id; }
+            set
+            {
+                this.OnPropertyValueChange(_.Product_Id, _Product_Id, value);
+                this._Product_Id = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Domain_Id
+        {
+            get { return _Domain_Id; }
+            set
+            {
+                this.OnPropertyValueChange(_.Domain_Id, _Domain_Id, value);
+                this._Domain_Id = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Language_Key
+        {
+            get { return _Language_Key; }
+            set
+            {
+                this.OnPropertyValueChange(_.Language_Key, _Language_Key, value);
+                this._Language_Key = value;
             }
         }
         /// <summary>
@@ -112,8 +164,7 @@ namespace Cube.Model.Entity
         public override Field[] GetPrimaryKeyFields()
         {
             return new Field[] {
-				_.User_Id,
-				_.Function_Id};
+				_.Id};
         }
         /// <summary>
         /// 获取列信息
@@ -121,8 +172,12 @@ namespace Cube.Model.Entity
         public override Field[] GetFields()
         {
             return new Field[] {
-				_.User_Id,
-				_.Function_Id,
+				_.Id,
+				_.Code,
+				_.Description,
+				_.Product_Id,
+				_.Domain_Id,
+				_.Language_Key,
 				_.Created_At,
 				_.Created_By,
 				_.Modified_At,
@@ -134,8 +189,12 @@ namespace Cube.Model.Entity
         public override object[] GetValues()
         {
             return new object[] {
-				this._User_Id,
-				this._Function_Id,
+				this._Id,
+				this._Code,
+				this._Description,
+				this._Product_Id,
+				this._Domain_Id,
+				this._Language_Key,
 				this._Created_At,
 				this._Created_By,
 				this._Modified_At,
@@ -146,8 +205,12 @@ namespace Cube.Model.Entity
         /// </summary>
         public override void SetPropertyValues(IDataReader reader)
         {
-            this._User_Id = DataUtils.ConvertValue<Guid>(reader["user_id"]);
-            this._Function_Id = DataUtils.ConvertValue<Guid>(reader["function_id"]);
+            this._Id = DataUtils.ConvertValue<Guid>(reader["id"]);
+            this._Code = DataUtils.ConvertValue<string>(reader["code"]);
+            this._Description = DataUtils.ConvertValue<string>(reader["description"]);
+            this._Product_Id = DataUtils.ConvertValue<string>(reader["product_id"]);
+            this._Domain_Id = DataUtils.ConvertValue<string>(reader["domain_id"]);
+            this._Language_Key = DataUtils.ConvertValue<string>(reader["language_key"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(reader["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(reader["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(reader["modified_at"]);
@@ -158,8 +221,12 @@ namespace Cube.Model.Entity
         /// </summary>
         public override void SetPropertyValues(DataRow row)
         {
-            this._User_Id = DataUtils.ConvertValue<Guid>(row["user_id"]);
-            this._Function_Id = DataUtils.ConvertValue<Guid>(row["function_id"]);
+            this._Id = DataUtils.ConvertValue<Guid>(row["id"]);
+            this._Code = DataUtils.ConvertValue<string>(row["code"]);
+            this._Description = DataUtils.ConvertValue<string>(row["description"]);
+            this._Product_Id = DataUtils.ConvertValue<string>(row["product_id"]);
+            this._Domain_Id = DataUtils.ConvertValue<string>(row["domain_id"]);
+            this._Language_Key = DataUtils.ConvertValue<string>(row["language_key"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(row["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(row["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(row["modified_at"]);
@@ -176,31 +243,47 @@ namespace Cube.Model.Entity
             /// <summary>
             /// * 
             /// </summary>
-            public readonly static Field All = new Field("*", "cb_bookmark");
+            public readonly static Field All = new Field("*", "mc_system");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field User_Id = new Field("user_id", "cb_bookmark", DbType.Guid, 16, "user_id");
+            public readonly static Field Id = new Field("id", "mc_system", DbType.Guid, 16, "id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Function_Id = new Field("function_id", "cb_bookmark", DbType.Guid, 16, "function_id");
+            public readonly static Field Code = new Field("code", "mc_system", DbType.String, 100, "code");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_At = new Field("created_at", "cb_bookmark", DbType.DateTime, 8, "created_at");
+            public readonly static Field Description = new Field("description", "mc_system", DbType.String, 500, "description");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_By = new Field("created_by", "cb_bookmark", DbType.String, 100, "created_by");
+            public readonly static Field Product_Id = new Field("product_id", "mc_system", DbType.String, 300, "product_id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Modified_At = new Field("modified_at", "cb_bookmark", DbType.DateTime, 8, "modified_at");
+            public readonly static Field Domain_Id = new Field("domain_id", "mc_system", DbType.String, 300, "domain_id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Modified_By = new Field("modified_by", "cb_bookmark", DbType.String, 100, "modified_by");
+            public readonly static Field Language_Key = new Field("language_key", "mc_system", DbType.String, 400, "language_key");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field Created_At = new Field("created_at", "mc_system", DbType.DateTime, 8, "created_at");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field Created_By = new Field("created_by", "mc_system", DbType.String, 100, "created_by");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field Modified_At = new Field("modified_at", "mc_system", DbType.DateTime, 8, "modified_at");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field Modified_By = new Field("modified_by", "mc_system", DbType.String, 100, "modified_by");
         }
         #endregion
 

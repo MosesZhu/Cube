@@ -78,6 +78,7 @@
                 <asp:ScriptReference Name="framework" />
                 <asp:ScriptReference Name="icheck" />
                 <asp:ScriptReference Name="cookie" />
+                <asp:ScriptReference Name="bootstrap-contextmenu" />
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>

@@ -12,8 +12,8 @@ namespace Cube.Model.DTO
         public string Code { get; set; }
         public string Language_Key { get; set; }
         public string Description { get; set; }
-        public Guid Domain_Id { get; set; }
-        public Guid Group_Id { get; set; }
+        public Guid Product_Id { get; set; }
+        public Guid Domain_Id { get; set; }        
         public List<FunctionDTO> FunctionList { get; set; }
         public SystemDTO()
         {

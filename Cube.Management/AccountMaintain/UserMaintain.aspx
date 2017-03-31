@@ -131,7 +131,7 @@
             });
 
             //$.dialog.showDialog("userBaseMaintainDialog");
-            $.dialog.showCustomerDialog("userBaseMaintainDialog");
+            $.dialog.showDialogOnTop("userBaseMaintainDialog");
             currentMaintainUserId = userId;
         };
 

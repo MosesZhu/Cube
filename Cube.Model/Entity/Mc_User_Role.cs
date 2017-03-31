@@ -1,7 +1,7 @@
 ﻿//------------------------------------------------------------------------------
-// File Name   : Cb_User_Function.cs
+// File Name   : Mc_User_Role.cs
 // Creator     : Moses.Zhu
-// Create Date : 2017-03-08
+// Create Date : 2017-03-31
 // Description : 此代码由工具生成，请不要人为更改代码，如果重新生成代码后，这些更改将会丢失。
 // Copyright (C) 2017 Qisda Corporation. All rights reserved.
 //------------------------------------------------------------------------------
@@ -17,16 +17,16 @@ namespace Cube.Model.Entity
 {
 
     /// <summary>
-    /// 实体类Cb_User_Function
+    /// 实体类Mc_User_Role
     /// </summary>
     [Serializable]
-    public class Cb_User_Function : ITS.Data.EntityBase
+    public class Mc_User_Role : ITS.Data.EntityBase
     {
-        public Cb_User_Function() : base("cb_user_function") { }
+        public Mc_User_Role() : base("mc_user_role") { }
 
         #region Model
         private Guid _User_Id;
-        private Guid _Function_Id;
+        private Guid _Role_Id;
         private DateTime? _Created_At;
         private string _Created_By;
         private DateTime? _Modified_At;
@@ -46,13 +46,13 @@ namespace Cube.Model.Entity
         /// <summary>
         /// 
         /// </summary>
-        public Guid Function_Id
+        public Guid Role_Id
         {
-            get { return _Function_Id; }
+            get { return _Role_Id; }
             set
             {
-                this.OnPropertyValueChange(_.Function_Id, _Function_Id, value);
-                this._Function_Id = value;
+                this.OnPropertyValueChange(_.Role_Id, _Role_Id, value);
+                this._Role_Id = value;
             }
         }
         /// <summary>
@@ -113,7 +113,7 @@ namespace Cube.Model.Entity
         {
             return new Field[] {
 				_.User_Id,
-				_.Function_Id};
+				_.Role_Id};
         }
         /// <summary>
         /// 获取列信息
@@ -122,7 +122,7 @@ namespace Cube.Model.Entity
         {
             return new Field[] {
 				_.User_Id,
-				_.Function_Id,
+				_.Role_Id,
 				_.Created_At,
 				_.Created_By,
 				_.Modified_At,
@@ -135,7 +135,7 @@ namespace Cube.Model.Entity
         {
             return new object[] {
 				this._User_Id,
-				this._Function_Id,
+				this._Role_Id,
 				this._Created_At,
 				this._Created_By,
 				this._Modified_At,
@@ -147,7 +147,7 @@ namespace Cube.Model.Entity
         public override void SetPropertyValues(IDataReader reader)
         {
             this._User_Id = DataUtils.ConvertValue<Guid>(reader["user_id"]);
-            this._Function_Id = DataUtils.ConvertValue<Guid>(reader["function_id"]);
+            this._Role_Id = DataUtils.ConvertValue<Guid>(reader["role_id"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(reader["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(reader["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(reader["modified_at"]);
@@ -159,7 +159,7 @@ namespace Cube.Model.Entity
         public override void SetPropertyValues(DataRow row)
         {
             this._User_Id = DataUtils.ConvertValue<Guid>(row["user_id"]);
-            this._Function_Id = DataUtils.ConvertValue<Guid>(row["function_id"]);
+            this._Role_Id = DataUtils.ConvertValue<Guid>(row["role_id"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(row["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(row["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(row["modified_at"]);
@@ -176,31 +176,31 @@ namespace Cube.Model.Entity
             /// <summary>
             /// * 
             /// </summary>
-            public readonly static Field All = new Field("*", "cb_user_function");
+            public readonly static Field All = new Field("*", "mc_user_role");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field User_Id = new Field("user_id", "cb_user_function", DbType.Guid, 16, "user_id");
+            public readonly static Field User_Id = new Field("user_id", "mc_user_role", DbType.Guid, 16, "user_id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Function_Id = new Field("function_id", "cb_user_function", DbType.Guid, 16, "function_id");
+            public readonly static Field Role_Id = new Field("role_id", "mc_user_role", DbType.Guid, 16, "role_id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_At = new Field("created_at", "cb_user_function", DbType.DateTime, 8, "created_at");
+            public readonly static Field Created_At = new Field("created_at", "mc_user_role", DbType.DateTime, 8, "created_at");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_By = new Field("created_by", "cb_user_function", DbType.String, 100, "created_by");
+            public readonly static Field Created_By = new Field("created_by", "mc_user_role", DbType.String, 100, "created_by");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Modified_At = new Field("modified_at", "cb_user_function", DbType.DateTime, 8, "modified_at");
+            public readonly static Field Modified_At = new Field("modified_at", "mc_user_role", DbType.DateTime, 8, "modified_at");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Modified_By = new Field("modified_by", "cb_user_function", DbType.String, 100, "modified_by");
+            public readonly static Field Modified_By = new Field("modified_by", "mc_user_role", DbType.String, 100, "modified_by");
         }
         #endregion
 

@@ -23,8 +23,8 @@ namespace Cube.Management.AccountMaintain
         [WebMethod(EnableSession = true)]
         public ResultDTO Inquiry(string login_name, string name)
         {
-            List<Cb_User> result = Db.From<Cb_User>().Where(Cb_User._.Login_Name.Contain(login_name)
-                && Cb_User._.Name.Contain(name)).Select().ToList();
+            List<Mc_User> result = Db.From<Mc_User>().Where(Mc_User._.Login_Name.Contain(login_name)
+                && Mc_User._.Name.Contain(name)).Select().ToList();
             return new ResultDTO() { 
                 success = true,
                 data = result
@@ -34,8 +34,8 @@ namespace Cube.Management.AccountMaintain
         [WebMethod(EnableSession = true)]
         public ResultDTO Update(Guid id, string loginName, string name, string mail)
         {
-            Cb_User user = new Cb_User() { Id = id, Login_Name = loginName, Name = name, Mail = mail };
-            Db.Update<Cb_User>(user);
+            Mc_User user = new Mc_User() { Id = id, Login_Name = loginName, Name = name, Mail = mail };
+            Db.Update<Mc_User>(user);
             return new ResultDTO()
             {
                 success = true

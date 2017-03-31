@@ -55,7 +55,7 @@ namespace Cube.Base
             }
         }
 
-        public Cb_User User {
+        public Mc_User User {
             get {
                 return SSOContext.Current.User;
             }

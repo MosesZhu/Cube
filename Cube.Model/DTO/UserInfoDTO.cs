@@ -24,6 +24,6 @@ namespace Cube.Model.DTO
         /// <summary>
         /// user菜单
         /// </summary>
-        public List<DomainDTO> MenuList { get; set; }
+        public List<ProductDTO> MenuList { get; set; }
     }
 }

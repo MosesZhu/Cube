@@ -50,7 +50,7 @@ namespace Cube.Base
             }
             MultiLanguageKeyList = MultiLanguageKeyList ?? new List<string>();
             //获得DB中已维护的多语言数据
-            List<Cb_Language> dbLangCollections = GetLanguageData();
+            List<Mc_Language> dbLangCollections = GetLanguageData();
 
             //(1)提取HTML中的lang Key值
             GetHTMLKeys(page);
@@ -120,7 +120,7 @@ namespace Cube.Base
         /// <param name="multiLanguageKeyList">Page内HTML需要替换的Key</param>
         /// <param name="multiLanguageDataList">DB内现有的多语言数据</param>
         /// <returns></returns>
-        private string AssemblyLanguagePackages(List<string> multiLanguageKeyList, List<Cb_Language> multiLanguageDataList)
+        private string AssemblyLanguagePackages(List<string> multiLanguageKeyList, List<Mc_Language> multiLanguageDataList)
         {
             string langJsStr_ZhCN = "var _Lang_ZhCN = {";
             string langJsStr_ZhTW = "var _Lang_ZhTW = {";
@@ -131,7 +131,7 @@ namespace Cube.Base
             {
                 foreach (string langKey in multiLanguageKeyList)
                 {
-                    Cb_Language thisLang = multiLanguageDataList.FirstOrDefault(l => l.Language_Key == langKey);
+                    Mc_Language thisLang = multiLanguageDataList.FirstOrDefault(l => l.Language_Key == langKey);
                     if (thisLang != null)
                     {
                         langJsStr_ZhCN += "\"" + langKey + "\":\"" + thisLang.Zh_Cn + "\",";
@@ -164,16 +164,16 @@ namespace Cube.Base
         /// 获得DB中已维护的多语言数据
         /// </summary>
         /// <returns></returns>
-        private List<Cb_Language> GetLanguageData()
+        private List<Mc_Language> GetLanguageData()
         {
-            List<Cb_Language> list = DBUtility.CubeDb.From<Cb_Language>()
+            List<Mc_Language> list = DBUtility.CubeDb.From<Mc_Language>()
                .Select(
-                     Cb_Language._.Language_Key.As("language_key")
-                   , Cb_Language._.En_Us.As("en_us")
-                   , Cb_Language._.Zh_Cn.As("zh_cn")
-                   , Cb_Language._.Zh_Tw.As("zh_tw")
+                     Mc_Language._.Language_Key.As("language_key")
+                   , Mc_Language._.En_Us.As("en_us")
+                   , Mc_Language._.Zh_Cn.As("zh_cn")
+                   , Mc_Language._.Zh_Tw.As("zh_tw")
                )
-               .ToList<Cb_Language>();
+               .ToList<Mc_Language>();
             return list;
         }
 
@@ -195,15 +195,15 @@ namespace Cube.Base
         /// <param name="keys2AddList"></param>
         private void AddLangKey2DB(List<string> keys2AddList)
         {
-            List<Cb_Language> list = new List<Cb_Language>();
-            keys2AddList.ForEach(d => list.Add(new Cb_Language()
+            List<Mc_Language> list = new List<Mc_Language>();
+            keys2AddList.ForEach(d => list.Add(new Mc_Language()
             {
                 Language_Key = d,
                 En_Us = d,
                 Zh_Cn = d,
                 Zh_Tw = d
             }));
-            DBUtility.CubeDb.Insert<Cb_Language>(list);
+            DBUtility.CubeDb.Insert<Mc_Language>(list);
         }
 
         /// <summary>

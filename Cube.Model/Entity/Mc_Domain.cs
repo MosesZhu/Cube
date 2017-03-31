@@ -1,7 +1,7 @@
 ﻿//------------------------------------------------------------------------------
-// File Name   : Cb_Domain.cs
+// File Name   : Mc_Domain.cs
 // Creator     : Moses.Zhu
-// Create Date : 2017-03-08
+// Create Date : 2017-03-31
 // Description : 此代码由工具生成，请不要人为更改代码，如果重新生成代码后，这些更改将会丢失。
 // Copyright (C) 2017 Qisda Corporation. All rights reserved.
 //------------------------------------------------------------------------------
@@ -17,16 +17,18 @@ namespace Cube.Model.Entity
 {
 
     /// <summary>
-    /// 实体类Cb_Domain
+    /// 实体类Mc_Domain
     /// </summary>
     [Serializable]
-    public class Cb_Domain : ITS.Data.EntityBase
+    public class Mc_Domain : ITS.Data.EntityBase
     {
-        public Cb_Domain() : base("cb_domain") { }
+        public Mc_Domain() : base("mc_domain") { }
 
         #region Model
         private Guid _Id;
-        private string _Name;
+        private Guid _Product_Id;
+        private string _Code;
+        private string _Language_Key;
         private DateTime? _Created_At;
         private string _Created_By;
         private DateTime? _Modified_At;
@@ -46,13 +48,37 @@ namespace Cube.Model.Entity
         /// <summary>
         /// 
         /// </summary>
-        public string Name
+        public Guid Product_Id
         {
-            get { return _Name; }
+            get { return _Product_Id; }
             set
             {
-                this.OnPropertyValueChange(_.Name, _Name, value);
-                this._Name = value;
+                this.OnPropertyValueChange(_.Product_Id, _Product_Id, value);
+                this._Product_Id = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Code
+        {
+            get { return _Code; }
+            set
+            {
+                this.OnPropertyValueChange(_.Code, _Code, value);
+                this._Code = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Language_Key
+        {
+            get { return _Language_Key; }
+            set
+            {
+                this.OnPropertyValueChange(_.Language_Key, _Language_Key, value);
+                this._Language_Key = value;
             }
         }
         /// <summary>
@@ -121,7 +147,9 @@ namespace Cube.Model.Entity
         {
             return new Field[] {
 				_.Id,
-				_.Name,
+				_.Product_Id,
+				_.Code,
+				_.Language_Key,
 				_.Created_At,
 				_.Created_By,
 				_.Modified_At,
@@ -134,7 +162,9 @@ namespace Cube.Model.Entity
         {
             return new object[] {
 				this._Id,
-				this._Name,
+				this._Product_Id,
+				this._Code,
+				this._Language_Key,
 				this._Created_At,
 				this._Created_By,
 				this._Modified_At,
@@ -146,7 +176,9 @@ namespace Cube.Model.Entity
         public override void SetPropertyValues(IDataReader reader)
         {
             this._Id = DataUtils.ConvertValue<Guid>(reader["id"]);
-            this._Name = DataUtils.ConvertValue<string>(reader["name"]);
+            this._Product_Id = DataUtils.ConvertValue<Guid>(reader["product_id"]);
+            this._Code = DataUtils.ConvertValue<string>(reader["code"]);
+            this._Language_Key = DataUtils.ConvertValue<string>(reader["language_key"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(reader["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(reader["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(reader["modified_at"]);
@@ -158,7 +190,9 @@ namespace Cube.Model.Entity
         public override void SetPropertyValues(DataRow row)
         {
             this._Id = DataUtils.ConvertValue<Guid>(row["id"]);
-            this._Name = DataUtils.ConvertValue<string>(row["name"]);
+            this._Product_Id = DataUtils.ConvertValue<Guid>(row["product_id"]);
+            this._Code = DataUtils.ConvertValue<string>(row["code"]);
+            this._Language_Key = DataUtils.ConvertValue<string>(row["language_key"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(row["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(row["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(row["modified_at"]);
@@ -175,31 +209,39 @@ namespace Cube.Model.Entity
             /// <summary>
             /// * 
             /// </summary>
-            public readonly static Field All = new Field("*", "cb_domain");
+            public readonly static Field All = new Field("*", "mc_domain");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Id = new Field("id", "cb_domain", DbType.Guid, 16, "id");
+            public readonly static Field Id = new Field("id", "mc_domain", DbType.Guid, 16, "id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Name = new Field("name", "cb_domain", DbType.String, 500, "name");
+            public readonly static Field Product_Id = new Field("product_id", "mc_domain", DbType.Guid, 16, "product_id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_At = new Field("created_at", "cb_domain", DbType.DateTime, 8, "created_at");
+            public readonly static Field Code = new Field("code", "mc_domain", DbType.String, 100, "code");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_By = new Field("created_by", "cb_domain", DbType.String, 100, "created_by");
+            public readonly static Field Language_Key = new Field("language_key", "mc_domain", DbType.String, 400, "language_key");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Modified_At = new Field("modified_at", "cb_domain", DbType.DateTime, 8, "modified_at");
+            public readonly static Field Created_At = new Field("created_at", "mc_domain", DbType.DateTime, 8, "created_at");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Modified_By = new Field("modified_by", "cb_domain", DbType.String, 100, "modified_by");
+            public readonly static Field Created_By = new Field("created_by", "mc_domain", DbType.String, 100, "created_by");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field Modified_At = new Field("modified_at", "mc_domain", DbType.DateTime, 8, "modified_at");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field Modified_By = new Field("modified_by", "mc_domain", DbType.String, 100, "modified_by");
         }
         #endregion
 

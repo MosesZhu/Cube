@@ -73,14 +73,14 @@ namespace Cube.Base.SSO
             }
         }
 
-        public Cb_User User { get; set; }
+        public Mc_User User { get; set; }
         public TokenDTO TokenInfo { get; set; }
         public SSOContext(string token) 
         {
             TokenInfo = TokenUtility.GetTokenInfo(Token);
-            string userId = DBUtility.CubeDb.From<Cb_Token>().Where(Cb_Token._.Secret_Key == TokenInfo.SecretKey)
-                .Select(Cb_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
-            User = DBUtility.CubeDb.From<Cb_User>().Where(Cb_User._.Id == userId).Select(Cb_User._.All).FirstDefault();
+            string userId = DBUtility.CubeDb.From<Mc_Token>().Where(Mc_Token._.Secret_Key == TokenInfo.SecretKey)
+                .Select(Mc_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
+            User = DBUtility.CubeDb.From<Mc_User>().Where(Mc_User._.Id == userId).Select(Mc_User._.All).FirstDefault();
         }            
     }
 }

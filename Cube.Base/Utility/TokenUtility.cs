@@ -49,13 +49,13 @@ namespace Cube.Base.Utility
             try 
             {
                 TokenDTO tokenInfo = GetTokenInfo(token);
-                Cb_Token tokenEntity = DBUtility.CubeDb.From<Cb_Token>().Where(Cb_Token._.Secret_Key == tokenInfo.SecretKey).Select(Cb_Token._.All).ToList().FirstOrDefault();
+                Mc_Token tokenEntity = DBUtility.CubeDb.From<Mc_Token>().Where(Mc_Token._.Secret_Key == tokenInfo.SecretKey).Select(Mc_Token._.All).ToList().FirstOrDefault();
                 if(tokenEntity == null)
                 {
                     return false;
                 }
 
-                Cb_User userEntity = DBUtility.CubeDb.From<Cb_User>().Where(Cb_User._.Id == tokenEntity.User_Id).FirstDefault();
+                Mc_User userEntity = DBUtility.CubeDb.From<Mc_User>().Where(Mc_User._.Id == tokenEntity.User_Id).FirstDefault();
                 if(userEntity == null)
                 {
                     return false;

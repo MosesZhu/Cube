@@ -1,7 +1,7 @@
 ﻿//------------------------------------------------------------------------------
-// File Name   : Cb_User.cs
+// File Name   : Mc_Bookmark.cs
 // Creator     : Moses.Zhu
-// Create Date : 2017-03-08
+// Create Date : 2017-03-31
 // Description : 此代码由工具生成，请不要人为更改代码，如果重新生成代码后，这些更改将会丢失。
 // Copyright (C) 2017 Qisda Corporation. All rights reserved.
 //------------------------------------------------------------------------------
@@ -17,18 +17,16 @@ namespace Cube.Model.Entity
 {
 
     /// <summary>
-    /// 实体类Cb_User
+    /// 实体类Mc_Bookmark
     /// </summary>
     [Serializable]
-    public class Cb_User : ITS.Data.EntityBase
+    public class Mc_Bookmark : ITS.Data.EntityBase
     {
-        public Cb_User() : base("cb_user") { }
+        public Mc_Bookmark() : base("mc_bookmark") { }
 
         #region Model
-        private Guid _Id;
-        private string _Login_Name;
-        private string _Name;
-        private string _Mail;
+        private Guid _User_Id;
+        private Guid _Function_Id;
         private DateTime? _Created_At;
         private string _Created_By;
         private DateTime? _Modified_At;
@@ -36,49 +34,25 @@ namespace Cube.Model.Entity
         /// <summary>
         /// 
         /// </summary>
-        public Guid Id
+        public Guid User_Id
         {
-            get { return _Id; }
+            get { return _User_Id; }
             set
             {
-                this.OnPropertyValueChange(_.Id, _Id, value);
-                this._Id = value;
+                this.OnPropertyValueChange(_.User_Id, _User_Id, value);
+                this._User_Id = value;
             }
         }
         /// <summary>
         /// 
         /// </summary>
-        public string Login_Name
+        public Guid Function_Id
         {
-            get { return _Login_Name; }
+            get { return _Function_Id; }
             set
             {
-                this.OnPropertyValueChange(_.Login_Name, _Login_Name, value);
-                this._Login_Name = value;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Name
-        {
-            get { return _Name; }
-            set
-            {
-                this.OnPropertyValueChange(_.Name, _Name, value);
-                this._Name = value;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Mail
-        {
-            get { return _Mail; }
-            set
-            {
-                this.OnPropertyValueChange(_.Mail, _Mail, value);
-                this._Mail = value;
+                this.OnPropertyValueChange(_.Function_Id, _Function_Id, value);
+                this._Function_Id = value;
             }
         }
         /// <summary>
@@ -138,7 +112,8 @@ namespace Cube.Model.Entity
         public override Field[] GetPrimaryKeyFields()
         {
             return new Field[] {
-				_.Id};
+				_.User_Id,
+				_.Function_Id};
         }
         /// <summary>
         /// 获取列信息
@@ -146,10 +121,8 @@ namespace Cube.Model.Entity
         public override Field[] GetFields()
         {
             return new Field[] {
-				_.Id,
-				_.Login_Name,
-				_.Name,
-				_.Mail,
+				_.User_Id,
+				_.Function_Id,
 				_.Created_At,
 				_.Created_By,
 				_.Modified_At,
@@ -161,10 +134,8 @@ namespace Cube.Model.Entity
         public override object[] GetValues()
         {
             return new object[] {
-				this._Id,
-				this._Login_Name,
-				this._Name,
-				this._Mail,
+				this._User_Id,
+				this._Function_Id,
 				this._Created_At,
 				this._Created_By,
 				this._Modified_At,
@@ -175,10 +146,8 @@ namespace Cube.Model.Entity
         /// </summary>
         public override void SetPropertyValues(IDataReader reader)
         {
-            this._Id = DataUtils.ConvertValue<Guid>(reader["id"]);
-            this._Login_Name = DataUtils.ConvertValue<string>(reader["login_name"]);
-            this._Name = DataUtils.ConvertValue<string>(reader["name"]);
-            this._Mail = DataUtils.ConvertValue<string>(reader["mail"]);
+            this._User_Id = DataUtils.ConvertValue<Guid>(reader["user_id"]);
+            this._Function_Id = DataUtils.ConvertValue<Guid>(reader["function_id"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(reader["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(reader["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(reader["modified_at"]);
@@ -189,10 +158,8 @@ namespace Cube.Model.Entity
         /// </summary>
         public override void SetPropertyValues(DataRow row)
         {
-            this._Id = DataUtils.ConvertValue<Guid>(row["id"]);
-            this._Login_Name = DataUtils.ConvertValue<string>(row["login_name"]);
-            this._Name = DataUtils.ConvertValue<string>(row["name"]);
-            this._Mail = DataUtils.ConvertValue<string>(row["mail"]);
+            this._User_Id = DataUtils.ConvertValue<Guid>(row["user_id"]);
+            this._Function_Id = DataUtils.ConvertValue<Guid>(row["function_id"]);
             this._Created_At = DataUtils.ConvertValue<DateTime?>(row["created_at"]);
             this._Created_By = DataUtils.ConvertValue<string>(row["created_by"]);
             this._Modified_At = DataUtils.ConvertValue<DateTime?>(row["modified_at"]);
@@ -209,39 +176,31 @@ namespace Cube.Model.Entity
             /// <summary>
             /// * 
             /// </summary>
-            public readonly static Field All = new Field("*", "cb_user");
+            public readonly static Field All = new Field("*", "mc_bookmark");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Id = new Field("id", "cb_user", DbType.Guid, 16, "id");
+            public readonly static Field User_Id = new Field("user_id", "mc_bookmark", DbType.Guid, 16, "user_id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Login_Name = new Field("login_name", "cb_user", DbType.String, 100, "login_name");
+            public readonly static Field Function_Id = new Field("function_id", "mc_bookmark", DbType.Guid, 16, "function_id");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Name = new Field("name", "cb_user", DbType.String, 100, "name");
+            public readonly static Field Created_At = new Field("created_at", "mc_bookmark", DbType.DateTime, 8, "created_at");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Mail = new Field("mail", "cb_user", DbType.String, 500, "mail");
+            public readonly static Field Created_By = new Field("created_by", "mc_bookmark", DbType.String, 100, "created_by");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_At = new Field("created_at", "cb_user", DbType.DateTime, 8, "created_at");
+            public readonly static Field Modified_At = new Field("modified_at", "mc_bookmark", DbType.DateTime, 8, "modified_at");
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field Created_By = new Field("created_by", "cb_user", DbType.String, 100, "created_by");
-            /// <summary>
-            /// 
-            /// </summary>
-            public readonly static Field Modified_At = new Field("modified_at", "cb_user", DbType.DateTime, 8, "modified_at");
-            /// <summary>
-            /// 
-            /// </summary>
-            public readonly static Field Modified_By = new Field("modified_by", "cb_user", DbType.String, 100, "modified_by");
+            public readonly static Field Modified_By = new Field("modified_by", "mc_bookmark", DbType.String, 100, "modified_by");
         }
         #endregion
 

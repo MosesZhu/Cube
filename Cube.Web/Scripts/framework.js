@@ -96,6 +96,7 @@ var _CurrentLang = window._Lang_ZhCN ? window._Lang_ZhCN : {};
 
 $(function () {
     $(window).bind('hashchange', $.CubeEvent.onHashChange);
+    //$(window).bind('beforeunload', $.CubeEvent.onUnload);
 
     var map = $.uriAnchor.makeAnchorMap();
     var needSetAnchor = false;
@@ -158,8 +159,8 @@ var closeConfirm = function (times) {
     $.dialog.closeConfirm(times);
 };
 
-var showCustomerDialog = function (dialogId, dialogHtml, times) {
-    $.dialog.showCustomerDialog(dialogId, dialogHtml, times);
+var showDialogOnTop = function (dialogId, dialogHtml, times) {
+    $.dialog.showDialogOnTop(dialogId, dialogHtml, times);
 };
 
 //end proxy function
@@ -180,6 +181,29 @@ jQuery.extend({
                 skinName = $.skin.type.default;
             }
             $.skin.change(skinName);
+        },
+
+        "onUnload": function () {
+            if (window.ConfirmClose || $("iframe").length <= 0) {
+                window.opener = null;
+                window.open('', '_self', '');
+                window.close();
+                return;
+            }
+
+            $.dialog.showConfirm(_CurrentLang['msg_confirm_close_window'], '', '',
+                function () {
+                    window.ConfirmClose = true;
+                    window.opener = null;
+                    window.open('', '_self', '');
+                    window.close();
+                },
+                function () {
+                    $.dialog.closeConfirm();
+                    return false;
+                });
+
+            return false;
         },
     }
 })
@@ -272,14 +296,14 @@ jQuery.extend({
         "closeDialog": function (dialogId) {
             $("#" + dialogId).modal('hide');
         },
-        "showCustomerDialog": function (dialogId, dialogHtml, times) {
-            if (parent && parent.showCustomerDialog) {
+        "showDialogOnTop": function (dialogId, dialogHtml, times) {
+            if (parent && parent.showDialogOnTop) {
                 if (!dialogHtml) {
                     dialogHtml = $("<div></div>").append($("#" + dialogId).clone()).html();
                 }
                 if (!times) {
                     var times = 1;
-                    parent.showCustomerDialog(dialogId, dialogHtml, times);
+                    parent.showDialogOnTop(dialogId, dialogHtml, times);
                     return;
                 }
             }

@@ -42,29 +42,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\DomainDTO.cs" />
+    <Compile Include="DTO\ProductDTO.cs" />
     <Compile Include="DTO\FunctionDTO.cs" />
     <Compile Include="DTO\MenuDTO.cs" />
     <Compile Include="DTO\PreferenceDTO.cs" />
     <Compile Include="DTO\ResultDTO.cs" />
     <Compile Include="DTO\RoleDTO.cs" />
-    <Compile Include="DTO\SystemGroupDTO.cs" />
+    <Compile Include="DTO\DomainDTO.cs" />
     <Compile Include="DTO\TokenDTO.cs" />
     <Compile Include="DTO\UserBasicInfoDTO.cs" />
     <Compile Include="DTO\UserInfoDTO.cs" />
-    <Compile Include="Entity\Cb_Bookmark.cs" />
-    <Compile Include="Entity\Cb_Domain.cs" />
-    <Compile Include="Entity\Cb_Function.cs" />
-    <Compile Include="Entity\Cb_Language.cs" />
-    <Compile Include="Entity\Cb_Preference.cs" />
-    <Compile Include="Entity\Cb_Role.cs" />
-    <Compile Include="Entity\Cb_Role_Function.cs" />
-    <Compile Include="Entity\Cb_System.cs" />
-    <Compile Include="Entity\Cb_System_Group.cs" />
-    <Compile Include="Entity\Cb_Token.cs" />
-    <Compile Include="Entity\Cb_User.cs" />
-    <Compile Include="Entity\Cb_User_Function.cs" />
-    <Compile Include="Entity\Cb_User_Role.cs" />
+    <Compile Include="Entity\Mc_Bookmark.cs" />
+    <Compile Include="Entity\Mc_Product.cs" />
+    <Compile Include="Entity\Mc_Function.cs" />
+    <Compile Include="Entity\Mc_Language.cs" />
+    <Compile Include="Entity\Mc_Preference.cs" />
+    <Compile Include="Entity\Mc_Role.cs" />
+    <Compile Include="Entity\Mc_Role_Function.cs" />
+    <Compile Include="Entity\Mc_System.cs" />
+    <Compile Include="Entity\Mc_Domain.cs" />
+    <Compile Include="Entity\Mc_Token.cs" />
+    <Compile Include="Entity\Mc_User.cs" />
+    <Compile Include="Entity\Mc_User_Function.cs" />
+    <Compile Include="Entity\Mc_User_Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DTO\SystemDTO.cs" />
   </ItemGroup>

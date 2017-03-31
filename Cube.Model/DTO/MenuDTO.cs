@@ -11,12 +11,12 @@ namespace Cube.DTO
     [Serializable]
     public class MenuDTO
     {
-        public List<DomainDTO> DomainList { get; set; }
-        public List<Cb_Language> LanguageList { get; set; }
+        public List<ProductDTO> ProductList { get; set; }
+        public List<Mc_Language> LanguageList { get; set; }
         public MenuDTO()
         {
-            DomainList = new List<DomainDTO>();
-            LanguageList = new List<Cb_Language>();
+            ProductList = new List<ProductDTO>();
+            LanguageList = new List<Mc_Language>();
         }
     }
 }
