@@ -838,7 +838,11 @@
             }
             var opened = false;
             $("#_FormTabs a").each(function (i, tab) {
-                if ($(tab).attr("functionid") == functionid) {
+                var thisFunctionId = $(tab).attr("functionid");
+                if (thisFunctionId.substring(0, 3) == "bk_") {
+                    thisFunctionId = thisFunctionId.substring(3);
+                }
+                if (thisFunctionId == functionid) {
                     opened = true;
                     $(tab).tab("show");
                 }
