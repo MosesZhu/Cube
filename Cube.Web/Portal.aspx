@@ -295,14 +295,14 @@
     </div>
     <div id="context-menu">
         <ul class="dropdown-menu" role="menu">
-            <li><a tabindex="1" lang="lang_open_in_new_window">open in new window</a></li>
-            <li><a tabindex="2" lang="lang_close">close</a></li>
-            <li><a tabindex="3" lang="lang_close_others">close others</a></li>
-            <li><a tabindex="4" lang="lang_close_all">close all</a></li>
+            <li><a tabindex="MENU_OPEN_IN_NEW_WINDOW" lang="lang_open_in_new_window">open in new window</a></li>
+            <li><a tabindex="MENU_CLOSE" lang="lang_close">close</a></li>
+            <li><a tabindex="MENU_CLOSE_OTHERS" lang="lang_close_others">close others</a></li>
+            <li><a tabindex="MENU_CLOSE_ALL" lang="lang_close_all">close all</a></li>
             <li class="divider"></li>
-            <li><a tabindex="5" lang="lang_refresh">refresh</a></li>
+            <li><a tabindex="MENU_REFRESH" lang="lang_refresh">refresh</a></li>
             <li class="divider"></li>
-            <li><a tabindex="6" lang="lang_add_to_favourite">add to my favourite</a></li>
+            <li><a tabindex="MENU_ADD_TO_FAVORITES" lang="lang_add_to_favorites">add to my favourite</a></li>
         </ul>
     </div>
 </asp:Content>
@@ -694,13 +694,7 @@
                 $("#_FunctionMenu .treeview li").removeClass("active");
                 $(menu).addClass("active");
 
-                var opend = false;
-                $("#_FormTabs a").each(function (i, tab) {
-                    if ($(tab).attr("functionid") == functionid) {
-                        opend = true;
-                        $(tab).tab("show");
-                    }
-                });
+                var opend = showFormByFunctionId(functionid);
 
                 if (!opend) {
                     var tabHtml = '<li class="nav-item form-tab">'
@@ -742,17 +736,77 @@
             $('.form-tab').contextmenu({
                 target: '#context-menu',
                 onItem: function (context, e) {
-                    alert($(e.target).text());
+                    var tabIndex = $(e.target).attr('tabindex');
+                    var functionid = $(context).find("a").attr("functionid");
+                    if (tabIndex == "MENU_OPEN_IN_NEW_WINDOW") {
+                        var url = $("#" + functionid).find("iframe").attr("src");
+                        window.open(url);
+                    } else if (tabIndex == "MENU_CLOSE") {
+                        $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
+                            function () {                                
+                                closeFormByFunctionId(functionid);
+                            },
+                            function () {});
+                    } else if (tabIndex == "MENU_CLOSE_OTHERS") {
+                        $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
+                            function () {
+                                $("#_FormTabs a").each(function (i, tab) {
+                                    if ($(tab).attr("functionid") != functionid) {
+                                        closeFormByFunctionId($(tab).attr("functionid"));
+                                    }
+                                });
+                            },
+                            function () {});
+                    } else if (tabIndex == "MENU_CLOSE_ALL") {
+                        $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
+                            function () {
+                                $("#_FormTabs a").each(function (i, tab) {
+                                    closeFormByFunctionId($(tab).attr("functionid"));
+                                });
+                            },
+                            function () { });
+                    } else if (tabIndex == "MENU_REFRESH") {
+                        var frameName = "frm_" + functionid;
+                        var url = $("iframe[name=" + frameName + "]").attr("src");
+                        $("iframe[name=" + frameName + "]").attr("src", null).attr("src", url);
+                    } else if (tabIndex == "MENU_ADD_TO_FAVORITES") {
+
+                    }
                 }
             });
+        };
+
+        var showFormByFunctionId = function (functionid) {
+            var opened = false;
+            $("#_FormTabs a").each(function (i, tab) {
+                if ($(tab).attr("functionid") == functionid) {
+                    opened = true;
+                    $(tab).tab("show");
+                }
+            });
+            return opened;
+        };
+
+        var closeFormByFunctionId = function (functionid) {
+            var preTab = $("a[functionid=" + functionid + "]").parent().prev();
+            var nextTab = $("a[functionid=" + functionid + "]").parent().next();
+            $("a[functionid=" + functionid + "]").parent().remove();
+            $("#" + functionid).remove();
+
+            if (preTab.length > 0) {
+                var preFunctionId = preTab.find("a").attr("functionid");
+                showFormByFunctionId(preFunctionId);
+            } else if (nextTab.length > 0) {
+                var nextFunctionId = nextTab.find("a").attr("functionid");
+                showFormByFunctionId(nextFunctionId);
+            }
         };
 
         var closeForm = function (ctrl) {
             $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
                 function () {
-                    var functionid = $(ctrl).parents('a').attr("functionid");//$(ctrl).parent().attr("functionid");
-                    $("a[functionid=" + functionid + "]").parent().remove();
-                    $("#" + functionid).remove();
+                    var functionid = $(ctrl).parents('a').attr("functionid");
+                    closeFormByFunctionId(functionid);
                 },
                 function () {
 
