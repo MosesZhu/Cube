@@ -459,7 +459,9 @@
     <Content Include="Test.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
-    <Content Include="Bundle.config" />
+    <Content Include="Bundle.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />

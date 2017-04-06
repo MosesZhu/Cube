@@ -23,10 +23,14 @@
             border-bottom-color: transparent;
         }
 
-            .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
-                border: 1px solid #ddd;
-                border-bottom-color: transparent;
-            }
+        .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
+            border: 1px solid #ddd;
+            border-bottom-color: transparent;
+        }
+
+        .dropdown-menu > li > a {
+            cursor: pointer;
+        }
     </style>
     >
 </asp:Content>
@@ -289,13 +293,16 @@
            immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div>
-    <div id="context-menu2">
+    <div id="context-menu">
         <ul class="dropdown-menu" role="menu">
-            <li><a tabindex="-1">Action</a></li>
-            <li><a tabindex="-1">Another action</a></li>
-            <li><a tabindex="-1">Something else here</a></li>
+            <li><a tabindex="1" lang="lang_open_in_new_window">open in new window</a></li>
+            <li><a tabindex="2" lang="lang_close">close</a></li>
+            <li><a tabindex="3" lang="lang_close_others">close others</a></li>
+            <li><a tabindex="4" lang="lang_close_all">close all</a></li>
             <li class="divider"></li>
-            <li><a tabindex="-1">Separated link</a></li>
+            <li><a tabindex="5" lang="lang_refresh">refresh</a></li>
+            <li class="divider"></li>
+            <li><a tabindex="6" lang="lang_add_to_favourite">add to my favourite</a></li>
         </ul>
     </div>
 </asp:Content>
@@ -733,7 +740,7 @@
 
         var bindContextMenu = function () {
             $('.form-tab').contextmenu({
-                target: '#context-menu2',
+                target: '#context-menu',
                 onItem: function (context, e) {
                     alert($(e.target).text());
                 }
