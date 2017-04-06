@@ -16,7 +16,10 @@ namespace Cube.Web
         {
             List<string> _multyKeyArray = new List<string>();
             _multyKeyArray.Add("msg_confirm_close_tab");
-            _multyKeyArray.Add("msg_confirm_close_window");            
+            _multyKeyArray.Add("msg_confirm_close_window");
+            _multyKeyArray.Add("lang_success");
+            _multyKeyArray.Add("msg_save_success");
+            _multyKeyArray.Add("lang_favorites");
             return _multyKeyArray;
         }
 

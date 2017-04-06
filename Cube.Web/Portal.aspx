@@ -310,6 +310,7 @@
     <script>
         var _PortalContext = {
             "MenuList": null,
+            "BookmarkList": null,
         };
 
         $(function () {
@@ -414,6 +415,22 @@
             return menuHtml;
         };
 
+        var getBookmarkMenuHtml = function (bookmarkMenu) {
+            var menuHtml = "";
+            menuHtml += '<li onclick="return openForm(this);" functionid="bk_' + bookmarkMenu.Id + '" ';
+            if (bookmarkMenu.Url) {
+                menuHtml += ' functionurl="http://'
+                          + bookmarkMenu.Url + '" ';
+            }
+            menuHtml += '>'
+                      + '<a href="#">'
+                      + '<i class="fa fa-circle-o text-light-blue"></i>'
+                      + '<span lang="' + bookmarkMenu.Language_Key + '">' + bookmarkMenu.Code + '</span>'
+                      + '</a>'
+                      + '</li>';
+            return menuHtml;
+        };
+
         var initMenu = function () {
             var options = {
                 "success": function (d) {
@@ -426,6 +443,7 @@
                         });
 
                         _PortalContext.MenuList = d.data.ProductList;
+                        _PortalContext.BookmarkList = d.data.BookmarkList;
                         refreshMenu();
                     }
                 }
@@ -451,6 +469,17 @@
                     menuHtml += getSystemMenuHtml(systemMenu);
                 });
             });
+
+            if (_PortalContext.BookmarkList.length > 0) {
+                menuHtml
+                    += '<li class="header">'
+                    + '<i class="fa fa-star"></i>'
+                    + '<span lang="lang_favorites" style="padding-left:5px;">Bookmark</span>'
+                    + '</li>';
+                $.each(_PortalContext.BookmarkList, function (i, bookmark) {
+                    menuHtml += getBookmarkMenuHtml(bookmark);
+                });
+            }
 
             $("#_FunctionMenu").html(menuHtml);
 
@@ -552,6 +581,17 @@
                     });
                 }
             });
+
+            if (_PortalContext.BookmarkList.length > 0) {
+                menuHtml
+                    += '<li class="header">'
+                    + '<i class="fa fa-star"></i>'
+                    + '<span lang="lang_favorites" style="padding-left:5px;">Bookmark</span>'
+                    + '</li>';
+                $.each(_PortalContext.BookmarkList, function (i, bookmark) {
+                    menuHtml += getBookmarkMenuHtml(bookmark);
+                });
+            }
 
             $("#_FunctionMenu").html(menuHtml);
 
@@ -770,13 +810,32 @@
                         var url = $("iframe[name=" + frameName + "]").attr("src");
                         $("iframe[name=" + frameName + "]").attr("src", null).attr("src", url);
                     } else if (tabIndex == "MENU_ADD_TO_FAVORITES") {
-
+                        addToBookmark(functionid);
                     }
                 }
             });
         };
 
+        var addToBookmark = function (functionid) {
+            var options = {
+                "success": function (d) {
+                    if (d.success) {
+                        $.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
+                        initMenu();
+                    }
+                }
+            };
+            var data = {
+                'functionId': functionid
+            };
+
+            $.ask("addToBookmark", data, options);
+        };
+
         var showFormByFunctionId = function (functionid) {
+            if (functionid.substring(0, 3) == "bk_") {
+                functionid = functionid.substring(3);
+            }
             var opened = false;
             $("#_FormTabs a").each(function (i, tab) {
                 if ($(tab).attr("functionid") == functionid) {

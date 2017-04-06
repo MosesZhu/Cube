@@ -78,6 +78,42 @@ namespace Cube.Web
             return result;
         }
 
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
+        public ResultDTO addToBookmark(string functionId)
+        {
+            ResultDTO result = new ResultDTO();
+            if (hasFunctionRight(User.Id.ToString(), functionId))
+            {
+                List<Mc_Bookmark> existBookmarkList = CubeDb.From<Mc_Bookmark>()
+                    .Where(Mc_Bookmark._.User_Id == User.Id && Mc_Bookmark._.Function_Id == functionId)
+                    .ToList();
+                if (existBookmarkList.Count() == 0)
+                {
+                    Mc_Bookmark newBookmark = new Mc_Bookmark()
+                    {
+                        User_Id = User.Id,
+                        Function_Id = Guid.Parse(functionId)
+                    };
+                    CubeDb.Insert<Mc_Bookmark>(newBookmark);
+                    result.success = true;
+                }
+            }
+            else
+            {
+                result.success = false;
+                result.message = "No permission";
+            }
+            return result;
+        }
+
+        private bool hasFunctionRight(string userId, string functionId)
+        {
+            List<Mc_User_Function> rightList = CubeDb.From<Mc_User_Function>()
+                .Where(Mc_User_Function._.User_Id == userId && Mc_User_Function._.Function_Id == functionId)
+                .ToList();
+            return rightList.Count() > 0;
+        }
         #endregion
 
         #region Method Implement
@@ -282,6 +318,18 @@ namespace Cube.Web
                 productList.Add(debugProduct);
             }
             result.ProductList = productList;
+
+            List<Guid> BookmarkIdList = CubeDb.From<Mc_Bookmark>()
+                .Where(Mc_Bookmark._.User_Id == User.Id)
+                .Select(Mc_Bookmark._.Function_Id).ToList<Guid>();
+            List<FunctionDTO> bookmarkFunctionList = CubeDb.From<Mc_Function>()
+                .Where(Mc_Function._.Id.In(BookmarkIdList))
+                .Select(Mc_Function._.All)
+                .OrderBy(Mc_Function._.Code.Asc)
+                .ToList<FunctionDTO>();
+            bookmarkFunctionList.RemoveAll(f => !function_id_list.Contains(f.Id));
+            result.BookmarkList = bookmarkFunctionList;
+
             return result;
         }
 
