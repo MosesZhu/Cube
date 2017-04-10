@@ -23,10 +23,10 @@
             border-bottom-color: transparent;
         }
 
-            .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
-                border: 1px solid #ddd;
-                border-bottom-color: transparent;
-            }
+        .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
+            border: 1px solid #ddd;
+            border-bottom-color: transparent;
+        }
 
         .dropdown-menu > li > a {
             cursor: pointer;
@@ -293,17 +293,16 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
+            <!--
             <section class="content-header">
-                <!--<h1>QML Maintain Form
-                    <small>QML基础数据维护</small>
-                </h1>-->
-                <ol class="breadcrumb" id="breadcrumb" style="top: -20px;">
+                <ol class="breadcrumb" id="breadcrumb" >
                     <li><i class="fa fa-dashboard"></i>Portal</li>
                 </ol>
             </section>
+            -->
 
             <!-- Main content -->
-            <section class="content body" style="padding-top: 0px; margin-top: -5px;">
+            <section class="content body" style="padding-top: 10px; margin-top: -5px;">
                 <div id="_FormTabsContainer">
                     <ul class="nav nav-tabs" role="tablist" id="_FormTabs"
                         style="display: -webkit-inline-box;">
@@ -325,7 +324,8 @@
                 Anything you want
             </div>
             <!-- Default to the left -->
-            Moses Demo<strong> WebFramework GT</strong>
+            <!--Moses Demo<strong> WebFramework GT</strong>-->
+            <div id = "breadcrumb"><i class="fa fa-bank"></i> <span id="breadcrumb-content">Portal</span></div>
         </footer>
 
         <!-- Control Sidebar -->
@@ -1066,17 +1066,34 @@
         };
 
         var changeBreadCrumb = function () {
-            var breadHtml = "<li><i class='fa fa-dashboard'> Portal</li>";
+            var bread = "Portal";
             if (_PortalContext.CurrentFunctionId) {
                 $.each(_PortalContext.MenuList, function (i, product) {
                     var productName = product.Name;
                     var found = false
                     $.each(product.DomainList, function (j, domainMenu) {
+                        if (found) {
+                            return false;
+                        }
+                        var domainName = domainMenu.Code;
                         $.each(domainMenu.SystemList, function (j, systemMenu) {
+                            if (found) {
+                                return false;
+                            }
+                            var systemName = systemMenu.Code;
                             $.each(systemMenu.FunctionList, function (j, functionMenu) {
                                 if (functionMenu.Id == _PortalContext.CurrentFunctionId) {
                                     found = true;
-                                    breadHtml += "<li>" + productName + "</li>";
+                                    bread += " > " + productName + " > " + domainName + " > " + systemName + + " > " + functionMenu.Name;
+                                    return false;
+                                }
+                                var temp = { "bread": bread, "found": found };
+                                if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {                                    
+                                    getSubFunctionBreadcrumb(functionMenu, temp);
+                                }
+                                if (temp.found) {
+                                    bread += temp.bread;
+                                    return false;
                                 }
                             });
                         });
@@ -1084,16 +1101,46 @@
 
                     if (!found) {
                         $.each(product.SystemList, function (j, systemMenu) {
+                            if (found) {
+                                return false;
+                            }
+                            var systemName = systemMenu.Code;
                             $.each(systemMenu.FunctionList, function (j, functionMenu) {
                                 if (functionMenu.Id == _PortalContext.CurrentFunctionId) {
-                                    //breadHtml += "<li>" + productName + "</li>";
+                                    found = true;
+                                    bread += " > " + productName + " > " + systemName + + " > " + functionMenu.Name;
+                                    return false;
+                                }
+                                var temp = { "bread": bread, "found": found };
+                                if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {                                    
+                                    getSubFunctionBreadcrumb(functionMenu, temp);
+                                }
+                                if (temp.found) {
+                                    bread += temp.bread;
+                                    return false;
                                 }
                             });
                         });
                     }
                 });
             }
-            $("#breadcrumb").html(breadHtml);
+            $("#breadcrumb-content").html(bread);
+        };
+
+        var getSubFunctionBreadcrumb = function (functionMenu, temp) {
+            $.each(functionMenu.SubFunctionList, function (j, subFunctionMenu) {
+                temp.bread += " > " + subFunctionMenu.Code;
+                if (subFunctionMenu.Id == _PortalContext.CurrentFunctionId) {
+                    temp.found = true;                    
+                    return false;
+                }
+                if (subFunctionMenu.SubFunctionList && subFunctionMenu.SubFunctionList.length > 0) {
+                    getSubFunctionBreadcrumb(subFunctionMenu, temp);
+                }
+                if (temp.found) {
+                    return false;
+                }
+            });
         };
 
         var closeFormByFunctionId = function (functionid) {
@@ -1128,18 +1175,18 @@
 
         var resetContentSize = function () {
             var isMenuVisible = ($('.main-sidebar').first().css('transform') === "none");
-            var isBreadCrumbBlock = ($('.breadcrumb').first().css("position") === 'relative');
-            var baseHeight = $(window).height() - 115;
+            //var isBreadCrumbBlock = ($('.breadcrumb').first().css("position") === 'relative');
+            var baseHeight = $(window).height() - $(".main-header").height() - 90;//142;
             var tempHeight = baseHeight;
-            if (isBreadCrumbBlock) {
-                tempHeight = baseHeight - 140;
-            } else {
-                tempHeight = baseHeight - 55;
-            }
+            //if (isBreadCrumbBlock) {
+            //    tempHeight = baseHeight - 140;
+            //} else {
+            //    tempHeight = baseHeight - 55;
+            //}
 
-            if (isMenuVisible && isBreadCrumbBlock) {
-                tempHeight += 55;
-            }
+            //if (isMenuVisible && isBreadCrumbBlock) {
+            //    tempHeight += 55;
+            //}
             $("section.content").height(tempHeight);
         };
 
