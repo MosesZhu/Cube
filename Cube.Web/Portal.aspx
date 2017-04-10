@@ -23,16 +23,153 @@
             border-bottom-color: transparent;
         }
 
-        .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
-            border: 1px solid #ddd;
-            border-bottom-color: transparent;
-        }
+            .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
+                border: 1px solid #ddd;
+                border-bottom-color: transparent;
+            }
 
         .dropdown-menu > li > a {
             cursor: pointer;
         }
+
+        .loader {
+            background: #000;
+            background: -webkit-radial-gradient(#222, #000);
+            background: radial-gradient(#222, #000);
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 99999;
+            opacity:0.3;
+            display:none;
+        }
+
+        .loader-inner {
+            bottom: 0;
+            height: 60px;
+            left: 0;
+            margin: auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100px;
+        }
+
+        .loader-line-wrap {
+            -webkit-animation: spin 2000ms cubic-bezier(.175, .885, .32, 1.275) infinite;
+            animation: spin 2000ms cubic-bezier(.175, .885, .32, 1.275) infinite;
+            box-sizing: border-box;
+            height: 50px;
+            left: 0;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+            width: 100px;
+        }
+
+        .loader-line {
+            border: 4px solid transparent;
+            border-radius: 100%;
+            box-sizing: border-box;
+            height: 100px;
+            left: 0;
+            margin: 0 auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100px;
+        }
+
+        .loader-line-wrap:nth-child(1) {
+            -webkit-animation-delay: -50ms;
+            animation-delay: -50ms;
+        }
+
+        .loader-line-wrap:nth-child(2) {
+            -webkit-animation-delay: -100ms;
+            animation-delay: -100ms;
+        }
+
+        .loader-line-wrap:nth-child(3) {
+            -webkit-animation-delay: -150ms;
+            animation-delay: -150ms;
+        }
+
+        .loader-line-wrap:nth-child(4) {
+            -webkit-animation-delay: -200ms;
+            animation-delay: -200ms;
+        }
+
+        .loader-line-wrap:nth-child(5) {
+            -webkit-animation-delay: -250ms;
+            animation-delay: -250ms;
+        }
+
+        .loader-line-wrap:nth-child(1) .loader-line {
+            border-color: hsl(0, 80%, 60%);
+            height: 90px;
+            width: 90px;
+            top: 7px;
+        }
+
+        .loader-line-wrap:nth-child(2) .loader-line {
+            border-color: hsl(60, 80%, 60%);
+            height: 76px;
+            width: 76px;
+            top: 14px;
+        }
+
+        .loader-line-wrap:nth-child(3) .loader-line {
+            border-color: hsl(120, 80%, 60%);
+            height: 62px;
+            width: 62px;
+            top: 21px;
+        }
+
+        .loader-line-wrap:nth-child(4) .loader-line {
+            border-color: hsl(180, 80%, 60%);
+            height: 48px;
+            width: 48px;
+            top: 28px;
+        }
+
+        .loader-line-wrap:nth-child(5) .loader-line {
+            border-color: hsl(240, 80%, 60%);
+            height: 34px;
+            width: 34px;
+            top: 35px;
+        }
+
+        @-webkit-keyframes spin {
+            0%, 15% {
+                -webkit-transform: rotate(0);
+                transform: rotate(0);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0%, 15% {
+                -webkit-transform: rotate(0);
+                transform: rotate(0);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
     </style>
-    >
+    
 </asp:Content>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
 
@@ -160,10 +297,8 @@
                 <!--<h1>QML Maintain Form
                     <small>QML基础数据维护</small>
                 </h1>-->
-                <ol class="breadcrumb" style="top: -20px;">
-                    <li><a href="#"><i class="fa fa-dashboard"></i>MFG</a></li>
-                    <li><a href="#">QML</a></li>
-                    <li class="active">QML Maintain Form</li>
+                <ol class="breadcrumb" id="breadcrumb" style="top: -20px;">
+                    <li><i class="fa fa-dashboard"></i>Portal</li>
                 </ol>
             </section>
 
@@ -293,17 +428,49 @@
            immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div>
-    <div id="context-menu">
+    <div id="tab-context-menu">
         <ul class="dropdown-menu" role="menu">
-            <li><a tabindex="MENU_OPEN_IN_NEW_WINDOW" lang="lang_open_in_new_window">open in new window</a></li>
-            <li><a tabindex="MENU_CLOSE" lang="lang_close">close</a></li>
-            <li><a tabindex="MENU_CLOSE_OTHERS" lang="lang_close_others">close others</a></li>
-            <li><a tabindex="MENU_CLOSE_ALL" lang="lang_close_all">close all</a></li>
+            <li><a menuindex="MENU_OPEN_IN_NEW_WINDOW" lang="lang_open_in_new_window">open in new window</a></li>
+            <li><a menuindex="MENU_CLOSE" lang="lang_close">close</a></li>
+            <li><a menuindex="MENU_CLOSE_OTHERS" lang="lang_close_others">close others</a></li>
+            <li><a menuindex="MENU_CLOSE_ALL" lang="lang_close_all">close all</a></li>
             <li class="divider"></li>
-            <li><a tabindex="MENU_REFRESH" lang="lang_refresh">refresh</a></li>
+            <li><a menuindex="MENU_REFRESH" lang="lang_refresh">refresh</a></li>
             <li class="divider"></li>
-            <li><a tabindex="MENU_ADD_TO_FAVORITES" lang="lang_add_to_favorites">add to my favourite</a></li>
+            <li><a menuindex="MENU_ADD_TO_FAVORITES" lang="lang_add_to_favorites">add to my favourite</a></li>
         </ul>
+    </div>
+    <div id="menu-context-menu">
+        <ul class="dropdown-menu" role="menu">
+            <li><a menuindex="MENU_EXPAND" lang="lang_expand">expand</a></li>
+            <li><a menuindex="MENU_EXPAND_ALL" lang="lang_expand_all">expand all</a></li>
+            <li><a menuindex="MENU_COLLAPSE" lang="lang_collapse">collapse</a></li>
+            <li><a menuindex="MENU_COLLAPSE_ALL" lang="lang_collapse_all">collapse all</a></li>
+        </ul>
+    </div>
+    <div id="bookmark-context-menu">
+        <ul class="dropdown-menu" role="menu">
+            <li><a menuindex="MENU_REMOVE_FROM_FAVORITES" lang="lang_remove">remove</a></li>
+        </ul>
+    </div>
+    <div class="loader" id="loader">
+        <div class="loader-inner">
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+        </div>
     </div>
 </asp:Content>
 <asp:Content ID="PageScriptContent" ContentPlaceHolderID="PageScriptContentHolder" runat="server">
@@ -311,6 +478,7 @@
         var _PortalContext = {
             "MenuList": null,
             "BookmarkList": null,
+            "CurrentFunctionId": null
         };
 
         $(function () {
@@ -386,13 +554,13 @@
             var menuHtml = '';
             if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
                 menuHtml += '<li class="treeview">'
-                          + '<a href="#">'
-                          + '<i class="fa fa-puzzle-piece text-blue"></i>'
-                          + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                          + '<span class="pull-right-container">'
-                          + '<i class="fa fa-angle-left pull-right"></i>'
-                          + '</span>'
-                          + '</a>';
+                    + '<a href="#">'
+                    + '<i class="fa fa-puzzle-piece text-blue"></i>'
+                    + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                    + '<span class="pull-right-container">'
+                    + '<i class="fa fa-angle-left pull-right"></i>'
+                    + '</span>'
+                    + '</a>';
                 menuHtml += '<ul class="treeview-menu">';
                 $.each(functionMenu.SubFunctionList, function (k, subFunctionMenu) {
                     menuHtml += getFunctionMenuHtml(subFunctionMenu);
@@ -402,14 +570,14 @@
                 menuHtml += '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
                 if (functionMenu.Url) {
                     menuHtml += ' functionurl="http://'
-                              + functionMenu.Url + '" ';
+                        + functionMenu.Url + '" ';
                 }
                 menuHtml += '>'
-                          + '<a href="#">'
-                          + '<i class="fa fa-circle-o text-light-blue"></i>'
-                          + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                          + '</a>'
-                          + '</li>';
+                    + '<a href="#">'
+                    + '<i class="fa fa-circle-o text-light-blue"></i>'
+                    + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                    + '</a>'
+                    + '</li>';
             }
 
             return menuHtml;
@@ -420,14 +588,14 @@
             menuHtml += '<li onclick="return openForm(this);" functionid="bk_' + bookmarkMenu.Id + '" ';
             if (bookmarkMenu.Url) {
                 menuHtml += ' functionurl="http://'
-                          + bookmarkMenu.Url + '" ';
+                    + bookmarkMenu.Url + '" ';
             }
             menuHtml += '>'
-                      + '<a href="#">'
-                      + '<i class="fa fa-circle-o text-light-blue"></i>'
-                      + '<span lang="' + bookmarkMenu.Language_Key + '">' + bookmarkMenu.Code + '</span>'
-                      + '</a>'
-                      + '</li>';
+                + '<a href="#">'
+                + '<i class="fa fa-circle-o text-light-blue"></i>'
+                + '<span lang="' + bookmarkMenu.Language_Key + '">' + bookmarkMenu.Code + '</span>'
+                + '</a>'
+                + '</li>';
             return menuHtml;
         };
 
@@ -483,6 +651,8 @@
 
             $("#_FunctionMenu").html(menuHtml);
 
+            bindMenuContextMenu();
+
             $.language.change(_Context.CurrentLang);
         };
 
@@ -490,14 +660,14 @@
             var menuHtml = '';
             if (groupMenu.bingo) {
                 menuHtml
-                = '<li class="treeview">'
-                + '<a href="#">'
-                + '<i class="fa fa-bank text-blue"></i>'
-                + '<span lang="' + groupMenu.Language_Key + '">' + groupMenu.Code + '</span>'
-                + '<span class="pull-right-container">'
-                + '<i class="fa fa-angle-left pull-right"></i>'
-                + '</span>'
-                + '</a>';
+                    = '<li class="treeview">'
+                    + '<a href="#">'
+                    + '<i class="fa fa-bank text-blue"></i>'
+                    + '<span lang="' + groupMenu.Language_Key + '">' + groupMenu.Code + '</span>'
+                    + '<span class="pull-right-container">'
+                    + '<i class="fa fa-angle-left pull-right"></i>'
+                    + '</span>'
+                    + '</a>';
                 menuHtml += '<ul class="treeview-menu">';
                 $.each(groupMenu.SystemList, function (k, systemMenu) {
                     menuHtml += getSystemMenuHtml(systemMenu);
@@ -511,14 +681,14 @@
             var menuHtml = '';
             if (systemMenu.bingo) {
                 menuHtml
-                = '<li class="treeview">'
-                + '<a href="#">'
-                + '<i class="fa fa-laptop text-blue"></i>'
-                + '<span lang="' + systemMenu.Language_Key + '">' + systemMenu.Code + '</span>'
-                + '<span class="pull-right-container">'
-                + '<i class="fa fa-angle-left pull-right"></i>'
-                + '</span>'
-                + '</a>';
+                    = '<li class="treeview">'
+                    + '<a href="#">'
+                    + '<i class="fa fa-laptop text-blue"></i>'
+                    + '<span lang="' + systemMenu.Language_Key + '">' + systemMenu.Code + '</span>'
+                    + '<span class="pull-right-container">'
+                    + '<i class="fa fa-angle-left pull-right"></i>'
+                    + '</span>'
+                    + '</a>';
                 menuHtml += '<ul class="treeview-menu">';
                 $.each(systemMenu.FunctionList, function (k, functionMenu) {
                     menuHtml += getSearchFunctionMenuHtml(functionMenu);
@@ -533,13 +703,13 @@
             if (functionMenu.bingo) {
                 if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
                     menuHtml += '<li class="treeview">'
-                              + '<a href="#">'
-                              + '<i class="fa fa-puzzle-piece text-blue"></i>'
-                              + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                              + '<span class="pull-right-container">'
-                              + '<i class="fa fa-angle-left pull-right"></i>'
-                              + '</span>'
-                              + '</a>';
+                        + '<a href="#">'
+                        + '<i class="fa fa-puzzle-piece text-blue"></i>'
+                        + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                        + '<span class="pull-right-container">'
+                        + '<i class="fa fa-angle-left pull-right"></i>'
+                        + '</span>'
+                        + '</a>';
                     menuHtml += '<ul class="treeview-menu">';
                     $.each(functionMenu.SubFunctionList, function (k, subFunctionMenu) {
                         menuHtml += getFunctionMenuHtml(subFunctionMenu);
@@ -549,14 +719,14 @@
                     menuHtml += '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
                     if (functionMenu.Url) {
                         menuHtml += ' functionurl="http://'
-                                  + functionMenu.Url + '" ';
+                            + functionMenu.Url + '" ';
                     }
                     menuHtml += '>'
-                              + '<a href="#">'
-                              + '<i class="fa fa-circle-o text-light-blue"></i>'
-                              + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                              + '</a>'
-                              + '</li>';
+                        + '<a href="#">'
+                        + '<i class="fa fa-circle-o text-light-blue"></i>'
+                        + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                        + '</a>'
+                        + '</li>';
                 }
             }
             return menuHtml;
@@ -594,6 +764,8 @@
             }
 
             $("#_FunctionMenu").html(menuHtml);
+
+            bindMenuContextMenu();
 
             $.language.change(_Context.CurrentLang);
         }
@@ -738,7 +910,8 @@
 
                 if (!opend) {
                     var tabHtml = '<li class="nav-item form-tab">'
-                        + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
+                        //+ '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
+                        + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" onclick="showFormByFunctionId(\'' + functionid + '\')" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
                         + '<table>'
                         + '<tr>'
                         + '<td>'
@@ -751,10 +924,9 @@
                     tabHtml += ">" + functionname + '</div>'
                         + '</td>'
                         + '<td style="padding-left:5px;">'
-                        + '<span class="fa fa-times icon_close_form" onclick="return closeForm(this);">'
+                        + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="return closeForm(this);">&times;</button >'//<span class="fa fa-times icon_close_form" onclick="return closeForm(this);">'
                         + '</span>'
                         + '</td>'
-
                         + '</tr>'
                         + '</table>'
                         + '</a>'
@@ -765,29 +937,29 @@
                         + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
                         + "#!lang=" + _Context.CurrentLang
                         + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
-                    bindContextMenu();
-                    $("#_FormTabs a[functionid=" + functionid + "]").tab("show");
+                    bindTabContextMenu();
+                    showFormByFunctionId(functionid);//$("#_FormTabs a[functionid=" + functionid + "]").tab("show");
                 }
             }
             return false;
         };
 
-        var bindContextMenu = function () {
+        var bindTabContextMenu = function () {
             $('.form-tab').contextmenu({
-                target: '#context-menu',
+                target: '#tab-context-menu',
                 onItem: function (context, e) {
-                    var tabIndex = $(e.target).attr('tabindex');
+                    var menuIndex = $(e.target).attr('menuindex');
                     var functionid = $(context).find("a").attr("functionid");
-                    if (tabIndex == "MENU_OPEN_IN_NEW_WINDOW") {
+                    if (menuIndex == "MENU_OPEN_IN_NEW_WINDOW") {
                         var url = $("#" + functionid).find("iframe").attr("src");
                         window.open(url);
-                    } else if (tabIndex == "MENU_CLOSE") {
+                    } else if (menuIndex == "MENU_CLOSE") {
                         $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
-                            function () {                                
+                            function () {
                                 closeFormByFunctionId(functionid);
                             },
-                            function () {});
-                    } else if (tabIndex == "MENU_CLOSE_OTHERS") {
+                            function () { });
+                    } else if (menuIndex == "MENU_CLOSE_OTHERS") {
                         $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
                             function () {
                                 $("#_FormTabs a").each(function (i, tab) {
@@ -796,8 +968,8 @@
                                     }
                                 });
                             },
-                            function () {});
-                    } else if (tabIndex == "MENU_CLOSE_ALL") {
+                            function () { });
+                    } else if (menuIndex == "MENU_CLOSE_ALL") {
                         $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
                             function () {
                                 $("#_FormTabs a").each(function (i, tab) {
@@ -805,12 +977,53 @@
                                 });
                             },
                             function () { });
-                    } else if (tabIndex == "MENU_REFRESH") {
+                    } else if (menuIndex == "MENU_REFRESH") {
                         var frameName = "frm_" + functionid;
                         var url = $("iframe[name=" + frameName + "]").attr("src");
-                        $("iframe[name=" + frameName + "]").attr("src", null).attr("src", url);
-                    } else if (tabIndex == "MENU_ADD_TO_FAVORITES") {
+                        $("iframe[name=" + frameName + "]").attr("src", url);
+                        showFormByFunctionId(functionid);
+                    } else if (menuIndex == "MENU_ADD_TO_FAVORITES") {
                         addToBookmark(functionid);
+                    }
+                }
+            });
+        };
+
+        var bindMenuContextMenu = function () {
+            $('#_FunctionMenu').find(".treeview,.header").contextmenu({
+                target: '#menu-context-menu',
+                onItem: function (context, e) {
+                    var menuIndex = $(e.target).attr('menuindex');
+                    if (menuIndex == "MENU_EXPAND") {
+                        if ($(context).hasClass("header")) {
+                            var current = $(context);
+                            while (true) {
+                                current = current.next("li");
+                                if (!current || current.hasClass("header")) {
+                                    break;
+                                }
+                                current.find("ul").slideDown(500);
+                            }
+                        } else {
+                            $(context).find("ul").slideDown(500);
+                        }
+                    } else if (menuIndex == "MENU_EXPAND_ALL") {
+                        $('#_FunctionMenu').find("ul").slideDown(500);
+                    } else if (menuIndex == "MENU_COLLAPSE") {
+                        if ($(context).hasClass("header")) {
+                            var current = $(context);
+                            while (true) {
+                                current = current.next("li");
+                                if (!current || current.hasClass("header")) {
+                                    break;
+                                }
+                                current.find("ul").slideUp(500);
+                            }
+                        } else {
+                            $(context).find("ul").slideUp(500);
+                        }
+                    } else if (menuIndex == "MENU_COLLAPSE_ALL") {
+                        $('#_FunctionMenu').find("ul").slideUp(500);
                     }
                 }
             });
@@ -845,16 +1058,51 @@
                 if (thisFunctionId == functionid) {
                     opened = true;
                     $(tab).tab("show");
+                    _PortalContext.CurrentFunctionId = functionid;
                 }
             });
+            changeBreadCrumb();
             return opened;
+        };
+
+        var changeBreadCrumb = function () {
+            var breadHtml = "<li><i class='fa fa-dashboard'> Portal</li>";
+            if (_PortalContext.CurrentFunctionId) {
+                $.each(_PortalContext.MenuList, function (i, product) {
+                    var productName = product.Name;
+                    var found = false
+                    $.each(product.DomainList, function (j, domainMenu) {
+                        $.each(domainMenu.SystemList, function (j, systemMenu) {
+                            $.each(systemMenu.FunctionList, function (j, functionMenu) {
+                                if (functionMenu.Id == _PortalContext.CurrentFunctionId) {
+                                    found = true;
+                                    breadHtml += "<li>" + productName + "</li>";
+                                }
+                            });
+                        });
+                    });
+
+                    if (!found) {
+                        $.each(product.SystemList, function (j, systemMenu) {
+                            $.each(systemMenu.FunctionList, function (j, functionMenu) {
+                                if (functionMenu.Id == _PortalContext.CurrentFunctionId) {
+                                    //breadHtml += "<li>" + productName + "</li>";
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+            $("#breadcrumb").html(breadHtml);
         };
 
         var closeFormByFunctionId = function (functionid) {
             var preTab = $("a[functionid=" + functionid + "]").parent().prev();
             var nextTab = $("a[functionid=" + functionid + "]").parent().next();
+            _PortalContext.CurrentFunctionId = null;
             $("a[functionid=" + functionid + "]").parent().remove();
             $("#" + functionid).remove();
+            changeBreadCrumb();
 
             if (preTab.length > 0) {
                 var preFunctionId = preTab.find("a").attr("functionid");

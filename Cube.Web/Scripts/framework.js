@@ -1,5 +1,6 @@
 ﻿jQuery.extend({
     "ask": function (method, data, options, not_self_service) {
+        $.dialog.showLoading();
         var ssoToken = getQueryStringByName("SSOToken") ? getQueryStringByName("SSOToken") : "";
         if (!ssoToken) {
             window.location.href = "Login";
@@ -40,6 +41,7 @@
                 }
             },
             success: function (d) {
+                $.dialog.closeLoading();
                 var resultData = d.d;
                 if (!resultData.success && resultData.errorcode == "E0001") {
                     location.href = "Login";
@@ -48,6 +50,7 @@
                 }
             },
             error: function (e) {
+                $.dialog.closeLoading();
                 cusError(e);
             }
         });
@@ -147,16 +150,24 @@ var showMessage = function (title, content, warning, type, times) {
     $.dialog.showMessage(title, content, warning, type, times);
 };
 
-var showConfirm = function (title, content, warning, type, oktodo, canceltodo, times) {
-    $.dialog.showConfirm(title, content, warning, type, oktodo, canceltodo, times);
-};
-
 var closeMessage = function (times) {
     $.dialog.closeMessage(times);
 };
 
+var showConfirm = function (title, content, warning, type, oktodo, canceltodo, times) {
+    $.dialog.showConfirm(title, content, warning, type, oktodo, canceltodo, times);
+};
+
 var closeConfirm = function (times) {
     $.dialog.closeConfirm(times);
+};
+
+var showLoading = function (times) {
+    $.dialog.showLoading(times);
+};
+
+var closeLoading = function (times) {
+    $.dialog.closeLoading(times);
 };
 
 var showDialogOnTop = function (dialogId, dialogHtml, times) {
@@ -309,6 +320,26 @@ jQuery.extend({
             }
             $("#customerDialogContainer").html(dialogHtml);
             $("#" + dialogId).modal('show');
+        },
+        "showLoading": function (times) {
+            if (parent && parent.showLoading) {
+                if (!times) {
+                    var times = 1;
+                    parent.showLoading(times);
+                    return;
+                }
+            }
+            $("#loader").show();
+        },
+        "closeLoading": function (times) {
+            if (parent && parent.closeLoading) {
+                if (!times) {
+                    var times = 1;
+                    parent.closeLoading(times);
+                    return;
+                }
+            }
+            $("#loader").hide();
         },
     }
 });

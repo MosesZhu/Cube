@@ -26,6 +26,9 @@ namespace Cube.Web
         [WebMethod]
         public ResultDTO getMenu()
         {
+            //for loading test
+            //int i = 0;
+            //while (i < 100000) { i++; }
             ResultDTO result = new ResultDTO()
             {
                 success = true,
