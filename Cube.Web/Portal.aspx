@@ -585,7 +585,7 @@
 
         var getBookmarkMenuHtml = function (bookmarkMenu) {
             var menuHtml = "";
-            menuHtml += '<li onclick="return openForm(this);" functionid="bk_' + bookmarkMenu.Id + '" ';
+            menuHtml += '<li class="bookmark-item" onclick="return openForm(this);" functionid="bk_' + bookmarkMenu.Id + '" ';
             if (bookmarkMenu.Url) {
                 menuHtml += ' functionurl="http://'
                     + bookmarkMenu.Url + '" ';
@@ -1027,6 +1027,21 @@
                     }
                 }
             });
+
+            bindBookmarkContextMenu();
+        };
+
+        var bindBookmarkContextMenu = function () {
+            $('#_FunctionMenu').find(".bookmark-item").contextmenu({
+                target: '#bookmark-context-menu',
+                onItem: function (context, e) {
+                    var menuIndex = $(e.target).attr('menuindex');
+                    if (menuIndex == "MENU_REMOVE_FROM_FAVORITES") {
+                        var functionid = $(context).attr("functionid").substring(3);;
+                        removeFromBookmark(functionid);
+                    }
+                }
+            });
         };
 
         var addToBookmark = function (functionid) {
@@ -1043,6 +1058,22 @@
             };
 
             $.ask("addToBookmark", data, options);
+        };
+
+        var removeFromBookmark = function (functionid) {
+            var options = {
+                "success": function (d) {
+                    if (d.success) {
+                        $.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
+                        initMenu();
+                    }
+                }
+            };
+            var data = {
+                'functionId': functionid
+            };
+
+            $.ask("removeFromBookmark", data, options);
         };
 
         var showFormByFunctionId = function (functionid) {
@@ -1066,33 +1097,32 @@
         };
 
         var changeBreadCrumb = function () {
-            var bread = "Portal";
+            var bread = "Portal";            
             if (_PortalContext.CurrentFunctionId) {
                 $.each(_PortalContext.MenuList, function (i, product) {
-                    var productName = product.Name;
-                    var found = false
+                    var found = false;
                     $.each(product.DomainList, function (j, domainMenu) {
                         if (found) {
                             return false;
                         }
-                        var domainName = domainMenu.Code;
                         $.each(domainMenu.SystemList, function (j, systemMenu) {
                             if (found) {
                                 return false;
                             }
-                            var systemName = systemMenu.Code;
                             $.each(systemMenu.FunctionList, function (j, functionMenu) {
-                                if (functionMenu.Id == _PortalContext.CurrentFunctionId) {
+                                var searchFlag = {
+                                    "found": false,
+                                    "founctionArray": new Array()
+                                };
+                                getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
+                                if (searchFlag.found) {
                                     found = true;
-                                    bread += " > " + productName + " > " + domainName + " > " + systemName + + " > " + functionMenu.Name;
-                                    return false;
-                                }
-                                var temp = { "bread": bread, "found": found };
-                                if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {                                    
-                                    getSubFunctionBreadcrumb(functionMenu, temp);
-                                }
-                                if (temp.found) {
-                                    bread += temp.bread;
+                                    bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
+                                        + "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span>";
+                                        + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
+                                    $.each(searchFlag.founctionArray, function (k, f) {
+                                        bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
+                                    });
                                     return false;
                                 }
                             });
@@ -1100,47 +1130,55 @@
                     });
 
                     if (!found) {
-                        $.each(product.SystemList, function (j, systemMenu) {
+                        $.each(product.SystemList, function (i, systemMenu) {
                             if (found) {
                                 return false;
                             }
-                            var systemName = systemMenu.Code;
                             $.each(systemMenu.FunctionList, function (j, functionMenu) {
-                                if (functionMenu.Id == _PortalContext.CurrentFunctionId) {
+                                var searchFlag = {
+                                    "found": false,
+                                    "founctionArray": new Array()
+                                };
+                                getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
+                                if (searchFlag.found) {
                                     found = true;
-                                    bread += " > " + productName + " > " + systemName + + " > " + functionMenu.Name;
-                                    return false;
-                                }
-                                var temp = { "bread": bread, "found": found };
-                                if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {                                    
-                                    getSubFunctionBreadcrumb(functionMenu, temp);
-                                }
-                                if (temp.found) {
-                                    bread += temp.bread;
+                                    bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
+                                        + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
+                                    $.each(searchFlag.founctionArray, function (k, f) {
+                                        bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
+                                    });
                                     return false;
                                 }
                             });
                         });
+                    } else {
+                        return false;
                     }
                 });
             }
             $("#breadcrumb-content").html(bread);
+            $.language.change(_Context.CurrentLang);
         };
 
-        var getSubFunctionBreadcrumb = function (functionMenu, temp) {
-            $.each(functionMenu.SubFunctionList, function (j, subFunctionMenu) {
-                temp.bread += " > " + subFunctionMenu.Code;
-                if (subFunctionMenu.Id == _PortalContext.CurrentFunctionId) {
-                    temp.found = true;                    
-                    return false;
-                }
-                if (subFunctionMenu.SubFunctionList && subFunctionMenu.SubFunctionList.length > 0) {
-                    getSubFunctionBreadcrumb(subFunctionMenu, temp);
-                }
-                if (temp.found) {
-                    return false;
-                }
-            });
+        var getFunctionArray = function (targetFunctionId, functionMenu, searchFlag) {
+            searchFlag.founctionArray.push(functionMenu);
+            if (functionMenu.Id == targetFunctionId) {
+                searchFlag.found = true;
+                return;
+            }            
+            if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
+                $.each(functionMenu.SubFunctionList, function (j, subFunctionMenu) {
+                    var currentIndex = searchFlag.founctionArray.length - 1;
+                    getFunctionArray(targetFunctionId, subFunctionMenu, searchFlag);
+                    if (searchFlag.found) {
+                        return false;
+                    } else {
+                        for (var i = searchFlag.founctionArray.length - 1; i > currentIndex; i--) {
+                            searchFlag.founctionArray.pop(i);
+                        }
+                    }
+                });
+            }       
         };
 
         var closeFormByFunctionId = function (functionid) {

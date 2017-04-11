@@ -110,6 +110,19 @@ namespace Cube.Web
             return result;
         }
 
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
+        public ResultDTO removeFromBookmark(string functionId)
+        {
+            ResultDTO result = new ResultDTO();
+            CubeDb.Delete<Mc_Bookmark>(Mc_Bookmark._.User_Id == User.Id && Mc_Bookmark._.Function_Id == functionId);
+            List<Mc_Bookmark> existBookmarkList = CubeDb.From<Mc_Bookmark>()
+                    .Where(Mc_Bookmark._.User_Id == User.Id && Mc_Bookmark._.Function_Id == functionId)
+                    .ToList();
+            result.success = true;
+            return result;
+        }
+
         private bool hasFunctionRight(string userId, string functionId)
         {
             List<Mc_User_Function> rightList = CubeDb.From<Mc_User_Function>()
