@@ -32,6 +32,11 @@
             cursor: pointer;
         }
 
+        #_FormTabContent > .tab-pane {
+            border: 1px solid #ddd;
+            border-top: 0px;
+        }
+
         .loader {
             background: #000;
             background: -webkit-radial-gradient(#222, #000);
