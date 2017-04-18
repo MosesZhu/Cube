@@ -74,6 +74,11 @@ namespace Cube.Base.SSO
         }
 
         public Mc_User User { get; set; }
+
+        public Guid ProductId { get; set; }
+
+        public Guid OrgId { get; set; }
+
         public TokenDTO TokenInfo { get; set; }
         public SSOContext(string token) 
         {

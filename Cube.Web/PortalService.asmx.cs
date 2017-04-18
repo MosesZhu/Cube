@@ -11,6 +11,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using ITS.Data;
 using Cube.Base.Utility;
+using ITS.WebFramework.PermissionComponent.ServiceProxy;
 
 namespace Cube.Web
 {
@@ -26,14 +27,23 @@ namespace Cube.Web
         [WebMethod]
         public ResultDTO getMenu()
         {
-            //for loading test
-            //int i = 0;
-            //while (i < 100000) { i++; }
             ResultDTO result = new ResultDTO()
             {
                 success = true,
                 data = GetMenuImp()
             };
+            try
+            {
+                string s = PermissionService.GetAuthorizedProductFunctionTree(User.Id, SSOContext.Current.OrgId, SSOContext.Current.ProductId, true);
+                //bool isadmin = PermissionService.IsSystemAdmin(Guid.Parse("65D9158B-1320-4894-92C1-367DDC59E64D"),
+                //    Guid.Parse("49786A76-62C5-4DF2-9692-177331D34D57"));
+                string s2 = "";
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+            }
+
             return result;
         }
 
@@ -157,12 +167,12 @@ namespace Cube.Web
         }
 
 
-        private void FoundParentFunctionWithoutRight(FunctionDTO currentFunction, List<FunctionDTO> opFunctionList, List<FunctionDTO> baseFunctionList)
+        private void FoundParentFunctionWithoutRight(Cube.Model.DTO.FunctionDTO currentFunction, List<Cube.Model.DTO.FunctionDTO> opFunctionList, List<Cube.Model.DTO.FunctionDTO> baseFunctionList)
         {
-            FunctionDTO parentFunction = CubeDb.From<Mc_Function>()
+            Cube.Model.DTO.FunctionDTO parentFunction = CubeDb.From<Mc_Function>()
                     .Where(Mc_Function._.Id == currentFunction.Parent_Function_Id)
                     .Select(Mc_Function._.All)
-                    .ToList<FunctionDTO>().FirstOrDefault();
+                    .ToList<Cube.Model.DTO.FunctionDTO>().FirstOrDefault();
             if (parentFunction != null)
             {
                 if (!opFunctionList.Exists(f => f.Id == currentFunction.Parent_Function_Id))
@@ -188,19 +198,19 @@ namespace Cube.Web
                 .Where(Mc_User_Function._.User_Id == User.Id)
                 .Select(Mc_User_Function._.Function_Id)
                 .ToList<Guid>();
-            List<FunctionDTO> functionList = functionList = new List<FunctionDTO>();
+            List<Cube.Model.DTO.FunctionDTO> functionList = functionList = new List<Cube.Model.DTO.FunctionDTO>();
             if (function_id_list != null)
             {
                 functionList = CubeDb.From<Mc_Function>()
                 .Where(Mc_Function._.Id.In(function_id_list))
                 .Select(Mc_Function._.All)
                 .OrderBy(Mc_Function._.Code.Asc)
-                .ToList<FunctionDTO>();
+                .ToList<Cube.Model.DTO.FunctionDTO>();
             }
 
             //应对子功能有权限而父功能没有权限的情况
-            List<FunctionDTO> parentFunctionList = new List<FunctionDTO>();
-            foreach(FunctionDTO function in functionList)
+            List<Cube.Model.DTO.FunctionDTO> parentFunctionList = new List<Cube.Model.DTO.FunctionDTO>();
+            foreach(Cube.Model.DTO.FunctionDTO function in functionList)
             {
                 if (function.Parent_Function_Id != null && function.Parent_Function_Id != Guid.Empty
                      && !functionList.Exists(f => f.Id == function.Parent_Function_Id))
@@ -211,27 +221,27 @@ namespace Cube.Web
             functionList.AddRange(parentFunctionList);
 
             List<string> system_id_list = functionList.Where(f => f.System_Id != null).Select(f => f.System_Id).ToList();
-            List<SystemDTO> systemList = CubeDb.From<Mc_System>()
+            List<Cube.Model.DTO.SystemDTO> systemList = CubeDb.From<Mc_System>()
                 .Where(Mc_System._.Id.In(system_id_list))
                 .Select(Mc_System._.All)
-                .ToList<SystemDTO>();
+                .ToList<Cube.Model.DTO.SystemDTO>();
 
             List<Guid> domain_id_list = systemList.Where(s => s.Domain_Id != null).Select(s => s.Domain_Id).ToList();
-            List<DomainDTO> domainList = CubeDb.From<Mc_Domain>()
+            List<Cube.Model.DTO.DomainDTO> domainList = CubeDb.From<Mc_Domain>()
                 .Where(Mc_Domain._.Id.In(domain_id_list))
                 .Select(Mc_Domain._.All)
-                .ToList<DomainDTO>();
+                .ToList<Cube.Model.DTO.DomainDTO>();
 
             List<Guid> product_id_list_from_system = systemList.Where(s => s.Product_Id != null).Select(s => s.Product_Id).ToList();
             List<Guid> product_id_list_from_domain = domainList.Where(d => d.Product_Id != null).Select(d => d.Product_Id).ToList();
             List<Guid> product_id_list = product_id_list_from_system.Union(product_id_list_from_domain).ToList();
-            List<ProductDTO> productList = CubeDb.From<Mc_Product>()
+            List<Cube.Model.DTO.ProductDTO> productList = CubeDb.From<Mc_Product>()
                 .Where(Mc_Product._.Id.In(product_id_list))
                 .Select(Mc_Product._.All)
-                .ToList<ProductDTO>();            
+                .ToList<Cube.Model.DTO.ProductDTO>();            
 
             //2.组装function
-            foreach (FunctionDTO function in functionList)
+            foreach (Cube.Model.DTO.FunctionDTO function in functionList)
             {                
                 function.SubFunctionList = functionList.FindAll(f => f.Parent_Function_Id != null && f.Parent_Function_Id.ToString().Equals(function.Id.ToString(), StringComparison.CurrentCultureIgnoreCase));
 
@@ -249,7 +259,7 @@ namespace Cube.Web
             }
 
             //3.组装system
-            foreach (SystemDTO system in systemList)
+            foreach (Cube.Model.DTO.SystemDTO system in systemList)
             {
                 system.FunctionList = functionList.FindAll(f => (f.Parent_Function_Id == null || f.Parent_Function_Id == Guid.Empty)
                     && f.System_Id != null && f.System_Id.ToString().Equals(system.Id.ToString(), StringComparison.CurrentCultureIgnoreCase));
@@ -270,7 +280,7 @@ namespace Cube.Web
             systemList = systemList.OrderBy(x => x.Code).ToList();
 
             //4.组装domain
-            foreach (DomainDTO domain in domainList)
+            foreach (Cube.Model.DTO.DomainDTO domain in domainList)
             {
                 domain.SystemList = systemList.FindAll(s => s.Domain_Id != null
                     && s.Domain_Id.ToString().Equals(domain.Id.ToString(), StringComparison.CurrentCultureIgnoreCase));
@@ -290,7 +300,7 @@ namespace Cube.Web
             domainList = domainList.OrderBy(d => d.Code).ToList();
 
             //5.组装product
-            foreach (ProductDTO product in productList)
+            foreach (Cube.Model.DTO.ProductDTO product in productList)
             {
                 product.DomainList = domainList.FindAll(d => d.Product_Id != null
                     && d.Product_Id.ToString().Equals(product.Id.ToString(), StringComparison.CurrentCultureIgnoreCase));
@@ -299,7 +309,7 @@ namespace Cube.Web
             }
 
             //去除多余的Others
-            ProductDTO othersProduct = new ProductDTO()
+            Cube.Model.DTO.ProductDTO othersProduct = new Cube.Model.DTO.ProductDTO()
             {
                 Id = Guid.Empty,
                 Name = "Others"
@@ -315,15 +325,15 @@ namespace Cube.Web
             if (SSOContext.IsDebug)
             {
                 string debugUrl = System.Web.HttpUtility.UrlDecode(SSOContext.LocalDebugUrl).Replace("http://", "").Replace("https://", "");
-                ProductDTO debugProduct = new ProductDTO();
+                Cube.Model.DTO.ProductDTO debugProduct = new Cube.Model.DTO.ProductDTO();
                 debugProduct.Id = Guid.NewGuid();
                 debugProduct.Name = "Debug";
 
-                SystemDTO debugSystem = new SystemDTO();
+                Cube.Model.DTO.SystemDTO debugSystem = new Cube.Model.DTO.SystemDTO();
                 debugSystem.Code = "DEBUG";
                 debugSystem.Id = Guid.NewGuid();
 
-                FunctionDTO debugFunction = new FunctionDTO();
+                Cube.Model.DTO.FunctionDTO debugFunction = new Cube.Model.DTO.FunctionDTO();
                 debugFunction.Code = "DEBUG";
                 debugFunction.Id = Guid.NewGuid();
                 debugFunction.Language_Key = "lang_debug";
@@ -338,11 +348,11 @@ namespace Cube.Web
             List<Guid> BookmarkIdList = CubeDb.From<Mc_Bookmark>()
                 .Where(Mc_Bookmark._.User_Id == User.Id)
                 .Select(Mc_Bookmark._.Function_Id).ToList<Guid>();
-            List<FunctionDTO> bookmarkFunctionList = CubeDb.From<Mc_Function>()
+            List<Cube.Model.DTO.FunctionDTO> bookmarkFunctionList = CubeDb.From<Mc_Function>()
                 .Where(Mc_Function._.Id.In(BookmarkIdList))
                 .Select(Mc_Function._.All)
                 .OrderBy(Mc_Function._.Code.Asc)
-                .ToList<FunctionDTO>();
+                .ToList<Cube.Model.DTO.FunctionDTO>();
             bookmarkFunctionList.RemoveAll(f => !function_id_list.Contains(f.Id));
             result.BookmarkList = bookmarkFunctionList;
 
@@ -355,7 +365,7 @@ namespace Cube.Web
         /// <param name="current_function"></param>
         /// <param name="function_id"></param>
         /// <returns></returns>
-        private FunctionDTO FindInFunctionTree(FunctionDTO current_function, string function_id)
+        private Cube.Model.DTO.FunctionDTO FindInFunctionTree(Cube.Model.DTO.FunctionDTO current_function, string function_id)
         {
             if (current_function.SubFunctionList.Count == 0)
             {
@@ -378,16 +388,16 @@ namespace Cube.Web
         /// 获得Role
         /// </summary>
         /// <returns></returns>
-        private List<RoleDTO> GetRoleList()
+        private List<Cube.Model.DTO.RoleDTO> GetRoleList()
         {
-            List<RoleDTO> list = DBUtility.CubeDb.From<Mc_User_Role>()
+            List<Cube.Model.DTO.RoleDTO> list = DBUtility.CubeDb.From<Mc_User_Role>()
                 .LeftJoin<Mc_Role>(Mc_Role._.Id == Mc_User_Role._.Role_Id)
                 .Where(Mc_User_Role._.User_Id == User.Id)
                 .Select(
                 Mc_User_Role._.Role_Id
                 , Mc_Role._.Name
                 )
-                .ToList<RoleDTO>();
+                .ToList<Cube.Model.DTO.RoleDTO>();
             return list;
 
         }

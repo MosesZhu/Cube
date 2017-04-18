@@ -1,4 +1,9 @@
-﻿jQuery.extend({
+﻿var cube = window.cube ? window.cube : {};
+if (!cube.plugin) {
+    cube.plugin = {};
+}
+
+jQuery.extend({
     "ask": function (method, data, options, not_self_service) {
         $.dialog.showLoading();
         var ssoToken = getQueryStringByName("SSOToken") ? getQueryStringByName("SSOToken") : "";
@@ -322,23 +327,29 @@ jQuery.extend({
             $("#" + dialogId).modal('show');
         },
         "showLoading": function (times) {
-            if (parent && parent.showLoading) {
-                if (!times) {
-                    var times = 1;
-                    parent.showLoading(times);
-                    return;
+            try {
+                if (parent && parent.showLoading) {
+                    if (!times) {
+                        var times = 1;
+                        parent.showLoading(times);
+                        return;
+                    }
                 }
-            }
+            } catch (error) {}
+            
             $("#loader").show();
         },
         "closeLoading": function (times) {
-            if (parent && parent.closeLoading) {
-                if (!times) {
-                    var times = 1;
-                    parent.closeLoading(times);
-                    return;
+            try {
+                if (parent && parent.closeLoading) {
+                    if (!times) {
+                        var times = 1;
+                        parent.closeLoading(times);
+                        return;
+                    }
                 }
-            }
+            } catch (error) { }
+            
             $("#loader").hide();
         },
     }

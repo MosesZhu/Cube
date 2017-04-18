@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,7 +47,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CubeDemo.Model\bin\Debug\CubeDemo.Model.dll</HintPath>
     </Reference>
-    <Reference Include="ITS.Data">
+    <Reference Include="ITS.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=49bcf0ef5ccc9012, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
     </Reference>
     <Reference Include="log4net">

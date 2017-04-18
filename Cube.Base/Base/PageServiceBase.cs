@@ -3,6 +3,7 @@ using Cube.Base.Utility;
 using Cube.Model.DTO;
 using Cube.Model.Entity;
 using ITS.Data;
+using ITS.WebFramework.PermissionComponent.ServiceProxy;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -59,7 +60,49 @@ namespace Cube.Base
             get {
                 return SSOContext.Current.User;
             }
-        }        
+        }
+
+        private UserDTO mUserInfo;
+        public UserDTO UserInfo {
+            get {
+                if (mUserInfo == null)
+                {
+                    try
+                    {
+                        PermissionService permissionService = new PermissionService();
+                        permissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
+                        mUserInfo = permissionService.GetUserInfo(User.Login_Name);
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+                return mUserInfo;
+            }
+        }
+
+        public PermissionService mPermissionService;
+        public PermissionService PermissionService
+        {
+            get {
+                if (mPermissionService == null)
+                {
+                    mPermissionService = new PermissionService();
+                    mPermissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
+
+                    if (UserInfo != null)
+                    {
+                        mPermissionService.PermissionServiceSoapValue = new PermissionServiceSoap
+                        {
+                            Org_Id = SSOContext.Current.OrgId,
+                            User_Id = UserInfo.User_ID,
+                            Product_Id = SSOContext.Current.ProductId
+                        };
+                    }
+                }
+                return mPermissionService;
+            }
+        }
 
         public string Language {
             get
@@ -76,7 +119,7 @@ namespace Cube.Base
             }
         }
 
-        public static string UNCHECK_URL = "LoginService.asmx/login";
+        public static string UNCHECK_URL = "LoginService.asmx";
         public bool ValidateToken()
         {
             return TokenUtility.ValidToken(SSOContext.Token);

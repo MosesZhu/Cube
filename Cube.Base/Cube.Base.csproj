@@ -33,6 +33,15 @@
     <Reference Include="ITS.Data">
       <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
     </Reference>
+    <Reference Include="ITS.WebFramework.Configuration">
+      <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.WebFramework.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="ITS.WebFramework.PermissionComponent.ServiceProxy">
+      <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.WebFramework.PermissionComponent.ServiceProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="ITS.WebFramework.SSO.Common">
+      <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.WebFramework.SSO.Common.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>\\10.85.10.2\bach30\Common\bin\log4net.dll</HintPath>
     </Reference>

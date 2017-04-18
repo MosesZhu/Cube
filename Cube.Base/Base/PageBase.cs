@@ -10,6 +10,8 @@ using ITS.Data;
 using Cube.Model.DTO;
 using Cube.Model.Entity;
 using Cube.Base.Utility;
+using ITS.WebFramework.PermissionComponent.ServiceProxy;
+using Cube.Base.SSO;
 
 namespace Cube.Base
 {
@@ -34,6 +36,35 @@ namespace Cube.Base
         {
             _Page = this;
             _Page.PreRenderComplete += InitMultilanguage;
+        }
+
+        public Mc_User User
+        {
+            get
+            {
+                return SSOContext.Current.User;
+            }
+        }
+
+        private UserDTO mUserInfo;
+        public UserDTO UserInfo
+        {
+            get
+            {
+                if (mUserInfo == null)
+                {
+                    try
+                    {
+                        PermissionService permissionService = new PermissionService();
+                        permissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
+                        mUserInfo = permissionService.GetUserInfo(User.Login_Name);
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+                return mUserInfo;
+            }
         }
 
         /// <summary>
