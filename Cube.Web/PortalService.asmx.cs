@@ -34,7 +34,7 @@ namespace Cube.Web
             };
             try
             {
-                string s = PermissionService.GetAuthorizedProductFunctionTree(User.Id, SSOContext.Current.OrgId, SSOContext.Current.ProductId, true);
+                string s = PermissionService.GetAuthorizedProductFunctionTree(UserInfo.User_ID, SSOContext.Current.OrgId, SSOContext.Current.ProductId, true);
                 //bool isadmin = PermissionService.IsSystemAdmin(Guid.Parse("65D9158B-1320-4894-92C1-367DDC59E64D"),
                 //    Guid.Parse("49786A76-62C5-4DF2-9692-177331D34D57"));
                 string s2 = "";

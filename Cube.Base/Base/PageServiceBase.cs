@@ -62,22 +62,23 @@ namespace Cube.Base
             }
         }
 
-        private UserDTO mUserInfo;
+        //private UserDTO mUserInfo;
         public UserDTO UserInfo {
             get {
-                if (mUserInfo == null)
-                {
-                    try
-                    {
-                        PermissionService permissionService = new PermissionService();
-                        permissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
-                        mUserInfo = permissionService.GetUserInfo(User.Login_Name);
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                }
-                return mUserInfo;
+                //if (mUserInfo == null)
+                //{
+                //    try
+                //    {
+                //        PermissionService permissionService = new PermissionService();
+                //        permissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
+                //        mUserInfo = permissionService.GetUserInfo(User.Login_Name);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //    }
+                //}
+                //return mUserInfo;
+                return SSOContext.Current.UserInfo;
             }
         }
 

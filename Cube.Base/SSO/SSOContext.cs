@@ -3,6 +3,7 @@ using Cube.Common;
 using Cube.DTO;
 using Cube.Model.DTO;
 using Cube.Model.Entity;
+using ITS.WebFramework.PermissionComponent.ServiceProxy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,6 +76,11 @@ namespace Cube.Base.SSO
 
         public Mc_User User { get; set; }
 
+        public UserDTO UserInfo
+        {
+            get; set;
+        }
+
         public Guid ProductId { get; set; }
 
         public Guid OrgId { get; set; }
@@ -86,6 +92,17 @@ namespace Cube.Base.SSO
             string userId = DBUtility.CubeDb.From<Mc_Token>().Where(Mc_Token._.Secret_Key == TokenInfo.SecretKey)
                 .Select(Mc_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
             User = DBUtility.CubeDb.From<Mc_User>().Where(Mc_User._.Id == userId).Select(Mc_User._.All).FirstDefault();
+            OrgId = TokenInfo.OrgId;
+            ProductId = TokenInfo.ProductId;
+            try
+            {
+                PermissionService permissionService = new PermissionService();
+                permissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
+                UserInfo = permissionService.GetUserInfo(User.Login_Name);
+            }
+            catch (Exception ex)
+            {
+            }
         }            
     }
 }
