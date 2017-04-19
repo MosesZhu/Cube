@@ -1059,7 +1059,13 @@
                             $(context).find("ul").slideDown(500);
                         }
                     } else if (menuIndex == "MENU_EXPAND_ALL") {
-                        $('#_FunctionMenu').find("ul").slideDown(500);
+                        $.each($('#_FunctionMenu').children("li.treeview"), function (i, l) {
+                            $(l).children("ul.treeview-menu").slideDown(500, function () {
+                                expandOneMenu(this);
+                            });
+                        });
+                        
+                        //$('#_FunctionMenu').find("ul").slideDown(500);
                     } else if (menuIndex == "MENU_COLLAPSE") {
                         if ($(context).hasClass("header")) {
                             var current = $(context);
@@ -1080,6 +1086,14 @@
             });
 
             bindBookmarkContextMenu();
+        };
+
+        var expandOneMenu = function (m) {
+            $.each($(m).children("li.treeview"), function (i, l) {
+                $(l).children("ul.treeview-menu").slideDown(500, function () {
+                    expandOneMenu(this);
+                });
+            });
         };
 
         var bindBookmarkContextMenu = function () {
