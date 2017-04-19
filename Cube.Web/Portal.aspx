@@ -1053,10 +1053,15 @@
                                 if (!current || current.hasClass("header")) {
                                     break;
                                 }
-                                current.find("ul").slideDown(500);
+                                //current.find("ul").slideDown(500);
+                                $(current).children("ul.treeview-menu").slideDown(500, function () {
+                                    expandOneMenu(this);
+                                });
                             }
                         } else {
-                            $(context).find("ul").slideDown(500);
+                            $(context).children("ul.treeview-menu").slideDown(500, function () {
+                                expandOneMenu(this);
+                            });
                         }
                     } else if (menuIndex == "MENU_EXPAND_ALL") {
                         $.each($('#_FunctionMenu').children("li.treeview"), function (i, l) {
