@@ -100,8 +100,8 @@ namespace Cube.Web
             }
             catch (Exception ex)
             {
-                result.success = false;
-                result.message = ex.Message;
+                //result.success = false;
+                //result.message = ex.Message;
             }
 
             return result;

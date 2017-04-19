@@ -37,6 +37,22 @@
             border-top: 0px;
         }
 
+        .function_menu_item {
+            overflow: auto;
+        }
+
+        ::-webkit-scrollbar {  
+            width: 12px;  
+            height: 12px;  
+            background-color: #1e282c;  
+            opacity: .8;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: gray;
+            opacity: .5;
+        }
+
         .loader {
             background: #000;
             background: -webkit-radial-gradient(#222, #000);
@@ -517,6 +533,14 @@
                 return true;
             });
 
+            $('#_FormTabsContainer').slimscroll({
+                height: '43px',
+                width: '100%',
+                axis: 'x',
+                alwaysVisible: false,
+                opacity: .2, //滚动条透明度
+                borderRadius: '7px', //滚动条圆角
+            });            
         });
 
         var getDomainMenuHtml = function (domainMenu) {
@@ -578,7 +602,7 @@
                         + functionMenu.Url + '" ';
                 }
                 menuHtml += '>'
-                    + '<a href="#">'
+                    + '<a href="#" class="function_menu_item">'
                     + '<i class="fa fa-circle-o text-light-blue"></i>'
                     + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
                     + '</a>'
@@ -659,6 +683,17 @@
             bindMenuContextMenu();
 
             $.language.change(_Context.CurrentLang);
+
+            //$('.function_menu_item').slimscroll({
+            //    height: '40px',
+            //    width: '100%',
+            //    display: 'table-cell',
+            //    verticalAlign: 'middle',
+            //    axis: 'x',
+            //    alwaysVisible: false,
+            //    opacity: .2, //滚动条透明度
+            //    borderRadius: '7px', //滚动条圆角
+            //});
         };
 
         var getSearchSystemGroupMenuHtml = function (groupMenu) {
@@ -727,7 +762,7 @@
                             + functionMenu.Url + '" ';
                     }
                     menuHtml += '>'
-                        + '<a href="#">'
+                        + '<a href="#" class="function_menu_item">'
                         + '<i class="fa fa-circle-o text-light-blue"></i>'
                         + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
                         + '</a>'
@@ -773,6 +808,17 @@
             bindMenuContextMenu();
 
             $.language.change(_Context.CurrentLang);
+
+            //$('.function_menu_item').slimscroll({
+            //    height: '40px',
+            //    width: '100%',
+            //    display: 'table-cell',
+            //    verticalAlign: 'middle',
+            //    axis: 'x',
+            //    alwaysVisible: false,
+            //    opacity: .2, //滚动条透明度
+            //    borderRadius: '7px', //滚动条圆角
+            //});
         }
 
         var searchFunctionMenu = function (search, subFunction, functionMenu, domain, groupMenu, systemMenu) {
