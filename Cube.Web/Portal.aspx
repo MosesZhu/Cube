@@ -574,7 +574,7 @@
             } else {
                 menuHtml += '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
                 if (functionMenu.Url) {
-                    menuHtml += ' functionurl="http://'
+                    menuHtml += ' functionurl="'//' functionurl="http://'
                         + functionMenu.Url + '" ';
                 }
                 menuHtml += '>'
@@ -592,7 +592,7 @@
             var menuHtml = "";
             menuHtml += '<li class="bookmark-item" onclick="return openForm(this);" functionid="bk_' + bookmarkMenu.Id + '" ';
             if (bookmarkMenu.Url) {
-                menuHtml += ' functionurl="http://'
+                menuHtml += ' functionurl="'//' functionurl="http://'
                     + bookmarkMenu.Url + '" ';
             }
             menuHtml += '>'
@@ -723,7 +723,7 @@
                 } else {
                     menuHtml += '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
                     if (functionMenu.Url) {
-                        menuHtml += ' functionurl="http://'
+                        menuHtml += ' functionurl="'//' functionurl="http://'
                             + functionMenu.Url + '" ';
                     }
                     menuHtml += '>'

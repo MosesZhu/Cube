@@ -12,6 +12,7 @@ using System.Web.Services;
 using ITS.Data;
 using Cube.Base.Utility;
 using ITS.WebFramework.PermissionComponent.ServiceProxy;
+using System.Xml;
 
 namespace Cube.Web
 {
@@ -29,19 +30,78 @@ namespace Cube.Web
         {
             ResultDTO result = new ResultDTO()
             {
-                success = true,
-                data = GetMenuImp()
+                success = true
             };
+            MenuDTO cubeMenu = GetMenuImp();
+            result.data = cubeMenu;
             try
-            {
-                string s = PermissionService.GetAuthorizedProductFunctionTree(UserInfo.User_ID, SSOContext.Current.OrgId, SSOContext.Current.ProductId, true);
-                //bool isadmin = PermissionService.IsSystemAdmin(Guid.Parse("65D9158B-1320-4894-92C1-367DDC59E64D"),
-                //    Guid.Parse("49786A76-62C5-4DF2-9692-177331D34D57"));
-                string s2 = "";
+            {                
+                string menuXmlStr = PermissionService.GetAuthorizedProductFunctionTree(UserInfo.User_ID, SSOContext.Current.OrgId, SSOContext.Current.ProductId, true);
+                if (!string.IsNullOrEmpty(menuXmlStr))
+                {
+                    Model.DTO.ProductDTO bachProduct = new Model.DTO.ProductDTO()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "BACH",
+                        DomainList = new List<Model.DTO.DomainDTO>()
+                    };
+
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.LoadXml(menuXmlStr);
+                    XmlNodeList domainNodes = xmlDoc.SelectNodes("/Tree/TreeNode");
+                    foreach (XmlNode domainNode in domainNodes)
+                    {
+                        if (domainNode.HasChildNodes)
+                        {
+                            Model.DTO.DomainDTO domain = new Model.DTO.DomainDTO()
+                            {
+                                Id = Guid.Parse(domainNode.Attributes["NodeID"].Value),
+                                Code = domainNode.Attributes["Text"].Value
+                            };
+
+                            foreach (XmlNode systemNode in domainNode.ChildNodes)
+                            {
+                                Model.DTO.SystemDTO system = new Model.DTO.SystemDTO()
+                                {
+                                    Id = Guid.Parse(systemNode.Attributes["NodeID"].Value),
+                                    Code = systemNode.Attributes["Text"].Value
+                                };
+
+                                foreach (XmlNode functionNode in systemNode.ChildNodes)
+                                {
+                                    Model.DTO.FunctionDTO function = new Model.DTO.FunctionDTO()
+                                    {
+                                        Id = Guid.Parse(functionNode.Attributes["NodeID"].Value),
+                                        Code = functionNode.Attributes["Text"].Value,
+                                        Url = functionNode.Attributes["NavigateUrl"] != null ? functionNode.Attributes["NavigateUrl"].Value : ""
+                                    };
+                                    foreach (XmlNode subFunctionNode in functionNode.ChildNodes)
+                                    {
+                                        Model.DTO.FunctionDTO subFunction = new Model.DTO.FunctionDTO()
+                                        {
+                                            Id = Guid.Parse(subFunctionNode.Attributes["NodeID"].Value),
+                                            Code = subFunctionNode.Attributes["Text"].Value,
+                                            Url = subFunctionNode.Attributes["NavigateUrl"] != null ? subFunctionNode.Attributes["NavigateUrl"].Value : ""
+                                        };
+                                        function.SubFunctionList.Add(subFunction);
+                                    }
+
+                                    system.FunctionList.Add(function);
+                                }
+
+                                domain.SystemList.Add(system);
+                            }
+
+                            bachProduct.DomainList.Add(domain);
+                        }
+                    }
+                    cubeMenu.ProductList.Add(bachProduct);
+                }                                              
             }
             catch (Exception ex)
             {
-                string msg = ex.Message;
+                result.success = false;
+                result.message = ex.Message;
             }
 
             return result;

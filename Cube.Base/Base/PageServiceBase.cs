@@ -82,6 +82,30 @@ namespace Cube.Base
             }
         }
 
+        public string ProductName
+        {
+            get
+            {
+                return SSOContext.Current.ProductName;
+            }
+        }
+
+        public Guid ProductId
+        {
+            get
+            {
+                return SSOContext.Current.ProductId;
+            }
+        }
+
+        public Guid OrgId
+        {
+            get
+            {
+                return SSOContext.Current.OrgId;
+            }
+        }
+
         public PermissionService mPermissionService;
         public PermissionService PermissionService
         {

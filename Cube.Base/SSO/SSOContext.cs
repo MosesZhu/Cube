@@ -83,6 +83,8 @@ namespace Cube.Base.SSO
 
         public Guid ProductId { get; set; }
 
+        public string ProductName { get; set; }
+
         public Guid OrgId { get; set; }
 
         public TokenDTO TokenInfo { get; set; }
@@ -99,6 +101,8 @@ namespace Cube.Base.SSO
                 PermissionService permissionService = new PermissionService();
                 permissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
                 UserInfo = permissionService.GetUserInfo(User.Login_Name);
+
+                ProductName = permissionService.GetProductInfo(ProductId).Name;
             }
             catch (Exception ex)
             {
