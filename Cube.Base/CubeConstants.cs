@@ -17,6 +17,7 @@ namespace Cube.Common
 
     public class ConfigContents
     {
+        public static readonly string AUTHORITY_MODE = "AuthorityMode";
         public static readonly string CUBE_IS_DEBUG_MODE = "CubeIsDebugMode";
         public static readonly string CUBE_LOGIN_URL = "CubeLoginUrl";
         public static readonly string TOKEN_OVERDUE_MINIUTE = "CubeTokenOverdueMiniute";

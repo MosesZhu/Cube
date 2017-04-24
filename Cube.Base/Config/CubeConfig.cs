@@ -1,4 +1,5 @@
-﻿using Cube.Common;
+﻿using Cube.Base.Enums;
+using Cube.Common;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,6 +17,7 @@ namespace Cube.Base.Config
             LastCacheTime = DateTime.Now;
             _cache = new Dictionary<string, string>();
             _cache[ConfigContents.CUBE_LOGIN_URL] = ConfigurationManager.AppSettings[ConfigContents.CUBE_LOGIN_URL];
+            _cache[ConfigContents.AUTHORITY_MODE] = Convert.ToInt32((AuthorityModeEnum)Enum.Parse(typeof(AuthorityModeEnum), ConfigurationManager.AppSettings[ConfigContents.AUTHORITY_MODE])).ToString();
         }
 
 
@@ -71,6 +73,16 @@ namespace Cube.Base.Config
             get
             {
                 return Convert.ToInt32(FindCacheValue(ConfigContents.TOKEN_OVERDUE_MINIUTE));
+            }
+        }
+
+        public static AuthorityModeEnum AuthorityMode
+        {
+            get
+            {
+                //return (AuthorityModeEnum)Convert.ToInt32(FindCacheValue(ConfigContents.AUTHORITY_MODE));
+                return ConfigurationManager.AppSettings[ConfigContents.AUTHORITY_MODE] == null ? AuthorityModeEnum.Cube :
+                    (AuthorityModeEnum)Enum.Parse(typeof(AuthorityModeEnum), ConfigurationManager.AppSettings[ConfigContents.AUTHORITY_MODE]);
             }
         }
     }

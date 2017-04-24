@@ -385,7 +385,13 @@ jQuery.extend({
                     break;
             }
             for (key in _CurrentLang) {
-                $("[lang=" + key + "]").text(_CurrentLang[key]);
+                $.each($("[lang=" + key + "]"), function (i, item) {
+                    if (typeof ($(item).attr("placeholder")) == "undefined") {
+                        $(item).text(_CurrentLang[key]);
+                    } else {
+                        $(item).attr("placeholder", _CurrentLang[key]);
+                    }
+                });                                                              
             }
             if (this.onchanged) {
                 this.onchanged();

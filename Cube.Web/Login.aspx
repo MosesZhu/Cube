@@ -152,7 +152,16 @@
   </div>
   <div class="login-box-body">
     <p class="login-box-msg" lang="lang_please_loginin">please login</p>
-
+      <div class="form-group has-feedback">
+        <div class="col-md-6 col-lg-6 col-sm-6">
+            <input type ="radio" name="isNT" checked="checked" value="Y" id="rdoInternalUser" onchange="return changeUserPosition();"/>
+            <label for="rdoInternalUser" lang="lang_for_internal_user">For Internal User</label>
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-6">            
+          <input type ="radio" name="isNT" value="N" id="rdoExternalUser" onchange="return changeUserPosition();"/>
+          <label for="rdoExternalUser" lang="lang_for_external_user">For External User</label>
+        </div>
+      </div>
       <div class="form-group has-feedback">
         <select class="form-control select2" style="width: 100%;" id="ddlProduct" onchange="changeProduct()">
         </select>
@@ -162,12 +171,16 @@
         </select>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Name" id="tbxName">
+        <input type="text" class="form-control" placeholder="Name" id="tbxName" lang="lang_user_name">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" id="tbxPassword">
+        <input type="password" class="form-control" placeholder="Password" id="tbxPassword" lang="lang_password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <select class="form-control select2" style="width: 100%;" id="ddlDomain">
+        </select>
       </div>
       <div class="form-group has-feedback">
         <select class="form-control select2" style="width: 100%;" id="ddlLanguage" onchange="return changeLanguage();">
@@ -181,7 +194,8 @@
           <div class="checkbox icheck">
             <label>
 
-              <input id="cbxRememberMe" type="checkbox" lang="lang_remember_me"> Remember Me
+              <input id="cbxRememberMe" type="checkbox">
+              <label for="cbxRememberMe" lang="lang_remember_me" style="padding-left:10px;">Remember Me</label>
             </label>
           </div>
         </div>
@@ -228,9 +242,20 @@
 
             $("#ddlLanguage").val($.uriAnchor.makeAnchorMap()["lang"]);
             $.language.change($.uriAnchor.makeAnchorMap()["lang"]);
-
+            
             initProductOrgList();
+            initDomainList();
         });
+
+        var changeUserPosition = function () {
+            var isNT = $("#rdoInternalUser").prop('checked');
+            if (!isNT) {
+                $("#ddlDomain").hide(200);
+            } else {
+                $("#ddlDomain").show(200);
+            }
+            return true;
+        };
 
         var ProductOrgList = null;
 
@@ -276,18 +301,56 @@
             $("#ddlOrg").html(orgHtml);
         };
 
+        var initDomainList = function () {
+            $.ajax({
+                url: "LoginService.asmx/getDomainList",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json",
+                success: function (data) {
+                    var d = data.d;
+                    $.dialog.closeLoading();
+                    if (d.success) {
+                        var domainHtml = "";
+                        $.each(d.data, function (i, domain) {
+                            domainHtml += "<option value='" + domain + "'>" + domain + "</option>";
+                        });
+
+                        $("#ddlDomain").html(domainHtml);
+                    }
+                },
+                error: function (e) {
+                    $.dialog.closeLoading();
+                    $.dialog.showMessage("error", e.responseText);
+                }
+            });
+        };
+
         var changeLanguage = function () {
             setLanguage($("#ddlLanguage").val());
         };
 
         var login = function () {
+            var userName = $("#tbxName").val();
+            var password = $("#tbxPassword").val();
+            var productId = $("#ddlProduct").val();
+            var productName = $("#ddlProduct").find("option:selected").text();
+            var orgId = $("#ddlOrg").val();
+            var orgName = $("#ddlOrg").find("option:selected").text();
+            var domain = $("#ddlDomain").val();
+            var isInternal = $("#rdoInternalUser").prop('checked');;
+
             $.dialog.showLoading();
             var param = {
-                userName: $("#tbxName").val(),
-                password: $("#tbxPassword").val(),
-                productId: $("#ddlProduct").val(),
-                orgId: $("#ddlOrg").val()
-            }         
+                "userName": userName,
+                "password": password,
+                "productId": productId,
+                "productName": productName,
+                "orgId": orgId,
+                "orgName": orgName,
+                "domain": domain,
+                "isInternal": isInternal
+            };
 
             $.ajax({
                 url: "LoginService.asmx/login",

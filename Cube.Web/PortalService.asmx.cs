@@ -36,7 +36,7 @@ namespace Cube.Web
             result.data = cubeMenu;
             try
             {                
-                string menuXmlStr = PermissionService.GetAuthorizedProductFunctionTree(UserInfo.User_ID, SSOContext.Current.OrgId, SSOContext.Current.ProductId, true);
+                string menuXmlStr = PermissionService.GetAuthorizedProductFunctionTree(UserInfo.User_ID, CubeSSOContext.Current.OrgId, CubeSSOContext.Current.ProductId, true);
                 if (!string.IsNullOrEmpty(menuXmlStr))
                 {
                     Model.DTO.ProductDTO bachProduct = new Model.DTO.ProductDTO()
@@ -382,9 +382,9 @@ namespace Cube.Web
                 productList.Add(othersProduct);
             }            
 
-            if (SSOContext.IsDebug)
+            if (CubeSSOContext.IsDebug)
             {
-                string debugUrl = System.Web.HttpUtility.UrlDecode(SSOContext.LocalDebugUrl).Replace("http://", "").Replace("https://", "");
+                string debugUrl = System.Web.HttpUtility.UrlDecode(CubeSSOContext.LocalDebugUrl).Replace("http://", "").Replace("https://", "");
                 Cube.Model.DTO.ProductDTO debugProduct = new Cube.Model.DTO.ProductDTO();
                 debugProduct.Id = Guid.NewGuid();
                 debugProduct.Name = "Debug";

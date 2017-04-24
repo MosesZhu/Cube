@@ -1,4 +1,5 @@
 ﻿using Cube.Base;
+using Cube.Base.Config;
 using Cube.Base.Utility;
 using Cube.Common;
 using Cube.DTO;
@@ -6,6 +7,9 @@ using Cube.Model.DTO;
 using Cube.Model.Entity;
 using ITS.WebFramework.Configuration;
 using ITS.WebFramework.PermissionComponent.ServiceProxy;
+using ITS.WebFramework.SSO.Business;
+using ITS.WebFramework.SSO.Common;
+using Qisda.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +21,18 @@ namespace Cube.Web
 {
     public class LoginService : PageServiceBase
     {
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
+        public ResultDTO getDomainList()
+        {
+            ResultDTO result = new ResultDTO()
+            {
+                success = true,
+                data = QADHelper.GetAllDomainList()
+            };
+            return result;
+        }
+
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         [WebMethod]
         public ResultDTO getProductOrgList()
@@ -63,30 +79,137 @@ namespace Cube.Web
 
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         [WebMethod]
-        public ResultDTO login(string userName, string password, string productId, string orgId)
+        public ResultDTO login(string userName, string password, string productId, string productName, string orgId, string orgName, string domain, bool isInternal)
         {
-            ResultDTO result = new ResultDTO();
-            Mc_User user = DBUtility.CubeDb
-                .From<Mc_User>()
-                .Where(Mc_User._.Login_Name == userName)
-                .First();
-            if (user == null)
+            if (CubeConfig.AuthorityMode == Base.Enums.AuthorityModeEnum.WFK)
             {
-                result.success = false;
-                result.errorcode = ErrorCode.NO_SSO_INFO;
-            }
-            else if (!CheckUserAuthencationInfo(user,password))
-            {
-                result.success = false;
-                result.data = ErrorCode.USER_AUTH_FAILED;
+                return wfkLogin(userName, password, productId, productName, orgId, orgName, domain, isInternal);
             }
             else
             {
-                result.success = true;
-                result.data = RenewToken(result, user, Guid.Parse(productId), Guid.Parse(orgId));
-            }            
+                ResultDTO result = new ResultDTO();
+                Mc_User user = DBUtility.CubeDb
+                    .From<Mc_User>()
+                    .Where(Mc_User._.Login_Name == userName)
+                    .First();
+                if (user == null)
+                {
+                    result.success = false;
+                    result.errorcode = ErrorCode.NO_SSO_INFO;
+                }
+                else if (!CheckUserAuthencationInfo(user, password))
+                {
+                    result.success = false;
+                    result.data = ErrorCode.USER_AUTH_FAILED;
+                }
+                else
+                {
+                    result.success = true;
+                    result.data = RenewToken(result, user, Guid.Parse(productId), Guid.Parse(orgId));
+                }
 
-            return result;
+                return result;
+            }            
+        }
+
+        private SSORequest _SSORequest
+        {
+            get
+            {
+                object obj = Session["SSORequest"];
+                if (obj != null)
+                    return (SSORequest)obj;
+                else
+                {
+                    //ToDo:以后需要移除这段初始化代码
+                    SSORequest request = new SSORequest();
+                    request.LoginType = LoginTypeEnum.Normal;
+                    return null;
+                }
+            }
+            set
+            {
+                Session["SSORequest"] = value;
+            }
+        }
+
+        SSOHelper _SSOHelper = new SSOHelper();
+
+        private SSOTicket GetSSOTicketFromCookie()
+        {
+            SSOTicket ssoTicket = _SSOHelper.LoadSSOTicket(Config.Global.SSOTicketName);
+            return ssoTicket;
+        }
+
+        public ResultDTO wfkLogin(string userName, string password, string productId, string productName, string orgId, string orgName, string domain, bool isInternal)
+        {
+            SSOTicket ssoTicket = GetSSOTicketFromCookie();
+
+            LogonInfo logonInfo = new LogonInfo();
+            logonInfo.SSORequest = _SSORequest;
+            logonInfo.IsNT = isInternal;
+            logonInfo.OrgID = Guid.Parse(orgId);
+            logonInfo.OrgName = orgName;
+            logonInfo.ProductID = Guid.Parse(productId);
+            logonInfo.ProductName = productName;
+
+            logonInfo.UserName = userName;
+
+            //if (ssoTicket == null
+            //    && _SSORequest.LoginType != LoginTypeEnum.AdminSimulate
+            //    && _SSORequest.LoginType != LoginTypeEnum.Debug)
+            //{
+            //    logonInfo.Password = inputPassword.Text.Trim();
+            //    if (string.IsNullOrEmpty(logonInfo.Password))
+            //    {
+            //        ShowMessage(MessageFillPassword, inputPassword);
+            //        return;
+            //    }
+            //    if (logonInfo.IsNT)
+            //    {
+            //        logonInfo.Domain = ddlDomain.SelectedItem.Value;
+            //    }
+            //}
+            //else
+            //{
+            //    logonInfo.IsSSOTicketAleadyExisted = true;
+            //    //logonInfo.AutoLogon = true;
+            //}
+            //logonInfo.Language = ddlLang.SelectedValue;
+            //DateTime expired = DateTime.Now.AddYears(1);
+            //CookiesManager.Add("SSOLastLanguage", logonInfo.Language, expired);
+            //CookiesManager.Add("SSOLastOrgID", logonInfo.OrgID.ToString(), expired);
+            //CookiesManager.Add("SSOLastProductID", logonInfo.ProductID.ToString(), expired);
+
+            //try
+            //{
+            //    if (!new SSOAuthentication().Logon(logonInfo))
+            //    {
+            //        ShowMessage(MessageUserPasswordError, inputPassword);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    string message = string.Empty;
+            //    if (ex.GetType() == typeof(SoapException))
+            //    {
+            //        message = DebugHelper.GetSoapExceptionMessage(ex as SoapException);
+            //    }
+            //    else
+            //    {
+            //        message = ex.Message;
+            //    }
+            //    if (message.IndexOf("user", StringComparison.OrdinalIgnoreCase) >= 0)
+            //    {
+            //        ShowMessage(message, inputUserName);
+            //    }
+            //    else
+            //    {
+            //        ShowMessage(message, inputPassword);
+            //    }
+            //}
+
+            return null;
         }
 
         /// <summary>

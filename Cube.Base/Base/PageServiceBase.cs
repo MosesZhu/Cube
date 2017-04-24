@@ -58,7 +58,7 @@ namespace Cube.Base
 
         public Mc_User User {
             get {
-                return SSOContext.Current.User;
+                return CubeSSOContext.Current.User;
             }
         }
 
@@ -78,7 +78,7 @@ namespace Cube.Base
                 //    }
                 //}
                 //return mUserInfo;
-                return SSOContext.Current.UserInfo;
+                return CubeSSOContext.Current.UserInfo;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Cube.Base
         {
             get
             {
-                return SSOContext.Current.ProductName;
+                return CubeSSOContext.Current.ProductName;
             }
         }
 
@@ -94,7 +94,7 @@ namespace Cube.Base
         {
             get
             {
-                return SSOContext.Current.ProductId;
+                return CubeSSOContext.Current.ProductId;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Cube.Base
         {
             get
             {
-                return SSOContext.Current.OrgId;
+                return CubeSSOContext.Current.OrgId;
             }
         }
 
@@ -119,9 +119,9 @@ namespace Cube.Base
                     {
                         mPermissionService.PermissionServiceSoapValue = new PermissionServiceSoap
                         {
-                            Org_Id = SSOContext.Current.OrgId,
+                            Org_Id = CubeSSOContext.Current.OrgId,
                             User_Id = UserInfo.User_ID,
-                            Product_Id = SSOContext.Current.ProductId
+                            Product_Id = CubeSSOContext.Current.ProductId
                         };
                     }
                 }
@@ -132,7 +132,7 @@ namespace Cube.Base
         public string Language {
             get
             {
-                return SSOContext.Language;
+                return CubeSSOContext.Language;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Cube.Base
         public static string UNCHECK_URL = "LoginService.asmx";
         public bool ValidateToken()
         {
-            return TokenUtility.ValidToken(SSOContext.Token);
+            return TokenUtility.ValidToken(CubeSSOContext.Token);
         }
     }
 }

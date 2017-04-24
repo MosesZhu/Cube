@@ -42,7 +42,7 @@ namespace Cube.Base
         {
             get
             {
-                return SSOContext.Current.User;
+                return CubeSSOContext.Current.User;
             }
         }
 
@@ -64,7 +64,7 @@ namespace Cube.Base
                 //    }
                 //}
                 //return mUserInfo;
-                return SSOContext.Current.UserInfo;
+                return CubeSSOContext.Current.UserInfo;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Cube.Base
         {
             get
             {
-                return SSOContext.Current.ProductName;
+                return CubeSSOContext.Current.ProductName;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Cube.Base
         {
             get
             {
-                return SSOContext.Current.ProductId;
+                return CubeSSOContext.Current.ProductId;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Cube.Base
         {
             get
             {
-                return SSOContext.Current.OrgId;
+                return CubeSSOContext.Current.OrgId;
             }
         }
 

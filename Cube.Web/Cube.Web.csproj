@@ -52,10 +52,21 @@
     <Reference Include="ITS.WebFramework.PermissionComponent.ServiceProxy">
       <HintPath>..\..\WebFramework\PermissionComponent\ServiceProxy\bin\debug\ITS.WebFramework.PermissionComponent.ServiceProxy.dll</HintPath>
     </Reference>
+    <Reference Include="ITS.WebFramework.SSO.Business">
+      <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.WebFramework.SSO.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="ITS.WebFramework.SSO.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WebFramework\SSO\Business\bin\Debug\ITS.WebFramework.SSO.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Oracle.DataAccess, Version=2.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Moses.Zhu\Desktop\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Qisda.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WebFramework\SSO\Business\bin\Debug\Qisda.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
