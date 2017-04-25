@@ -30,16 +30,17 @@ namespace Cube.Base
         public void Dispose() { }
         public void Init(HttpApplication context)
         {
-            if (CubeConfig.AuthorityMode == Enums.AuthorityModeEnum.WFK)
-            {
-                SSOModule wfkSSOModule = new SSOModule();
-                context.BeginRequest += wfkSSOModule.BeginRequest;
-            }
-            else
-            {
-                context.BeginRequest += process;
-            }
-            
+            //if (CubeConfig.AuthorityMode == Enums.AuthorityModeEnum.WFK)
+            //{
+            //    SSOModule wfkSSOModule = new SSOModule();
+            //    context.BeginRequest += wfkSSOModule.BeginRequest;
+            //}
+            //else
+            //{
+            //    context.BeginRequest += process;
+            //}
+            SSOModule wfkSSOModule = new SSOModule();
+            context.BeginRequest += wfkSSOModule.BeginRequest;
         }
 
         private static void process(Object source, EventArgs args)

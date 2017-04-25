@@ -81,6 +81,11 @@ namespace Cube.Base.Utility
             return true;
         }
 
+        public static bool ValidWfkToken()
+        {
+            return true;
+        }
+
         #region Json
         public static string GetJson<T>(T obj)
         {

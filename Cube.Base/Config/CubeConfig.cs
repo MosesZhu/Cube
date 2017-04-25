@@ -76,14 +76,14 @@ namespace Cube.Base.Config
             }
         }
 
-        public static AuthorityModeEnum AuthorityMode
-        {
-            get
-            {
-                //return (AuthorityModeEnum)Convert.ToInt32(FindCacheValue(ConfigContents.AUTHORITY_MODE));
-                return ConfigurationManager.AppSettings[ConfigContents.AUTHORITY_MODE] == null ? AuthorityModeEnum.Cube :
-                    (AuthorityModeEnum)Enum.Parse(typeof(AuthorityModeEnum), ConfigurationManager.AppSettings[ConfigContents.AUTHORITY_MODE]);
-            }
-        }
+        //public static AuthorityModeEnum AuthorityMode
+        //{
+        //    get
+        //    {
+        //        //return (AuthorityModeEnum)Convert.ToInt32(FindCacheValue(ConfigContents.AUTHORITY_MODE));
+        //        return ConfigurationManager.AppSettings[ConfigContents.AUTHORITY_MODE] == null ? AuthorityModeEnum.Cube :
+        //            (AuthorityModeEnum)Enum.Parse(typeof(AuthorityModeEnum), ConfigurationManager.AppSettings[ConfigContents.AUTHORITY_MODE]);
+        //    }
+        //}
     }
 }

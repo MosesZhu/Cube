@@ -1,9 +1,12 @@
-﻿using Cube.Base.Utility;
+﻿using Cube.Base.Config;
+using Cube.Base.Utility;
 using Cube.Common;
 using Cube.DTO;
 using Cube.Model.DTO;
 using Cube.Model.Entity;
+using ITS.WebFramework.Common.Constants;
 using ITS.WebFramework.PermissionComponent.ServiceProxy;
+using ITS.WebFramework.SSO.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +44,7 @@ namespace Cube.Base.SSO
         {
             get
             {
-                return string.IsNullOrEmpty(HttpContext.Current.Request["SSOToken"]) ? HttpContext.Current.Request.Headers["SSOToken"] : HttpContext.Current.Request["SSOToken"];
+                return !string.IsNullOrEmpty(HttpContext.Current.Request.Headers["SSOToken"]) ? HttpContext.Current.Request.Headers["SSOToken"] : HttpContext.Current.Request["SSOToken"];
             }
         }
         public static bool IsDebug
@@ -88,25 +91,45 @@ namespace Cube.Base.SSO
         public Guid OrgId { get; set; }
 
         public TokenDTO TokenInfo { get; set; }
+
+        public SSOContext WfkSSOContext { get; set; }
         public CubeSSOContext(string token) 
         {
-            TokenInfo = TokenUtility.GetTokenInfo(Token);
-            string userId = DBUtility.CubeDb.From<Mc_Token>().Where(Mc_Token._.Secret_Key == TokenInfo.SecretKey)
-                .Select(Mc_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
-            User = DBUtility.CubeDb.From<Mc_User>().Where(Mc_User._.Id == userId).Select(Mc_User._.All).FirstDefault();
-            OrgId = TokenInfo.OrgId;
-            ProductId = TokenInfo.ProductId;
-            try
-            {
-                PermissionService permissionService = new PermissionService();
-                permissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
-                UserInfo = permissionService.GetUserInfo(User.Login_Name);
+            //if (CubeConfig.AuthorityMode == Enums.AuthorityModeEnum.WFK)
+            //{
+            //    WfkSSOContext = SSOContext.Current;
+            //    UserInfo = new UserDTO() {
+            //        User_ID = WfkSSOContext.UserID,
+            //        User_Name = WfkSSOContext.UserName
+            //    };
 
-                ProductName = permissionService.GetProductInfo(ProductId).Name;
-            }
-            catch (Exception ex)
+            //}
+            //else
+            //{
+            //    TokenInfo = TokenUtility.GetTokenInfo(Token);
+            //    string userId = DBUtility.CubeDb.From<Mc_Token>().Where(Mc_Token._.Secret_Key == TokenInfo.SecretKey)
+            //        .Select(Mc_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
+            //    User = DBUtility.CubeDb.From<Mc_User>().Where(Mc_User._.Id == userId).Select(Mc_User._.All).FirstDefault();
+            //    OrgId = TokenInfo.OrgId;
+            //    ProductId = TokenInfo.ProductId;
+            //    try
+            //    {
+            //        PermissionService permissionService = new PermissionService();
+            //        permissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
+            //        UserInfo = permissionService.GetUserInfo(User.Login_Name);
+
+            //        ProductName = permissionService.GetProductInfo(ProductId).Name;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //    }
+            //}
+            WfkSSOContext = SSOContext.Current;
+            UserInfo = new UserDTO()
             {
-            }
+                User_ID = WfkSSOContext.UserID,
+                User_Name = WfkSSOContext.UserName
+            };
         }            
     }
 }

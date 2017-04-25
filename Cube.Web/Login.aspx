@@ -146,7 +146,7 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
-<div class="login-box">
+    <div class="login-box">
   <div class="login-logo">
     <b style="color:blue">C</b><b style="color:yellow">u</b><b style="color:red">b</b><b style="color:green" />e</b>Framework
   </div>
@@ -338,8 +338,9 @@
             var orgId = $("#ddlOrg").val();
             var orgName = $("#ddlOrg").find("option:selected").text();
             var domain = $("#ddlDomain").val();
-            var isInternal = $("#rdoInternalUser").prop('checked');;
-
+            var isInternal = $("#rdoInternalUser").prop('checked');
+            var language = $("#ddlLanguage").val();
+            
             $.dialog.showLoading();
             var param = {
                 "userName": userName,
@@ -349,7 +350,8 @@
                 "orgId": orgId,
                 "orgName": orgName,
                 "domain": domain,
-                "isInternal": isInternal
+                "isInternal": isInternal,
+                "language": language
             };
 
             $.ajax({
@@ -361,16 +363,17 @@
                 success: function (data) {
                     $.dialog.closeLoading();
                     var d = data.d;
-                    if (d.success) {
-                        var token = d.data;
+                    if (d.success) {                        
+                        //var token = d.data;
+                        var portalUrl = d.data;
                         var lang = $("#ddlLanguage").val();
-                        $.cookie("SSOToken", token);
-                        $.cookie("Language", lang);
-                        var portalUrl = "Portal?SSOToken=" + token;
+                        //$.cookie("SSOToken", token);
+                        //$.cookie("Language", lang);
+                        //var portalUrl = "Portal?SSOToken=" + token;
                         if (getQueryStringByName('IsDebug') == "Y") {
                             portalUrl += "&IsDebug=Y&LocalDebugUrl=" + getQueryStringByName('LocalDebugUrl');
                         }
-                        portalUrl += "#!lang=" + lang;
+                        portalUrl += "#!lang=" + lang;                        
                         window.location.href = portalUrl;
                     } else {
                         $.dialog.showMessage(_CurrentLang.lang_error, _CurrentLang.lang_msg_login_failed);

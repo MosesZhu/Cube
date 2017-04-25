@@ -1,4 +1,5 @@
-﻿using Cube.Base.SSO;
+﻿using Cube.Base.Config;
+using Cube.Base.SSO;
 using Cube.Base.Utility;
 using Cube.Model.DTO;
 using Cube.Model.Entity;
@@ -147,7 +148,15 @@ namespace Cube.Base
         public static string UNCHECK_URL = "LoginService.asmx";
         public bool ValidateToken()
         {
-            return TokenUtility.ValidToken(CubeSSOContext.Token);
+            //if (CubeConfig.AuthorityMode == Enums.AuthorityModeEnum.WFK)
+            //{
+            //    return TokenUtility.ValidWfkToken();
+            //}
+            //else
+            //{
+            //    return TokenUtility.ValidToken(CubeSSOContext.Token);
+            //}
+            return TokenUtility.ValidWfkToken();
         }
     }
 }

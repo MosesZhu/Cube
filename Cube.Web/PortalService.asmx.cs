@@ -13,6 +13,10 @@ using ITS.Data;
 using Cube.Base.Utility;
 using ITS.WebFramework.PermissionComponent.ServiceProxy;
 using System.Xml;
+using Cube.Base.Config;
+using ITS.WebFramework.SSO.Business;
+using ITS.WebFramework.SSO.Common;
+using ITS.WebFramework.Configuration;
 
 namespace Cube.Web
 {
@@ -32,11 +36,22 @@ namespace Cube.Web
             {
                 success = true
             };
-            MenuDTO cubeMenu = GetMenuImp();
+            MenuDTO cubeMenu = new MenuDTO();//GetMenuImp();
             result.data = cubeMenu;
+            //if (CubeConfig.AuthorityMode == Base.Enums.AuthorityModeEnum.Cube)
+            //{
+            //    cubeMenu = GetMenuImp();
+            //}
+            //else
+            //{
+
+            //}
+
             try
-            {                
-                string menuXmlStr = PermissionService.GetAuthorizedProductFunctionTree(UserInfo.User_ID, CubeSSOContext.Current.OrgId, CubeSSOContext.Current.ProductId, true);
+            {
+                string menuXmlStr = menuXmlStr = PermissionService.GetAuthorizedProductFunctionTree(CubeSSOContext.Current.WfkSSOContext.UserID,
+                        CubeSSOContext.Current.WfkSSOContext.OrgID,
+                        CubeSSOContext.Current.WfkSSOContext.ProductID, true);
                 if (!string.IsNullOrEmpty(menuXmlStr))
                 {
                     Model.DTO.ProductDTO bachProduct = new Model.DTO.ProductDTO()
@@ -96,14 +111,13 @@ namespace Cube.Web
                         }
                     }
                     cubeMenu.ProductList.Add(bachProduct);
-                }                                              
+                }
             }
             catch (Exception ex)
             {
                 //result.success = false;
                 //result.message = ex.Message;
             }
-
             return result;
         }
 
@@ -146,7 +160,16 @@ namespace Cube.Web
         [WebMethod]
         public ResultDTO logout()
         {
-            DBUtility.CubeDb.Delete<Mc_Token>(Mc_Token._.User_Id == User.Id);
+            //if (CubeConfig.AuthorityMode == Base.Enums.AuthorityModeEnum.WFK)
+            //{
+
+            //}
+            //else
+            //{
+            //    DBUtility.CubeDb.Delete<Mc_Token>(Mc_Token._.User_Id == User.Id);
+            //}          
+            SSOHelper ssoHelper = new SSOHelper { Context = HttpContext.Current };
+            ssoHelper.DeleteSSOTicket(Config.Global.SSOTicketName);
             ResultDTO result = new ResultDTO() { success = true };
             return result;
         }

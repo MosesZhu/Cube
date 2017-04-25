@@ -33,6 +33,10 @@
     <Reference Include="ITS.Data">
       <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
     </Reference>
+    <Reference Include="ITS.WebFramework.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WebFramework\SSO\Business\bin\Debug\ITS.WebFramework.Common.dll</HintPath>
+    </Reference>
     <Reference Include="ITS.WebFramework.Configuration">
       <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.WebFramework.Configuration.dll</HintPath>
     </Reference>
@@ -45,6 +49,10 @@
     <Reference Include="ITS.WebFramework.SSO.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\WebFramework\SSO\Business\bin\Debug\ITS.WebFramework.SSO.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ITS.WebFramework.SSO.Session, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WebFramework\SSO\Session\bin\Debug\ITS.WebFramework.SSO.Session.dll</HintPath>
     </Reference>
     <Reference Include="ITS.WebFramework.SSO.SSOModule, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

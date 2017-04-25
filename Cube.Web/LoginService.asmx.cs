@@ -5,6 +5,7 @@ using Cube.Common;
 using Cube.DTO;
 using Cube.Model.DTO;
 using Cube.Model.Entity;
+using ITS.WebFramework.Common;
 using ITS.WebFramework.Configuration;
 using ITS.WebFramework.PermissionComponent.ServiceProxy;
 using ITS.WebFramework.SSO.Business;
@@ -79,46 +80,57 @@ namespace Cube.Web
 
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         [WebMethod]
-        public ResultDTO login(string userName, string password, string productId, string productName, string orgId, string orgName, string domain, bool isInternal)
+        public ResultDTO login(string userName, string password, string productId, string productName, string orgId, string orgName, string domain, bool isInternal, string language)
         {
-            if (CubeConfig.AuthorityMode == Base.Enums.AuthorityModeEnum.WFK)
-            {
-                return wfkLogin(userName, password, productId, productName, orgId, orgName, domain, isInternal);
-            }
-            else
-            {
-                ResultDTO result = new ResultDTO();
-                Mc_User user = DBUtility.CubeDb
-                    .From<Mc_User>()
-                    .Where(Mc_User._.Login_Name == userName)
-                    .First();
-                if (user == null)
-                {
-                    result.success = false;
-                    result.errorcode = ErrorCode.NO_SSO_INFO;
-                }
-                else if (!CheckUserAuthencationInfo(user, password))
-                {
-                    result.success = false;
-                    result.data = ErrorCode.USER_AUTH_FAILED;
-                }
-                else
-                {
-                    result.success = true;
-                    result.data = RenewToken(result, user, Guid.Parse(productId), Guid.Parse(orgId));
-                }
+            //if (CubeConfig.AuthorityMode == Base.Enums.AuthorityModeEnum.WFK)
+            //{
+            //    return wfkLogin(userName, password, productId, productName, orgId, orgName, domain, isInternal, language);
+            //}
+            //else
+            //{
+            //    ResultDTO result = new ResultDTO();
+            //    Mc_User user = DBUtility.CubeDb
+            //        .From<Mc_User>()
+            //        .Where(Mc_User._.Login_Name == userName)
+            //        .First();
+            //    if (user == null)
+            //    {
+            //        result.success = false;
+            //        result.errorcode = ErrorCode.NO_SSO_INFO;
+            //    }
+            //    else if (!CheckUserAuthencationInfo(user, password))
+            //    {
+            //        result.success = false;
+            //        result.data = ErrorCode.USER_AUTH_FAILED;
+            //    }
+            //    else
+            //    {
+            //        result.success = true;
+            //        result.data = RenewToken(result, user, Guid.Parse(productId), Guid.Parse(orgId));
+            //    }
 
-                return result;
-            }            
+            //    return result;
+            //}            
+            return wfkLogin(userName, password, productId, productName, orgId, orgName, domain, isInternal, language);
         }
 
         private SSORequest _SSORequest
         {
             get
             {
+                if (Session == null)
+                {
+                    SSORequest request = new SSORequest();
+                    request.LoginType = LoginTypeEnum.Normal;
+                    request.ReturnUrl = HttpContext.Current.Request.Url.ToString().Substring(0, HttpContext.Current.Request.Url.ToString().ToLower().IndexOf("loginservice.asmx")) + "Portal";
+                    return request;
+                }
+
                 object obj = Session["SSORequest"];
                 if (obj != null)
+                {
                     return (SSORequest)obj;
+                }                    
                 else
                 {
                     //ToDo:以后需要移除这段初始化代码
@@ -141,8 +153,10 @@ namespace Cube.Web
             return ssoTicket;
         }
 
-        public ResultDTO wfkLogin(string userName, string password, string productId, string productName, string orgId, string orgName, string domain, bool isInternal)
+        public ResultDTO wfkLogin(string userName, string password, string productId, string productName, string orgId, string orgName, string domain, bool isInternal, string language)
         {
+            ResultDTO result = new ResultDTO();
+
             SSOTicket ssoTicket = GetSSOTicketFromCookie();
 
             LogonInfo logonInfo = new LogonInfo();
@@ -155,61 +169,47 @@ namespace Cube.Web
 
             logonInfo.UserName = userName;
 
-            //if (ssoTicket == null
-            //    && _SSORequest.LoginType != LoginTypeEnum.AdminSimulate
-            //    && _SSORequest.LoginType != LoginTypeEnum.Debug)
-            //{
-            //    logonInfo.Password = inputPassword.Text.Trim();
-            //    if (string.IsNullOrEmpty(logonInfo.Password))
-            //    {
-            //        ShowMessage(MessageFillPassword, inputPassword);
-            //        return;
-            //    }
-            //    if (logonInfo.IsNT)
-            //    {
-            //        logonInfo.Domain = ddlDomain.SelectedItem.Value;
-            //    }
-            //}
-            //else
-            //{
-            //    logonInfo.IsSSOTicketAleadyExisted = true;
-            //    //logonInfo.AutoLogon = true;
-            //}
-            //logonInfo.Language = ddlLang.SelectedValue;
-            //DateTime expired = DateTime.Now.AddYears(1);
-            //CookiesManager.Add("SSOLastLanguage", logonInfo.Language, expired);
-            //CookiesManager.Add("SSOLastOrgID", logonInfo.OrgID.ToString(), expired);
-            //CookiesManager.Add("SSOLastProductID", logonInfo.ProductID.ToString(), expired);
+            if (ssoTicket == null
+                && _SSORequest.LoginType != LoginTypeEnum.AdminSimulate
+                && _SSORequest.LoginType != LoginTypeEnum.Debug)
+            {
+                logonInfo.Password = password;
+                if (logonInfo.IsNT)
+                {
+                    logonInfo.Domain = domain;
+                }
+            }
+            else
+            {
+                logonInfo.IsSSOTicketAleadyExisted = true;
+            }
+            logonInfo.Language = language;
+            DateTime expired = DateTime.Now.AddYears(1);
+            CookiesManager.Add("SSOLastLanguage", logonInfo.Language, expired);
+            CookiesManager.Add("SSOLastOrgID", logonInfo.OrgID.ToString(), expired);
+            CookiesManager.Add("SSOLastProductID", logonInfo.ProductID.ToString(), expired);
 
-            //try
-            //{
-            //    if (!new SSOAuthentication().Logon(logonInfo))
-            //    {
-            //        ShowMessage(MessageUserPasswordError, inputPassword);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    string message = string.Empty;
-            //    if (ex.GetType() == typeof(SoapException))
-            //    {
-            //        message = DebugHelper.GetSoapExceptionMessage(ex as SoapException);
-            //    }
-            //    else
-            //    {
-            //        message = ex.Message;
-            //    }
-            //    if (message.IndexOf("user", StringComparison.OrdinalIgnoreCase) >= 0)
-            //    {
-            //        ShowMessage(message, inputUserName);
-            //    }
-            //    else
-            //    {
-            //        ShowMessage(message, inputPassword);
-            //    }
-            //}
+            try
+            {
+                string url = new SSOAuthentication().LogonWithPortalUrl(logonInfo);
+                if (url == null)
+                {
+                    result.success = false;
+                    result.message = "user name or password error!";//MessageUserPasswordError;
+                }
+                else
+                {
+                    result.success = true;
+                    result.data = url;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.success = false;
+                result.message = ex.Message;
+            }
 
-            return null;
+            return result;
         }
 
         /// <summary>
