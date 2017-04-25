@@ -148,14 +148,6 @@ namespace Cube.Base
         public static string UNCHECK_URL = "LoginService.asmx";
         public bool ValidateToken()
         {
-            //if (CubeConfig.AuthorityMode == Enums.AuthorityModeEnum.WFK)
-            //{
-            //    return TokenUtility.ValidWfkToken();
-            //}
-            //else
-            //{
-            //    return TokenUtility.ValidToken(CubeSSOContext.Token);
-            //}
             return TokenUtility.ValidWfkToken();
         }
     }

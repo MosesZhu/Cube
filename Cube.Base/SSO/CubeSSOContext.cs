@@ -94,36 +94,7 @@ namespace Cube.Base.SSO
 
         public SSOContext WfkSSOContext { get; set; }
         public CubeSSOContext(string token) 
-        {
-            //if (CubeConfig.AuthorityMode == Enums.AuthorityModeEnum.WFK)
-            //{
-            //    WfkSSOContext = SSOContext.Current;
-            //    UserInfo = new UserDTO() {
-            //        User_ID = WfkSSOContext.UserID,
-            //        User_Name = WfkSSOContext.UserName
-            //    };
-
-            //}
-            //else
-            //{
-            //    TokenInfo = TokenUtility.GetTokenInfo(Token);
-            //    string userId = DBUtility.CubeDb.From<Mc_Token>().Where(Mc_Token._.Secret_Key == TokenInfo.SecretKey)
-            //        .Select(Mc_Token._.All).ToList().FirstOrDefault().User_Id.ToString();
-            //    User = DBUtility.CubeDb.From<Mc_User>().Where(Mc_User._.Id == userId).Select(Mc_User._.All).FirstDefault();
-            //    OrgId = TokenInfo.OrgId;
-            //    ProductId = TokenInfo.ProductId;
-            //    try
-            //    {
-            //        PermissionService permissionService = new PermissionService();
-            //        permissionService.Url = ITS.WebFramework.Configuration.Config.Global.PermissionServiceUrl;
-            //        UserInfo = permissionService.GetUserInfo(User.Login_Name);
-
-            //        ProductName = permissionService.GetProductInfo(ProductId).Name;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //    }
-            //}
+        {            
             WfkSSOContext = SSOContext.Current;
             UserInfo = new UserDTO()
             {

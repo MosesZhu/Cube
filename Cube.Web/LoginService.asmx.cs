@@ -81,36 +81,7 @@ namespace Cube.Web
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         [WebMethod]
         public ResultDTO login(string userName, string password, string productId, string productName, string orgId, string orgName, string domain, bool isInternal, string language)
-        {
-            //if (CubeConfig.AuthorityMode == Base.Enums.AuthorityModeEnum.WFK)
-            //{
-            //    return wfkLogin(userName, password, productId, productName, orgId, orgName, domain, isInternal, language);
-            //}
-            //else
-            //{
-            //    ResultDTO result = new ResultDTO();
-            //    Mc_User user = DBUtility.CubeDb
-            //        .From<Mc_User>()
-            //        .Where(Mc_User._.Login_Name == userName)
-            //        .First();
-            //    if (user == null)
-            //    {
-            //        result.success = false;
-            //        result.errorcode = ErrorCode.NO_SSO_INFO;
-            //    }
-            //    else if (!CheckUserAuthencationInfo(user, password))
-            //    {
-            //        result.success = false;
-            //        result.data = ErrorCode.USER_AUTH_FAILED;
-            //    }
-            //    else
-            //    {
-            //        result.success = true;
-            //        result.data = RenewToken(result, user, Guid.Parse(productId), Guid.Parse(orgId));
-            //    }
-
-            //    return result;
-            //}            
+        {            
             return wfkLogin(userName, password, productId, productName, orgId, orgName, domain, isInternal, language);
         }
 
@@ -133,7 +104,6 @@ namespace Cube.Web
                 }                    
                 else
                 {
-                    //ToDo:以后需要移除这段初始化代码
                     SSORequest request = new SSORequest();
                     request.LoginType = LoginTypeEnum.Normal;
                     return null;

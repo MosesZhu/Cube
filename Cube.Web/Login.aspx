@@ -233,7 +233,19 @@
 </asp:Content>
 <asp:Content ID="PageScriptContent" ContentPlaceHolderID="PageScriptContentHolder" runat="server">
     <script>
-        $(function () {
+        $(function () {        
+            if ($.cookie("LastNeedRemember") == "true") {
+                $("#cbxRememberMe").prop("checked", true);
+                $("#ddlLanguage").val($.cookie("LastLanguage"));
+                setLanguage($("#ddlLanguage").val());
+                $("#tbxName").val($.cookie("LastUserName"));
+                if ($.cookie("LastPosition") == "true") {
+                    $("#rdoInternalUser").prop('checked', true);
+                } else {
+                    $("#rdoInternalUser").prop('checked', false);
+                }                
+            }
+
             $('#cbxRememberMe').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
@@ -242,9 +254,10 @@
 
             $("#ddlLanguage").val($.uriAnchor.makeAnchorMap()["lang"]);
             $.language.change($.uriAnchor.makeAnchorMap()["lang"]);
-            
+
             initProductOrgList();
-            initDomainList();
+            initDomainList();          
+            
         });
 
         var changeUserPosition = function () {
@@ -275,8 +288,17 @@
                             opHtml += "<option value='" + product.Id + "'>" + product.Name + "</option>";
                         });
 
-                        $("#ddlProduct").html(opHtml);
+                        $("#ddlProduct").html(opHtml);                        
+
+                        if ($.cookie("LastNeedRemember") == "true") {
+                            $("#ddlProduct").val($.cookie("LastProductId"));                          
+                        } 
+
                         changeProduct();
+
+                        if ($.cookie("LastNeedRemember") == "true") {
+                            $("#ddlOrg").val($.cookie("LastOrgId"));
+                        }
                     }
                 },
                 error: function (e) {
@@ -317,6 +339,10 @@
                         });
 
                         $("#ddlDomain").html(domainHtml);
+
+                        if ($.cookie("LastNeedRemember") == "true") {
+                            $("#ddlDomain").val($.cookie("LastDomain"));
+                        } 
                     }
                 },
                 error: function (e) {
@@ -340,7 +366,27 @@
             var domain = $("#ddlDomain").val();
             var isInternal = $("#rdoInternalUser").prop('checked');
             var language = $("#ddlLanguage").val();
-            
+            var needRemember = $("#cbxRememberMe").prop("checked");
+
+            if (!needRemember) {
+                $.cookie("LastNeedRemember", false);
+                $.cookie("LastLanguage", null);
+                $.cookie("LastProductId", null);
+                $.cookie("LastOrgId", null);
+                $.cookie("LastUserName", null);
+                $.cookie("LastDomain", null);
+            }
+
+            if (userName.length == 0) {                
+                $.dialog.showMessage(_CurrentLang.lang_error, _CurrentLang.lang_msg_must_input_login_name);
+                return false;
+            }
+
+            if (orgId.length == 0) {
+                $.dialog.showMessage(_CurrentLang.lang_error, _CurrentLang.lang_msg_must_choose_org);
+                return false;
+            }
+
             $.dialog.showLoading();
             var param = {
                 "userName": userName,
@@ -367,6 +413,16 @@
                         //var token = d.data;
                         var portalUrl = d.data;
                         var lang = $("#ddlLanguage").val();
+                        if (needRemember) {
+                            $.cookie("LastNeedRemember", true);
+                            $.cookie("LastLanguage", language);
+                            $.cookie("LastProductId", productId);
+                            $.cookie("LastOrgId", orgId);
+                            $.cookie("LastUserName", userName);
+                            $.cookie("LastDomain", domain);
+                            $.cookie("LastPosition", $("#rdoInternalUser").prop('checked'));
+                        }
+                        //var token = getQueryStringByName("SSOToken");
                         //$.cookie("SSOToken", token);
                         //$.cookie("Language", lang);
                         //var portalUrl = "Portal?SSOToken=" + token;

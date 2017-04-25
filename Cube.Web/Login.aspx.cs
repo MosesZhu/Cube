@@ -25,6 +25,8 @@ namespace Cube.Web
             List<string> keyList = new List<string>();
             keyList.Add("lang_error");
             keyList.Add("lang_msg_login_failed");
+            keyList.Add("lang_msg_must_input_login_name");
+            keyList.Add("lang_msg_must_choose_org");
             return keyList;
         }
     }
