@@ -255,16 +255,17 @@
                                 <!-- The user image in the navbar-->
                                 <img src="img/user2-160x160.jpg" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">Moses.Zhu</span>
+                                <span class="hidden-xs" id="lblUserName">Moses.Zhu</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
                                     <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
-                                    <p>
+                                    <p id="lblUserDepartment">
                                         Moses.Zhu - AIC12
                       <small>tel: +88861873</small>
+                                        <small id="lblLoginTime"></small>
                                     </p>
                                 </li>
 
@@ -499,7 +500,8 @@
         var _PortalContext = {
             "MenuList": null,
             "BookmarkList": null,
-            "CurrentFunctionId": null
+            "CurrentFunctionId": null,
+            "UserInfo": null
         };
 
         $(function () {
@@ -540,8 +542,28 @@
                 alwaysVisible: false,
                 opacity: .2, //滚动条透明度
                 borderRadius: '7px', //滚动条圆角
-            });            
+            });
+
+            initUserInfo();
         });
+
+        var initUserInfo = function () {
+            var options = {
+                "success": function (d) {
+                    if (d.success) {
+                        _PortalContext.UserInfo = d.data;
+                        refreshUserInfo();
+                    }
+                }
+            };
+
+            $.ask("getUserInfo", {}, options);
+        };
+
+        var refreshUserInfo = function () {
+            $("#lblUserName").text(_PortalContext.UserInfo.Name);
+            $("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
+        };
 
         var getDomainMenuHtml = function (domainMenu) {
             var menuHtml
@@ -1115,6 +1137,9 @@
         };
 
         var addToBookmark = function (functionid) {
+            if (functionid.substring(0, 3) == "bk_") {
+                functionid = functionid.substring(3);
+            }
             var options = {
                 "success": function (d) {
                     if (d.success) {

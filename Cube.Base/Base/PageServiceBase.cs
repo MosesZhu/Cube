@@ -57,11 +57,20 @@ namespace Cube.Base
             }
         }
 
-        public Mc_User User {
-            get {
-                return CubeSSOContext.Current.User;
+        private DbSession m_WFKDb;
+        public DbSession WFKDb
+        {
+            get
+            {
+                return this.m_WFKDb ?? (this.m_WFKDb = new DbSession("WebFramework"));
             }
         }
+
+        //public Mc_User User {
+        //    get {
+        //        return CubeSSOContext.Current.User;
+        //    }
+        //}
 
         //private UserDTO mUserInfo;
         public UserDTO UserInfo {

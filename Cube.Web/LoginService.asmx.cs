@@ -154,11 +154,7 @@ namespace Cube.Web
                 logonInfo.IsSSOTicketAleadyExisted = true;
             }
             logonInfo.Language = language;
-            DateTime expired = DateTime.Now.AddYears(1);
-            CookiesManager.Add("SSOLastLanguage", logonInfo.Language, expired);
-            CookiesManager.Add("SSOLastOrgID", logonInfo.OrgID.ToString(), expired);
-            CookiesManager.Add("SSOLastProductID", logonInfo.ProductID.ToString(), expired);
-
+            
             try
             {
                 string url = new SSOAuthentication().LogonWithPortalUrl(logonInfo);

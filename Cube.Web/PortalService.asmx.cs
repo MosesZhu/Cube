@@ -17,6 +17,8 @@ using Cube.Base.Config;
 using ITS.WebFramework.SSO.Business;
 using ITS.WebFramework.SSO.Common;
 using ITS.WebFramework.Configuration;
+using ITS.WebFramework.SSO.Session;
+using ITS.WebFramework.PermissionManagement.Entity;
 
 namespace Cube.Web
 {
@@ -36,17 +38,12 @@ namespace Cube.Web
             {
                 success = true
             };
-            MenuDTO cubeMenu = new MenuDTO();//GetMenuImp();
-            result.data = cubeMenu;
-            //if (CubeConfig.AuthorityMode == Base.Enums.AuthorityModeEnum.Cube)
-            //{
-            //    cubeMenu = GetMenuImp();
-            //}
-            //else
-            //{
+            MenuDTO cubeMenu = new MenuDTO();//GetMenuImp();            
+            cubeMenu = GetMenuImp();
 
-            //}
-
+            List<Guid> BookmarkIdList = CubeDb.From<Mc_Bookmark>()
+                .Where(Mc_Bookmark._.User_Id == SSOContext.Current.UserID)
+                .Select(Mc_Bookmark._.Function_Id).ToList<Guid>();           
             try
             {
                 string menuXmlStr = menuXmlStr = PermissionService.GetAuthorizedProductFunctionTree(CubeSSOContext.Current.WfkSSOContext.UserID,
@@ -98,7 +95,16 @@ namespace Cube.Web
                                             Code = subFunctionNode.Attributes["Text"].Value,
                                             Url = subFunctionNode.Attributes["NavigateUrl"] != null ? subFunctionNode.Attributes["NavigateUrl"].Value : ""
                                         };
+                                        if (BookmarkIdList.Contains(subFunction.Id))
+                                        {
+                                            cubeMenu.BookmarkList.Add(subFunction);
+                                        }
                                         function.SubFunctionList.Add(subFunction);
+                                    }
+
+                                    if (BookmarkIdList.Contains(function.Id))
+                                    {
+                                        cubeMenu.BookmarkList.Add(function);
                                     }
 
                                     system.FunctionList.Add(function);
@@ -112,12 +118,14 @@ namespace Cube.Web
                     }
                     cubeMenu.ProductList.Add(bachProduct);
                 }
+
+                result.data = cubeMenu;
             }
             catch (Exception ex)
             {
-                //result.success = false;
-                //result.message = ex.Message;
-            }
+                result.success = false;
+                result.message = ex.Message;
+            }            
             return result;
         }
 
@@ -179,26 +187,39 @@ namespace Cube.Web
         public ResultDTO addToBookmark(string functionId)
         {
             ResultDTO result = new ResultDTO();
-            if (hasFunctionRight(User.Id.ToString(), functionId))
-            {
-                List<Mc_Bookmark> existBookmarkList = CubeDb.From<Mc_Bookmark>()
-                    .Where(Mc_Bookmark._.User_Id == User.Id && Mc_Bookmark._.Function_Id == functionId)
+            //if (hasFunctionRight(SSOContext.Current.UserID.ToString(), functionId))
+            //{
+            //    List<Mc_Bookmark> existBookmarkList = CubeDb.From<Mc_Bookmark>()
+            //        .Where(Mc_Bookmark._.User_Id == User.Id && Mc_Bookmark._.Function_Id == functionId)
+            //        .ToList();
+            //    if (existBookmarkList.Count() == 0)
+            //    {
+            //        Mc_Bookmark newBookmark = new Mc_Bookmark()
+            //        {
+            //            User_Id = User.Id,
+            //            Function_Id = Guid.Parse(functionId)
+            //        };
+            //        CubeDb.Insert<Mc_Bookmark>(newBookmark);
+            //        result.success = true;
+            //    }
+            //}
+            //else
+            //{
+            //    result.success = false;
+            //    result.message = "No permission";
+            //}
+            List<Mc_Bookmark> existBookmarkList = CubeDb.From<Mc_Bookmark>()
+                    .Where(Mc_Bookmark._.User_Id == SSOContext.Current.UserID && Mc_Bookmark._.Function_Id == functionId)
                     .ToList();
-                if (existBookmarkList.Count() == 0)
-                {
-                    Mc_Bookmark newBookmark = new Mc_Bookmark()
-                    {
-                        User_Id = User.Id,
-                        Function_Id = Guid.Parse(functionId)
-                    };
-                    CubeDb.Insert<Mc_Bookmark>(newBookmark);
-                    result.success = true;
-                }
-            }
-            else
+            if (existBookmarkList.Count() == 0)
             {
-                result.success = false;
-                result.message = "No permission";
+                Mc_Bookmark newBookmark = new Mc_Bookmark()
+                {
+                    User_Id = SSOContext.Current.UserID,
+                    Function_Id = Guid.Parse(functionId)
+                };
+                CubeDb.Insert<Mc_Bookmark>(newBookmark);
+                result.success = true;
             }
             return result;
         }
@@ -208,9 +229,9 @@ namespace Cube.Web
         public ResultDTO removeFromBookmark(string functionId)
         {
             ResultDTO result = new ResultDTO();
-            CubeDb.Delete<Mc_Bookmark>(Mc_Bookmark._.User_Id == User.Id && Mc_Bookmark._.Function_Id == functionId);
+            CubeDb.Delete<Mc_Bookmark>(Mc_Bookmark._.User_Id == SSOContext.Current.UserID && Mc_Bookmark._.Function_Id == functionId);
             List<Mc_Bookmark> existBookmarkList = CubeDb.From<Mc_Bookmark>()
-                    .Where(Mc_Bookmark._.User_Id == User.Id && Mc_Bookmark._.Function_Id == functionId)
+                    .Where(Mc_Bookmark._.User_Id == SSOContext.Current.UserID && Mc_Bookmark._.Function_Id == functionId)
                     .ToList();
             result.success = true;
             return result;
@@ -227,26 +248,51 @@ namespace Cube.Web
 
         #region Method Implement
 
+        public string GetLoginTime(string productName, string orgName, string userName)
+        {
+            List<DateTime> listLoginTime =
+            WFKDb.From<Sso_Login>()
+                .Where(Sso_Login._.Product_Name == productName
+                       && Sso_Login._.Org_Name == orgName
+                       && Sso_Login._.Login_User == userName
+                       && Sso_Login._.Is_Success == 1)
+                .Select(Sso_Login._.Login_Time)
+                .OrderBy(Sso_Login._.Login_Time.Desc)
+                .Top(2)
+                .ToList<DateTime>();
+            if (listLoginTime == null || listLoginTime.Count == 0)
+            {
+                return string.Empty;
+            }
+            return listLoginTime.Min().ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
         /// <summary>
         /// 从DB中取得user完整信息
         /// </summary>
         /// <returns></returns>
         private UserInfoDTO GetUserInfoImp()
         {
-            UserInfoDTO user = new UserInfoDTO();
-            //(1)基础信息
-            UserBasicInfoDTO basicInfo = GetUserBasicInfo();
-            user.Id = basicInfo.Id;
-            user.Login_Name = basicInfo.Login_Name;
-            user.Name = basicInfo.Name;
-            user.Mail = basicInfo.Mail;
-            //(2)偏好设置
-            user.preference = GetUserPreferenceImp();
-            //(3)Role列表
-            user.RoleList = GetRoleList();
-            //(4)菜单
-            user.MenuList = GetMenuImp().ProductList;
-            return user;
+            UserInfoDTO result = new UserInfoDTO();
+            result.Id = SSOContext.Current.UserID;
+            result.Name = SSOContext.Current.UserName;
+            result.LoginTime = GetLoginTime(SSOContext.Current.ProductName, SSOContext.Current.OrgName, SSOContext.Current.UserName);
+            return result;
+
+            //UserInfoDTO user = new UserInfoDTO();
+            ////(1)基础信息
+            //UserBasicInfoDTO basicInfo = GetUserBasicInfo();
+            //user.Id = basicInfo.Id;
+            //user.Login_Name = basicInfo.Login_Name;
+            //user.Name = basicInfo.Name;
+            //user.Mail = basicInfo.Mail;
+            ////(2)偏好设置
+            //user.preference = GetUserPreferenceImp();
+            ////(3)Role列表
+            //user.RoleList = GetRoleList();
+            ////(4)菜单
+            //user.MenuList = GetMenuImp().ProductList;
+            //return user;
         }
 
 
@@ -278,7 +324,7 @@ namespace Cube.Web
             MenuDTO result = new MenuDTO();
             //1.当前user的所有function_id_list           
             List<Guid> function_id_list = CubeDb.From<Mc_User_Function>()
-                .Where(Mc_User_Function._.User_Id == User.Id)
+                .Where(Mc_User_Function._.User_Id == SSOContext.Current.UserID)
                 .Select(Mc_User_Function._.Function_Id)
                 .ToList<Guid>();
             List<Cube.Model.DTO.FunctionDTO> functionList = functionList = new List<Cube.Model.DTO.FunctionDTO>();
@@ -429,7 +475,7 @@ namespace Cube.Web
             result.ProductList = productList;
 
             List<Guid> BookmarkIdList = CubeDb.From<Mc_Bookmark>()
-                .Where(Mc_Bookmark._.User_Id == User.Id)
+                .Where(Mc_Bookmark._.User_Id == SSOContext.Current.UserID)
                 .Select(Mc_Bookmark._.Function_Id).ToList<Guid>();
             List<Cube.Model.DTO.FunctionDTO> bookmarkFunctionList = CubeDb.From<Mc_Function>()
                 .Where(Mc_Function._.Id.In(BookmarkIdList))
@@ -475,7 +521,7 @@ namespace Cube.Web
         {
             List<Cube.Model.DTO.RoleDTO> list = DBUtility.CubeDb.From<Mc_User_Role>()
                 .LeftJoin<Mc_Role>(Mc_Role._.Id == Mc_User_Role._.Role_Id)
-                .Where(Mc_User_Role._.User_Id == User.Id)
+                .Where(Mc_User_Role._.User_Id == SSOContext.Current.UserID)
                 .Select(
                 Mc_User_Role._.Role_Id
                 , Mc_Role._.Name
@@ -492,7 +538,7 @@ namespace Cube.Web
         private PreferenceDTO GetUserPreferenceImp()
         {
             PreferenceDTO preference = DBUtility.CubeDb.From<Mc_Preference>()
-                .Where(Mc_Preference._.User_Id == User.Id)
+                .Where(Mc_Preference._.User_Id == SSOContext.Current.UserID)
                 .Select(
                     Mc_Preference._.Skin.As("theme")
                     , Mc_Preference._.Language_Key.As("language")
@@ -509,7 +555,7 @@ namespace Cube.Web
         private UserBasicInfoDTO GetUserBasicInfo()
         {
             UserBasicInfoDTO user = DBUtility.CubeDb.From<Mc_User>()
-                .Where(Mc_User._.Id == User.Id)
+                .Where(Mc_User._.Id == SSOContext.Current.UserID)
                 .Select(Mc_User._.All)
                 .First<UserBasicInfoDTO>();
             return user ?? new UserBasicInfoDTO();

@@ -57,6 +57,10 @@
     <Reference Include="ITS.WebFramework.PermissionComponent.ServiceProxy">
       <HintPath>..\..\WebFramework\PermissionComponent\ServiceProxy\bin\debug\ITS.WebFramework.PermissionComponent.ServiceProxy.dll</HintPath>
     </Reference>
+    <Reference Include="ITS.WebFramework.PermissionManagement.Entity, Version=4.0.100.100, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WebFramework\PermissionManagement\Entity\bin\Debug\ITS.WebFramework.PermissionManagement.Entity.dll</HintPath>
+    </Reference>
     <Reference Include="ITS.WebFramework.SSO.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\WebFramework\SSO\Business\bin\Debug\ITS.WebFramework.SSO.Business.dll</HintPath>

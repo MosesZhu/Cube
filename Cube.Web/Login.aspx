@@ -163,11 +163,11 @@
         </div>
       </div>
       <div class="form-group has-feedback">
-        <select class="form-control select2" style="width: 100%;" id="ddlProduct" onchange="changeProduct()">
+        <select class="form-control select2" style="width: 100%;padding-right: 20px;" id="ddlProduct" onchange="changeProduct()">
         </select>
       </div>
       <div class="form-group has-feedback">
-        <select class="form-control select2" style="width: 100%;" id="ddlOrg" onchange="changeOrg()">
+        <select class="form-control select2" style="width: 100%;padding-right: 20px;" id="ddlOrg" onchange="changeOrg()">
         </select>
       </div>
       <div class="form-group has-feedback">
@@ -179,11 +179,11 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <select class="form-control select2" style="width: 100%;" id="ddlDomain">
+        <select class="form-control select2" style="width: 100%;padding-right: 20px;" id="ddlDomain">
         </select>
       </div>
       <div class="form-group has-feedback">
-        <select class="form-control select2" style="width: 100%;" id="ddlLanguage" onchange="return changeLanguage();">
+        <select class="form-control select2" style="width: 100%;padding-right: 20px;" id="ddlLanguage" onchange="return changeLanguage();">
             <option selected="selected" value="EnUS">English</option>
             <option value="ZhCN">中文简体</option>
             <option value="ZhTW">中文繁體</option>

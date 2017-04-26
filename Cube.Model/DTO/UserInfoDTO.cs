@@ -13,6 +13,8 @@ namespace Cube.Model.DTO
         public string Login_Name { get; set; }
         public string Name { get; set; }
         public string Mail { get; set; }
+
+        public string LoginTime { get; set; }
         /// <summary>
         /// 用户设置
         /// </summary>

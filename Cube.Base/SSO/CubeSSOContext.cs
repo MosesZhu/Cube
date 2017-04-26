@@ -101,6 +101,8 @@ namespace Cube.Base.SSO
                 User_ID = WfkSSOContext.UserID,
                 User_Name = WfkSSOContext.UserName
             };
+
+            //User = DBUtility.CubeDb.From<Mc_User>().Where(Mc_User._.Id == UserInfo.User_ID).Select(Mc_User._.All).FirstDefault();
         }            
     }
 }
