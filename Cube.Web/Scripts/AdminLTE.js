@@ -473,13 +473,31 @@ function _init() {
       btn.on('click', function (e) {
         e.preventDefault();
         //If the sidebar is not open
-        if (!sidebar.hasClass('control-sidebar-open')
-          && !$('body').hasClass('control-sidebar-open')) {
-          //Open the sidebar
-          _this.open(sidebar, o.slide);
-        } else {
-          _this.close(sidebar, o.slide);
+       //Modified by Moses Zhu on 20170427
+        if ($(this).attr('data-target')) {
+            var thisSidebarId = $(this).attr('data-target');
+            var thisSidebar = $("#" + thisSidebarId);
+            if (thisSidebar) {
+                $.each(sidebar, function (i, s) {
+                    if ($(s).attr("id") != thisSidebarId) {
+                        _this.close($(s), o.slide);
+                    }
+                });
+                if (!thisSidebar.hasClass('control-sidebar-open')
+                    && !$('body').hasClass('control-sidebar-open')) {                    
+                    _this.open(thisSidebar, o.slide);
+                } else {
+                    _this.close(thisSidebar, o.slide);
+                } 
+            }                                  
         }
+        //if (!sidebar.hasClass('control-sidebar-open')
+        //  && !$('body').hasClass('control-sidebar-open')) {
+        //  //Open the sidebar
+        //  _this.open(sidebar, o.slide);
+        //} else {
+        //  _this.close(sidebar, o.slide);
+        //}
       });
 
       //If the body has a boxed layout, fix the sidebar bg position

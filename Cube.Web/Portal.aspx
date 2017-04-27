@@ -279,7 +279,10 @@
                         </li>
                         <!-- Control Sidebar Toggle Button -->
                         <li>
-                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                            <a href="#" data-toggle="control-sidebar" data-target="control_sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="control-sidebar" data-target="bookmark_sidebar" ><i class="fa fa-star"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -351,7 +354,7 @@
         </footer>
 
         <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
+        <aside class="control-sidebar control-sidebar-dark" id="control_sidebar">
             <!-- Create the tabs -->
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
                 <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
@@ -445,10 +448,16 @@
                 <!-- /.tab-pane -->
             </div>
         </aside>
+
+        <aside class="control-sidebar control-sidebar-dark" id="bookmark_sidebar">
+            <ul class="nav sidebar-menu" id="_BookmarkMenu">
+            </ul>
+        </aside>
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
-        <div class="control-sidebar-bg"></div>
+        <div class="control-sidebar-bg" data-target="control_sidebar"></div>
+        <div class="control-sidebar-bg" data-target="bookmark_sidebar"></div>
     </div>
     <div id="tab-context-menu">
         <ul class="dropdown-menu" role="menu">
@@ -701,6 +710,11 @@
             }
 
             $("#_FunctionMenu").html(menuHtml);
+            var bookmarkMenuHtml = "";
+            $.each(_PortalContext.BookmarkList, function (i, bookmark) {
+                bookmarkMenuHtml += getBookmarkMenuHtml(bookmark);
+            });
+            $("#_BookmarkMenu").html(bookmarkMenuHtml);
 
             bindMenuContextMenu();
 
@@ -820,9 +834,9 @@
                     + '<i class="fa fa-star"></i>'
                     + '<span lang="lang_favorites" style="padding-left:5px;">Bookmark</span>'
                     + '</li>';
-                $.each(_PortalContext.BookmarkList, function (i, bookmark) {
-                    menuHtml += getBookmarkMenuHtml(bookmark);
-                });
+                //$.each(_PortalContext.BookmarkList, function (i, bookmark) {
+                //    menuHtml += getBookmarkMenuHtml(bookmark);
+                //});
             }
 
             $("#_FunctionMenu").html(menuHtml);
