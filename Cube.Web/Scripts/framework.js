@@ -415,7 +415,9 @@ jQuery.extend({
             "red": "red",
             "red-light": "red-light",
             "purple": "purple",
-            "purple-light": "purple-light"
+            "purple-light": "purple-light",
+            "black": "black",
+            "black-light": "black-light"
         },
         "set": function (skinName) {
             if (!$.skin.type[skinName]) {

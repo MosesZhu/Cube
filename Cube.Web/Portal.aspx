@@ -193,6 +193,14 @@
                 transform: rotate(360deg);
             }
         }
+
+        .header-toggle {
+            float: left;
+            font-size: 14px;
+            width: 30px;
+        }
+
+
     </style>
     
 </asp:Content>
@@ -201,20 +209,28 @@
     <div class="wrapper" style="height: 100%; background-color: transparent;">
 
         <header class="main-header">
+                        
             <!-- Logo -->
-            <a href="index2.html" class="logo">
+            <div class="logo" style="padding:0px;">
+                <a class="header-toggle" data-toggle="" role="button">
+                    <span class="fa fa-sort-asc"></span>
+                </a>
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>A</b>LT</span>
-                <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">WebFramework GT</span>
-            </a>
+                <!-- <span class="logo-mini"><b>A</b>LT</span> -->
+                <!-- logo for regular state and mobile devices -->                
+                <span class="logo-lg">
+                    WebFramework GT 
+                </span>
+
+                
+            </div>            
 
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>
-                </a>
+                </a>                
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
@@ -430,6 +446,12 @@
                                     <li>
                                         <div class="text-purple alpha60 skin_button" onclick="setSkin('purple-light')"><i class="fa fa-square"></i></div>
                                     </li>
+                                    <li>
+                                        <div class="text-black skin_button" onclick="setSkin('black')"><i class="fa fa-square"></i></div>
+                                    </li>
+                                    <li>
+                                        <div class="text-black alpha60 skin_button" onclick="setSkin('black-light')"><i class="fa fa-square"></i></div>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -561,6 +583,14 @@
 
             initUserInfo();
         });
+
+        var hideHeader = function () {
+            $("header").slideUp();
+        };
+
+        var showHeader = function () {
+            $("header").slideDown();
+        }
 
         var initUserInfo = function () {
             var options = {
