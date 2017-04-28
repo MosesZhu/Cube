@@ -2,6 +2,10 @@
 
 <asp:Content ID="PageStyleContent" ContentPlaceHolderID="PageStyleContentHolder" runat="server">
     <style>
+        #_BookmarkMenu > li.bookmark-item:hover > a, #_BookmarkMenu > li.active > a {
+            background-color: lightgray;
+        }
+
         .icon_close_form {
             cursor: pointer;
         }
@@ -296,7 +300,7 @@
 
                 <!-- search form (Optional) -->
                 <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
+                    <div class="input-group" style="position:absolute; top:0px;">
                         <input type="text" name="q" id="tbxSearchMenu" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
                             <button type="button" name="search" id="search-btn" class="btn btn-flat">
@@ -352,6 +356,13 @@
             <!--Moses Demo<strong> WebFramework GT</strong>-->
             <div id = "breadcrumb"><i class="fa fa-bank"></i> <span id="breadcrumb-content">Portal</span></div>
         </footer>
+
+        <!-- Bookmark Sidebar -->
+        <aside class="control-sidebar control-sidebar-light" id="bookmark_sidebar">
+            <ul class="nav sidebar-menu" id="_BookmarkMenu">
+            </ul>
+        </aside>        
+        <div class="control-sidebar-bg" data-target="bookmark_sidebar"></div>
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark" id="control_sidebar">
@@ -448,16 +459,11 @@
                 <!-- /.tab-pane -->
             </div>
         </aside>
-
-        <aside class="control-sidebar control-sidebar-dark" id="bookmark_sidebar">
-            <ul class="nav sidebar-menu" id="_BookmarkMenu">
-            </ul>
-        </aside>
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
         <div class="control-sidebar-bg" data-target="control_sidebar"></div>
-        <div class="control-sidebar-bg" data-target="bookmark_sidebar"></div>
+        
     </div>
     <div id="tab-context-menu">
         <ul class="dropdown-menu" role="menu">
@@ -698,16 +704,16 @@
                 });
             });
 
-            if (_PortalContext.BookmarkList.length > 0) {
-                menuHtml
-                    += '<li class="header">'
-                    + '<i class="fa fa-star"></i>'
-                    + '<span lang="lang_favorites" style="padding-left:5px;">Bookmark</span>'
-                    + '</li>';
-                $.each(_PortalContext.BookmarkList, function (i, bookmark) {
-                    menuHtml += getBookmarkMenuHtml(bookmark);
-                });
-            }
+            //if (_PortalContext.BookmarkList.length > 0) {
+            //    menuHtml
+            //        += '<li class="header">'
+            //        + '<i class="fa fa-star"></i>'
+            //        + '<span lang="lang_favorites" style="padding-left:5px;">Bookmark</span>'
+            //        + '</li>';
+            //    $.each(_PortalContext.BookmarkList, function (i, bookmark) {
+            //        menuHtml += getBookmarkMenuHtml(bookmark);
+            //    });
+            //}
 
             $("#_FunctionMenu").html(menuHtml);
             var bookmarkMenuHtml = "";
@@ -991,6 +997,8 @@
                 var functionname = $(menu).text();
                 var functionid = $(menu).attr("functionid");
                 $("#_FunctionMenu .treeview li").removeClass("active");
+                $("#_BookmarkMenu li").removeClass("active");
+                
                 $(menu).addClass("active");
 
                 var opend = showFormByFunctionId(functionid);
@@ -1138,7 +1146,7 @@
         };
 
         var bindBookmarkContextMenu = function () {
-            $('#_FunctionMenu').find(".bookmark-item").contextmenu({
+            $('#_BookmarkMenu').find(".bookmark-item").contextmenu({
                 target: '#bookmark-context-menu',
                 onItem: function (context, e) {
                     var menuIndex = $(e.target).attr('menuindex');
@@ -1199,6 +1207,7 @@
                     opened = true;
                     $(tab).tab("show");
                     _PortalContext.CurrentFunctionId = functionid;
+                    return false;
                 }
             });
             changeBreadCrumb();

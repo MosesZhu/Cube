@@ -473,7 +473,7 @@ function _init() {
       btn.on('click', function (e) {
         e.preventDefault();
         //If the sidebar is not open
-       //Modified by Moses Zhu on 20170427
+       //Added by Moses Zhu on 20170427
         if ($(this).attr('data-target')) {
             var thisSidebarId = $(this).attr('data-target');
             var thisSidebar = $("#" + thisSidebarId);
@@ -491,6 +491,8 @@ function _init() {
                 } 
             }                                  
         }
+        //End added by Moses Zhu on 20170427
+        //Marked by Moses Zhu on 20170427
         //if (!sidebar.hasClass('control-sidebar-open')
         //  && !$('body').hasClass('control-sidebar-open')) {
         //  //Open the sidebar
