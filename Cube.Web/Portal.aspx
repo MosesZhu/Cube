@@ -204,9 +204,9 @@
             position: fixed;
             left: 0px;
             top: -50px;
-            height: 50px;
+            height: 20px;
             text-align: center;
-            padding-top: 10px;
+            padding-bottom: 3px;
             z-index:999;
         }
     </style>
@@ -218,7 +218,7 @@
         <a class="header-toggle" data-toggle="" role="button" id="btnShowHeader" onclick="return toggleHeader();" >
             <span class="fa fa-sort-down"></span>
         </a>
-        <header class="main-header">                        
+        <header class="main-header">
             <!-- Logo -->
             <div class="logo" style="padding:0px;">
                 <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return toggleHeader();">
@@ -603,7 +603,23 @@
         };
 
         var hideHeader = function () {
+            var headerHeight = $("header").height();
             $(".main-sidebar").animate({ "padding-top": "0px" }, 200);
+            $("#bookmark_sidebar").animate({ "padding-top": "0px" }, 200);
+            $("#control_sidebar").animate({ "padding-top": "0px" }, 200);
+            var contentHeight = $("section.content").height();
+            $("section.content").height(contentHeight + headerHeight);
+            var menuHeight = $("aside > .slimScrollDiv").height();
+            $("aside > .slimScrollDiv").height(menuHeight + headerHeight);
+            $("section.sidebar").height(menuHeight + headerHeight);
+            $("section.content").animate({
+                "margin-top": - (headerHeight + 5) + "px"
+                //,"height": contentHeight + headerHeight + "px"
+            }, 200); 
+            
+            //$(".main-sidebar .slimScrollDiv").animate({ "height": $(".main-sidebar .slimScrollDiv").height() + 50 }, 200);
+            //$(".main-sidebar .sidebar").animate({ "height": $(".main-sidebar .sidebar").height() + 50 }, 200);
+            
 
             $("header").slideUp(200, function () {
                 if (_PortalContext.MenuVisible()) {
@@ -611,16 +627,33 @@
                 } else {
                     $("#btnShowHeader").css("left", "0px");
                 }
+
+
                 $("#btnShowHeader").animate({"top" : "0px"}, 200);
                 _PortalContext.HeaderVisible = false;
             });
         };
 
         var showHeader = function () {
+            var headerHeight = $("header").height();
             $("#btnShowHeader").animate({ "top": "-50px" }, 200, function () {
+                $(".main-sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
+                $("#bookmark_sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
+                $("#control_sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
+                var contentHeight = $("section.content").height();
+                $("section.content").height(contentHeight - headerHeight);
+                var menuHeight = $("aside > .slimScrollDiv").height();
+                $("aside > .slimScrollDiv").height(menuHeight - headerHeight);
+                $("section.sidebar").height(menuHeight - headerHeight);
+                $("section.content").animate({
+                    "margin-top": "-5px"
+                    //,"height": contentHeight - headerHeight + "px"
+                }, 200); 
+                //$(".main-sidebar .slimScrollDiv").animate({ "height": $(".main-sidebar .slimScrollDiv").height() - 50 }, 200);
+                //$(".main-sidebar .sidebar").animate({ "height": $(".main-sidebar .sidebar").height() - 50 }, 200);
+
                 $("header").slideDown(200, function () {
-                    _PortalContext.HeaderVisible = true;
-                    $(".main-sidebar").css("padding-top", "50px");
+                    _PortalContext.HeaderVisible = true;                    
                 }); 
             });                       
         }
