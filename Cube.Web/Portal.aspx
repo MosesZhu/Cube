@@ -200,29 +200,36 @@
             width: 30px;
         }
 
-
+        #btnShowHeader {
+            position: fixed;
+            left: 0px;
+            top: -50px;
+            height: 50px;
+            text-align: center;
+            padding-top: 10px;
+            z-index:999;
+        }
     </style>
     
 </asp:Content>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
 
     <div class="wrapper" style="height: 100%; background-color: transparent;">
-
-        <header class="main-header">
-                        
+        <a class="header-toggle" data-toggle="" role="button" id="btnShowHeader" onclick="return toggleHeader();" >
+            <span class="fa fa-sort-down"></span>
+        </a>
+        <header class="main-header">                        
             <!-- Logo -->
             <div class="logo" style="padding:0px;">
-                <a class="header-toggle" data-toggle="" role="button">
-                    <span class="fa fa-sort-asc"></span>
-                </a>
+                <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return toggleHeader();">
+                    <span class="fa fa-sort-up"></span>
+                </a>                
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <!-- <span class="logo-mini"><b>A</b>LT</span> -->
                 <!-- logo for regular state and mobile devices -->                
                 <span class="logo-lg">
                     WebFramework GT 
-                </span>
-
-                
+                </span>                
             </div>            
 
             <!-- Header Navbar -->
@@ -310,7 +317,6 @@
         </header>
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
-
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar" id="scrollspy">
 
@@ -538,7 +544,11 @@
             "MenuList": null,
             "BookmarkList": null,
             "CurrentFunctionId": null,
-            "UserInfo": null
+            "UserInfo": null,
+            "HeaderVisible": true,
+            "MenuVisible": function () {
+                return !$("body").hasClass("sidebar-collapse");
+            }
         };
 
         $(function () {
@@ -584,12 +594,35 @@
             initUserInfo();
         });
 
+        var toggleHeader = function () {
+            if (_PortalContext.HeaderVisible) {
+                hideHeader();
+            } else {
+                showHeader();
+            }
+        };
+
         var hideHeader = function () {
-            $("header").slideUp();
+            $(".main-sidebar").animate({ "padding-top": "0px" }, 200);
+
+            $("header").slideUp(200, function () {
+                if (_PortalContext.MenuVisible()) {
+                    $("#btnShowHeader").css("left", "230px");
+                } else {
+                    $("#btnShowHeader").css("left", "0px");
+                }
+                $("#btnShowHeader").animate({"top" : "0px"}, 200);
+                _PortalContext.HeaderVisible = false;
+            });
         };
 
         var showHeader = function () {
-            $("header").slideDown();
+            $("#btnShowHeader").animate({ "top": "-50px" }, 200, function () {
+                $("header").slideDown(200, function () {
+                    _PortalContext.HeaderVisible = true;
+                    $(".main-sidebar").css("padding-top", "50px");
+                }); 
+            });                       
         }
 
         var initUserInfo = function () {
