@@ -194,20 +194,52 @@
             }
         }
 
-        .header-toggle {
+        /*.header-toggle {
             float: left;
             font-size: 14px;
             width: 30px;
-        }
+        }*/
 
         #btnShowHeader {
             position: fixed;
-            left: 0px;
+            right: 0px;
             top: -50px;
             height: 20px;
             text-align: center;
             padding-bottom: 3px;
-            z-index:999;
+            z-index:9999;            
+            width: 38px;
+            height: 34px;
+        }
+
+        #_FunctionMenu > li:first-child {
+            padding-top: 45px;
+        }
+
+        section.content {
+            padding: 0px 0px 15px 0px;
+        }
+
+        .nav-tabs > li > a {
+            border-radius: 0px;
+            padding: 6px 15px;
+        }
+
+        #_FormTabs {
+            padding-left: 10px;
+            border-bottom: 0px;
+        }
+
+        #_BreadcrumbBar {
+            background-color: white;
+            height: 20px;
+            margin-left: 1px;
+            margin-right: 1px;
+        }
+
+        #_BreadcrumbContent {
+            float: right;
+            padding-right: 10px;
         }
     </style>
     
@@ -221,9 +253,9 @@
         <header class="main-header">
             <!-- Logo -->
             <div class="logo" style="padding:0px;">
-                <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return toggleHeader();">
+<%--                <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return toggleHeader();">
                     <span class="fa fa-sort-up"></span>
-                </a>                
+                </a>                --%>
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <!-- <span class="logo-mini"><b>A</b>LT</span> -->
                 <!-- logo for regular state and mobile devices -->                
@@ -311,6 +343,11 @@
                         <li>
                             <a href="#" data-toggle="control-sidebar" data-target="bookmark_sidebar" ><i class="fa fa-star"></i></a>
                         </li>
+                        <li>                           
+                            <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return toggleHeader();">
+                                <i class="fa fa-sort-up"></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -353,13 +390,13 @@
             -->
 
             <!-- Main content -->
-            <section class="content body" style="padding-top: 10px; margin-top: -5px;">
+            <section class="content body">
                 <div id="_FormTabsContainer">
                     <ul class="nav nav-tabs" role="tablist" id="_FormTabs"
                         style="display: -webkit-inline-box;">
                     </ul>
                 </div>
-
+                <div id="_BreadcrumbBar"><div id="_BreadcrumbContent"></div></div>
                 <div class="tab-content" style="height: 100%;" id="_FormTabContent">
                 </div>
 
@@ -583,7 +620,7 @@
             });
 
             $('#_FormTabsContainer').slimscroll({
-                height: '43px',
+                height: '34px',
                 width: '100%',
                 axis: 'x',
                 alwaysVisible: false,
@@ -608,25 +645,27 @@
             $("#bookmark_sidebar").animate({ "padding-top": "0px" }, 200);
             $("#control_sidebar").animate({ "padding-top": "0px" }, 200);
             var contentHeight = $("section.content").height();
-            $("section.content").height(contentHeight + headerHeight);
+            $("section.content").height(contentHeight + headerHeight - 30);
             var menuHeight = $("aside > .slimScrollDiv").height();
             $("aside > .slimScrollDiv").height(menuHeight + headerHeight);
             $("section.sidebar").height(menuHeight + headerHeight);
-            $("section.content").animate({
-                "margin-top": - (headerHeight + 5) + "px"
-                //,"height": contentHeight + headerHeight + "px"
-            }, 200); 
+            //$("section.content").animate({
+            //    "margin-top": - (headerHeight + 5) + "px"
+            //}, 200); 
+            $(".content-wrapper").animate({
+                "padding-top": "0px"
+            }, 200);    
             
             //$(".main-sidebar .slimScrollDiv").animate({ "height": $(".main-sidebar .slimScrollDiv").height() + 50 }, 200);
             //$(".main-sidebar .sidebar").animate({ "height": $(".main-sidebar .sidebar").height() + 50 }, 200);
             
 
             $("header").slideUp(200, function () {
-                if (_PortalContext.MenuVisible()) {
-                    $("#btnShowHeader").css("left", "230px");
-                } else {
-                    $("#btnShowHeader").css("left", "0px");
-                }
+                //if (_PortalContext.MenuVisible()) {
+                //    $("#btnShowHeader").css("left", "230px");
+                //} else {
+                //    $("#btnShowHeader").css("left", "0px");
+                //}
 
 
                 $("#btnShowHeader").animate({"top" : "0px"}, 200);
@@ -641,14 +680,16 @@
                 $("#bookmark_sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
                 $("#control_sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
                 var contentHeight = $("section.content").height();
-                $("section.content").height(contentHeight - headerHeight);
+                $("section.content").height(contentHeight - headerHeight - 30);
                 var menuHeight = $("aside > .slimScrollDiv").height();
                 $("aside > .slimScrollDiv").height(menuHeight - headerHeight);
                 $("section.sidebar").height(menuHeight - headerHeight);
-                $("section.content").animate({
-                    "margin-top": "-5px"
-                    //,"height": contentHeight - headerHeight + "px"
-                }, 200); 
+                //$("section.content").animate({
+                //    "margin-top": "-5px"
+                //}, 200); 
+                $(".content-wrapper").animate({
+                    "padding-top": headerHeight + "px"//"50px"
+                }, 200);                 
                 //$(".main-sidebar .slimScrollDiv").animate({ "height": $(".main-sidebar .slimScrollDiv").height() - 50 }, 200);
                 //$(".main-sidebar .sidebar").animate({ "height": $(".main-sidebar .sidebar").height() - 50 }, 200);
 
@@ -1370,7 +1411,9 @@
                     }
                 });
             }
-            $("#breadcrumb-content").html(bread);
+            //$("#breadcrumb-content").html(bread);
+            //bread += "</div>";
+            $("#_BreadcrumbContent").html(bread);
             $.language.change(_Context.CurrentLang);
         };
 
