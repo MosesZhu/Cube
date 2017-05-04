@@ -36,7 +36,7 @@
                         <p class="text-warning"><small id="messageDialogWarningContent"></small></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button"  class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" lang="lang_close">Close</button>
+                        <button type="button"  class="btn btn-primary btn-flat header-toggle btn-skin-primary" data-dismiss="modal" data-dismiss="modal" lang="lang_close">Close</button>
                     </div>
                 </div>
             </div>
@@ -54,8 +54,8 @@
                         <p class="text-warning"><small id="confirmDialogWarningContent"></small></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button"  class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" lang="lang_confirm" id="btnConfirmDialogConfirm">Confirm</button>
-                        <button type="button"  class="btn" data-dismiss="modal" data-dismiss="modal" lang="lang_cancel" id="btnConfirmDialogCancel">Cancel</button>
+                        <button type="button"  class="btn btn-primary btn-flat btn-skin-primary" data-dismiss="modal" data-dismiss="modal" lang="lang_confirm" id="btnConfirmDialogConfirm">Confirm</button>
+                        <button type="button"  class="btn btn-flat" data-dismiss="modal" data-dismiss="modal" lang="lang_cancel" id="btnConfirmDialogCancel">Cancel</button>
                     </div>
                 </div>
             </div>

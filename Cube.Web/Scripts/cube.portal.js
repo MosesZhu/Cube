@@ -195,7 +195,7 @@
 						menuHtml += '>'
 							+ '<a>'
 							+ '<i class="fa fa-circle-o text-light-blue"></i>'
-							+ '<span lang="' + bookmarkMenu.Language_Key + '">' + bookmarkMenu.Code + '</span>'
+							+ '<span lang="' + bookmarkMenu.Language_Key + '" data-toggle="tooltip" data-placement="top" title="' + bookmarkMenu.Code + '">' + bookmarkMenu.Code + '</span>'
 							+ '</a>'
 							+ '</li>';
 						return menuHtml;
@@ -431,6 +431,19 @@
 								_menu.expandOneMenu(this);
 							});
 						});
+					},
+
+					"activeMenu": function (functionid) {
+						if (functionid.substring(0, 3) == "bk_") {
+							functionid = functionid.substring(3);
+						}
+						$("#_FunctionMenu li").removeClass("active");
+						$("#_FunctionMenu li[functionid=" + functionid + "]").parents(".treeview").addClass("active");
+						$("#_FunctionMenu li[functionid=" + functionid + "]").addClass("active");
+
+						var bkFunctionId = "bk_" + functionid;
+						$("#_BookmarkMenu li").removeClass("active");						
+						$("#_BookmarkMenu li[functionid=" + bkFunctionId + "]").addClass("active");
 					}
 				},
 
@@ -674,7 +687,7 @@
 
 							if (!opend) {
 								var tabHtml = '<li class="nav-item form-tab">'
-									+ '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" onclick="_form.showFormByFunctionId(\'' + functionid + '\'), return false;" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
+									+ '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" onclick="_form.showFormByFunctionId(\'' + functionid + '\'); return false;" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
 									+ '<table>'
 									+ '<tr>'
 									+ '<td>'

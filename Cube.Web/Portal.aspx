@@ -407,7 +407,7 @@
 
         <!-- Bookmark Sidebar -->
         <aside class="control-sidebar control-sidebar-light" id="bookmark_sidebar">
-            <ul class="nav sidebar-menu" id="_BookmarkMenu">
+            <ul class="nav sidebar-menu" id="_BookmarkMenu" style="overflow:hidden;">
             </ul>
         </aside>        
         <div class="control-sidebar-bg" data-target="bookmark_sidebar"></div>
@@ -434,7 +434,7 @@
                                         <option value="ZhTW">中文繁體</option>
                                     </select>
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-success" onclick="return changeLanguage();" lang="lang_confirm">Confirm</button>
+                                        <button type="button" class="btn btn-success btn-flat" onclick="return changeLanguage();" lang="lang_confirm">Confirm</button>
                                     </div>
                                 </div>
                             </a>
@@ -516,8 +516,7 @@
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
-        <div class="control-sidebar-bg" data-target="control_sidebar"></div>
-        
+        <div class="control-sidebar-bg" data-target="control_sidebar"></div>        
     </div>
     <div id="tab-context-menu">
         <ul class="dropdown-menu" role="menu">
@@ -593,10 +592,8 @@
 
             //Tabs Event
             $('#_FormTabs').on('shown.bs.tab', function (e) {
-                var actionFunctionId = $(e.target).attr("functionid");
-                $("#_FunctionMenu li").removeClass("active");
-                $("#_FunctionMenu li[functionid=" + actionFunctionId + "]").parents(".treeview").addClass("active");
-                $("#_FunctionMenu li[functionid=" + actionFunctionId + "]").addClass("active");
+                var functionid = $(e.target).attr("functionid");
+                _menu.activeMenu(functionid);
             });
 
             $('#tbxSearchMenu').on('keydown', function (e) {
