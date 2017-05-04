@@ -120,7 +120,7 @@
 
 					"getDomainMenuHtml": function (domainMenu) {
 						var menuHtml = '<li class="treeview">'
-							+ '<a href="#">'
+							+ '<a>'
 							+ '<i class="fa fa-bank text-blue"></i>'
 							+ '<span lang="' + domainMenu.Language_Key + '">' + domainMenu.Code + '</span>'
 							+ '<span class="pull-right-container">'
@@ -137,7 +137,7 @@
 
 					"getSystemMenuHtml": function (systemMenu) {
 						var menuHtml = '<li class="treeview">'
-							+ '<a href="#">'
+							+ '<a>'
 							+ '<i class="fa fa-laptop text-blue"></i>'
 							+ '<span lang="' + systemMenu.Language_Key + '">' + systemMenu.Code + '</span>'
 							+ '<span class="pull-right-container">'
@@ -156,7 +156,7 @@
 						var menuHtml = '';
 						if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
 							menuHtml += '<li class="treeview">'
-								+ '<a href="#">'
+								+ '<a>'
 								+ '<i class="fa fa-puzzle-piece text-blue"></i>'
 								+ '<span lang="' + functionMenu.Language_Key + '" data-toggle="tooltip" data-placement="top" title="' + functionMenu.Code + '">' + functionMenu.Code + '</span>'
 								+ '<span class="pull-right-container">'
@@ -169,13 +169,13 @@
 							});
 							menuHtml += '</ul></li>';
 						} else {
-							menuHtml += '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
+							menuHtml += '<li onclick="return _form.openForm(this);" functionid="' + functionMenu.Id + '" ';
 							if (functionMenu.Url) {
 								menuHtml += ' functionurl="'//' functionurl="http://'
 									+ functionMenu.Url + '" ';
 							}
 							menuHtml += '>'
-								+ '<a href="#" class="function_menu_item">'
+								+ '<a class="function_menu_item">'
 								+ '<i class="fa fa-circle-o text-light-blue"></i>'
 								+ '<span lang="' + functionMenu.Language_Key + '" data-toggle="tooltip" data-placement="top" title="' + functionMenu.Code + '">' + functionMenu.Code + '</span>'
 								+ '</a>'
@@ -187,13 +187,13 @@
 
 					"getBookmarkMenuHtml": function (bookmarkMenu) {
 						var menuHtml = "";
-						menuHtml += '<li class="bookmark-item" onclick="return openForm(this);" functionid="bk_' + bookmarkMenu.Id + '" ';
+						menuHtml += '<li class="bookmark-item" onclick="return _form.openForm(this);" functionid="bk_' + bookmarkMenu.Id + '" ';
 						if (bookmarkMenu.Url) {
 							menuHtml += ' functionurl="'//' functionurl="http://'
 								+ bookmarkMenu.Url + '" ';
 						}
 						menuHtml += '>'
-							+ '<a href="#">'
+							+ '<a>'
 							+ '<i class="fa fa-circle-o text-light-blue"></i>'
 							+ '<span lang="' + bookmarkMenu.Language_Key + '">' + bookmarkMenu.Code + '</span>'
 							+ '</a>'
@@ -333,7 +333,7 @@
 						var menuHtml = '';
 						if (domainMenu.bingo) {
 							menuHtml = '<li class="treeview">'
-								+ '<a href="#">'
+								+ '<a>'
 								+ '<i class="fa fa-bank text-blue"></i>'
 								+ '<span lang="' + domainMenu.Language_Key + '">' + domainMenu.Code + '</span>'
 								+ '<span class="pull-right-container">'
@@ -353,7 +353,7 @@
 						var menuHtml = '';
 						if (systemMenu.bingo) {
 							menuHtml = '<li class="treeview">'
-								+ '<a href="#">'
+								+ '<a>'
 								+ '<i class="fa fa-laptop text-blue"></i>'
 								+ '<span lang="' + systemMenu.Language_Key + '">' + systemMenu.Code + '</span>'
 								+ '<span class="pull-right-container">'
@@ -374,7 +374,7 @@
 						if (functionMenu.bingo) {
 							if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
 								menuHtml += '<li class="treeview">'
-									+ '<a href="#">'
+									+ '<a>'
 									+ '<i class="fa fa-puzzle-piece text-blue"></i>'
 									+ '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
 									+ '<span class="pull-right-container">'
@@ -387,13 +387,13 @@
 								});
 								menuHtml += '</ul></li>';
 							} else {
-								menuHtml += '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
+								menuHtml += '<li onclick="return _form.openForm(this);" functionid="' + functionMenu.Id + '" ';
 								if (functionMenu.Url) {
 									menuHtml += ' functionurl="'
 										+ functionMenu.Url + '" ';
 								}
 								menuHtml += '>'
-									+ '<a href="#" class="function_menu_item">'
+									+ '<a class="function_menu_item">'
 									+ '<i class="fa fa-circle-o text-light-blue"></i>'
 									+ '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
 									+ '</a>'
@@ -447,7 +447,7 @@
 								} else if (menuIndex == "MENU_CLOSE") {
 									$.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
 										function () {
-											closeFormByFunctionId(functionid);
+											_form.closeFormByFunctionId(functionid);
 										},
 										function () { });
 								} else if (menuIndex == "MENU_CLOSE_OTHERS") {
@@ -455,7 +455,7 @@
 										function () {
 											$("#_FormTabs a").each(function (i, tab) {
 												if ($(tab).attr("functionid") != functionid) {
-													closeFormByFunctionId($(tab).attr("functionid"));
+													_form.closeFormByFunctionId($(tab).attr("functionid"));
 												}
 											});
 										},
@@ -464,7 +464,7 @@
 									$.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
 										function () {
 											$("#_FormTabs a").each(function (i, tab) {
-												closeFormByFunctionId($(tab).attr("functionid"));
+												_form.closeFormByFunctionId($(tab).attr("functionid"));
 											});
 										},
 										function () { });
@@ -472,9 +472,9 @@
 									var frameName = "frm_" + functionid;
 									var url = $("iframe[name=" + frameName + "]").attr("src");
 									$("iframe[name=" + frameName + "]").attr("src", url);
-									showFormByFunctionId(functionid);
+									_form.showFormByFunctionId(functionid);
 								} else if (menuIndex == "MENU_ADD_TO_FAVORITES") {
-									addToBookmark(functionid);
+									_bookmark.addToBookmark(functionid);
 								}
 							}
 						});
@@ -537,7 +537,7 @@
 								var menuIndex = $(e.target).attr('menuindex');
 								if (menuIndex == "MENU_REMOVE_FROM_FAVORITES") {
 									var functionid = $(context).attr("functionid").substring(3);;
-									removeFromBookmark(functionid);
+									_bookmark.removeFromBookmark(functionid);
 								}
 							}
 						});
@@ -545,7 +545,218 @@
 				},
 
 				"bookmark": {
+					"addToBookmark": function (functionid) {
+						if (functionid.substring(0, 3) == "bk_") {
+							functionid = functionid.substring(3);
+						}
+						var options = {
+							"success": function (d) {
+								if (d.success) {
+									$.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
+									_menu.initMenu();
+								}
+							}
+						};
+						var data = {
+							'functionId': functionid
+						};
 
+						$.ask("addToBookmark", data, options);
+					},
+
+					"removeFromBookmark": function (functionid) {
+						var options = {
+							"success": function (d) {
+								if (d.success) {
+									$.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
+									_menu.initMenu();
+								}
+							}
+						};
+						var data = {
+							'functionId': functionid
+						};
+
+						$.ask("removeFromBookmark", data, options);
+					}
+				},
+
+				"breadcrumb": {
+					"toggleBreadcrumb": function () {
+						var hasForm = ($("#_FormTabs>li").length > 0);
+						var breadcrumbHeight = 0;
+						if (hasForm) {
+							breadcrumbHeight = 20;
+							$("#_BreadcrumbContent").show(200);
+						} else {
+							$("#_BreadcrumbContent").hide(200);
+						}
+						$("#_BreadcrumbBar").animate({ "height": breadcrumbHeight + "px" }, 200);
+					},
+
+					"changeBreadCrumb": function () {
+						var bread = "Portal";
+						if (_PortalContext.CurrentFunctionId) {
+							$.each(_PortalContext.MenuList, function (i, product) {
+								var found = false;
+								$.each(product.DomainList, function (j, domainMenu) {
+									if (found) {
+										return false;
+									}
+									$.each(domainMenu.SystemList, function (j, systemMenu) {
+										if (found) {
+											return false;
+										}
+										$.each(systemMenu.FunctionList, function (j, functionMenu) {
+											var searchFlag = {
+												"found": false,
+												"founctionArray": new Array()
+											};
+											getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
+											if (searchFlag.found) {
+												found = true;
+												bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
+													+ "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span>";
+												+ "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
+												$.each(searchFlag.founctionArray, function (k, f) {
+													bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
+												});
+												return false;
+											}
+										});
+									});
+								});
+
+								if (!found) {
+									$.each(product.SystemList, function (i, systemMenu) {
+										if (found) {
+											return false;
+										}
+										$.each(systemMenu.FunctionList, function (j, functionMenu) {
+											var searchFlag = {
+												"found": false,
+												"founctionArray": new Array()
+											};
+											getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
+											if (searchFlag.found) {
+												found = true;
+												bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
+													+ "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
+												$.each(searchFlag.founctionArray, function (k, f) {
+													bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
+												});
+												return false;
+											}
+										});
+									});
+								} else {
+									return false;
+								}
+							});
+						}
+						$("#_BreadcrumbContent").hide().html(bread).show(300);
+						$.language.change(_Context.CurrentLang);
+					}
+				},
+
+				"form": {
+					"openForm": function (menu) {
+						var functionurl = $(menu).attr("functionurl");
+						if (functionurl) {
+							var functionname = $(menu).text();
+							var functionid = $(menu).attr("functionid");
+							$("#_FunctionMenu .treeview li").removeClass("active");
+							$("#_BookmarkMenu li").removeClass("active");
+
+							$(menu).addClass("active");
+
+							var opend = this.showFormByFunctionId(functionid);
+
+							if (!opend) {
+								var tabHtml = '<li class="nav-item form-tab">'
+									+ '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" onclick="_form.showFormByFunctionId(\'' + functionid + '\'), return false;" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
+									+ '<table>'
+									+ '<tr>'
+									+ '<td>'
+									+ '<div';
+
+								var tabLang = $(menu).find('span').attr('lang');
+								if (tabLang) {
+									tabHtml += ' lang="' + tabLang + '"';
+								}
+								tabHtml += ">" + functionname + '</div>'
+									+ '</td>'
+									+ '<td style="padding-left:5px;">'
+									+ '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="return _form.closeForm(this);">&times;</button >'//<span class="fa fa-times icon_close_form" onclick="return closeForm(this);">'
+									+ '</span>'
+									+ '</td>'
+									+ '</tr>'
+									+ '</table>'
+									+ '</a>'
+									+ '</li>';
+								$("#_FormTabs").append(tabHtml);
+
+								$("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
+									+ '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
+									+ "#!lang=" + _Context.CurrentLang
+									+ '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
+								_cmenu.bindTabContextMenu();
+								this.showFormByFunctionId(functionid);
+							}
+						}
+						_breadcrumb.toggleBreadcrumb();
+						return false;
+					},
+
+					"showFormByFunctionId": function (functionid) {
+						if (functionid.substring(0, 3) == "bk_") {
+							functionid = functionid.substring(3);
+						}
+						var opened = false;
+						$("#_FormTabs a").each(function (i, tab) {
+							var thisFunctionId = $(tab).attr("functionid");
+							if (thisFunctionId.substring(0, 3) == "bk_") {
+								thisFunctionId = thisFunctionId.substring(3);
+							}
+							if (thisFunctionId == functionid) {
+								opened = true;
+								$(tab).tab("show");
+								_PortalContext.CurrentFunctionId = functionid;
+								return false;
+							}
+						});
+						_breadcrumb.changeBreadCrumb();
+						return opened;
+					},
+
+					"closeFormByFunctionId": function (functionid) {
+						var preTab = $("a[functionid=" + functionid + "]").parent().prev();
+						var nextTab = $("a[functionid=" + functionid + "]").parent().next();
+						_PortalContext.CurrentFunctionId = null;
+						$("a[functionid=" + functionid + "]").parent().remove();
+						$("#" + functionid).remove();
+						_breadcrumb.changeBreadCrumb();
+
+						if (preTab.length > 0) {
+							var preFunctionId = preTab.find("a").attr("functionid");
+							this.showFormByFunctionId(preFunctionId);
+						} else if (nextTab.length > 0) {
+							var nextFunctionId = nextTab.find("a").attr("functionid");
+							this.showFormByFunctionId(nextFunctionId);
+						}
+					},
+
+					"closeForm": function (ctrl) {
+						$.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
+							function () {
+								var functionid = $(ctrl).parents('a').attr("functionid");
+								_form.closeFormByFunctionId(functionid);
+								_breadcrumb.toggleBreadcrumb();
+							},
+							function () {});
+
+						return false;
+					}
 				}
 			}
 		}
@@ -557,3 +768,5 @@ var _header = $.cube.portal.ui.header;
 var _menu = $.cube.portal.ui.menu;
 var _cmenu = $.cube.portal.ui.context_menu;
 var _bookmark = $.cube.portal.ui.bookmark;
+var _breadcrumb = $.cube.portal.ui.breadcrumb;
+var _form = $.cube.portal.ui.form;

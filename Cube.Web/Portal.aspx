@@ -242,6 +242,10 @@
             padding-right: 10px;
             font-size: 10px;
         }
+
+        #_FunctionMenu a:hover,  header a:hover, aside a:hover{
+            cursor: pointer;
+        }
     </style>
     
 </asp:Content>
@@ -262,7 +266,7 @@
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
-                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>
                 </a>                
                 <!-- Navbar Right Menu -->
@@ -271,7 +275,7 @@
                         <!-- Messages: style can be found in dropdown.less-->
                         <li class="dropdown messages-menu">
                             <!-- Menu toggle button -->
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="label label-success">4</span>
                             </a>
@@ -282,7 +286,7 @@
                                     <ul class="menu">
                                         <li>
                                             <!-- start message -->
-                                            <a href="#">
+                                            <a>
                                                 <div class="pull-left">
                                                     <!-- User Image -->
                                                     <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -298,14 +302,14 @@
                                     </ul>
                                     <!-- /.menu -->
                                 </li>
-                                <li class="footer"><a href="#">See All Messages</a></li>
+                                <li class="footer"><a>See All Messages</a></li>
                             </ul>
                         </li>
 
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
                                 <img src="img/user2-160x160.jpg" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
@@ -326,17 +330,17 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat" lang="lang_logout" onclick="logout()">Logout</a>
+                                        <a class="btn btn-default btn-flat" lang="lang_logout" onclick="logout()">Logout</a>
                                     </div>
                                 </li>
                             </ul>
                         </li>
                         <!-- Control Sidebar Toggle Button -->
                         <li>
-                            <a href="#" data-toggle="control-sidebar" data-target="control_sidebar"><i class="fa fa-gears"></i></a>
+                            <a data-toggle="control-sidebar" data-target="control_sidebar"><i class="fa fa-gears"></i></a>
                         </li>
                         <li>
-                            <a href="#" data-toggle="control-sidebar" data-target="bookmark_sidebar" ><i class="fa fa-star"></i></a>
+                            <a data-toggle="control-sidebar" data-target="bookmark_sidebar" ><i class="fa fa-star"></i></a>
                         </li>
                         <li>                           
                             <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return _header.toggleHeader();">
@@ -353,7 +357,7 @@
             <section class="sidebar" id="scrollspy">
 
                 <!-- search form (Optional) -->
-                <form action="#" method="get" class="sidebar-form">
+                <form method="get" class="sidebar-form">
                     <div class="input-group" style="position:absolute; top:0px;">
                         <input type="text" name="q" id="tbxSearchMenu" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
@@ -649,127 +653,6 @@
         };        
 
 
-
-        var addToBookmark = function (functionid) {
-            if (functionid.substring(0, 3) == "bk_") {
-                functionid = functionid.substring(3);
-            }
-            var options = {
-                "success": function (d) {
-                    if (d.success) {
-                        $.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
-                        _menu.initMenu();
-                    }
-                }
-            };
-            var data = {
-                'functionId': functionid
-            };
-
-            $.ask("addToBookmark", data, options);
-        };
-
-        var removeFromBookmark = function (functionid) {
-            var options = {
-                "success": function (d) {
-                    if (d.success) {
-                        $.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
-                        _menu.initMenu();
-                    }
-                }
-            };
-            var data = {
-                'functionId': functionid
-            };
-
-            $.ask("removeFromBookmark", data, options);
-        };
-
-        var showFormByFunctionId = function (functionid) {
-            if (functionid.substring(0, 3) == "bk_") {
-                functionid = functionid.substring(3);
-            }
-            var opened = false;
-            $("#_FormTabs a").each(function (i, tab) {
-                var thisFunctionId = $(tab).attr("functionid");
-                if (thisFunctionId.substring(0, 3) == "bk_") {
-                    thisFunctionId = thisFunctionId.substring(3);
-                }
-                if (thisFunctionId == functionid) {
-                    opened = true;
-                    $(tab).tab("show");
-                    _PortalContext.CurrentFunctionId = functionid;
-                    return false;
-                }
-            });
-            changeBreadCrumb();
-            return opened;
-        };
-
-        var changeBreadCrumb = function () {
-            var bread = "Portal";            
-            if (_PortalContext.CurrentFunctionId) {
-                $.each(_PortalContext.MenuList, function (i, product) {
-                    var found = false;
-                    $.each(product.DomainList, function (j, domainMenu) {
-                        if (found) {
-                            return false;
-                        }
-                        $.each(domainMenu.SystemList, function (j, systemMenu) {
-                            if (found) {
-                                return false;
-                            }
-                            $.each(systemMenu.FunctionList, function (j, functionMenu) {
-                                var searchFlag = {
-                                    "found": false,
-                                    "founctionArray": new Array()
-                                };
-                                getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
-                                if (searchFlag.found) {
-                                    found = true;
-                                    bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
-                                        + "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span>";
-                                        + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
-                                    $.each(searchFlag.founctionArray, function (k, f) {
-                                        bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
-                                    });
-                                    return false;
-                                }
-                            });
-                        });
-                    });
-
-                    if (!found) {
-                        $.each(product.SystemList, function (i, systemMenu) {
-                            if (found) {
-                                return false;
-                            }
-                            $.each(systemMenu.FunctionList, function (j, functionMenu) {
-                                var searchFlag = {
-                                    "found": false,
-                                    "founctionArray": new Array()
-                                };
-                                getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
-                                if (searchFlag.found) {
-                                    found = true;
-                                    bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
-                                        + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
-                                    $.each(searchFlag.founctionArray, function (k, f) {
-                                        bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
-                                    });
-                                    return false;
-                                }
-                            });
-                        });
-                    } else {
-                        return false;
-                    }
-                });
-            }
-            $("#_BreadcrumbContent").html(bread);
-            $.language.change(_Context.CurrentLang);
-        };
-
         var getFunctionArray = function (targetFunctionId, functionMenu, searchFlag) {
             searchFlag.founctionArray.push(functionMenu);
             if (functionMenu.Id == targetFunctionId) {
@@ -791,96 +674,6 @@
             }       
         };
 
-        var closeFormByFunctionId = function (functionid) {
-            var preTab = $("a[functionid=" + functionid + "]").parent().prev();
-            var nextTab = $("a[functionid=" + functionid + "]").parent().next();
-            _PortalContext.CurrentFunctionId = null;
-            $("a[functionid=" + functionid + "]").parent().remove();
-            $("#" + functionid).remove();
-            changeBreadCrumb();
-
-            if (preTab.length > 0) {
-                var preFunctionId = preTab.find("a").attr("functionid");
-                showFormByFunctionId(preFunctionId);
-            } else if (nextTab.length > 0) {
-                var nextFunctionId = nextTab.find("a").attr("functionid");
-                showFormByFunctionId(nextFunctionId);
-            }
-        };
-
-        var openForm = function (menu) {
-            var functionurl = $(menu).attr("functionurl");
-            if (functionurl) {
-                var functionname = $(menu).text();
-                var functionid = $(menu).attr("functionid");
-                $("#_FunctionMenu .treeview li").removeClass("active");
-                $("#_BookmarkMenu li").removeClass("active");
-
-                $(menu).addClass("active");
-
-                var opend = showFormByFunctionId(functionid);
-
-                if (!opend) {
-                    var tabHtml = '<li class="nav-item form-tab">'
-                        + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" onclick="showFormByFunctionId(\'' + functionid + '\')" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
-                        + '<table>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div';
-
-                    var tabLang = $(menu).find('span').attr('lang');
-                    if (tabLang) {
-                        tabHtml += ' lang="' + tabLang + '"';
-                    }
-                    tabHtml += ">" + functionname + '</div>'
-                        + '</td>'
-                        + '<td style="padding-left:5px;">'
-                        + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="return closeForm(this);">&times;</button >'//<span class="fa fa-times icon_close_form" onclick="return closeForm(this);">'
-                        + '</span>'
-                        + '</td>'
-                        + '</tr>'
-                        + '</table>'
-                        + '</a>'
-                        + '</li>';
-                    $("#_FormTabs").append(tabHtml);
-
-                    $("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
-                        + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
-                        + "#!lang=" + _Context.CurrentLang
-                        + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
-                    _cmenu.bindTabContextMenu();
-                    showFormByFunctionId(functionid);
-                }
-            }
-            toggleBreadcrumb();
-            return false;
-        };
-
-        var closeForm = function (ctrl) {
-            $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
-                function () {
-                    var functionid = $(ctrl).parents('a').attr("functionid");
-                    closeFormByFunctionId(functionid);
-                    toggleBreadcrumb();
-                },
-                function () {
-
-                });
-
-            return false;
-        };
-
-        var toggleBreadcrumb = function () {
-            var hasForm = ($("#_FormTabs>li").length > 0);
-            var breadcrumbHeight = 0;
-            if (hasForm) {
-                breadcrumbHeight = 20;
-                $("#_BreadcrumbContent").show(200);
-            } else {
-                $("#_BreadcrumbContent").hide(200);
-            }
-            $("#_BreadcrumbBar").animate({"height":breadcrumbHeight + "px"}, 200);
-        };
 
 
         var changeLanguage = function () {
