@@ -85,7 +85,8 @@ namespace Cube.Web
                                     {
                                         Id = Guid.Parse(functionNode.Attributes["NodeID"].Value),
                                         Code = functionNode.Attributes["Text"].Value,
-                                        Url = functionNode.Attributes["NavigateUrl"] != null ? functionNode.Attributes["NavigateUrl"].Value : ""
+                                        Url = functionNode.Attributes["NavigateUrl"] != null ? functionNode.Attributes["NavigateUrl"].Value : "",
+                                        System_Id = system.Id.ToString()
                                     };
                                     foreach (XmlNode subFunctionNode in functionNode.ChildNodes)
                                     {
@@ -93,7 +94,8 @@ namespace Cube.Web
                                         {
                                             Id = Guid.Parse(subFunctionNode.Attributes["NodeID"].Value),
                                             Code = subFunctionNode.Attributes["Text"].Value,
-                                            Url = subFunctionNode.Attributes["NavigateUrl"] != null ? subFunctionNode.Attributes["NavigateUrl"].Value : ""
+                                            Url = subFunctionNode.Attributes["NavigateUrl"] != null ? subFunctionNode.Attributes["NavigateUrl"].Value : "",
+                                            System_Id = system.Id.ToString()
                                         };
                                         if (BookmarkIdList.Contains(subFunction.Id))
                                         {

@@ -2,8 +2,16 @@
 
 <asp:Content ID="PageStyleContent" ContentPlaceHolderID="PageStyleContentHolder" runat="server">
     <style>
-        #_BookmarkMenu > li.bookmark-item:hover > a, #_BookmarkMenu > li.active > a {
+        #_BookmarkMenu > li.bookmark-item:hover > a, #_BookmarkMenu > li.active > a, #_BookmarkMenu li:hover > a:hover {
             background-color: lightgray;
+        }
+
+        #_BookmarkMenu .header {
+            background-color: #dddddd;
+        }
+
+        .bookmark-item a {
+            padding-left: 30px;
         }
 
         .icon_close_form {

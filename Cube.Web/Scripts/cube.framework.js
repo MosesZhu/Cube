@@ -405,7 +405,7 @@ jQuery.extend({
 jQuery.extend({
     "skin": {
         "type": {
-            "default": "blue",
+            "default": "red",
             "blue": "blue",
             "blue-light": "blue-light",
             "yellow": "yellow",

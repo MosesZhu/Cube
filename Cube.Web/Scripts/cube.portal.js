@@ -107,10 +107,8 @@
 						});
 
 						$("#_FunctionMenu").html(menuHtml);
-						var bookmarkMenuHtml = "";
-						$.each(_PortalContext.BookmarkList, function (i, bookmark) {
-							bookmarkMenuHtml += _menu.getBookmarkMenuHtml(bookmark);
-						});
+
+						var bookmarkMenuHtml = _menu.getBookmarkMenuHtml();						
 						$("#_BookmarkMenu").html(bookmarkMenuHtml);
 
 						_cmenu.bindMenuContextMenu();
@@ -185,15 +183,69 @@
 						return menuHtml;
 					},
 
-					"getBookmarkMenuHtml": function (bookmarkMenu) {
+					"getBookmarkMenuHtml": function () {
+						var bookmarkMenuHtml = "";
+						var tempBookmarkSystemList = new Array();
+						$.each(_PortalContext.BookmarkList, function (i, bookmark) {
+							var bookmarkSystemId = bookmark.System_Id;
+							$.each(_PortalContext.MenuList, function (i, product) {
+								$.each(product.DomainList, function (j, domain) {
+									$.each(domain.SystemList, function (j, system) {
+										if (system.Id == bookmarkSystemId) {
+											var exist = false;
+											for (var x = 0; x < tempBookmarkSystemList.length; x++) {
+												if (tempBookmarkSystemList[x].System.Id == bookmarkSystemId) {
+													exist = true;
+													tempBookmarkSystemList[x].BookmarkList.push(bookmark);
+													break;
+												}
+											}
+											if (!exist) {
+												tempBookmarkSystemList.push({
+													"System": system,
+													"BookmarkList": [bookmark]
+												});
+											}
+											return false;
+										}
+									});
+								});
+							});
+							//bookmarkMenuHtml += _menu.getBookmarkMenuItemHtml(bookmark);
+						});
+
+						$.each(tempBookmarkSystemList, function (i, system) {
+							//bookmarkMenuHtml += '<li class="treeview">'
+							//	+ '<a>'
+							//	+ '<i class="fa fa-laptop text-blue"></i>'
+							//	+ '<span lang="' + system.System.Language_Key + '">' + system.System.Code + '</span>'
+							//	+ '<span class="pull-right-container">'
+							//	+ '<i class="fa fa-angle-left pull-right"></i>'
+							//	+ '</span>'
+							//	+ '</a>';
+							//bookmarkMenuHtml += '<ul class="treeview-menu">';
+							bookmarkMenuHtml += '<li class="header text-blue">'
+								+ '<i class="fa fa-laptop text-blue"></i>'
+								+ '<span lang="' + system.System.Language_Key + '" style="padding-left:5px;">' + system.System.Code + '</span>'
+								+ '</li>';
+							$.each(system.BookmarkList, function (k, bookmark) {
+								bookmarkMenuHtml += _menu.getBookmarkMenuItemHtml(bookmark);
+							});
+							bookmarkMenuHtml += '</ul></li>';
+						});
+
+						return bookmarkMenuHtml;
+					},
+
+					"getBookmarkMenuItemHtml": function (bookmarkMenu) {
 						var menuHtml = "";
 						menuHtml += '<li class="bookmark-item" onclick="return _form.openForm(this);" functionid="bk_' + bookmarkMenu.Id + '" ';
 						if (bookmarkMenu.Url) {
-							menuHtml += ' functionurl="'//' functionurl="http://'
+							menuHtml += ' functionurl="'
 								+ bookmarkMenu.Url + '" ';
 						}
 						menuHtml += '>'
-							+ '<a>'
+							+ '<a style="padding-left: 30px;">'
 							+ '<i class="fa fa-circle-o text-light-blue"></i>'
 							+ '<span lang="' + bookmarkMenu.Language_Key + '" data-toggle="tooltip" data-placement="top" title="' + bookmarkMenu.Code + '">' + bookmarkMenu.Code + '</span>'
 							+ '</a>'
