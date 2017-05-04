@@ -240,6 +240,7 @@
         #_BreadcrumbContent {
             float: right;
             padding-right: 10px;
+            font-size: 10px;
         }
     </style>
     
@@ -396,7 +397,7 @@
                         style="display: -webkit-inline-box;">
                     </ul>
                 </div>
-                <div id="_BreadcrumbBar"><div id="_BreadcrumbContent"></div></div>
+                <div id="_BreadcrumbBar" style="height: 0px;"><div id="_BreadcrumbContent"></div></div>
                 <div class="tab-content" style="height: 100%;" id="_FormTabContent">
                 </div>
 
@@ -412,8 +413,7 @@
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <!--Moses Demo<strong> WebFramework GT</strong>-->
-            <div id = "breadcrumb"><i class="fa fa-bank"></i> <span id="breadcrumb-content">Portal</span></div>
+            Moses Demo<strong> WebFramework GT</strong>            
         </footer>
 
         <!-- Bookmark Sidebar -->
@@ -649,27 +649,15 @@
             var menuHeight = $("aside > .slimScrollDiv").height();
             $("aside > .slimScrollDiv").height(menuHeight + headerHeight);
             $("section.sidebar").height(menuHeight + headerHeight);
-            //$("section.content").animate({
-            //    "margin-top": - (headerHeight + 5) + "px"
-            //}, 200); 
+ 
             $(".content-wrapper").animate({
                 "padding-top": "0px"
             }, 200);    
-            
-            //$(".main-sidebar .slimScrollDiv").animate({ "height": $(".main-sidebar .slimScrollDiv").height() + 50 }, 200);
-            //$(".main-sidebar .sidebar").animate({ "height": $(".main-sidebar .sidebar").height() + 50 }, 200);
-            
 
             $("header").slideUp(200, function () {
-                //if (_PortalContext.MenuVisible()) {
-                //    $("#btnShowHeader").css("left", "230px");
-                //} else {
-                //    $("#btnShowHeader").css("left", "0px");
-                //}
-
-
                 $("#btnShowHeader").animate({"top" : "0px"}, 200);
                 _PortalContext.HeaderVisible = false;
+                resetContentSize();
             });
         };
 
@@ -684,17 +672,14 @@
                 var menuHeight = $("aside > .slimScrollDiv").height();
                 $("aside > .slimScrollDiv").height(menuHeight - headerHeight);
                 $("section.sidebar").height(menuHeight - headerHeight);
-                //$("section.content").animate({
-                //    "margin-top": "-5px"
-                //}, 200); 
+
                 $(".content-wrapper").animate({
                     "padding-top": headerHeight + "px"//"50px"
                 }, 200);                 
-                //$(".main-sidebar .slimScrollDiv").animate({ "height": $(".main-sidebar .slimScrollDiv").height() - 50 }, 200);
-                //$(".main-sidebar .sidebar").animate({ "height": $(".main-sidebar .sidebar").height() - 50 }, 200);
 
                 $("header").slideDown(200, function () {
-                    _PortalContext.HeaderVisible = true;                    
+                    _PortalContext.HeaderVisible = true;       
+                    resetContentSize();
                 }); 
             });                       
         }
@@ -840,17 +825,6 @@
                     menuHtml += getSystemMenuHtml(systemMenu);
                 });
             });
-
-            //if (_PortalContext.BookmarkList.length > 0) {
-            //    menuHtml
-            //        += '<li class="header">'
-            //        + '<i class="fa fa-star"></i>'
-            //        + '<span lang="lang_favorites" style="padding-left:5px;">Bookmark</span>'
-            //        + '</li>';
-            //    $.each(_PortalContext.BookmarkList, function (i, bookmark) {
-            //        menuHtml += getBookmarkMenuHtml(bookmark);
-            //    });
-            //}
 
             $("#_FunctionMenu").html(menuHtml);
             var bookmarkMenuHtml = "";
@@ -1126,55 +1100,7 @@
                 }
             };
             $.ask("logout", {}, options);
-        };
-
-        var openForm = function (menu) {
-            var functionurl = $(menu).attr("functionurl");
-            if (functionurl) {
-                var functionname = $(menu).text();
-                var functionid = $(menu).attr("functionid");
-                $("#_FunctionMenu .treeview li").removeClass("active");
-                $("#_BookmarkMenu li").removeClass("active");
-                
-                $(menu).addClass("active");
-
-                var opend = showFormByFunctionId(functionid);
-
-                if (!opend) {
-                    var tabHtml = '<li class="nav-item form-tab">'
-                        //+ '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
-                        + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" onclick="showFormByFunctionId(\'' + functionid + '\')" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
-                        + '<table>'
-                        + '<tr>'
-                        + '<td>'
-                        + '<div';
-
-                    var tabLang = $(menu).find('span').attr('lang');
-                    if (tabLang) {
-                        tabHtml += ' lang="' + tabLang + '"';
-                    }
-                    tabHtml += ">" + functionname + '</div>'
-                        + '</td>'
-                        + '<td style="padding-left:5px;">'
-                        + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="return closeForm(this);">&times;</button >'//<span class="fa fa-times icon_close_form" onclick="return closeForm(this);">'
-                        + '</span>'
-                        + '</td>'
-                        + '</tr>'
-                        + '</table>'
-                        + '</a>'
-                        + '</li>';
-                    $("#_FormTabs").append(tabHtml);
-
-                    $("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
-                        + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
-                        + "#!lang=" + _Context.CurrentLang
-                        + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
-                    bindTabContextMenu();
-                    showFormByFunctionId(functionid);//$("#_FormTabs a[functionid=" + functionid + "]").tab("show");
-                }
-            }
-            return false;
-        };
+        };        
 
         var bindTabContextMenu = function () {
             $('.form-tab').contextmenu({
@@ -1234,7 +1160,6 @@
                                 if (!current || current.hasClass("header")) {
                                     break;
                                 }
-                                //current.find("ul").slideDown(500);
                                 $(current).children("ul.treeview-menu").slideDown(500, function () {
                                     expandOneMenu(this);
                                 });
@@ -1455,11 +1380,60 @@
             }
         };
 
+        var openForm = function (menu) {
+            var functionurl = $(menu).attr("functionurl");
+            if (functionurl) {
+                var functionname = $(menu).text();
+                var functionid = $(menu).attr("functionid");
+                $("#_FunctionMenu .treeview li").removeClass("active");
+                $("#_BookmarkMenu li").removeClass("active");
+
+                $(menu).addClass("active");
+
+                var opend = showFormByFunctionId(functionid);
+
+                if (!opend) {
+                    var tabHtml = '<li class="nav-item form-tab">'
+                        + '<a class="nav-link" data-toggle="tab" href="#' + functionid + '" onclick="showFormByFunctionId(\'' + functionid + '\')" role="tab" aria-controls="' + functionid + '" functionid="' + functionid + '">'
+                        + '<table>'
+                        + '<tr>'
+                        + '<td>'
+                        + '<div';
+
+                    var tabLang = $(menu).find('span').attr('lang');
+                    if (tabLang) {
+                        tabHtml += ' lang="' + tabLang + '"';
+                    }
+                    tabHtml += ">" + functionname + '</div>'
+                        + '</td>'
+                        + '<td style="padding-left:5px;">'
+                        + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="return closeForm(this);">&times;</button >'//<span class="fa fa-times icon_close_form" onclick="return closeForm(this);">'
+                        + '</span>'
+                        + '</td>'
+                        + '</tr>'
+                        + '</table>'
+                        + '</a>'
+                        + '</li>';
+                    $("#_FormTabs").append(tabHtml);
+
+                    $("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
+                        + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
+                        + "#!lang=" + _Context.CurrentLang
+                        + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
+                    bindTabContextMenu();
+                    showFormByFunctionId(functionid);
+                }
+            }
+            toggleBreadcrumb();
+            return false;
+        };
+
         var closeForm = function (ctrl) {
             $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
                 function () {
                     var functionid = $(ctrl).parents('a').attr("functionid");
                     closeFormByFunctionId(functionid);
+                    toggleBreadcrumb();
                 },
                 function () {
 
@@ -1468,21 +1442,30 @@
             return false;
         };
 
-        var resetContentSize = function () {
-            var isMenuVisible = ($('.main-sidebar').first().css('transform') === "none");
-            //var isBreadCrumbBlock = ($('.breadcrumb').first().css("position") === 'relative');
-            var baseHeight = $(window).height() - $(".main-header").height() - 90;//142;
-            var tempHeight = baseHeight;
-            //if (isBreadCrumbBlock) {
-            //    tempHeight = baseHeight - 140;
-            //} else {
-            //    tempHeight = baseHeight - 55;
-            //}
+        var toggleBreadcrumb = function () {
+            var hasForm = ($("#_FormTabs>li").length > 0);
+            var breadcrumbHeight = 0;
+            if (hasForm) {
+                breadcrumbHeight = 20;
+                $("#_BreadcrumbContent").show(200);
+            } else {
+                $("#_BreadcrumbContent").hide(200);
+            }
+            $("#_BreadcrumbBar").animate({"height":breadcrumbHeight + "px"}, 200);
+        };
 
-            //if (isMenuVisible && isBreadCrumbBlock) {
-            //    tempHeight += 55;
-            //}
-            $("section.content").height(tempHeight);
+        var resetContentSize = function () {
+            //var isMenuVisible = ($('.main-sidebar').first().css('transform') === "none");
+            //var baseHeight = $(window).height() - $(".main-header").height() - 90;//142;
+            //var tempHeight = baseHeight;
+            
+            //$("section.content").height(tempHeight);
+            var headerHeight = $("header").height();
+            if (!_PortalContext.HeaderVisible) {
+                headerHeight = 0;
+            }
+            var footerHeight = $(".main-footer").height();
+            $("section.content").height($(window).height() - headerHeight - footerHeight - 72);
         };
 
         var changeLanguage = function () {
