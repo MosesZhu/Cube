@@ -467,7 +467,7 @@
     <Content Include="Scripts\bootstrap-table.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\fastclick.min.js" />
-    <Content Include="Scripts\framework.js" />
+    <Content Include="Scripts\cube.framework.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\bak-jquery.slimscroll.min.js" />
@@ -514,6 +514,7 @@
     <Content Include="Configuration\ITS.Data.config" />
     <Content Include="Configuration\log4net.config" />
     <None Include="Project_Readme.html" />
+    <Content Include="Scripts\cube.portal.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

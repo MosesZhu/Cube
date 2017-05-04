@@ -248,18 +248,12 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
 
     <div class="wrapper" style="height: 100%; background-color: transparent;">
-        <a class="header-toggle" data-toggle="" role="button" id="btnShowHeader" onclick="return toggleHeader();" >
+        <a class="header-toggle" data-toggle="" role="button" id="btnShowHeader" onclick="return _header.toggleHeader();" >
             <span class="fa fa-sort-down"></span>
         </a>
         <header class="main-header">
             <!-- Logo -->
-            <div class="logo" style="padding:0px;">
-<%--                <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return toggleHeader();">
-                    <span class="fa fa-sort-up"></span>
-                </a>                --%>
-                <!-- mini logo for sidebar mini 50x50 pixels -->
-                <!-- <span class="logo-mini"><b>A</b>LT</span> -->
-                <!-- logo for regular state and mobile devices -->                
+            <div class="logo" style="padding:0px;">         
                 <span class="logo-lg">
                     WebFramework GT 
                 </span>                
@@ -345,7 +339,7 @@
                             <a href="#" data-toggle="control-sidebar" data-target="bookmark_sidebar" ><i class="fa fa-star"></i></a>
                         </li>
                         <li>                           
-                            <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return toggleHeader();">
+                            <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return _header.toggleHeader();">
                                 <i class="fa fa-sort-up"></i>
                             </a>
                         </li>
@@ -380,16 +374,7 @@
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <!--
-            <section class="content-header">
-                <ol class="breadcrumb" id="breadcrumb" >
-                    <li><i class="fa fa-dashboard"></i>Portal</li>
-                </ol>
-            </section>
-            -->
-
+        <div class="content-wrapper">            
             <!-- Main content -->
             <section class="content body">
                 <div id="_FormTabsContainer">
@@ -589,19 +574,18 @@
         };
 
         $(function () {
-            //Main Content Size
-            resetContentSize();
+            _ui.resetContentSize();
             $(window).on("resize", function () {
-                resetContentSize();
+                _ui.resetContentSize();
             });
 
             $("#search-btn").on("click", function () {
-                searchMenu();
+                _menu.searchMenu();
             });
 
             $("#ddlLanguage").val($.uriAnchor.makeAnchorMap()["lang"]);
 
-            initMenu();
+            _menu.initMenu();
 
             //Tabs Event
             $('#_FormTabs').on('shown.bs.tab', function (e) {
@@ -613,7 +597,7 @@
 
             $('#tbxSearchMenu').on('keydown', function (e) {
                 if (e.keyCode == 13) {
-                    searchMenu();
+                    _menu.searchMenu();
                     return false;
                 }
                 return true;
@@ -629,60 +613,7 @@
             });
 
             initUserInfo();
-        });
-
-        var toggleHeader = function () {
-            if (_PortalContext.HeaderVisible) {
-                hideHeader();
-            } else {
-                showHeader();
-            }
-        };
-
-        var hideHeader = function () {
-            var headerHeight = $("header").height();
-            $(".main-sidebar").animate({ "padding-top": "0px" }, 200);
-            $("#bookmark_sidebar").animate({ "padding-top": "0px" }, 200);
-            $("#control_sidebar").animate({ "padding-top": "0px" }, 200);
-            var contentHeight = $("section.content").height();
-            $("section.content").height(contentHeight + headerHeight - 30);
-            var menuHeight = $("aside > .slimScrollDiv").height();
-            $("aside > .slimScrollDiv").height(menuHeight + headerHeight);
-            $("section.sidebar").height(menuHeight + headerHeight);
- 
-            $(".content-wrapper").animate({
-                "padding-top": "0px"
-            }, 200);    
-
-            $("header").slideUp(200, function () {
-                $("#btnShowHeader").animate({"top" : "0px"}, 200);
-                _PortalContext.HeaderVisible = false;
-                resetContentSize();
-            });
-        };
-
-        var showHeader = function () {
-            var headerHeight = $("header").height();
-            $("#btnShowHeader").animate({ "top": "-50px" }, 200, function () {
-                $(".main-sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
-                $("#bookmark_sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
-                $("#control_sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
-                var contentHeight = $("section.content").height();
-                $("section.content").height(contentHeight - headerHeight - 30);
-                var menuHeight = $("aside > .slimScrollDiv").height();
-                $("aside > .slimScrollDiv").height(menuHeight - headerHeight);
-                $("section.sidebar").height(menuHeight - headerHeight);
-
-                $(".content-wrapper").animate({
-                    "padding-top": headerHeight + "px"//"50px"
-                }, 200);                 
-
-                $("header").slideDown(200, function () {
-                    _PortalContext.HeaderVisible = true;       
-                    resetContentSize();
-                }); 
-            });                       
-        }
+        });                        
 
         var initUserInfo = function () {
             var options = {
@@ -702,392 +633,7 @@
             $("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
         };
 
-        var getDomainMenuHtml = function (domainMenu) {
-            var menuHtml
-                = '<li class="treeview">'
-                + '<a href="#">'
-                + '<i class="fa fa-bank text-blue"></i>'
-                + '<span lang="' + domainMenu.Language_Key + '">' + domainMenu.Code + '</span>'
-                + '<span class="pull-right-container">'
-                + '<i class="fa fa-angle-left pull-right"></i>'
-                + '</span>'
-                + '</a>';
-            menuHtml += '<ul class="treeview-menu">';
-            $.each(domainMenu.SystemList, function (k, systemMenu) {
-                menuHtml += getSystemMenuHtml(systemMenu);
-            });
-            menuHtml += '</ul></li>';
-            return menuHtml;
-        };
 
-        var getSystemMenuHtml = function (systemMenu) {
-            var menuHtml
-                = '<li class="treeview">'
-                + '<a href="#">'
-                + '<i class="fa fa-laptop text-blue"></i>'
-                + '<span lang="' + systemMenu.Language_Key + '">' + systemMenu.Code + '</span>'
-                + '<span class="pull-right-container">'
-                + '<i class="fa fa-angle-left pull-right"></i>'
-                + '</span>'
-                + '</a>';
-            menuHtml += '<ul class="treeview-menu">';
-            $.each(systemMenu.FunctionList, function (k, functionMenu) {
-                menuHtml += getFunctionMenuHtml(functionMenu);
-            });
-            menuHtml += '</ul></li>';
-            return menuHtml;
-        };
-
-        var getFunctionMenuHtml = function (functionMenu) {
-            var menuHtml = '';
-            if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
-                menuHtml += '<li class="treeview">'
-                    + '<a href="#">'
-                    + '<i class="fa fa-puzzle-piece text-blue"></i>'
-                    + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                    + '<span class="pull-right-container">'
-                    + '<i class="fa fa-angle-left pull-right"></i>'
-                    + '</span>'
-                    + '</a>';
-                menuHtml += '<ul class="treeview-menu">';
-                $.each(functionMenu.SubFunctionList, function (k, subFunctionMenu) {
-                    menuHtml += getFunctionMenuHtml(subFunctionMenu);
-                });
-                menuHtml += '</ul></li>';
-            } else {
-                menuHtml += '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
-                if (functionMenu.Url) {
-                    menuHtml += ' functionurl="'//' functionurl="http://'
-                        + functionMenu.Url + '" ';
-                }
-                menuHtml += '>'
-                    + '<a href="#" class="function_menu_item">'
-                    + '<i class="fa fa-circle-o text-light-blue"></i>'
-                    + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                    + '</a>'
-                    + '</li>';
-            }
-
-            return menuHtml;
-        };
-
-        var getBookmarkMenuHtml = function (bookmarkMenu) {
-            var menuHtml = "";
-            menuHtml += '<li class="bookmark-item" onclick="return openForm(this);" functionid="bk_' + bookmarkMenu.Id + '" ';
-            if (bookmarkMenu.Url) {
-                menuHtml += ' functionurl="'//' functionurl="http://'
-                    + bookmarkMenu.Url + '" ';
-            }
-            menuHtml += '>'
-                + '<a href="#">'
-                + '<i class="fa fa-circle-o text-light-blue"></i>'
-                + '<span lang="' + bookmarkMenu.Language_Key + '">' + bookmarkMenu.Code + '</span>'
-                + '</a>'
-                + '</li>';
-            return menuHtml;
-        };
-
-        var initMenu = function () {
-            var options = {
-                "success": function (d) {
-                    if (d.success) {
-                        //menu muliti language
-                        $.each(d.data.LanguageList, function (i, lang) {
-                            _Lang_ZhCN[lang.Language_Key] = lang.Zh_Cn;
-                            _Lang_ZhTW[lang.Language_Key] = lang.Zh_Tw;
-                            _Lang_EnUS[lang.Language_Key] = lang.En_Us;
-                        });
-
-                        _PortalContext.MenuList = d.data.ProductList;
-                        _PortalContext.BookmarkList = d.data.BookmarkList;
-                        refreshMenu();
-                    }
-                }
-            };
-
-            $.ask("getMenu", {}, options);
-        };
-
-        var refreshMenu = function () {
-            var menuHtml = "";
-            $.each(_PortalContext.MenuList, function (i, product) {
-                menuHtml
-                    += '<li class="header">'
-                    + '<i class="fa fa-bank"></i>'
-                    + '<span lang="' + product.LanguageID + '" style="padding-left:5px;">' + product.Name + '</span>'
-                    + '</li>';
-                $.each(product.DomainList, function (j, domainMenu) {
-                    menuHtml += getDomainMenuHtml(domainMenu);
-
-                });
-
-                $.each(product.SystemList, function (j, systemMenu) {
-                    menuHtml += getSystemMenuHtml(systemMenu);
-                });
-            });
-
-            $("#_FunctionMenu").html(menuHtml);
-            var bookmarkMenuHtml = "";
-            $.each(_PortalContext.BookmarkList, function (i, bookmark) {
-                bookmarkMenuHtml += getBookmarkMenuHtml(bookmark);
-            });
-            $("#_BookmarkMenu").html(bookmarkMenuHtml);
-
-            bindMenuContextMenu();
-
-            $.language.change(_Context.CurrentLang);
-
-            //$('.function_menu_item').slimscroll({
-            //    height: '40px',
-            //    width: '100%',
-            //    display: 'table-cell',
-            //    verticalAlign: 'middle',
-            //    axis: 'x',
-            //    alwaysVisible: false,
-            //    opacity: .2, //滚动条透明度
-            //    borderRadius: '7px', //滚动条圆角
-            //});
-        };
-
-        var getSearchSystemGroupMenuHtml = function (groupMenu) {
-            var menuHtml = '';
-            if (groupMenu.bingo) {
-                menuHtml
-                    = '<li class="treeview">'
-                    + '<a href="#">'
-                    + '<i class="fa fa-bank text-blue"></i>'
-                    + '<span lang="' + groupMenu.Language_Key + '">' + groupMenu.Code + '</span>'
-                    + '<span class="pull-right-container">'
-                    + '<i class="fa fa-angle-left pull-right"></i>'
-                    + '</span>'
-                    + '</a>';
-                menuHtml += '<ul class="treeview-menu">';
-                $.each(groupMenu.SystemList, function (k, systemMenu) {
-                    menuHtml += getSystemMenuHtml(systemMenu);
-                });
-                menuHtml += '</ul></li>';
-            }
-            return menuHtml;
-        };
-
-        var getSearchSystemMenuHtml = function (systemMenu) {
-            var menuHtml = '';
-            if (systemMenu.bingo) {
-                menuHtml
-                    = '<li class="treeview">'
-                    + '<a href="#">'
-                    + '<i class="fa fa-laptop text-blue"></i>'
-                    + '<span lang="' + systemMenu.Language_Key + '">' + systemMenu.Code + '</span>'
-                    + '<span class="pull-right-container">'
-                    + '<i class="fa fa-angle-left pull-right"></i>'
-                    + '</span>'
-                    + '</a>';
-                menuHtml += '<ul class="treeview-menu">';
-                $.each(systemMenu.FunctionList, function (k, functionMenu) {
-                    menuHtml += getSearchFunctionMenuHtml(functionMenu);
-                });
-                menuHtml += '</ul></li>';
-            }
-            return menuHtml;
-        };
-
-        var getSearchFunctionMenuHtml = function (functionMenu) {
-            var menuHtml = '';
-            if (functionMenu.bingo) {
-                if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
-                    menuHtml += '<li class="treeview">'
-                        + '<a href="#">'
-                        + '<i class="fa fa-puzzle-piece text-blue"></i>'
-                        + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                        + '<span class="pull-right-container">'
-                        + '<i class="fa fa-angle-left pull-right"></i>'
-                        + '</span>'
-                        + '</a>';
-                    menuHtml += '<ul class="treeview-menu">';
-                    $.each(functionMenu.SubFunctionList, function (k, subFunctionMenu) {
-                        menuHtml += getFunctionMenuHtml(subFunctionMenu);
-                    });
-                    menuHtml += '</ul></li>';
-                } else {
-                    menuHtml += '<li onclick="return openForm(this);" functionid="' + functionMenu.Id + '" ';
-                    if (functionMenu.Url) {
-                        menuHtml += ' functionurl="'//' functionurl="http://'
-                            + functionMenu.Url + '" ';
-                    }
-                    menuHtml += '>'
-                        + '<a href="#" class="function_menu_item">'
-                        + '<i class="fa fa-circle-o text-light-blue"></i>'
-                        + '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
-                        + '</a>'
-                        + '</li>';
-                }
-            }
-            return menuHtml;
-        };
-
-        var refreshSearchMenu = function (menuList) {
-            var menuHtml = "";
-            $.each(menuList, function (i, domain) {
-                if (domain.bingo) {
-                    menuHtml
-                        += '<li class="header">'
-                        + '<i class="fa fa-bank"></i>'
-                        + '<span lang="' + domain.LanguageID + '" style="padding-left:5px;">' + domain.Name + '</span>'
-                        + '</li>';
-                    $.each(domain.SystemGroupList, function (j, groupMenu) {
-                        menuHtml += getSearchSystemGroupMenuHtml(groupMenu);
-
-                    });
-
-                    $.each(domain.SystemList, function (j, systemMenu) {
-                        menuHtml += getSearchSystemMenuHtml(systemMenu);
-                    });
-                }
-            });
-
-            if (_PortalContext.BookmarkList.length > 0) {
-                menuHtml
-                    += '<li class="header">'
-                    + '<i class="fa fa-star"></i>'
-                    + '<span lang="lang_favorites" style="padding-left:5px;">Bookmark</span>'
-                    + '</li>';
-                //$.each(_PortalContext.BookmarkList, function (i, bookmark) {
-                //    menuHtml += getBookmarkMenuHtml(bookmark);
-                //});
-            }
-
-            $("#_FunctionMenu").html(menuHtml);
-
-            bindMenuContextMenu();
-
-            $.language.change(_Context.CurrentLang);
-
-            //$('.function_menu_item').slimscroll({
-            //    height: '40px',
-            //    width: '100%',
-            //    display: 'table-cell',
-            //    verticalAlign: 'middle',
-            //    axis: 'x',
-            //    alwaysVisible: false,
-            //    opacity: .2, //滚动条透明度
-            //    borderRadius: '7px', //滚动条圆角
-            //});
-        }
-
-        var searchFunctionMenu = function (search, subFunction, functionMenu, domain, groupMenu, systemMenu) {
-            if (functionMenu.bingo) {
-                subFunction.bingo = true;
-            } else if (subFunction.Code.indexOf(search) >= 0
-                || (_Lang_ZhCN[subFunction.Language_Key] && _Lang_ZhCN[subFunction.Language_Key].indexOf(search) >= 0)
-                || (_Lang_ZhTW[subFunction.Language_Key] && _Lang_ZhTW[subFunction.Language_Key].indexOf(search) >= 0)
-                || (_Lang_EnUS[subFunction.Language_Key] && _Lang_EnUS[subFunction.Language_Key].indexOf(search) >= 0)) {
-                domain.bingo = true;
-                if (groupMenu) {
-                    groupMenu.bingo = true;
-                }
-                systemMenu.bingo = true;
-                functionMenu.bingo = true;
-            }
-
-            if (subFunction.SubFunctionList && subFunction.SubFunctionList.length > 0) {
-                $.each(subFunction.SubFunctionList, function (i, subSubFunction) {
-                    searchFunctionMenu(search, subSubFunction, subFunction, domain, groupMenu, systemMenu);
-                });
-            }
-        };
-
-        var searchMenu = function () {
-            if ($("#tbxSearchMenu").val().length > 0) {
-                var search = $("#tbxSearchMenu").val();
-
-                var tempMenuList = $.extend(true, {}, _PortalContext.MenuList);
-                $.each(tempMenuList, function (i, domain) {
-                    if (domain.Name.indexOf(search) >= 0) {
-                        domain.bingo = true;
-                    }
-
-                    $.each(domain.SystemGroupList, function (j, groupMenu) {
-                        if (domain.bingo) {
-                            groupMenu.bingo = true;
-                        } else if (groupMenu.Code.indexOf(search) >= 0
-                            || (_Lang_ZhCN[groupMenu.Language_Key] && _Lang_ZhCN[groupMenu.Language_Key].indexOf(search) >= 0)
-                            || (_Lang_ZhTW[groupMenu.Language_Key] && _Lang_ZhTW[groupMenu.Language_Key].indexOf(search) >= 0)
-                            || (_Lang_EnUS[groupMenu.Language_Key] && _Lang_EnUS[groupMenu.Language_Key].indexOf(search) >= 0)) {
-                            domain.bingo = true;
-                            groupMenu.bingo = true;
-                        }
-
-                        $.each(groupMenu.SystemList, function (j, systemMenu) {
-                            if (groupMenu.bingo) {
-                                systemMenu.bingo = true;
-                            } else if (systemMenu.Code.indexOf(search) >= 0
-                                || (_Lang_ZhCN[systemMenu.Language_Key] && _Lang_ZhCN[systemMenu.Language_Key].indexOf(search) >= 0)
-                                || (_Lang_ZhTW[systemMenu.Language_Key] && _Lang_ZhTW[systemMenu.Language_Key].indexOf(search) >= 0)
-                                || (_Lang_EnUS[systemMenu.Language_Key] && _Lang_EnUS[systemMenu.Language_Key].indexOf(search) >= 0)) {
-                                domain.bingo = true;
-                                groupMenu.bingo = true;
-                                systemMenu.bingo = true;
-                            }
-
-                            $.each(systemMenu.FunctionList, function (j, functionMenu) {
-                                if (systemMenu.bingo) {
-                                    functionMenu.bingo = true;
-                                } else if (functionMenu.Code.indexOf(search) >= 0
-                                    || (_Lang_ZhCN[functionMenu.Language_Key] && _Lang_ZhCN[functionMenu.Language_Key].indexOf(search) >= 0)
-                                    || (_Lang_ZhTW[functionMenu.Language_Key] && _Lang_ZhTW[functionMenu.Language_Key].indexOf(search) >= 0)
-                                    || (_Lang_EnUS[functionMenu.Language_Key] && _Lang_EnUS[functionMenu.Language_Key].indexOf(search) >= 0)) {
-                                    domain.bingo = true;
-                                    groupMenu.bingo = true;
-                                    systemMenu.bingo = true;
-                                    functionMenu.bingo = true;
-                                }
-
-                                if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
-                                    $.each(functionMenu.SubFunctionList, function (i, subFunction) {
-                                        searchFunctionMenu(search, subFunction, functionMenu, domain, groupMenu, systemMenu);
-                                    });
-                                }
-                            });
-                        });
-                    });
-
-                    $.each(domain.SystemList, function (j, systemMenu) {
-                        if (domain.bingo) {
-                            systemMenu.bingo = true;
-                        } else if (systemMenu.Code.indexOf(search) >= 0
-                            || (_Lang_ZhCN[systemMenu.Language_Key] && _Lang_ZhCN[systemMenu.Language_Key].indexOf(search) >= 0)
-                            || (_Lang_ZhTW[systemMenu.Language_Key] && _Lang_ZhTW[systemMenu.Language_Key].indexOf(search) >= 0)
-                            || (_Lang_EnUS[systemMenu.Language_Key] && _Lang_EnUS[systemMenu.Language_Key].indexOf(search) >= 0)) {
-                            domain.bingo = true;
-                            systemMenu.bingo = true;
-                        }
-
-                        $.each(systemMenu.FunctionList, function (j, functionMenu) {
-                            if (systemMenu.bingo) {
-                                functionMenu.bingo = true;
-                            } else if (functionMenu.Code.indexOf(search) >= 0
-                                || (_Lang_ZhCN[functionMenu.Language_Key] && _Lang_ZhCN[functionMenu.Language_Key].indexOf(search) >= 0)
-                                || (_Lang_ZhTW[functionMenu.Language_Key] && _Lang_ZhTW[functionMenu.Language_Key].indexOf(search) >= 0)
-                                || (_Lang_EnUS[functionMenu.Language_Key] && _Lang_EnUS[functionMenu.Language_Key].indexOf(search) >= 0)) {
-                                domain.bingo = true;
-                                systemMenu.bingo = true;
-                                functionMenu.bingo = true;
-                            }
-
-                            if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
-                                $.each(functionMenu.SubFunctionList, function (i, subFunction) {
-                                    searchFunctionMenu(search, subFunction, functionMenu, domain, null, systemMenu);
-                                });
-                            }
-                        });
-                    });
-                });
-
-                refreshSearchMenu(tempMenuList);
-            } else {
-                refreshMenu();
-            }
-        };
 
         var logout = function () {
             var options = {
@@ -1102,123 +648,7 @@
             $.ask("logout", {}, options);
         };        
 
-        var bindTabContextMenu = function () {
-            $('.form-tab').contextmenu({
-                target: '#tab-context-menu',
-                onItem: function (context, e) {
-                    var menuIndex = $(e.target).attr('menuindex');
-                    var functionid = $(context).find("a").attr("functionid");
-                    if (menuIndex == "MENU_OPEN_IN_NEW_WINDOW") {
-                        var url = $("#" + functionid).find("iframe").attr("src");
-                        window.open(url);
-                    } else if (menuIndex == "MENU_CLOSE") {
-                        $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
-                            function () {
-                                closeFormByFunctionId(functionid);
-                            },
-                            function () { });
-                    } else if (menuIndex == "MENU_CLOSE_OTHERS") {
-                        $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
-                            function () {
-                                $("#_FormTabs a").each(function (i, tab) {
-                                    if ($(tab).attr("functionid") != functionid) {
-                                        closeFormByFunctionId($(tab).attr("functionid"));
-                                    }
-                                });
-                            },
-                            function () { });
-                    } else if (menuIndex == "MENU_CLOSE_ALL") {
-                        $.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
-                            function () {
-                                $("#_FormTabs a").each(function (i, tab) {
-                                    closeFormByFunctionId($(tab).attr("functionid"));
-                                });
-                            },
-                            function () { });
-                    } else if (menuIndex == "MENU_REFRESH") {
-                        var frameName = "frm_" + functionid;
-                        var url = $("iframe[name=" + frameName + "]").attr("src");
-                        $("iframe[name=" + frameName + "]").attr("src", url);
-                        showFormByFunctionId(functionid);
-                    } else if (menuIndex == "MENU_ADD_TO_FAVORITES") {
-                        addToBookmark(functionid);
-                    }
-                }
-            });
-        };
 
-        var bindMenuContextMenu = function () {
-            $('#_FunctionMenu').find(".treeview,.header").contextmenu({
-                target: '#menu-context-menu',
-                onItem: function (context, e) {
-                    var menuIndex = $(e.target).attr('menuindex');
-                    if (menuIndex == "MENU_EXPAND") {
-                        if ($(context).hasClass("header")) {
-                            var current = $(context);
-                            while (true) {
-                                current = current.next("li");
-                                if (!current || current.hasClass("header")) {
-                                    break;
-                                }
-                                $(current).children("ul.treeview-menu").slideDown(500, function () {
-                                    expandOneMenu(this);
-                                });
-                            }
-                        } else {
-                            $(context).children("ul.treeview-menu").slideDown(500, function () {
-                                expandOneMenu(this);
-                            });
-                        }
-                    } else if (menuIndex == "MENU_EXPAND_ALL") {
-                        $.each($('#_FunctionMenu').children("li.treeview"), function (i, l) {
-                            $(l).children("ul.treeview-menu").slideDown(500, function () {
-                                expandOneMenu(this);
-                            });
-                        });
-                        
-                        //$('#_FunctionMenu').find("ul").slideDown(500);
-                    } else if (menuIndex == "MENU_COLLAPSE") {
-                        if ($(context).hasClass("header")) {
-                            var current = $(context);
-                            while (true) {
-                                current = current.next("li");
-                                if (!current || current.hasClass("header")) {
-                                    break;
-                                }
-                                current.find("ul").slideUp(500);
-                            }
-                        } else {
-                            $(context).find("ul").slideUp(500);
-                        }
-                    } else if (menuIndex == "MENU_COLLAPSE_ALL") {
-                        $('#_FunctionMenu').find("ul").slideUp(500);
-                    }
-                }
-            });
-
-            bindBookmarkContextMenu();
-        };
-
-        var expandOneMenu = function (m) {
-            $.each($(m).children("li.treeview"), function (i, l) {
-                $(l).children("ul.treeview-menu").slideDown(500, function () {
-                    expandOneMenu(this);
-                });
-            });
-        };
-
-        var bindBookmarkContextMenu = function () {
-            $('#_BookmarkMenu').find(".bookmark-item").contextmenu({
-                target: '#bookmark-context-menu',
-                onItem: function (context, e) {
-                    var menuIndex = $(e.target).attr('menuindex');
-                    if (menuIndex == "MENU_REMOVE_FROM_FAVORITES") {
-                        var functionid = $(context).attr("functionid").substring(3);;
-                        removeFromBookmark(functionid);
-                    }
-                }
-            });
-        };
 
         var addToBookmark = function (functionid) {
             if (functionid.substring(0, 3) == "bk_") {
@@ -1228,7 +658,7 @@
                 "success": function (d) {
                     if (d.success) {
                         $.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
-                        initMenu();
+                        _menu.initMenu();
                     }
                 }
             };
@@ -1244,7 +674,7 @@
                 "success": function (d) {
                     if (d.success) {
                         $.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
-                        initMenu();
+                        _menu.initMenu();
                     }
                 }
             };
@@ -1336,8 +766,6 @@
                     }
                 });
             }
-            //$("#breadcrumb-content").html(bread);
-            //bread += "</div>";
             $("#_BreadcrumbContent").html(bread);
             $.language.change(_Context.CurrentLang);
         };
@@ -1420,7 +848,7 @@
                         + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
                         + "#!lang=" + _Context.CurrentLang
                         + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
-                    bindTabContextMenu();
+                    _cmenu.bindTabContextMenu();
                     showFormByFunctionId(functionid);
                 }
             }
@@ -1454,19 +882,6 @@
             $("#_BreadcrumbBar").animate({"height":breadcrumbHeight + "px"}, 200);
         };
 
-        var resetContentSize = function () {
-            //var isMenuVisible = ($('.main-sidebar').first().css('transform') === "none");
-            //var baseHeight = $(window).height() - $(".main-header").height() - 90;//142;
-            //var tempHeight = baseHeight;
-            
-            //$("section.content").height(tempHeight);
-            var headerHeight = $("header").height();
-            if (!_PortalContext.HeaderVisible) {
-                headerHeight = 0;
-            }
-            var footerHeight = $(".main-footer").height();
-            $("section.content").height($(window).height() - headerHeight - footerHeight - 72);
-        };
 
         var changeLanguage = function () {
             setLanguage($("#ddlLanguage").val());

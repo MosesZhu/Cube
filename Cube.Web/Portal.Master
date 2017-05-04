@@ -75,10 +75,11 @@
                 <asp:ScriptReference Name="AdminLTE" />
                 <asp:ScriptReference Name="slimscroll" />
                 <asp:ScriptReference Name="respond" />
-                <asp:ScriptReference Name="framework" />
+                <asp:ScriptReference Name="cube.framework" />
                 <asp:ScriptReference Name="icheck" />
                 <asp:ScriptReference Name="cookie" />
                 <asp:ScriptReference Name="bootstrap-contextmenu" />
+                <asp:ScriptReference Name="cube.portal" />
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>

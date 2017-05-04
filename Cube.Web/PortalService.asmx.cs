@@ -38,8 +38,8 @@ namespace Cube.Web
             {
                 success = true
             };
-            MenuDTO cubeMenu = new MenuDTO();//GetMenuImp();            
-            cubeMenu = GetMenuImp();
+            MenuDTO cubeMenu = new MenuDTO();
+            //cubeMenu = GetMenuImp();
 
             List<Guid> BookmarkIdList = CubeDb.From<Mc_Bookmark>()
                 .Where(Mc_Bookmark._.User_Id == SSOContext.Current.UserID)

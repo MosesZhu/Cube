@@ -76,10 +76,16 @@ namespace Cube.Web
                     Path = "~/Scripts/jquery.slimscroll.min.js",
                 });
             ScriptManager.ScriptResourceMapping.AddDefinition(
-                "framework",
+                "cube.framework",
                 new ScriptResourceDefinition
                 {
-                    Path = "~/Scripts/framework.js",
+                    Path = "~/Scripts/cube.framework.js",
+                });
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "cube.portal",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/cube.portal.js",
                 });
 
             ScriptManager.ScriptResourceMapping.AddDefinition(
