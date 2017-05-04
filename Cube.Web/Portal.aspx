@@ -1,264 +1,9 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Portal.Master" AutoEventWireup="true" CodeBehind="Portal.aspx.cs" Inherits="Cube.Web.Portal" %>
 
 <asp:Content ID="PageStyleContent" ContentPlaceHolderID="PageStyleContentHolder" runat="server">
-    <style>
-        #_BookmarkMenu > li.bookmark-item:hover > a, #_BookmarkMenu > li.active > a, #_BookmarkMenu li:hover > a:hover {
-            background-color: lightgray;
-        }
-
-        #_BookmarkMenu .header {
-            background-color: #dddddd;
-        }
-
-        .bookmark-item a {
-            padding-left: 30px;
-        }
-
-        .icon_close_form {
-            cursor: pointer;
-        }
-
-        .skin_button {
-            cursor: pointer;
-        }
-
-        body {
-            overflow: hidden;
-        }
-
-        .alpha60 {
-            opacity: 0.6;
-        }
-
-        .nav-tabs > li > a {
-            border: 1px solid #ddd;
-            border-bottom-color: transparent;
-        }
-
-        .nav-tabs > li > a:hover, .nav-tabs > li > a:active, .nav-tabs > li > a:focus {
-            border: 1px solid #ddd;
-            border-bottom-color: transparent;
-        }
-
-        .dropdown-menu > li > a {
-            cursor: pointer;
-        }
-
-        #_FormTabContent > .tab-pane {
-            border: 1px solid #ddd;
-            border-top: 0px;
-        }
-
-        .function_menu_item {
-            overflow: auto;
-        }
-
-        ::-webkit-scrollbar {  
-            width: 12px;  
-            height: 12px;  
-            background-color: #1e282c;  
-            opacity: .8;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: gray;
-            opacity: .5;
-        }
-
-        .loader {
-            background: #000;
-            background: -webkit-radial-gradient(#222, #000);
-            background: radial-gradient(#222, #000);
-            bottom: 0;
-            left: 0;
-            overflow: hidden;
-            position: fixed;
-            right: 0;
-            top: 0;
-            z-index: 99999;
-            opacity:0.3;
-            display:none;
-        }
-
-        .loader-inner {
-            bottom: 0;
-            height: 60px;
-            left: 0;
-            margin: auto;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 100px;
-        }
-
-        .loader-line-wrap {
-            -webkit-animation: spin 2000ms cubic-bezier(.175, .885, .32, 1.275) infinite;
-            animation: spin 2000ms cubic-bezier(.175, .885, .32, 1.275) infinite;
-            box-sizing: border-box;
-            height: 50px;
-            left: 0;
-            overflow: hidden;
-            position: absolute;
-            top: 0;
-            -webkit-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
-            width: 100px;
-        }
-
-        .loader-line {
-            border: 4px solid transparent;
-            border-radius: 100%;
-            box-sizing: border-box;
-            height: 100px;
-            left: 0;
-            margin: 0 auto;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 100px;
-        }
-
-        .loader-line-wrap:nth-child(1) {
-            -webkit-animation-delay: -50ms;
-            animation-delay: -50ms;
-        }
-
-        .loader-line-wrap:nth-child(2) {
-            -webkit-animation-delay: -100ms;
-            animation-delay: -100ms;
-        }
-
-        .loader-line-wrap:nth-child(3) {
-            -webkit-animation-delay: -150ms;
-            animation-delay: -150ms;
-        }
-
-        .loader-line-wrap:nth-child(4) {
-            -webkit-animation-delay: -200ms;
-            animation-delay: -200ms;
-        }
-
-        .loader-line-wrap:nth-child(5) {
-            -webkit-animation-delay: -250ms;
-            animation-delay: -250ms;
-        }
-
-        .loader-line-wrap:nth-child(1) .loader-line {
-            border-color: hsl(0, 80%, 60%);
-            height: 90px;
-            width: 90px;
-            top: 7px;
-        }
-
-        .loader-line-wrap:nth-child(2) .loader-line {
-            border-color: hsl(60, 80%, 60%);
-            height: 76px;
-            width: 76px;
-            top: 14px;
-        }
-
-        .loader-line-wrap:nth-child(3) .loader-line {
-            border-color: hsl(120, 80%, 60%);
-            height: 62px;
-            width: 62px;
-            top: 21px;
-        }
-
-        .loader-line-wrap:nth-child(4) .loader-line {
-            border-color: hsl(180, 80%, 60%);
-            height: 48px;
-            width: 48px;
-            top: 28px;
-        }
-
-        .loader-line-wrap:nth-child(5) .loader-line {
-            border-color: hsl(240, 80%, 60%);
-            height: 34px;
-            width: 34px;
-            top: 35px;
-        }
-
-        @-webkit-keyframes spin {
-            0%, 15% {
-                -webkit-transform: rotate(0);
-                transform: rotate(0);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0%, 15% {
-                -webkit-transform: rotate(0);
-                transform: rotate(0);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-        }
-
-        /*.header-toggle {
-            float: left;
-            font-size: 14px;
-            width: 30px;
-        }*/
-
-        #btnShowHeader {
-            position: fixed;
-            right: 0px;
-            top: -50px;
-            height: 20px;
-            text-align: center;
-            padding-bottom: 3px;
-            z-index:9999;            
-            width: 38px;
-            height: 34px;
-        }
-
-        #_FunctionMenu > li:first-child {
-            padding-top: 45px;
-        }
-
-        section.content {
-            padding: 0px 0px 15px 0px;
-        }
-
-        .nav-tabs > li > a {
-            border-radius: 0px;
-            padding: 6px 15px;
-        }
-
-        #_FormTabs {
-            padding-left: 10px;
-            border-bottom: 0px;
-        }
-
-        #_BreadcrumbBar {
-            background-color: white;
-            height: 20px;
-            margin-left: 1px;
-            margin-right: 1px;
-        }
-
-        #_BreadcrumbContent {
-            float: right;
-            padding-right: 10px;
-            font-size: 10px;
-        }
-
-        #_FunctionMenu a:hover,  header a:hover, aside a:hover{
-            cursor: pointer;
-        }
-    </style>
-    
 </asp:Content>
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
 
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
     <div class="wrapper" style="height: 100%; background-color: transparent;">
         <a class="header-toggle" data-toggle="" role="button" id="btnShowHeader" onclick="return _header.toggleHeader();" >
             <span class="fa fa-sort-down"></span>
@@ -285,7 +30,7 @@
                             <!-- Menu toggle button -->
                             <a class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope-o"></i>
-                                <span class="label label-success">4</span>
+                                <span class="label label-success" id="lblNewsCount" style="display:none;"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">You have 4 messages</li>
@@ -571,6 +316,7 @@
         </div>
     </div>
 </asp:Content>
+
 <asp:Content ID="PageScriptContent" ContentPlaceHolderID="PageScriptContentHolder" runat="server">
     <script>
         var _PortalContext = {
@@ -578,6 +324,7 @@
             "BookmarkList": null,
             "CurrentFunctionId": null,
             "UserInfo": null,
+            "News": null,
             "HeaderVisible": true,
             "MenuVisible": function () {
                 return !$("body").hasClass("sidebar-collapse");
@@ -621,28 +368,9 @@
                 borderRadius: '7px', //滚动条圆角
             });
 
-            initUserInfo();
+            _user.initUserInfo();
+            _news.initNews();
         });                        
-
-        var initUserInfo = function () {
-            var options = {
-                "success": function (d) {
-                    if (d.success) {
-                        _PortalContext.UserInfo = d.data;
-                        refreshUserInfo();
-                    }
-                }
-            };
-
-            $.ask("getUserInfo", {}, options);
-        };
-
-        var refreshUserInfo = function () {
-            $("#lblUserName").text(_PortalContext.UserInfo.Name);
-            $("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
-        };
-
-
 
         var logout = function () {
             var options = {

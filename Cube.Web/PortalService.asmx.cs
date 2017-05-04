@@ -19,6 +19,7 @@ using ITS.WebFramework.SSO.Common;
 using ITS.WebFramework.Configuration;
 using ITS.WebFramework.SSO.Session;
 using ITS.WebFramework.PermissionManagement.Entity;
+using ITS.WebFramework.PermissionManagement.DTO;
 
 namespace Cube.Web
 {
@@ -128,6 +129,21 @@ namespace Cube.Web
                 result.success = false;
                 result.message = ex.Message;
             }            
+            return result;
+        }
+
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
+        public ResultDTO getNews()
+        {
+            ResultDTO result = new ResultDTO();
+            WhereClause where =
+                WhereClause.All.And(Portal_News._.Active == 1
+                                    && Portal_News._.Due_Date >= DateTime.Today
+                                    && Portal_News._.Org_Id == SSOContext.Current.OrgID
+                                    && Portal_News._.Product_Id == SSOContext.Current.ProductID);
+            result.data = WFKDb.From<Portal_News>().Where(where).ToList<PortalNewsDTO>();
+            result.success = true;
             return result;
         }
 

@@ -10,7 +10,6 @@
 					var footerHeight = $(".main-footer").height();
 					$("section.content").height($(window).height() - headerHeight - footerHeight - 72);
 				},
-
 				"header": {
 					"toggleHeader": function () {
 						if (_PortalContext.HeaderVisible) {
@@ -65,7 +64,6 @@
 						});
 					}
 				},
-
 				"menu": {
 					"initMenu": function () {
 						var options = {
@@ -215,15 +213,6 @@
 						});
 
 						$.each(tempBookmarkSystemList, function (i, system) {
-							//bookmarkMenuHtml += '<li class="treeview">'
-							//	+ '<a>'
-							//	+ '<i class="fa fa-laptop text-blue"></i>'
-							//	+ '<span lang="' + system.System.Language_Key + '">' + system.System.Code + '</span>'
-							//	+ '<span class="pull-right-container">'
-							//	+ '<i class="fa fa-angle-left pull-right"></i>'
-							//	+ '</span>'
-							//	+ '</a>';
-							//bookmarkMenuHtml += '<ul class="treeview-menu">';
 							bookmarkMenuHtml += '<li class="header text-blue">'
 								+ '<i class="fa fa-laptop text-blue"></i>'
 								+ '<span lang="' + system.System.Language_Key + '" style="padding-left:5px;">' + system.System.Code + '</span>'
@@ -498,7 +487,6 @@
 						$("#_BookmarkMenu li[functionid=" + bkFunctionId + "]").addClass("active");
 					}
 				},
-
 				"context_menu": {
 					"bindTabContextMenu": function () {
 						$('.form-tab').contextmenu({
@@ -608,7 +596,6 @@
 						});
 					}
 				},
-
 				"bookmark": {
 					"addToBookmark": function (functionid) {
 						if (functionid.substring(0, 3) == "bk_") {
@@ -645,7 +632,6 @@
 						$.ask("removeFromBookmark", data, options);
 					}
 				},
-
 				"breadcrumb": {
 					"toggleBreadcrumb": function () {
 						var hasForm = ($("#_FormTabs>li").length > 0);
@@ -723,7 +709,6 @@
 						$.language.change(_Context.CurrentLang);
 					}
 				},
-
 				"form": {
 					"openForm": function (menu) {
 						var functionurl = $(menu).attr("functionurl");
@@ -823,6 +808,47 @@
 						return false;
 					}
 				}
+			},
+			"user": {
+				"initUserInfo": function () {
+					var options = {
+						"success": function (d) {
+							if (d.success) {
+								_PortalContext.UserInfo = d.data;
+								_user.refreshUserInfo();
+							}
+						}
+					};
+
+					$.ask("getUserInfo", {}, options);
+				},
+				"refreshUserInfo": function () {
+					$("#lblUserName").text(_PortalContext.UserInfo.Name);
+					$("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
+				}
+			},
+			"news": {
+				"initNews": function () {
+					var options = {
+						"success": function (d) {
+							if (d.success) {
+								_PortalContext.News = d.data;
+								_news.refreshNews();
+							}
+						}
+					};
+
+					$.ask("getNews", {}, options);
+				},
+				"refreshNews": function () {
+					var newsCount = _PortalContext.News.length;
+					if (newsCount > 0) {
+						$("#lblNewsCount").text(newsCount).show(300);
+					}					
+				},
+				"getNewsItemHtml": function () {
+
+				}
 			}
 		}
 	}
@@ -835,3 +861,5 @@ var _cmenu = $.cube.portal.ui.context_menu;
 var _bookmark = $.cube.portal.ui.bookmark;
 var _breadcrumb = $.cube.portal.ui.breadcrumb;
 var _form = $.cube.portal.ui.form;
+var _user = $.cube.portal.user;
+var _news = $.cube.portal.news;

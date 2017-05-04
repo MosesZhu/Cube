@@ -54,8 +54,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\WebFramework\SSO\Business\bin\Debug\ITS.WebFramework.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="ITS.WebFramework.PermissionComponent.DTO">
+      <HintPath>..\..\WebFramework\PermissionComponent\Business\bin\debug\ITS.WebFramework.PermissionComponent.DTO.dll</HintPath>
+    </Reference>
     <Reference Include="ITS.WebFramework.PermissionComponent.ServiceProxy">
       <HintPath>..\..\WebFramework\PermissionComponent\ServiceProxy\bin\debug\ITS.WebFramework.PermissionComponent.ServiceProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="ITS.WebFramework.PermissionManagement.DTO">
+      <HintPath>..\..\WebFramework\PermissionManagement\Business\bin\Debug\ITS.WebFramework.PermissionManagement.DTO.dll</HintPath>
     </Reference>
     <Reference Include="ITS.WebFramework.PermissionManagement.Entity, Version=4.0.100.100, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -228,6 +234,7 @@
     <Content Include="Content\AdminLTE\skins\_all-skins.css" />
     <Content Include="Content\AdminLTE\skins\_all-skins.min.css" />
     <Content Include="Content\bootstrap-combined.min.css" />
+    <Content Include="Content\cube.portal.css" />
     <Content Include="Scripts\bootstrap-contextmenu.js" />
     <Content Include="Content\bootstrap-table.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
