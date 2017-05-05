@@ -250,3 +250,11 @@ section.content {
 #_FunctionMenu a:hover, header a:hover, aside a:hover {
     cursor: pointer;
 }
+
+#newsList h4, #newsList p {
+    margin: 0px;
+}
+
+#newsList p {
+    text-align: right;
+}

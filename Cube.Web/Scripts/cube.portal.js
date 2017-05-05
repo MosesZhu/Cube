@@ -9,6 +9,11 @@
 					}
 					var footerHeight = $(".main-footer").height();
 					$("section.content").height($(window).height() - headerHeight - footerHeight - 72);
+
+					$(".content-wrapper").css("padding-top", headerHeight + "px");
+					//$(".content-wrapper").animate({
+					//	"padding-top": headerHeight + "px"
+					//}, 200);
 				},
 				"header": {
 					"toggleHeader": function () {
@@ -844,10 +849,27 @@
 					var newsCount = _PortalContext.News.length;
 					if (newsCount > 0) {
 						$("#lblNewsCount").text(newsCount).show(300);
+						$("#lblTotalNews").text(newsCount);
+
+						var html = "";
+						$.each(_PortalContext.News, function (i, news) {
+							html += _news.getNewsItemHtml(news);
+						});
+						$("#newsList").html(html);
 					}					
 				},
-				"getNewsItemHtml": function () {
-
+				"getNewsItemHtml": function (news) {
+					var date = new Date(parseInt(news.Modified_Date.replace("/Date(", "").replace(")/", ""), 10));
+					var html = "<li>"
+						+ "<a onclick='return _news.openNews(\"" + news.Id + "\")'>"
+						+ "<h4>" + news.Subject + "<small><i class='fa fa-clock-o'></i>&nbsp;" + (new Date(date)).Format("yyyy-MM-dd") + "</small>"
+						+ "</h4>"
+						+ "<p><i class='fa fa-user'></i>&nbsp;" + news.Created_By + "</p></a></li>";
+					return html;
+				},
+				"openNews": function (newsId) {
+					var url = "PortalNewsDetail.aspx?" + $.param({ "id": newsId });
+					window.open(url, "PortalNewsDetail", '', "_blank");
 				}
 			}
 		}

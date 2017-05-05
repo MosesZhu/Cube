@@ -173,20 +173,12 @@ $(function () {
 
   //Add slimscroll to navbar dropdown
   if (o.navbarMenuSlimscroll && typeof $.fn.slimscroll != 'undefined') {
-    $(".navbar .menu").slimscroll({
-      height: o.navbarMenuHeight,
-      alwaysVisible: false,
-      size: o.navbarMenuSlimscrollWidth
-    }).css("width", "100%");
-
-      //$(".nav-tabs").slimscroll({
-      //    width: '100%', //可滚动区域宽度
-      //    height: '42px',
-      //    alwaysVisible: true,
-      //    opacity: .4, //滚动条透明度
-      //    borderRadius: '7px', //滚动条圆角
-      //    axis: 'x'
-      //}).css("width", "100%");
+    //$(".navbar .menu").slimscroll({
+    //  height: o.navbarMenuHeight,
+    //  alwaysVisible: false,
+    //  size: o.navbarMenuSlimscrollWidth,
+    //  axis: 'y' //added by Moses Zhu
+    //}).css("width", "100%");
   }
 
   //Activate sidebar push menu
