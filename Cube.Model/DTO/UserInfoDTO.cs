@@ -14,6 +14,8 @@ namespace Cube.Model.DTO
         public string Name { get; set; }
         public string Mail { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public string LoginTime { get; set; }
         /// <summary>
         /// 用户设置

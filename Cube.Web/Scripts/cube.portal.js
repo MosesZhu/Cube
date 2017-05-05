@@ -830,6 +830,9 @@
 				"refreshUserInfo": function () {
 					$("#lblUserName").text(_PortalContext.UserInfo.Name);
 					$("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
+
+					var imgBinary = _PortalContext.UserInfo.ImageUrl;
+					$(".userImage").hide(200).attr("src", imgBinary).show(200);
 				}
 			},
 			"news": {
