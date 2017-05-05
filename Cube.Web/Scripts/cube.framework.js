@@ -5,7 +5,14 @@ if (!cube.plugin) {
 
 jQuery.extend({
     "ask": function (method, data, options, not_self_service) {
-        $.dialog.showLoading();
+        var showMask = true;
+        if (options && options.hasOwnProperty("show_mask")) {
+            showMask = options.show_mask;
+        }
+        if (showMask) {
+            $.dialog.showLoading();
+        }
+        
         var ssoToken = getQueryStringByName("SSOToken") ? getQueryStringByName("SSOToken") : "";
         if (!ssoToken) {
             window.location.href = "Login";

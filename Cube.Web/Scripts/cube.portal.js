@@ -490,6 +490,27 @@
 						var bkFunctionId = "bk_" + functionid;
 						$("#_BookmarkMenu li").removeClass("active");						
 						$("#_BookmarkMenu li[functionid=" + bkFunctionId + "]").addClass("active");
+					},
+
+					"getFunctionArray": function (targetFunctionId, functionMenu, searchFlag) {
+						searchFlag.founctionArray.push(functionMenu);
+						if (functionMenu.Id == targetFunctionId) {
+							searchFlag.found = true;
+							return;
+						}
+						if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
+							$.each(functionMenu.SubFunctionList, function (j, subFunctionMenu) {
+								var currentIndex = searchFlag.founctionArray.length - 1;
+								_menu.getFunctionArray(targetFunctionId, subFunctionMenu, searchFlag);
+								if (searchFlag.found) {
+									return false;
+								} else {
+									for (var i = searchFlag.founctionArray.length - 1; i > currentIndex; i--) {
+										searchFlag.founctionArray.pop(i);
+									}
+								}
+							});
+						}
 					}
 				},
 				"context_menu": {
@@ -668,7 +689,7 @@
 												"found": false,
 												"founctionArray": new Array()
 											};
-											getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
+											_menu.getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
 											if (searchFlag.found) {
 												found = true;
 												bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
@@ -693,7 +714,7 @@
 												"found": false,
 												"founctionArray": new Array()
 											};
-											getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
+											_menu.getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
 											if (searchFlag.found) {
 												found = true;
 												bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
@@ -843,15 +864,23 @@
 								_PortalContext.News = d.data;
 								_news.refreshNews();
 							}
-						}
+						},
+						"show_mask": false
 					};
 
 					$.ask("getNews", {}, options);
+
+					if (this.options.TIMER_ENABLE) {
+						clearInterval(this.timer);
+						this.timer = setInterval("this._news.initNews()", this.options.REFRESH_INTERVAL);
+					}
 				},
 				"refreshNews": function () {
 					var newsCount = _PortalContext.News.length;
 					if (newsCount > 0) {
-						$("#lblNewsCount").text(newsCount).show(300);
+						if ($("#lblNewsCount").text() != newsCount) {
+							$("#lblNewsCount").hide(200).text(newsCount).show(300);
+						}						
 						$("#lblTotalNews").text(newsCount);
 
 						var html = "";
@@ -859,10 +888,12 @@
 							html += _news.getNewsItemHtml(news);
 						});
 						$("#newsList").html(html);
-					}					
+					} else {
+						$("#lblNewsCount").text(newsCount).hide(200);
+					}
 				},
 				"getNewsItemHtml": function (news) {
-					var date = new Date(parseInt(news.Modified_Date.replace("/Date(", "").replace(")/", ""), 10));
+					var date = new Date(parseInt(news.Created_Date.replace("/Date(", "").replace(")/", ""), 10));
 					var html = "<li>"
 						+ "<a onclick='return _news.openNews(\"" + news.Id + "\")'>"
 						+ "<h4>" + news.Subject + "<small><i class='fa fa-clock-o'></i>&nbsp;" + (new Date(date)).Format("yyyy-MM-dd") + "</small>"
@@ -873,18 +904,76 @@
 				"openNews": function (newsId) {
 					var url = "PortalNewsDetail.aspx?" + $.param({ "id": newsId });
 					window.open(url, "PortalNewsDetail", '', "_blank");
+				},
+				"timer": null,
+				"options": {
+					"TIMER_ENABLE": true,
+					"REFRESH_INTERVAL": 5000
 				}
+			},
+			"init": function () {
+				this.ui.resetContentSize();
+				$(window).on("resize", function () {
+					_ui.resetContentSize();
+				});
+
+				$("#search-btn").on("click", function () {
+					_menu.searchMenu();
+				});
+
+				$("#ddlLanguage").val($.uriAnchor.makeAnchorMap()["lang"]);
+
+				this.ui.menu.initMenu();
+
+				//Tabs Event
+				$('#_FormTabs').on('shown.bs.tab', function (e) {
+					var functionid = $(e.target).attr("functionid");
+					_menu.activeMenu(functionid);
+				});
+
+				$('#tbxSearchMenu').on('keydown', function (e) {
+					if (e.keyCode == 13) {
+						_menu.searchMenu();
+						return false;
+					}
+					return true;
+				});
+
+				$('#_FormTabsContainer').slimscroll({
+					height: '34px',
+					width: '100%',
+					axis: 'x',
+					alwaysVisible: false,
+					opacity: .2, //滚动条透明度
+					borderRadius: '7px', //滚动条圆角
+				});
+
+				this.user.initUserInfo();
+				this.news.initNews();
+			},
+			"logout": function () {
+				var options = {
+					"success": function (d) {
+						if (d.success) {
+							$.cookie("SSOToken", null);
+							$.goto("Login");
+						}
+					}
+				};
+				$.ask("logout", {}, options);
+				return false;
 			}
 		}
 	}
 });
 
-var _ui = $.cube.portal.ui;
-var _header = $.cube.portal.ui.header;
-var _menu = $.cube.portal.ui.menu;
-var _cmenu = $.cube.portal.ui.context_menu;
-var _bookmark = $.cube.portal.ui.bookmark;
-var _breadcrumb = $.cube.portal.ui.breadcrumb;
-var _form = $.cube.portal.ui.form;
-var _user = $.cube.portal.user;
-var _news = $.cube.portal.news;
+var _portal = $.cube.portal;
+var _ui = _portal.ui;
+var _header = _ui.header;
+var _menu = _ui.menu;
+var _cmenu = _ui.context_menu;
+var _bookmark = _ui.bookmark;
+var _breadcrumb = _ui.breadcrumb;
+var _form = _ui.form;
+var _user = _portal.user;
+var _news = _portal.news;

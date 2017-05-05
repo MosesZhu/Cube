@@ -57,7 +57,7 @@
                                 </li>
                                 <li class="user-footer">
                                     <div class="pull-right">
-                                        <a class="btn btn-default btn-flat" lang="lang_logout" onclick="logout()">Logout</a>
+                                        <a class="btn btn-default btn-flat" lang="lang_logout" onclick="return _portal.logout();">Logout</a>
                                     </div>
                                 </li>
                             </ul>
@@ -308,80 +308,8 @@
         };
 
         $(function () {
-            _ui.resetContentSize();
-            $(window).on("resize", function () {
-                _ui.resetContentSize();
-            });
-
-            $("#search-btn").on("click", function () {
-                _menu.searchMenu();
-            });
-
-            $("#ddlLanguage").val($.uriAnchor.makeAnchorMap()["lang"]);
-
-            _menu.initMenu();
-
-            //Tabs Event
-            $('#_FormTabs').on('shown.bs.tab', function (e) {
-                var functionid = $(e.target).attr("functionid");
-                _menu.activeMenu(functionid);
-            });
-
-            $('#tbxSearchMenu').on('keydown', function (e) {
-                if (e.keyCode == 13) {
-                    _menu.searchMenu();
-                    return false;
-                }
-                return true;
-            });
-
-            $('#_FormTabsContainer').slimscroll({
-                height: '34px',
-                width: '100%',
-                axis: 'x',
-                alwaysVisible: false,
-                opacity: .2, //滚动条透明度
-                borderRadius: '7px', //滚动条圆角
-            });
-
-            _user.initUserInfo();
-            _news.initNews();            
+            _portal.init();           
         });
-
-        var logout = function () {
-            var options = {
-                "success": function (d) {
-                    if (d.success) {
-                        $.cookie("SSOToken", null);
-                        $.goto("Login");
-                        //window.location.href = "Login";
-                    }
-                }
-            };
-            $.ask("logout", {}, options);
-        };
-
-
-        var getFunctionArray = function (targetFunctionId, functionMenu, searchFlag) {
-            searchFlag.founctionArray.push(functionMenu);
-            if (functionMenu.Id == targetFunctionId) {
-                searchFlag.found = true;
-                return;
-            }
-            if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
-                $.each(functionMenu.SubFunctionList, function (j, subFunctionMenu) {
-                    var currentIndex = searchFlag.founctionArray.length - 1;
-                    getFunctionArray(targetFunctionId, subFunctionMenu, searchFlag);
-                    if (searchFlag.found) {
-                        return false;
-                    } else {
-                        for (var i = searchFlag.founctionArray.length - 1; i > currentIndex; i--) {
-                            searchFlag.founctionArray.pop(i);
-                        }
-                    }
-                });
-            }
-        };
 
 
 
