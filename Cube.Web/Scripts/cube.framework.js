@@ -4,7 +4,7 @@ if (!cube.plugin) {
 }
 
 jQuery.extend({
-    "ask": function (method, data, options, not_self_service) {
+    "callWebService": function (method, data, options, not_self_service) {
         var showMask = true;
         if (options && options.hasOwnProperty("show_mask")) {
             showMask = options.show_mask;

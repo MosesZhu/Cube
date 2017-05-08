@@ -26,6 +26,8 @@ namespace Cube.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.Title = CubeConfig.CubePortalTitle;
+            this.textHeaderInfo.Text = CubeConfig.CubePortalHeaderInfo;
             this.textFooterInfo.Text = CubeConfig.CubePortalFooterInfo;
         }
     }

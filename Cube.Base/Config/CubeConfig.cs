@@ -76,12 +76,48 @@ namespace Cube.Base.Config
             }
         }
 
-        public static string CubeSingleSystemId
+        public static string CubeSystemId
         {
             get
             {
-                return ConfigurationManager.AppSettings[ConfigContents.CUBE_SINGLE_SYSTEM_ID] == null ? string.Empty :
-                    ConfigurationManager.AppSettings[ConfigContents.CUBE_SINGLE_SYSTEM_ID];
+                return ConfigurationManager.AppSettings[ConfigContents.CUBE_SYSTEM_ID] == null ? string.Empty :
+                    ConfigurationManager.AppSettings[ConfigContents.CUBE_SYSTEM_ID];
+            }
+        }
+
+        public static string CubeSystemName
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[ConfigContents.CUBE_SYSTEM_NAME] == null ? string.Empty :
+                    ConfigurationManager.AppSettings[ConfigContents.CUBE_SYSTEM_NAME];
+            }
+        }
+
+        public static string CubePortalHeaderInfo
+        {
+            get
+            {
+                string header = ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_HEADER_INFO] == null ? CubeSystemName :
+                    ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_HEADER_INFO];
+                if (string.IsNullOrEmpty(header)) {
+                    header = CubePortalTitle;
+                }
+                return header;
+            }
+        }
+
+        public static string CubePortalTitle
+        {
+            get
+            {
+                string title = ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_TITLE] == null ? CubeSystemName :
+                    ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_TITLE];
+                if (string.IsNullOrEmpty(title)) {
+                    title = "Portal";
+                }
+
+                return title;
             }
         }
 

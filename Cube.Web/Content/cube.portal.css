@@ -220,6 +220,10 @@ body {
     padding-top: 45px;
 }
 
+#_FunctionMenu.SingleModeMenu > li:first-child {
+    padding-top: 34px;
+}
+
 section.content {
     padding: 0px 0px 15px 0px;
 }

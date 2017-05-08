@@ -166,7 +166,7 @@
                 'mail': mail
             };
 
-            $.ask("Update", data, options);
+            $.callWebService("Update", data, options);
             return true;
         }
 
@@ -185,7 +185,7 @@
                 'login_name': $('#tbxLoginNameInquiry').val(),
                 'name': $('#tbxNameInquiry').val()
             };
-            $.ask("Inquiry", data, options);
+            $.callWebService("Inquiry", data, options);
             return true;
         };
 

@@ -11,7 +11,8 @@
         <header class="main-header">
             <!-- Logo -->
             <div class="logo" style="padding: 0px;">
-                <span class="logo-lg">WebFramework GT 
+                <span class="logo-lg">
+                    <asp:Literal ID="textHeaderInfo" runat="server"></asp:Literal>
                 </span>
             </div>
 

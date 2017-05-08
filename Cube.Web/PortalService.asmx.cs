@@ -47,19 +47,30 @@ namespace Cube.Web
             MenuDTO cubeMenu = getMenuFromWfk(BookmarkIdList);
             if (CubeConfig.SystemMode == Base.Enums.CubeSystemModeEnum.Mulity)
             {
+                cubeMenu.CubeSystemMode = Base.Enums.CubeSystemModeEnum.Mulity.ToString();
                 result.data = cubeMenu;
             }
             else
             {
-                if (CubeConfig.CubeSingleSystemId != null)
+                if (CubeConfig.CubeSystemId != null)
                 {
+                    string systemId = CubeConfig.CubeSystemId;
                     Model.DTO.ProductDTO product = cubeMenu.ProductList.FirstOrDefault(p => 
-                        p.DomainList.Exists(d => d.SystemList.Exists(s => s.Id.ToString().Equals(CubeConfig.CubeSingleSystemId, StringComparison.CurrentCultureIgnoreCase))));
+                        p.DomainList.Exists(d => d.SystemList.Exists(s => s.Id.ToString().Equals(systemId, StringComparison.CurrentCultureIgnoreCase))));
                     if (product != null)
                     {
-                        Model.DTO.DomainDTO domain = product.DomainList.FirstOrDefault(d => d.SystemList.Exists(s => s.Id.ToString().Equals(CubeConfig.CubeSingleSystemId, StringComparison.CurrentCultureIgnoreCase)));
-                        Model.DTO.SystemDTO system = product.SystemList.FirstOrDefault(s => s.Id.ToString().Equals(CubeConfig.CubeSingleSystemId, StringComparison.CurrentCultureIgnoreCase));
-                        result.data = system;
+                        Model.DTO.DomainDTO domain = product.DomainList.FirstOrDefault(d => d.SystemList.Exists(s => s.Id.ToString().Equals(systemId, StringComparison.CurrentCultureIgnoreCase)));
+                        Model.DTO.SystemDTO system = domain.SystemList.FirstOrDefault(s => s.Id.ToString().Equals(systemId, StringComparison.CurrentCultureIgnoreCase));
+
+                        domain.SystemList.Clear();
+                        domain.SystemList.Add(system);
+                        product.DomainList.Clear();
+                        product.DomainList.Add(domain);
+
+                        cubeMenu.BookmarkList.RemoveAll(b => ! b.System_Id.Equals(systemId, StringComparison.CurrentCultureIgnoreCase));
+
+                        cubeMenu.CubeSystemMode = Base.Enums.CubeSystemModeEnum.Single.ToString();
+                        result.data = cubeMenu;
                     }
                 }                
             }

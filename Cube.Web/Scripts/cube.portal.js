@@ -84,40 +84,57 @@
 							"success": function (d) {
 								if (d.success) {
 									//menu muliti language
-									$.each(d.data.LanguageList, function (i, lang) {
-										_Lang_ZhCN[lang.Language_Key] = lang.Zh_Cn;
-										_Lang_ZhTW[lang.Language_Key] = lang.Zh_Tw;
-										_Lang_EnUS[lang.Language_Key] = lang.En_Us;
-									});
+                                    if (d.data) {
+                                        $.each(d.data.LanguageList, function (i, lang) {
+                                            _Lang_ZhCN[lang.Language_Key] = lang.Zh_Cn;
+                                            _Lang_ZhTW[lang.Language_Key] = lang.Zh_Tw;
+                                            _Lang_EnUS[lang.Language_Key] = lang.En_Us;
+                                        });
 
-									_PortalContext.MenuList = d.data.ProductList;
-									_PortalContext.BookmarkList = d.data.BookmarkList;
-									_menu.refreshMenu();
+                                        _PortalContext.MenuList = d.data.ProductList;
+                                        _PortalContext.BookmarkList = d.data.BookmarkList;
+                                        _menu.refreshMenu();
+                                    }									
 								}
 							}
 						};
 
-						$.ask("getMenu", {}, options);
+						$.callWebService("getMenu", {}, options);
 					},
 
 					"refreshMenu": function () {
-						var menuHtml = "";
-						$.each(_PortalContext.MenuList, function (i, product) {
-							menuHtml
-								+= '<li class="header">'
-								+ '<i class="fa fa-bank"></i>'
-								+ '<span lang="' + product.LanguageID + '" style="padding-left:5px;">' + product.Name + '</span>'
-								+ '</li>';
-							$.each(product.DomainList, function (j, domainMenu) {
-								menuHtml += _menu.getDomainMenuHtml(domainMenu);
+                        var menuHtml = "";
+                        if (_PortalContext.CubeSystemMode == "Single") {
+                            try {
+                                $.each(_PortalContext.MenuList, function (i, product) {
+                                    menuHtml
+                                        += '<li class="header">'
+                                        + '<i class="fa fa-bank"></i>'
+                                        + '<span lang="' + product.LanguageID + '" style="padding-left:5px;">' + product.Name + '</span>'
+                                        + '</li>';
+                                    $.each(product.DomainList, function (j, domainMenu) {
+                                        menuHtml += _menu.getDomainMenuHtml(domainMenu);
+                                    });
 
-							});
+                                    $.each(product.SystemList, function (j, systemMenu) {
+                                        menuHtml += _menu.getSystemMenuHtml(systemMenu);
+                                    });
 
-							$.each(product.SystemList, function (j, systemMenu) {
-								menuHtml += _menu.getSystemMenuHtml(systemMenu);
-							});
-						});
-
+                                    $("#_FunctionMenu").removeClass("SingleModeMenu");
+                                });
+                            } catch (error) { }
+                            
+                        } else {
+                            try {
+                                var system = _PortalContext.MenuList[0].DomainList[0].SystemList[0];
+                                $.each(system.FunctionList, function (k, functionMenu) {
+                                    menuHtml += _menu.getFunctionMenuHtml(functionMenu);
+                                });
+                                $("#_FunctionMenu").addClass("SingleModeMenu");
+                            } catch (error) { }
+                            
+                        }
+						
 						$("#_FunctionMenu").html(menuHtml);
 
 						var bookmarkMenuHtml = _menu.getBookmarkMenuHtml();						
@@ -657,7 +674,7 @@
 							'functionId': functionid
 						};
 
-						$.ask("addToBookmark", data, options);
+                        $.callWebService("addToBookmark", data, options);
 					},
 
 					"removeFromBookmark": function (functionid) {
@@ -673,7 +690,7 @@
 							'functionId': functionid
 						};
 
-						$.ask("removeFromBookmark", data, options);
+                        $.callWebService("removeFromBookmark", data, options);
                     },
 
                     "toggleBookmarkSidebar": function (btn) {
@@ -873,7 +890,7 @@
 						}
 					};
 
-					$.ask("getUserInfo", {}, options);
+                    $.callWebService("getUserInfo", {}, options);
 				},
 				"refreshUserInfo": function () {
 					$("#lblUserName").text(_PortalContext.UserInfo.Name);
@@ -895,7 +912,7 @@
 						"show_mask": false
 					};
 
-					$.ask("getNews", {}, options);
+                    $.callWebService("getNews", {}, options);
 
 					if (this.options.TIMER_ENABLE) {
 						clearInterval(this.timer);
@@ -993,7 +1010,7 @@
 						}
 					}
 				};
-				$.ask("logout", {}, options);
+                $.callWebService("logout", {}, options);
 				return false;
             },
             "state": {

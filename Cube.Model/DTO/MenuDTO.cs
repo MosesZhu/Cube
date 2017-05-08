@@ -14,6 +14,8 @@ namespace Cube.DTO
         public List<ProductDTO> ProductList { get; set; }
         public List<FunctionDTO> BookmarkList { get; set; }
         public List<Mc_Language> LanguageList { get; set; }
+
+        public string CubeSystemMode { get; set; }
         public MenuDTO()
         {
             ProductList = new List<ProductDTO>();

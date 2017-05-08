@@ -27,7 +27,7 @@
             //    }
             //};
 
-            //$.ask("http://10.85.129.44/CubePortal/LoginService.asmx/login", param, options, true);
+            //$.callWebService("http://10.85.129.44/CubePortal/LoginService.asmx/login", param, options, true);
 
             $.ajax({
                 url: "http://10.85.129.44/CubePortal/LoginService.asmx/login",
