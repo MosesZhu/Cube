@@ -242,9 +242,14 @@ section.content {
 }
 
 #_BreadcrumbContent {
-    float: right;
-    padding-right: 10px;
+    float: left;
+    padding-left: 10px;
     font-size: 10px;
+}
+
+#_FunctionMenu a {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #_FunctionMenu a:hover, header a:hover, aside a:hover {

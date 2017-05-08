@@ -11,7 +11,7 @@ namespace Cube.Base.Config
 {
     public static class CubeConfig
     {
-        private static void InitCache() 
+        private static void InitCache()
         {
             //ConfigurationManager.AppSettings[];
             LastCacheTime = DateTime.Now;
@@ -41,12 +41,12 @@ namespace Cube.Base.Config
         private static Dictionary<string, string> _cache;
         public static Dictionary<string, string> Cache
         {
-            get { 
-                if(_cache == null || IsCacheOverTime())
+            get {
+                if (_cache == null || IsCacheOverTime())
                 {
                     InitCache();
                 }
-                
+
                 return _cache;
             }
             set {
@@ -54,7 +54,7 @@ namespace Cube.Base.Config
             }
         }
 
-        public static bool IsDebugMode 
+        public static bool IsDebugMode
         {
             get {
                 return String.Equals(FindCacheValue(ConfigContents.CUBE_IS_DEBUG_MODE), "true", StringComparison.CurrentCultureIgnoreCase);
@@ -65,6 +65,23 @@ namespace Cube.Base.Config
         {
             get {
                 return FindCacheValue(ConfigContents.CUBE_LOGIN_URL);
+            }
+        }
+
+        public static CubeSystemModeEnum SystemMode
+        {
+            get {
+                return ConfigurationManager.AppSettings[ConfigContents.CUBE_SYSTEM_MODE] == null ? CubeSystemModeEnum.Mulity :
+                    (CubeSystemModeEnum)Enum.Parse(typeof(CubeSystemModeEnum), ConfigurationManager.AppSettings[ConfigContents.CUBE_SYSTEM_MODE]);
+            }
+        }
+
+        public static string CubeSingleSystemId
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[ConfigContents.CUBE_SINGLE_SYSTEM_ID] == null ? "" :
+                    ConfigurationManager.AppSettings[ConfigContents.CUBE_SINGLE_SYSTEM_ID];
             }
         }
 

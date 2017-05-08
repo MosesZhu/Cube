@@ -92,6 +92,7 @@
     <Compile Include="CubeConstants.cs" />
     <Compile Include="CubeHttpModule.cs" />
     <Compile Include="Enums\AuthorityModeEnum.cs" />
+    <Compile Include="Enums\CubeSystemModeEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSO\CubeSSOContext.cs" />
     <Compile Include="Utility\DBUtility.cs" />

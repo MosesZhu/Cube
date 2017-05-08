@@ -38,18 +38,42 @@ namespace Cube.Web
             ResultDTO result = new ResultDTO()
             {
                 success = true
-            };
-            MenuDTO cubeMenu = new MenuDTO();
-            //cubeMenu = GetMenuImp();
+            };            
 
             List<Guid> BookmarkIdList = CubeDb.From<Mc_Bookmark>()
                 .Where(Mc_Bookmark._.User_Id == SSOContext.Current.UserID)
-                .Select(Mc_Bookmark._.Function_Id).ToList<Guid>();           
-            try
+                .Select(Mc_Bookmark._.Function_Id).ToList<Guid>();
+
+            MenuDTO cubeMenu = getMenuFromWfk(BookmarkIdList);
+            if (CubeConfig.SystemMode == Base.Enums.CubeSystemModeEnum.Mulity)
             {
+                result.data = cubeMenu;
+            }
+            else
+            {
+                if (CubeConfig.CubeSingleSystemId != null)
+                {
+                    Model.DTO.ProductDTO product = cubeMenu.ProductList.FirstOrDefault(p => 
+                        p.DomainList.Exists(d => d.SystemList.Exists(s => s.Id.ToString().Equals(CubeConfig.CubeSingleSystemId, StringComparison.CurrentCultureIgnoreCase))));
+                    if (product != null)
+                    {
+                        Model.DTO.DomainDTO domain = product.DomainList.FirstOrDefault(d => d.SystemList.Exists(s => s.Id.ToString().Equals(CubeConfig.CubeSingleSystemId, StringComparison.CurrentCultureIgnoreCase)));
+                        Model.DTO.SystemDTO system = product.SystemList.FirstOrDefault(s => s.Id.ToString().Equals(CubeConfig.CubeSingleSystemId, StringComparison.CurrentCultureIgnoreCase));
+                        result.data = system;
+                    }
+                }                
+            }
+
+            return result;
+        }
+
+        private MenuDTO getMenuFromWfk(List<Guid> BookmarkIdList)
+        {
+            MenuDTO cubeMenu = new MenuDTO();
+            try {
                 string menuXmlStr = menuXmlStr = PermissionService.GetAuthorizedProductFunctionTree(CubeSSOContext.Current.WfkSSOContext.UserID,
-                        CubeSSOContext.Current.WfkSSOContext.OrgID,
-                        CubeSSOContext.Current.WfkSSOContext.ProductID, true);
+                    CubeSSOContext.Current.WfkSSOContext.OrgID,
+                    CubeSSOContext.Current.WfkSSOContext.ProductID, true);
                 if (!string.IsNullOrEmpty(menuXmlStr))
                 {
                     Model.DTO.ProductDTO bachProduct = new Model.DTO.ProductDTO()
@@ -121,15 +145,10 @@ namespace Cube.Web
                     }
                     cubeMenu.ProductList.Add(bachProduct);
                 }
-
-                result.data = cubeMenu;
             }
-            catch (Exception ex)
-            {
-                result.success = false;
-                result.message = ex.Message;
-            }            
-            return result;
+            catch (Exception ex) { }
+            
+            return cubeMenu;
         }
 
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]

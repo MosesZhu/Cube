@@ -6,7 +6,10 @@
 					var headerHeight = $("header").height();
 					if (!_PortalContext.HeaderVisible) {
 						headerHeight = 0;
-					}
+                    }
+                    if (headerHeight == 100 && $(window).width() >= 768) {
+                        headerHeight = 50;
+                    }
 					var footerHeight = $(".main-footer").height();
 					$("section.content").height($(window).height() - headerHeight - footerHeight - 72);
 
@@ -731,7 +734,8 @@
 								}
 							});
 						}
-						$("#_BreadcrumbContent").hide().html(bread).show(300);
+						//$("#_BreadcrumbContent").hide().html(bread).show(300);
+                        $("#_BreadcrumbContent").html(bread);
 						$.language.change(_Context.CurrentLang);
 					}
 				},
@@ -895,10 +899,16 @@
 				"getNewsItemHtml": function (news) {
 					var date = new Date(parseInt(news.Created_Date.replace("/Date(", "").replace(")/", ""), 10));
 					var html = "<li>"
-						+ "<a onclick='return _news.openNews(\"" + news.Id + "\")'>"
-						+ "<h4>" + news.Subject + "<small><i class='fa fa-clock-o'></i>&nbsp;" + (new Date(date)).Format("yyyy-MM-dd") + "</small>"
-						+ "</h4>"
-						+ "<p><i class='fa fa-user'></i>&nbsp;" + news.Created_By + "</p></a></li>";
+                        + "<a onclick='return _news.openNews(\"" + news.Id + "\")' >"
+						//+ "<h4 style='overflow:hidden;'>" + news.Subject + "<small><i class='fa fa-clock-o'></i>&nbsp;" + (new Date(date)).Format("yyyy-MM-dd") + "</small>"
+						//+ "</h4>"
+                        //+ "<p><i class='fa fa-user'></i>&nbsp;" + news.Created_By + "</p>"
+                        + "<div>"
+                        + "<h4 style='overflow:hidden;text-overflow:ellipsis;'>" + news.Subject + "</h4>"
+                        + "</div>"
+                        + "<small><i class='fa fa-clock-o'></i>&nbsp;" + (new Date(date)).Format("yyyy-MM-dd") + "</small>"
+                        + "&nbsp;&nbsp;<small><i class='fa fa-user'></i>&nbsp;" + news.Created_By + "</small>"
+                        + "</a></li>";
 					return html;
 				},
 				"openNews": function (newsId) {
@@ -915,7 +925,7 @@
 				this.ui.resetContentSize();
 				$(window).on("resize", function () {
 					_ui.resetContentSize();
-				});
+                });
 
 				$("#search-btn").on("click", function () {
 					_menu.searchMenu();
