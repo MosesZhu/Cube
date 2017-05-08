@@ -10,10 +10,16 @@
                     if (headerHeight == 100 && $(window).width() >= 768) {
                         headerHeight = 50;
                     }
+
+                    $(".main-sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
+                    $("#bookmark_sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
+                    $("#control_sidebar").animate({ "padding-top": headerHeight + "px" }, 200);
+
 					var footerHeight = $(".main-footer").height();
 					$("section.content").height($(window).height() - headerHeight - footerHeight - 72);
 
-					$(".content-wrapper").css("padding-top", headerHeight + "px");
+                    $(".content-wrapper").css("padding-top", headerHeight + "px");
+        
 					//$(".content-wrapper").animate({
 					//	"padding-top": headerHeight + "px"
 					//}, 200);
@@ -624,7 +630,16 @@
 							}
 						});
 					}
-				},
+                },
+                "setting": {
+                    "toggleSettingSidebar": function (btn) {
+                        if ($("#control_sidebar").hasClass("control-sidebar-open")) {
+                            $(btn).addClass("active");
+                        } else {
+                            $(btn).removeClass("active");
+                        }
+                    }
+                },
 				"bookmark": {
 					"addToBookmark": function (functionid) {
 						if (functionid.substring(0, 3) == "bk_") {
@@ -659,7 +674,15 @@
 						};
 
 						$.ask("removeFromBookmark", data, options);
-					}
+                    },
+
+                    "toggleBookmarkSidebar": function (btn) {
+                        if ($("#bookmark_sidebar").hasClass("control-sidebar-open")) {
+                            $(btn).addClass("active");
+                        } else {
+                            $(btn).removeClass("active");
+                        }
+                    }
 				},
 				"breadcrumb": {
 					"toggleBreadcrumb": function () {
@@ -972,7 +995,24 @@
 				};
 				$.ask("logout", {}, options);
 				return false;
-			}
+            },
+            "state": {
+                "changeLanguage": function () {
+                    setLanguage($("#ddlLanguage").val());
+                    this.syncFramesState();
+                },
+                "syncFramesState": function () {
+                    $("iframe").each(function (i, f) {
+                        var oldSrc = $(f).attr("src");
+                        var oldUrl = oldSrc.split("#!")[0];
+                        var map = {};
+                        map = $.uriAnchor.makeAnchorMap(oldSrc);
+                        map["lang"] = _Context.CurrentLang;
+                        var mapStr = $.uriAnchor.makeAnchorString(map);
+                        $(f).attr("src", oldUrl + "#!" + mapStr);
+                    });
+                }
+            }
 		}
 	}
 });
@@ -983,7 +1023,9 @@ var _header = _ui.header;
 var _menu = _ui.menu;
 var _cmenu = _ui.context_menu;
 var _bookmark = _ui.bookmark;
+var _setting = _ui.setting;
 var _breadcrumb = _ui.breadcrumb;
 var _form = _ui.form;
 var _user = _portal.user;
 var _news = _portal.news;
+var _state = _portal.state;

@@ -166,6 +166,13 @@ namespace Cube.Web
             return result;
         }
 
+
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
+        public ResultDTO getPorterInfo()
+        {
+            return null;
+        }
         /// <summary>
         /// API：获得用户偏好设置
         /// </summary>

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Cube.Base;
 using System.Web.UI.HtmlControls;
+using Cube.Base.Config;
 
 namespace Cube.Web
 {
@@ -25,7 +26,7 @@ namespace Cube.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            this.textFooterInfo.Text = CubeConfig.CubePortalFooterInfo;
         }
     }
 }

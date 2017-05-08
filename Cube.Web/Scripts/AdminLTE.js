@@ -475,6 +475,7 @@ function _init() {
                         _this.close($(s), o.slide);
                     }
                 });
+                $(".sidebar_button").removeClass("active");
                 if (!thisSidebar.hasClass('control-sidebar-open')
                     && !$('body').hasClass('control-sidebar-open')) {                    
                     _this.open(thisSidebar, o.slide);

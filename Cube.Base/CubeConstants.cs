@@ -19,7 +19,8 @@ namespace Cube.Common
     {
         public static readonly string AUTHORITY_MODE = "AuthorityMode";
         public static readonly string CUBE_SYSTEM_MODE = "CubeSystemMode";
-        public static readonly string CUBE_SINGLE_SYSTEM_ID = "CubeSingleSystemId";        
+        public static readonly string CUBE_SINGLE_SYSTEM_ID = "CubeSingleSystemId";
+        public static readonly string CUBE_PORTAL_FOOTER_INFO = "CubePortalFooterInfo";
         public static readonly string CUBE_IS_DEBUG_MODE = "CubeIsDebugMode";
         public static readonly string CUBE_LOGIN_URL = "CubeLoginUrl";
         public static readonly string TOKEN_OVERDUE_MINIUTE = "CubeTokenOverdueMiniute";

@@ -80,8 +80,17 @@ namespace Cube.Base.Config
         {
             get
             {
-                return ConfigurationManager.AppSettings[ConfigContents.CUBE_SINGLE_SYSTEM_ID] == null ? "" :
+                return ConfigurationManager.AppSettings[ConfigContents.CUBE_SINGLE_SYSTEM_ID] == null ? string.Empty :
                     ConfigurationManager.AppSettings[ConfigContents.CUBE_SINGLE_SYSTEM_ID];
+            }
+        }
+
+        public static string CubePortalFooterInfo
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_FOOTER_INFO] == null ? string.Empty :
+                    ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_FOOTER_INFO];
             }
         }
 

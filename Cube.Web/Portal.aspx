@@ -63,10 +63,10 @@
                             </ul>
                         </li>
                         <!-- Right Sidebar Button -->
-                        <li>
+                        <li id="btnToggleSettingSidebar" class="sidebar_button" onclick="return _setting.toggleSettingSidebar(this);">
                             <a data-toggle="control-sidebar" data-target="control_sidebar"><i class="fa fa-gears"></i></a>
                         </li>
-                        <li>
+                        <li id="btnToggleBookmarkSidebar" class="sidebar_button" onclick="return _bookmark.toggleBookmarkSidebar(this);">
                             <a data-toggle="control-sidebar" data-target="bookmark_sidebar" ><i class="fa fa-star"></i></a>
                         </li>
                         <li>                           
@@ -126,12 +126,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer" style="position: fixed; bottom: 0px; width: 100%; padding: 8px;">
-            <!-- To the right -->
-            <div class="pull-right hidden-xs">
-                Anything you want
-            </div>
-            <!-- Default to the left -->
-            Moses Demo<strong> WebFramework GT</strong>
+            <div id="footerContainer"><asp:Literal ID="textFooterInfo" runat="server"></asp:Literal></div>
         </footer>
 
         <!-- Bookmark Sidebar -->
@@ -163,7 +158,7 @@
                                         <option value="ZhTW">中文繁體</option>
                                     </select>
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-success btn-flat btn-skin-primary" onclick="return changeLanguage();" lang="lang_confirm">Confirm</button>
+                                        <button type="button" class="btn btn-success btn-flat btn-skin-primary" onclick="return _state.changeLanguage();" lang="lang_confirm">Confirm</button>
                                     </div>
                                 </div>
                             </a>
@@ -310,25 +305,6 @@
         $(function () {
             _portal.init();           
         });
-
-
-
-        var changeLanguage = function () {
-            setLanguage($("#ddlLanguage").val());
-            syncFramesState();
-        };
-
-        var syncFramesState = function () {
-            $("iframe").each(function (i, f) {
-                var oldSrc = $(f).attr("src");
-                var oldUrl = oldSrc.split("#!")[0];
-                var map = {};
-                map = $.uriAnchor.makeAnchorMap(oldSrc);
-                map["lang"] = _Context.CurrentLang;
-                var mapStr = $.uriAnchor.makeAnchorString(map);
-                $(f).attr("src", oldUrl + "#!" + mapStr);
-            });
-        }
     </script>
 </asp:Content>
 
