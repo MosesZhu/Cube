@@ -85,6 +85,7 @@
 								if (d.success) {
 									//menu muliti language
                                     if (d.data) {
+                                        _PortalContext.SystemMode = d.data.CubeSystemMode;
                                         $.each(d.data.LanguageList, function (i, lang) {
                                             _Lang_ZhCN[lang.Language_Key] = lang.Zh_Cn;
                                             _Lang_ZhTW[lang.Language_Key] = lang.Zh_Tw;
@@ -104,7 +105,7 @@
 
 					"refreshMenu": function () {
                         var menuHtml = "";
-                        if (_PortalContext.CubeSystemMode == "Single") {
+                        if (_PortalContext.SystemMode == "Mulity") {
                             try {
                                 $.each(_PortalContext.MenuList, function (i, product) {
                                     menuHtml

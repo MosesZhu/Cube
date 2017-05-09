@@ -98,11 +98,9 @@ namespace Cube.Base.Config
         {
             get
             {
-                string header = ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_HEADER_INFO] == null ? CubeSystemName :
+                string header = ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_HEADER_INFO] == null ? CubePortalTitle :
                     ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_HEADER_INFO];
-                if (string.IsNullOrEmpty(header)) {
-                    header = CubePortalTitle;
-                }
+
                 return header;
             }
         }
@@ -111,8 +109,12 @@ namespace Cube.Base.Config
         {
             get
             {
-                string title = ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_TITLE] == null ? CubeSystemName :
+                string title = ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_TITLE] == null ? "" :
                     ConfigurationManager.AppSettings[ConfigContents.CUBE_PORTAL_TITLE];
+                if (string.IsNullOrEmpty(title) && CubeConfig.SystemMode == CubeSystemModeEnum.Single)
+                {
+                    title = CubeSystemName;
+                }
                 if (string.IsNullOrEmpty(title)) {
                     title = "Portal";
                 }

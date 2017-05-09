@@ -267,3 +267,7 @@ section.content {
 #newsList p {
     text-align: right;
 }
+
+#newsList a {
+    color: #72afd2;
+}

@@ -292,6 +292,7 @@
 <asp:Content ID="PageScriptContent" ContentPlaceHolderID="PageScriptContentHolder" runat="server">
     <script>
         var _PortalContext = {
+            "SystemMode": null,
             "MenuList": null,
             "BookmarkList": null,
             "CurrentFunctionId": null,
