@@ -261,6 +261,8 @@
             <li><a menuindex="MENU_EXPAND_ALL" lang="lang_expand_all">expand all</a></li>
             <li><a menuindex="MENU_COLLAPSE" lang="lang_collapse">collapse</a></li>
             <li><a menuindex="MENU_COLLAPSE_ALL" lang="lang_collapse_all">collapse all</a></li>
+            <li class="divider"></li>
+            <li><a menuindex="MENU_REFRESH" lang="lang_refresh">collapse all</a></li>            
         </ul>
     </div>
     <div id="bookmark-context-menu">
