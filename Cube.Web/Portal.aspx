@@ -6,7 +6,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
     <div class="wrapper" style="height: 100%; background-color: transparent;">
         <a class="header-toggle" data-toggle="" role="button" id="btnShowHeader" onclick="return _header.toggleHeader();">
-            <span class="fa fa-sort-down"></span>
+            <i class="fa fa-sort-down"></i>
         </a>
         <header class="main-header">
             <!-- Logo -->
