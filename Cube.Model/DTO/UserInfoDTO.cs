@@ -17,6 +17,8 @@ namespace Cube.Model.DTO
         public string ImageUrl { get; set; }
 
         public string LoginTime { get; set; }
+
+        public List<string> DepartmentList { get; set; }
         /// <summary>
         /// 用户设置
         /// </summary>
@@ -29,5 +31,10 @@ namespace Cube.Model.DTO
         /// user菜单
         /// </summary>
         public List<ProductDTO> MenuList { get; set; }
+
+        public UserInfoDTO()
+        {
+            this.DepartmentList = new List<string>();
+        }
     }
 }

@@ -148,6 +148,7 @@ namespace Cube.Base
 
         public PageServiceBase()
         {
+
             if (!Context.Request.Url.ToString().ToUpper().Contains(UNCHECK_URL.ToUpper()) && !ValidateToken())
             {
                 throw new Exception("");

@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Portal.Master" AutoEventWireup="true" CodeBehind="Portal.aspx.cs" Inherits="Cube.Web.Portal" %>
 
-<asp:Content ID="PageStyleContent" ContentPlaceHolderID="PageStyleContentHolder" runat="server">
+<asp:Content ID="PageStyleContent" ContentPlaceHolderID="PageHeadContentHolder" runat="server">
+    <title>Portal</title>
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
@@ -45,14 +46,14 @@
                         <li class="dropdown user user-menu" id="navUser">
                             <a class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="img/user.jpg" class="user-image userImage" alt="User Image">
-                                <span class="hidden-xs" id="lblUserName">Moses.Zhu</span>
+                                <span class="hidden-xs" id="lblUserName"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="user-header">
                                     <img src="img/user.jpg" class="img-circle userImage" alt="User Image">
-                                    <p id="lblUserDepartment">
-                                        Moses.Zhu - AIC12
-                                        <small>tel: +88861873</small>
+                                    <p>
+                                        <span id="lblUserDepartment">User Name - Department</span>
+                                        <small>tel: +00000000</small>
                                         <small id="lblLoginTime"></small>
                                     </p>
                                 </li>
@@ -85,16 +86,14 @@
             <section class="sidebar" id="scrollspy">
 
                 <!-- search form (Optional) -->
-                <form method="get" class="sidebar-form">
-                    <div class="input-group" style="position: absolute; top: 0px;">
-                        <input type="text" name="q" id="tbxSearchMenu" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button type="button" name="search" id="search-btn" class="btn btn-flat">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
+                <div class="input-group" style="position: absolute; top: 0px;">
+                    <input type="text" name="q" id="tbxSearchMenu" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button type="button" name="search" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
                 <!-- /.search form -->
 
                 <!-- Sidebar Menu -->

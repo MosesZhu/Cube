@@ -331,6 +331,7 @@ namespace Cube.Web
             UserInfoDTO result = new UserInfoDTO();
             result.Id = SSOContext.Current.UserID;
             result.Name = SSOContext.Current.UserName;
+                        
             result.LoginTime = GetLoginTime(SSOContext.Current.ProductName, SSOContext.Current.OrgName, SSOContext.Current.UserName);
 
             Mc_User_Image userImage = CubeDb.From<Mc_User_Image>().Where(Mc_User_Image._.User_Id == SSOContext.Current.UserID).ToList<Mc_User_Image>().FirstOrDefault();

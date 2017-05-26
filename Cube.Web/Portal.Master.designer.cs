@@ -13,13 +13,13 @@ namespace Cube.Web {
     public partial class SiteMaster {
         
         /// <summary>
-        /// PageStyleContentHolder 控件。
+        /// PageHeadContentHolder 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder PageStyleContentHolder;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder PageHeadContentHolder;
         
         /// <summary>
         /// MainContentHolder 控件。

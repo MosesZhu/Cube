@@ -78,7 +78,11 @@
 						});
 					}
 				},
-				"menu": {
+                "menu": {
+                    "_BeforeSearchMenu": null,
+
+                    "_LastSearchKeywords": null,
+
 					"initMenu": function () {
 						var options = {
 							"success": function (d) {
@@ -274,126 +278,112 @@
 						return menuHtml;
 					},
 
-					"searchMenu": function () {
-						if ($("#tbxSearchMenu").val().length > 0) {
-							var search = $("#tbxSearchMenu").val();
-
+                    "searchMenu": function () {
+                        if (this._LastSearchKeywords == null || this._LastSearchKeywords == "") {
+                            this._BeforeSearchMenu = $("#_FunctionMenu").html();
+                        }
+                        var searchKeywords = $("#tbxSearchMenu").val();
+                        if (searchKeywords.length > 0) {
 							var tempMenuList = $.extend(true, {}, _PortalContext.MenuList);
-							$.each(tempMenuList, function (i, domain) {
-								if (domain.Name.indexOf(search) >= 0) {
-									domain.bingo = true;
-								}
+							$.each(tempMenuList, function (i, product) {
+                                if (product.Name.indexOf(searchKeywords) >= 0) {
+                                    product.bingo = true;
+                                    $.each(product.DomainList, function (i1, domain) {
+                                        domain.bingo = true;
+                                        $.each(domain.SystemList, function (i2, system) {
+                                            system.bingo = true;
+                                            $.each(system.FunctionList, function (i3, func) {
+                                                _menu.searchSetFunctionMenuFound(func);
+                                            });
+                                        });
+                                    });
+                                    return true;
+                                }
 
-								$.each(domain.SystemGroupList, function (j, groupMenu) {
-									if (domain.bingo) {
-										groupMenu.bingo = true;
-									} else if (groupMenu.Code.indexOf(search) >= 0
-										|| (_Lang_ZhCN[groupMenu.Language_Key] && _Lang_ZhCN[groupMenu.Language_Key].indexOf(search) >= 0)
-										|| (_Lang_ZhTW[groupMenu.Language_Key] && _Lang_ZhTW[groupMenu.Language_Key].indexOf(search) >= 0)
-										|| (_Lang_EnUS[groupMenu.Language_Key] && _Lang_EnUS[groupMenu.Language_Key].indexOf(search) >= 0)) {
-										domain.bingo = true;
-										groupMenu.bingo = true;
-									}
+                                $.each(product.DomainList, function (j, domain) {
+                                    if (domain.Code.indexOf(searchKeywords) >= 0) {
+                                        product.bingo = true;
+                                        domain.bingo = true;
+                                        $.each(domain.SystemList, function (j1, system) {
+                                            system.bingo = true;
+                                            $.each(system.FunctionList, function (j2, func) {
+                                                _menu.searchSetFunctionMenuFound(func);
+                                            });
+                                        });
+                                        return true;
+                                    }
 
-									$.each(groupMenu.SystemList, function (j, systemMenu) {
-										if (groupMenu.bingo) {
-											systemMenu.bingo = true;
-										} else if (systemMenu.Code.indexOf(search) >= 0
-											|| (_Lang_ZhCN[systemMenu.Language_Key] && _Lang_ZhCN[systemMenu.Language_Key].indexOf(search) >= 0)
-											|| (_Lang_ZhTW[systemMenu.Language_Key] && _Lang_ZhTW[systemMenu.Language_Key].indexOf(search) >= 0)
-											|| (_Lang_EnUS[systemMenu.Language_Key] && _Lang_EnUS[systemMenu.Language_Key].indexOf(search) >= 0)) {
-											domain.bingo = true;
-											groupMenu.bingo = true;
-											systemMenu.bingo = true;
-										}
+                                    $.each(domain.SystemList, function (k, system) {
+                                        if (system.Code.indexOf(searchKeywords) >= 0) {
+                                            product.bingo = true;
+                                            domain.bingo = true;
+                                            system.bingo = true;
+                                            $.each(system.FunctionList, function (k1, func) {
+                                                _menu.searchSetFunctionMenuFound(func);
+                                            });
+                                            return true;
+                                        }
 
-										$.each(systemMenu.FunctionList, function (j, functionMenu) {
-											if (systemMenu.bingo) {
-												functionMenu.bingo = true;
-											} else if (functionMenu.Code.indexOf(search) >= 0
-												|| (_Lang_ZhCN[functionMenu.Language_Key] && _Lang_ZhCN[functionMenu.Language_Key].indexOf(search) >= 0)
-												|| (_Lang_ZhTW[functionMenu.Language_Key] && _Lang_ZhTW[functionMenu.Language_Key].indexOf(search) >= 0)
-												|| (_Lang_EnUS[functionMenu.Language_Key] && _Lang_EnUS[functionMenu.Language_Key].indexOf(search) >= 0)) {
-												domain.bingo = true;
-												groupMenu.bingo = true;
-												systemMenu.bingo = true;
-												functionMenu.bingo = true;
-											}
+                                        $.each(system.FunctionList, function (l, func) {
+                                            if (func.Code.indexOf(searchKeywords) >= 0
+                                                || (_Lang_ZhCN[func.Language_Key] && _Lang_ZhCN[func.Language_Key].indexOf(search) >= 0)
+                                                || (_Lang_ZhTW[func.Language_Key] && _Lang_ZhTW[func.Language_Key].indexOf(search) >= 0)
+                                                || (_Lang_EnUS[func.Language_Key] && _Lang_EnUS[func.Language_Key].indexOf(search) >= 0)) {
+                                                product.bingo = true;
+                                                domain.bingo = true;
+                                                system.bingo = true;
+                                                func.bingo = true;
+                                                _menu.searchSetFunctionMenuFound(func);
+                                                return true;
+                                            }
 
-											if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
-												$.each(functionMenu.SubFunctionList, function (i, subFunction) {
-													_menu.searchFunctionMenu(search, subFunction, functionMenu, domain, groupMenu, systemMenu);
-												});
-											}
-										});
-									});
-								});
-
-								$.each(domain.SystemList, function (j, systemMenu) {
-									if (domain.bingo) {
-										systemMenu.bingo = true;
-									} else if (systemMenu.Code.indexOf(search) >= 0
-										|| (_Lang_ZhCN[systemMenu.Language_Key] && _Lang_ZhCN[systemMenu.Language_Key].indexOf(search) >= 0)
-										|| (_Lang_ZhTW[systemMenu.Language_Key] && _Lang_ZhTW[systemMenu.Language_Key].indexOf(search) >= 0)
-										|| (_Lang_EnUS[systemMenu.Language_Key] && _Lang_EnUS[systemMenu.Language_Key].indexOf(search) >= 0)) {
-										domain.bingo = true;
-										systemMenu.bingo = true;
-									}
-
-									$.each(systemMenu.FunctionList, function (j, functionMenu) {
-										if (systemMenu.bingo) {
-											functionMenu.bingo = true;
-										} else if (functionMenu.Code.indexOf(search) >= 0
-											|| (_Lang_ZhCN[functionMenu.Language_Key] && _Lang_ZhCN[functionMenu.Language_Key].indexOf(search) >= 0)
-											|| (_Lang_ZhTW[functionMenu.Language_Key] && _Lang_ZhTW[functionMenu.Language_Key].indexOf(search) >= 0)
-											|| (_Lang_EnUS[functionMenu.Language_Key] && _Lang_EnUS[functionMenu.Language_Key].indexOf(search) >= 0)) {
-											domain.bingo = true;
-											systemMenu.bingo = true;
-											functionMenu.bingo = true;
-										}
-
-										if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
-											$.each(functionMenu.SubFunctionList, function (i, subFunction) {
-												_menu.searchFunctionMenu(search, subFunction, functionMenu, domain, null, systemMenu);
-											});
-										}
-									});
-								});
+                                            if (func.SubFunctionList && func.SubFunctionList.length > 0) {
+                                                $.each(func.SubFunctionList, function (i, subFunc) {
+                                                    _menu.searchFunctionMenu(searchKeywords, subFunc, func, product, domain, system);
+                                                });
+                                            }
+                                        });
+                                    });
+                                });								
 							});
 
-							_menu.refreshSearchMenu(tempMenuList);
-						} else {
-							_menu.refreshMenu();
-						}
-					},
+                            _menu.refreshSearchMenu(tempMenuList);
+                            _menu.expandAllMenu();
+                        } else {
+                            if (this._BeforeSearchMenu != null) {
+                                $("#_FunctionMenu").html(this._BeforeSearchMenu);
+                            } else {
+                                _menu.refreshMenu();
+                            }							
+                        }
+
+                        this._LastSearchKeywords = searchKeywords;
+                    },
+
+                    "searchSetFunctionMenuFound": function (functionMenu) {
+                        functionMenu.bingo = true;
+                        if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
+                            $.each(functionMenu.SubFunctionList, function (i, subFunction) {
+                                _menu.searchSetFunctionMenuFound(subFunction);
+                            });
+                        }
+                    },
 
 					"refreshSearchMenu": function (menuList) {
 						var menuHtml = "";
-						$.each(menuList, function (i, domain) {
-							if (domain.bingo) {
+						$.each(menuList, function (i, product) {
+                            if (product.bingo) {
 								menuHtml
 									+= '<li class="header">'
 									+ '<i class="fa fa-bank"></i>'
-									+ '<span lang="' + domain.LanguageID + '" style="padding-left:5px;">' + domain.Name + '</span>'
+                                    + '<span lang="' + product.LanguageID + '" style="padding-left:5px;">' + product.Name + '</span>'
 									+ '</li>';
-								$.each(domain.SystemGroupList, function (j, groupMenu) {
-									menuHtml += _menu.getSearchDomainMenuHtml(groupMenu);
+                                $.each(product.DomainList, function (j, domain) {
+                                    menuHtml += _menu.getSearchDomainMenuHtml(domain);
 
-								});
-
-								$.each(domain.SystemList, function (j, systemMenu) {
-									menuHtml += _menu.getSearchSystemMenuHtml(systemMenu);
 								});
 							}
 						});
-
-						if (_PortalContext.BookmarkList.length > 0) {
-							menuHtml
-								+= '<li class="header">'
-								+ '<i class="fa fa-star"></i>'
-								+ '<span lang="lang_favorites" style="padding-left:5px;">Bookmark</span>'
-								+ '</li>';
-						}
 
 						$("#_FunctionMenu").html(menuHtml);
 
@@ -402,73 +392,73 @@
 						$.language.change(_Context.CurrentLang);
 					},
 
-					"getSearchDomainMenuHtml": function (domainMenu) {
+					"getSearchDomainMenuHtml": function (domain) {
 						var menuHtml = '';
-						if (domainMenu.bingo) {
+                        if (domain.bingo) {
 							menuHtml = '<li class="treeview">'
 								+ '<a>'
 								+ '<i class="fa fa-bank text-blue"></i>'
-								+ '<span lang="' + domainMenu.Language_Key + '">' + domainMenu.Code + '</span>'
+                                + '<span lang="' + domain.Language_Key + '">' + domain.Code + '</span>'
 								+ '<span class="pull-right-container">'
 								+ '<i class="fa fa-angle-left pull-right"></i>'
 								+ '</span>'
 								+ '</a>';
 							menuHtml += '<ul class="treeview-menu">';
-							$.each(domainMenu.SystemList, function (k, systemMenu) {
-								menuHtml += _menu.getSystemMenuHtml(systemMenu);
+                            $.each(domain.SystemList, function (i, system) {
+                                menuHtml += _menu.getSearchSystemMenuHtml(system);
 							});
 							menuHtml += '</ul></li>';
 						}
 						return menuHtml;
 					},
 
-					"getSearchSystemMenuHtml": function (systemMenu) {
+					"getSearchSystemMenuHtml": function (system) {
 						var menuHtml = '';
-						if (systemMenu.bingo) {
+                        if (system.bingo) {
 							menuHtml = '<li class="treeview">'
 								+ '<a>'
 								+ '<i class="fa fa-laptop text-blue"></i>'
-								+ '<span lang="' + systemMenu.Language_Key + '">' + systemMenu.Code + '</span>'
+                                + '<span lang="' + system.Language_Key + '">' + system.Code + '</span>'
 								+ '<span class="pull-right-container">'
 								+ '<i class="fa fa-angle-left pull-right"></i>'
 								+ '</span>'
 								+ '</a>';
 							menuHtml += '<ul class="treeview-menu">';
-							$.each(systemMenu.FunctionList, function (k, functionMenu) {
-								menuHtml += _menu.getSearchFunctionMenuHtml(functionMenu);
+                            $.each(system.FunctionList, function (i, func) {
+                                menuHtml += _menu.getSearchFunctionMenuHtml(func);
 							});
 							menuHtml += '</ul></li>';
 						}
 						return menuHtml;
 					},
 
-					"getSearchFunctionMenuHtml": function (functionMenu) {
+                    "getSearchFunctionMenuHtml": function (func) {
 						var menuHtml = '';
-						if (functionMenu.bingo) {
-							if (functionMenu.SubFunctionList && functionMenu.SubFunctionList.length > 0) {
+                        if (func.bingo) {
+                            if (func.SubFunctionList && func.SubFunctionList.length > 0) {
 								menuHtml += '<li class="treeview">'
 									+ '<a>'
 									+ '<i class="fa fa-puzzle-piece text-blue"></i>'
-									+ '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                                    + '<span lang="' + func.Language_Key + '">' + func.Code + '</span>'
 									+ '<span class="pull-right-container">'
 									+ '<i class="fa fa-angle-left pull-right"></i>'
 									+ '</span>'
 									+ '</a>';
 								menuHtml += '<ul class="treeview-menu">';
-								$.each(functionMenu.SubFunctionList, function (k, subFunctionMenu) {
-									menuHtml += _menu.getFunctionMenuHtml(subFunctionMenu);
+                                $.each(func.SubFunctionList, function (i, subFunc) {
+                                    menuHtml += _menu.getFunctionMenuHtml(subFunc);
 								});
 								menuHtml += '</ul></li>';
 							} else {
-								menuHtml += '<li onclick="return _form.openForm(this);" functionid="' + functionMenu.Id + '" ';
-								if (functionMenu.Url) {
+                                menuHtml += '<li onclick="return _form.openForm(this);" functionid="' + func.Id + '" ';
+                                if (func.Url) {
 									menuHtml += ' functionurl="'
-										+ functionMenu.Url + '" ';
+                                        + func.Url + '" ';
 								}
 								menuHtml += '>'
 									+ '<a class="function_menu_item">'
 									+ '<i class="fa fa-circle-o text-light-blue"></i>'
-									+ '<span lang="' + functionMenu.Language_Key + '">' + functionMenu.Code + '</span>'
+                                    + '<span lang="' + func.Language_Key + '">' + func.Code + '</span>'
 									+ '</a>'
 									+ '</li>';
 							}
@@ -476,24 +466,23 @@
 						return menuHtml;
 					},
 
-					"searchFunctionMenu": function (search, subFunction, functionMenu, domain, groupMenu, systemMenu) {
-						if (functionMenu.bingo) {
-							subFunction.bingo = true;
-						} else if (subFunction.Code.indexOf(search) >= 0
-							|| (_Lang_ZhCN[subFunction.Language_Key] && _Lang_ZhCN[subFunction.Language_Key].indexOf(search) >= 0)
-							|| (_Lang_ZhTW[subFunction.Language_Key] && _Lang_ZhTW[subFunction.Language_Key].indexOf(search) >= 0)
-							|| (_Lang_EnUS[subFunction.Language_Key] && _Lang_EnUS[subFunction.Language_Key].indexOf(search) >= 0)) {
-							domainMenu.bingo = true;
-							if (groupMenu) {
-								groupMenu.bingo = true;
-							}
-							systemMenu.bingo = true;
-							functionMenu.bingo = true;
-						}
+                    "searchFunctionMenu": function (searchKeywords, subFunc, func, product, domain, system) {
+                        if (subFunc.Code.indexOf(searchKeywords) >= 0
+                            || (_Lang_ZhCN[subFunc.Language_Key] && _Lang_ZhCN[subFunc.Language_Key].indexOf(searchKeywords) >= 0)
+                            || (_Lang_ZhTW[subFunc.Language_Key] && _Lang_ZhTW[subFunc.Language_Key].indexOf(searchKeywords) >= 0)
+                            || (_Lang_EnUS[subFunc.Language_Key] && _Lang_EnUS[subFunc.Language_Key].indexOf(searchKeywords) >= 0)) {
+                            product.bingo = true;
+                            domain.bingo = true;
+                            system.bingo = true;
+                            func.bingo = true;
+                            subFunc.bingo = true;
+                            _menu.searchSetFunctionMenuFound(subFunc);
+                            return true;
+                        }
 
-						if (subFunction.SubFunctionList && subFunction.SubFunctionList.length > 0) {
-							$.each(subFunction.SubFunctionList, function (i, subSubFunction) {
-								_menu.searchFunctionMenu(search, subSubFunction, subFunction, domainMenu, groupMenu, systemMenu);
+                        if (subFunc.SubFunctionList && subFunc.SubFunctionList.length > 0) {
+                            $.each(subFunc.SubFunctionList, function (i, subSubFunc) {
+                                _menu.searchFunctionMenu(searchKeywords, subSubFunc, subFunc, product, domain, system);
 							});
 						}
 					},
@@ -773,7 +762,7 @@
 					},
 
 					"changeBreadCrumb": function () {
-						var bread = "Portal";
+						var bread = "";
 						if (_PortalContext.CurrentFunctionId) {
 							$.each(_PortalContext.MenuList, function (i, product) {
 								var found = false;
@@ -793,9 +782,10 @@
 											_menu.getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
 											if (searchFlag.found) {
 												found = true;
-												bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
-													+ "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span>";
-												+ "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
+                                                bread += //"<span class='text-gray'> > </span>
+                                                    "<span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
+													+ "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span>"
+												    + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
 												$.each(searchFlag.founctionArray, function (k, f) {
 													bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
 												});
@@ -818,8 +808,9 @@
 											_menu.getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
 											if (searchFlag.found) {
 												found = true;
-												bread += "<span class='text-gray'> > </span><span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
-													+ "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
+                                                bread +=  //"<span class='text-gray'> > </span>
+                                                      "< span lang= '" + product.Language_Key + "' > " + product.Name + "</span > "
+													  + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
 												$.each(searchFlag.founctionArray, function (k, f) {
 													bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
 												});
@@ -833,6 +824,7 @@
 							});
 						}
 						//$("#_BreadcrumbContent").hide().html(bread).show(300);
+                        
                         $("#_BreadcrumbContent").html(bread);
 						$.language.change(_Context.CurrentLang);
 					}
@@ -952,10 +944,14 @@
 				},
 				"refreshUserInfo": function () {
 					$("#lblUserName").text(_PortalContext.UserInfo.Name);
-					$("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
+                    $("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
 
-					var imgBinary = _PortalContext.UserInfo.ImageUrl;
-					$(".userImage").hide(200).attr("src", imgBinary).show(200);
+                    $("#lblUserDepartment").text(_PortalContext.UserInfo.Name + "-"  + _PortalContext.UserInfo.Department);
+
+                    var imgBinary = _PortalContext.UserInfo.ImageUrl;
+                    if (imgBinary && imgBinary.length > 0) {
+                        $(".userImage").hide(200).attr("src", imgBinary).show(200);
+                    }					
 				}
 			},
 			"news": {
@@ -1015,7 +1011,7 @@
 				},
 				"timer": null,
 				"options": {
-					"TIMER_ENABLE": true,
+					"TIMER_ENABLE": false,
 					"REFRESH_INTERVAL": 5000
 				}
 			},

@@ -1,7 +1,10 @@
-﻿var cube = window.cube ? window.cube : {};
-if (!cube.plugin) {
-    cube.plugin = {};
-}
+﻿jQuery.extend({
+    "cube": {
+        "callWebService": function () {
+
+        }
+    }
+});
 
 jQuery.extend({
     "callWebService": function (method, data, options, not_self_service) {

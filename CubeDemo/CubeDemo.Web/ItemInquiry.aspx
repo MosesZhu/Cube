@@ -5,8 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link rel="stylesheet" href="http://10.85.129.44/CubePortal/Content/bootstrap.css">
-    <link rel="stylesheet" href="http://10.85.129.44/CubePortal/Content/bootstrap-table.min.css">
+    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com//CubePortal/Content/bootstrap.css">
+    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com//CubePortal/Content/bootstrap-table.min.css">
 </head>
 <body>
     <form id="form1" runat="server">
@@ -91,12 +91,12 @@
             </div>
         </div>
 
-        <script src="http://10.85.129.44/CubePortal/Scripts/jquery-2.2.3.min.js"></script>
-        <script src="http://10.85.129.44/CubePortal/Scripts/jquery.uriAnchor.js"></script>
-        <script src="http://10.85.129.44/CubePortal/Scripts/framework.js"></script>
-        <script src="http://10.85.129.44/CubePortal/Scripts/jquery.slimscroll.min.js"></script>
-        <script src="http://10.85.129.44/CubePortal/Scripts/bootstrap.js"></script>
-        <script src="http://10.85.129.44/CubePortal/Scripts/bootstrap-table.js"></script>
+        <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery-2.2.3.min.js"></script>
+        <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.uriAnchor.js"></script>
+        <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/cube.framework.js"></script>
+        <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.slimscroll.min.js"></script>
+        <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap.js"></script>
+        <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table.js"></script>
 
         <script>
             /**
@@ -150,7 +150,7 @@
                     'description': description
                 };
 
-                $.ask("SaveItem", mydata, options);
+                $.callWebService("SaveItem", mydata, options);
                 return true;
             }
 
@@ -165,7 +165,7 @@
                 };
 
                 var itemNo = $('#tbxItemNoInquiry').val();
-                $.ask("Inquiry", { 'itemNo': itemNo }, options);
+                $.callWebService("Inquiry", { 'itemNo': itemNo }, options);
                 return true;
             }
 
