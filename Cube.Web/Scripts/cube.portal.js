@@ -425,7 +425,9 @@
 								+ '</a>';
 							menuHtml += '<ul class="treeview-menu">';
                             $.each(system.FunctionList, function (i, func) {
-                                menuHtml += _menu.getSearchFunctionMenuHtml(func);
+                                if (func.bingo) {
+                                    menuHtml += _menu.getSearchFunctionMenuHtml(func);
+                                }                                
 							});
 							menuHtml += '</ul></li>';
 						}
@@ -446,7 +448,9 @@
 									+ '</a>';
 								menuHtml += '<ul class="treeview-menu">';
                                 $.each(func.SubFunctionList, function (i, subFunc) {
-                                    menuHtml += _menu.getFunctionMenuHtml(subFunc);
+                                    if (subFunc.bingo) {
+                                        menuHtml += _menu.getFunctionMenuHtml(subFunc);
+                                    }                                    
 								});
 								menuHtml += '</ul></li>';
 							} else {
@@ -489,12 +493,12 @@
 
                     "expandOneMenu": function (menu) {
                         if ($(menu).is("li.treeview")) {
-                            $(menu).children("ul.treeview-menu").slideDown(500, function () {
+                            $(menu).children("ul.treeview-menu").slideDown(200, function () {
                                 _menu.expandOneMenu(this);
                             });
                         } else {
                             $.each($(menu).children("li.treeview"), function (i, l) {
-                                $(l).children("ul.treeview-menu").slideDown(500, function () {
+                                $(l).children("ul.treeview-menu").slideDown(200, function () {
                                     _menu.expandOneMenu(this);
                                 });
                             });
@@ -522,7 +526,7 @@
                                 if ($(menu).css("display") == "block") {
                                     _menu.expandOneSubMenuByFunctionId(menu, functionid);
                                 } else {
-                                    $(menu).slideDown(500, function () {
+                                    $(menu).slideDown(200, function () {
                                         _menu.expandOneSubMenuByFunctionId(menu, functionid);
                                     });
                                 }
@@ -539,12 +543,12 @@
                                 if (!current || current.hasClass("header")) {
                                     break;
                                 }
-                                $(current).children("ul.treeview-menu").slideDown(500, function () {
+                                $(current).children("ul.treeview-menu").slideDown(200, function () {
                                     _menu.expandOneMenu(this);
                                 });
                             }
                         } else {
-                            $(context).children("ul.treeview-menu").slideDown(500, function () {
+                            $(context).children("ul.treeview-menu").slideDown(200, function () {
                                 _menu.expandOneMenu(this);
                             });
                         }
@@ -552,7 +556,7 @@
 
                     "expandAllMenu": function () {
                         $.each($('#_FunctionMenu').children("li.treeview"), function (i, l) {
-                            $(l).children("ul.treeview-menu").slideDown(500, function () {
+                            $(l).children("ul.treeview-menu").slideDown(200, function () {
                                 _menu.expandOneMenu(this);
                             });
                         });
