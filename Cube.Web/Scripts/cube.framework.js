@@ -233,7 +233,7 @@ window.onmessage = function (e) {
         switch (msg.message) {
             case CubeFrameworkMessage.CUBE_CALLBACK:
                 try {
-                    eval(msg.data + "()");
+                    eval("(" + msg.data + ")" + "()");
                 } catch (e) { }
                 break;
         }
@@ -312,11 +312,31 @@ jQuery.extend({
 
                 if (wname && window.frames[wname]) {
                     var win = window.frames[wname];
-                    if (data.okfunc) {                        
+                    if (data.okfuncname) {                        
+                        $("#btnConfirmDialogConfirm").on('click', function () {
+                            var msg = {
+                                "message": CubeFrameworkMessage.CUBE_CALLBACK,
+                                "data": data.okfuncname
+                            };
+                            win.postMessage(JSON.stringify(msg), "*");
+                        });
+                    }
+
+                    if (data.okfunc) {
                         $("#btnConfirmDialogConfirm").on('click', function () {
                             var msg = {
                                 "message": CubeFrameworkMessage.CUBE_CALLBACK,
                                 "data": data.okfunc
+                            };
+                            win.postMessage(JSON.stringify(msg), "*");
+                        });
+                    }
+
+                    if (data.cancelfuncname) {
+                        $("#btnConfirmDialogCancel").on('click', function () {
+                            var msg = {
+                                "message": CubeFrameworkMessage.CUBE_CALLBACK,
+                                "data": data.cancelfuncname
                             };
                             win.postMessage(JSON.stringify(msg), "*");
                         });
@@ -336,6 +356,12 @@ jQuery.extend({
                 $("#confirmDialog").modal('show');
             } else {
                 if (window.parent) {
+                    if (data.okfunc) {
+                        data.okfunc = data.okfunc.toString().replace(/\r\n/g, "");
+                    }
+                    if (data.cancelfunc) {
+                        data.cancelfunc = data.cancelfunc.toString().replace(/\r\n/g, "");;
+                    }
                     var msg = {
                         "wname": window.name,
                         "message": CubeFrameworkMessage.SHOW_CONFIRM,
@@ -391,7 +417,7 @@ jQuery.extend({
                 }
             }
         },
-        "closeLoading": function (times) {
+        "closeLoading": function () {
             if ($("#loader") && $("#loader").html()) {
                 $("#loader").hide();
             } else {

@@ -184,8 +184,10 @@
                 var confirmData = {
                     "title": "confir delete",
                     "content": "confirm to delete?",
-                    "oktodo": doDeleteItem,
-                    "okfunc": "doDeleteItem"
+                    "okfuncname": "doDeleteItem",
+                    //"okfunc": function () {
+                    //    alert();
+                    //}
                 };
                 $.dialog.showConfirm(confirmData);
                 return false;
