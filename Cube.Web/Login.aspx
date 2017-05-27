@@ -168,7 +168,10 @@
                 },
                 error: function (e) {
                     $.dialog.closeLoading();
-                    $.dialog.showMessage("error", e.responseText);
+                    $.dialog.showMessage({
+                        "title": "error", 
+                        "content": e.responseText
+                    });
                 }
             });
         };
@@ -212,7 +215,10 @@
                 },
                 error: function (e) {
                     $.dialog.closeLoading();
-                    $.dialog.showMessage("error", e.responseText);
+                    $.dialog.showMessage({
+                        "title": "error",
+                        "content": e.responseText
+                    });
                 }
             });
         };
@@ -242,13 +248,19 @@
                 $.cookie("LastDomain", null);
             }
 
-            if (userName.length == 0) {                
-                $.dialog.showMessage(_CurrentLang.lang_error, _CurrentLang.lang_msg_must_input_login_name);
+            if (userName.length == 0) {
+                $.dialog.showMessage({
+                    "title": _CurrentLang.lang_error,
+                    "content": _CurrentLang.lang_msg_must_input_login_name
+                });
                 return false;
             }
 
             if (orgId.length == 0) {
-                $.dialog.showMessage(_CurrentLang.lang_error, _CurrentLang.lang_msg_must_choose_org);
+                $.dialog.showMessage({
+                    "title": _CurrentLang.lang_error,
+                    "content": _CurrentLang.lang_msg_must_choose_org
+                });
                 return false;
             }
 
@@ -297,12 +309,18 @@
                         portalUrl += "#!lang=" + lang;                        
                         window.location.href = portalUrl;
                     } else {
-                        $.dialog.showMessage(_CurrentLang.lang_error, _CurrentLang.lang_msg_login_failed);
+                        $.dialog.showMessage({
+                            "title": _CurrentLang.lang_error,
+                            "content": _CurrentLang.lang_msg_login_failed
+                        });
                     }
                 },
                 error: function (e) {
                     $.dialog.closeLoading();
-                    $.dialog.showMessage("error", e.responseText);
+                    $.dialog.showMessage({
+                        "title": "error",
+                        "content": e.responseText
+                    });
                 }
             });
 

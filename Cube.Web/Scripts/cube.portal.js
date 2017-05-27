@@ -628,30 +628,39 @@
 								if (menuIndex == "MENU_OPEN_IN_NEW_WINDOW") {
 									var url = $("#" + functionid).find("iframe").attr("src");
 									window.open(url);
-								} else if (menuIndex == "MENU_CLOSE") {
-									$.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
-										function () {
-											_form.closeFormByFunctionId(functionid);
-										},
-										function () { });
-								} else if (menuIndex == "MENU_CLOSE_OTHERS") {
-									$.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
-										function () {
-											$("#_FormTabs a").each(function (i, tab) {
-												if ($(tab).attr("functionid") != functionid) {
-													_form.closeFormByFunctionId($(tab).attr("functionid"));
-												}
-											});
-										},
-										function () { });
-								} else if (menuIndex == "MENU_CLOSE_ALL") {
-									$.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
-										function () {
-											$("#_FormTabs a").each(function (i, tab) {
-												_form.closeFormByFunctionId($(tab).attr("functionid"));
-											});
-										},
-										function () { });
+                                } else if (menuIndex == "MENU_CLOSE") {
+                                    var confirmData = {
+                                        "content": _CurrentLang['msg_confirm_close_tab'],
+                                        "oktodo": function () {
+                                            _form.closeFormByFunctionId(functionid);
+                                            _breadcrumb.toggleBreadcrumb();
+                                        }
+                                    };
+                                    $.dialog.showConfirm(confirmData);
+                                } else if (menuIndex == "MENU_CLOSE_OTHERS") {
+                                    var confirmData = {
+                                        "content": _CurrentLang['msg_confirm_close_tab'],
+                                        "oktodo": function () {
+                                            $("#_FormTabs a").each(function (i, tab) {
+                                                if ($(tab).attr("functionid") != functionid) {
+                                                    _form.closeFormByFunctionId($(tab).attr("functionid"));
+                                                }
+                                            });
+                                            _breadcrumb.toggleBreadcrumb();
+                                        }
+                                    };
+                                    $.dialog.showConfirm(confirmData);
+                                } else if (menuIndex == "MENU_CLOSE_ALL") {
+                                    var confirmData = {
+                                        "content": _CurrentLang['msg_confirm_close_tab'],
+                                        "oktodo": function () {
+                                            $("#_FormTabs a").each(function (i, tab) {
+                                                _form.closeFormByFunctionId($(tab).attr("functionid"));
+                                            });
+                                            _breadcrumb.toggleBreadcrumb();
+                                        }
+                                    };
+                                    $.dialog.showConfirm(confirmData);									
 								} else if (menuIndex == "MENU_REFRESH") {
 									var frameName = "frm_" + functionid;
 									var url = $("iframe[name=" + frameName + "]").attr("src");
@@ -716,7 +725,10 @@
 						var options = {
 							"success": function (d) {
 								if (d.success) {
-									$.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
+                                    $.dialog.showMessage({
+                                        "title": _CurrentLang['lang_success'], 
+                                        "content": _CurrentLang['msg_save_success']
+                                    });
 									_menu.initMenu();
 								}
 							}
@@ -731,8 +743,11 @@
 					"removeFromBookmark": function (functionid) {
 						var options = {
 							"success": function (d) {
-								if (d.success) {
-									$.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
+                                if (d.success) {
+                                    $.dialog.showMessage({
+                                        "title": _CurrentLang['lang_success'],
+                                        "content": _CurrentLang['msg_save_success']
+                                    });
 									_menu.initMenu();
 								}
 							}
@@ -920,14 +935,16 @@
 						}
 					},
 
-					"closeForm": function (ctrl) {
-						$.dialog.showConfirm(_CurrentLang['msg_confirm_close_tab'], '', '',
-							function () {
-								var functionid = $(ctrl).parents('a').attr("functionid");
-								_form.closeFormByFunctionId(functionid);
-								_breadcrumb.toggleBreadcrumb();
-							},
-							function () {});
+                    "closeForm": function (ctrl) {
+                        var confirmData = {
+                            "content": _CurrentLang['msg_confirm_close_tab'],
+                            "oktodo": function () {
+                                var functionid = $(ctrl).parents('a').attr("functionid");
+                                _form.closeFormByFunctionId(functionid);
+                                _breadcrumb.toggleBreadcrumb();
+                            }
+                        };
+                        $.dialog.showConfirm(confirmData);
 
 						return false;
 					}
@@ -1024,6 +1041,33 @@
 				$(window).on("resize", function () {
 					_ui.resetContentSize();
                 });
+
+                window.onmessage = function (e) {                    
+                    e = e || event;
+                    try {
+                        var msg = $.parseJSON(e.data);
+                        switch (msg.message) {
+                            case CubeFrameworkMessage.SHOW_MESSAGE:
+                                $.dialog.showMessage(msg.data);
+                                break;
+                            case CubeFrameworkMessage.CLOSE_MESSAGE:
+                                $.dialog.closeMessage();
+                                break;
+                            case CubeFrameworkMessage.SHOW_CONFIRM:                                
+                                $.dialog.showConfirm(msg.data, msg.wname);
+                                break;
+                            case CubeFrameworkMessage.CLOSE_CONFIRM:
+                                $.dialog.closeConfirm();
+                                break;
+                            case CubeFrameworkMessage.SHOW_LOADING:
+                                $.dialog.showLoading();
+                                break;
+                            case CubeFrameworkMessage.CLOSE_LOADING:
+                                $.dialog.closeLoading();
+                                break;
+                        }
+                    } catch (e) {}
+                }
 
 				$("#search-btn").on("click", function () {
 					_menu.searchMenu();

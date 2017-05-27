@@ -19,7 +19,7 @@
                             <td lang="lang_item_no">Item NO.</td>
                             <td class="text-bold" style="padding: 10px;">
                                 <input type="text" data-clear-btn="true" name="tbxItemNoInquiry" class="form-control"
-                                    id="tbxItemNoInquiry" value="" />
+                                    id="tbxItemNoInquiry" value="" />                                
                             </td>
                         </tr>
                     </table>
@@ -29,6 +29,9 @@
                     <div class="btn-toolbar" role="toolbar" style="float: right;">
                         <button type="button" class="btn btn-primary" onclick="return inquiryItem();" lang="lang_inquiry">
                             Inquiry
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="return deleteItem();" lang="lang_delete">
+                            Delete
                         </button>
                     </div>
                 </div>
@@ -131,7 +134,10 @@
                 var itemNo = $("#tbxItemNo").val();
                 var description = $("#tbxDescription").val();
                 if (itemNo == "") {
-                    $.dialog.showDialog('Error', 'Item No can not be null');
+                    $.dialog.showMessage({
+                        "title": 'Error', 
+                        "content": 'Item No can not be null'
+                    });
                     return false;
                 }
 
@@ -139,7 +145,10 @@
                 var options = {
                     "success": function (d) {
                         $("#itemMaintainDialog").modal('hide');
-                        $.dialog.showDialog('Success', 'Update success');
+                        $.dialog.showMessage({
+                            "title": 'Success',
+                            "content": 'Update success'
+                        });
                         inquiryItem();
                     }
                 };
@@ -168,6 +177,30 @@
                 $.callWebService("Inquiry", { 'itemNo': itemNo }, options);
                 return true;
             }
+
+            var _CurrentItemId = null;
+            var deleteItem = function () {
+                _CurrentItemId = 5;
+                var confirmData = {
+                    "title": "confir delete",
+                    "content": "confirm to delete?",
+                    "oktodo": doDeleteItem,
+                    "okfunc": "doDeleteItem"
+                };
+                $.dialog.showConfirm(confirmData);
+                return false;
+            };
+
+            var doDeleteItem = function () {
+                $.dialog.showLoading();
+                $.dialog.showMessage({
+                    "title": "got",
+                    "content": "delete current item: " + _CurrentItemId
+                });
+                setInterval(function () {
+                    $.dialog.closeLoading();
+                }, 50000);
+            };
 
         </script>
     </form>

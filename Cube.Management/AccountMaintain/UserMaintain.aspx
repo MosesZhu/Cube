@@ -143,18 +143,27 @@
             var name = $("#tbxName").val();
             var mail = $("#tbxMail").val();
             if (loginName == "") {
-                $.dialog.showMessage(_CurrentLang['lang_error'], _CurrentLang['msg_login_name_can_not_empty']);
+                $.dialog.showMessage({
+                    "title": _CurrentLang['lang_error'],
+                    "content": _CurrentLang['msg_login_name_can_not_empty']
+                });
                 return false;
             }
             if (name == "") {
-                $.dialog.showMessage(_CurrentLang['lang_error'], _CurrentLang['msg_name_can_not_empty']);
+                $.dialog.showMessage({
+                    "title": _CurrentLang['lang_error'],
+                    "content": _CurrentLang['msg_name_can_not_empty']
+                });
                 return false;
             }
 
             var options = {
                 "success": function (d) {
                     $.dialog.closeDialog("userBaseMaintainDialog");
-                    $.dialog.showMessage(_CurrentLang['lang_success'], _CurrentLang['msg_save_success']);
+                    $.dialog.showMessage({
+                        "title": _CurrentLang['lang_success'],
+                        "content": _CurrentLang['msg_save_success']
+                    });
                     inquiryUser();
                 }
             };

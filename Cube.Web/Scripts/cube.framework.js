@@ -82,7 +82,10 @@ jQuery.extend({
         },
 
         "error": function (e) {
-            $.dialog.showMessage("error", e.responseText);
+            $.dialog.showMessage({
+                "title": "error",
+                "content": e.responseText
+            });
         }
     }
 });
@@ -152,18 +155,6 @@ var setLanguage = function (languageName) {
     return false;
 }
 
-var showMessage = function (title, content, warning, type, times) {
-    $.dialog.showMessage(title, content, warning, type, times);
-};
-
-var closeMessage = function (times) {
-    $.dialog.closeMessage(times);
-};
-
-var showConfirm = function (title, content, warning, type, oktodo, canceltodo, times) {
-    $.dialog.showConfirm(title, content, warning, type, oktodo, canceltodo, times);
-};
-
 var closeConfirm = function (times) {
     $.dialog.closeConfirm(times);
 };
@@ -225,87 +216,147 @@ jQuery.extend({
     }
 })
 
+var CubeFrameworkMessage = {
+    "SHOW_MESSAGE": "SHOW_MESSAGE",
+    "CLOSE_MESSAGE": "CLOSE_MESSAGE",
+    "SHOW_CONFIRM": "SHOW_CONFIRM",
+    "CLOSE_CONFIRM": "CLOSE_CONFIRM",
+    "SHOW_LOADING": "SHOW_LOADING",
+    "CLOSE_LOADING": "CLOSE_LOADING",
+    "CUBE_CALLBACK": "CUBE_CALLBACK"
+};
+
+window.onmessage = function (e) {
+    e = e || event;
+    try {
+        var msg = $.parseJSON(e.data);
+        switch (msg.message) {
+            case CubeFrameworkMessage.CUBE_CALLBACK:
+                try {
+                    eval(msg.data + "()");
+                } catch (e) { }
+                break;
+        }
+    } catch (e) { }
+}
+
 jQuery.extend({
     "dialog": {
-        "dialog": {},        
-        "showMessage": function (title, content, warning, type, times) {
-            if (parent && parent.showMessage) {
-                if (!times) {
-                    var times = 1;
-                    parent.showMessage(title, content, warning, type, times);
-                    return;
-                }             
-            }
-            $("#messageDialogTitle").text("");
-            $("#messageDialogContent").html("");
-            $("#messageDialogWarningContent").html("");
+        "dialog": {},
+        "showMessage": function (data) {
+            if ($("#messageDialog") && $("#messageDialog").html()) {
+                $("#messageDialogTitle").text("");
+                $("#messageDialogContent").html("");
+                $("#messageDialogWarningContent").html("");
 
-            if (title) {
-                $("#messageDialogTitle").text(title);
-            }
+                if (data.title) {
+                    $("#messageDialogTitle").text(data.title);
+                }
 
-            if (content) {
-                $("#messageDialogContent").html(content);
-            }
+                if (data.content) {
+                    $("#messageDialogContent").html(data.content);
+                }
 
-            if (warning) {
-                $("#messageDialogWarningContent").html(warning);
-            }
+                if (data.warning) {
+                    $("#messageDialogWarningContent").html(data.warning);
+                }
 
-            $("#messageDialog").modal('show');
-        },
-        "closeMessage": function (times) {
-            if (parent && parent.closeMessage) {
-                if (!times) {
-                    var times = 1;
-                    parent.closeMessage(times);
-                    return;
+                $("#messageDialog").modal('show');
+            } else {
+                if (window.parent) {
+                    var msg = {
+                        "wname": window.name,
+                        "message": CubeFrameworkMessage.SHOW_MESSAGE,
+                        "data": data
+                    };
+                    window.parent.postMessage(JSON.stringify(msg), "*");
                 }
             }
-            $("#messageDialog").modal('hide');
         },
-        "showConfirm": function (content, warning, type, oktodo, canceltodo, times) {
-            if (parent && parent.showConfirm) {
-                if (!times) {
-                    var times = 1;
-                    parent.showConfirm(content, warning, type, oktodo, canceltodo, times);
-                    return;
-                }
-            } 
-            
-            $("#confirmDialogContent").html("");
-            $("#confirmDialogWarningContent").html("");
-
-            if (content) {
-                $("#confirmDialogContent").html(content);
-            }
-
-            if (warning) {
-                $("#confirmDialogWarningContent").html(warning);
-            }
-
-            $("#btnConfirmDialogConfirm").off('click');
-            $("#btnConfirmDialogCancel").off('click');
-
-            if (oktodo) {
-                $("#btnConfirmDialogConfirm").on('click', oktodo);
-            }
-
-            if (canceltodo) {
-                $("#btnConfirmDialogCancel").on('click', canceltodo);
-            }
-
-            $("#confirmDialog").modal('show');
-        },
-        "closeConfirm": function (times) {
-            if (parent && parent.closeConfirm) {
-                if (!times) {
-                    var times = 1;
-                    parent.closeConfirm(times);
-                    return;
+        "closeMessage": function () {
+            if ($("#messageDialog") && $("#messageDialog").html()) {
+                $("#messageDialog").modal('hide');
+            } else {
+                if (window.parent) {
+                    var msg = {
+                        "wname": window.name,
+                        "message": CubeFrameworkMessage.CLOSE_MESSAGE
+                    };
+                    window.parent.postMessage(JSON.stringify(msg), "*");
                 }
             }
-            $("#confirmDialog").modal('hide');
+        },
+        "showConfirm": function (data, wname) {
+            if ($("#confirmDialog") && $("#confirmDialog").html()) {
+                $("#confirmDialogContent").html("");
+                $("#confirmDialogWarningContent").html("");
+
+                if (data.content) {
+                    $("#confirmDialogContent").html(data.content);
+                }
+
+                if (data.warning) {
+                    $("#confirmDialogWarningContent").html(data.warning);
+                }
+
+                $("#btnConfirmDialogConfirm").off('click');
+                $("#btnConfirmDialogCancel").off('click');
+
+                if (data.oktodo) {
+                    $("#btnConfirmDialogConfirm").on('click', data.oktodo);
+                }
+
+                if (data.canceltodo) {
+                    $("#btnConfirmDialogCancel").on('click', data.canceltodo);
+                }
+
+                if (wname && window.frames[wname]) {
+                    var win = window.frames[wname];
+                    if (data.okfunc) {                        
+                        $("#btnConfirmDialogConfirm").on('click', function () {
+                            var msg = {
+                                "message": CubeFrameworkMessage.CUBE_CALLBACK,
+                                "data": data.okfunc
+                            };
+                            win.postMessage(JSON.stringify(msg), "*");
+                        });
+                    }
+
+                    if (data.cancelfunc) {
+                        $("#btnConfirmDialogCancel").on('click', function () {
+                            var msg = {
+                                "message": CubeFrameworkMessage.CUBE_CALLBACK,
+                                "data": data.cancelfunc
+                            };
+                            win.postMessage(JSON.stringify(msg), "*");
+                        });
+                    }
+                }
+
+                $("#confirmDialog").modal('show');
+            } else {
+                if (window.parent) {
+                    var msg = {
+                        "wname": window.name,
+                        "message": CubeFrameworkMessage.SHOW_CONFIRM,
+                        "data": data
+                    };
+                    window.parent.postMessage(JSON.stringify(msg), "*");
+                }
+            }
+        },
+        "closeConfirm": function () {
+            if ($("#confirmDialog") && $("#confirmDialog").html()) {
+                $("#confirmDialog").modal('hide');
+            } else {
+                if (window.parent) {
+                    var msg = {
+                        "wname": window.name,
+                        "message": CubeFrameworkMessage.CLOSE_CONFIRM
+                    };
+                    window.parent.postMessage(JSON.stringify(msg), "*");
+                }
+            }            
         },
         "showDialog": function (dialogId) {
             $("#" + dialogId).modal('show');
@@ -327,32 +378,32 @@ jQuery.extend({
             $("#customerDialogContainer").html(dialogHtml);
             $("#" + dialogId).modal('show');
         },
-        "showLoading": function (times) {
-            try {
-                if (parent && parent.showLoading) {
-                    if (!times) {
-                        var times = 1;
-                        parent.showLoading(times);
-                        return;
-                    }
+        "showLoading": function () {
+            if ($("#loader") && $("#loader").html()) {
+                $("#loader").show();
+            } else {
+                if (window.parent) {
+                    var msg = {
+                        "wname": window.name,
+                        "message": CubeFrameworkMessage.SHOW_LOADING
+                    };
+                    window.parent.postMessage(JSON.stringify(msg), "*");
                 }
-            } catch (error) {}
-            
-            $("#loader").show();
+            }
         },
         "closeLoading": function (times) {
-            try {
-                if (parent && parent.closeLoading) {
-                    if (!times) {
-                        var times = 1;
-                        parent.closeLoading(times);
-                        return;
-                    }
+            if ($("#loader") && $("#loader").html()) {
+                $("#loader").hide();
+            } else {
+                if (window.parent) {
+                    var msg = {
+                        "wname": window.name,
+                        "message": CubeFrameworkMessage.CLOSE_LOADING
+                    };
+                    window.parent.postMessage(JSON.stringify(msg), "*");
                 }
-            } catch (error) { }
-            
-            $("#loader").hide();
-        },
+            }
+        }
     }
 });
 
