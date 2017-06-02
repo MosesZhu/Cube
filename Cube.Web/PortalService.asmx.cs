@@ -20,6 +20,8 @@ using ITS.WebFramework.Configuration;
 using ITS.WebFramework.SSO.Session;
 using ITS.WebFramework.PermissionManagement.Entity;
 using ITS.WebFramework.PermissionManagement.DTO;
+using ITS.WebFramework.Common;
+using System.Xml.Linq;
 
 namespace Cube.Web
 {
@@ -77,89 +79,214 @@ namespace Cube.Web
 
             return result;
         }
-
+        public string GetDebugUserSystemFunctionTree(Guid userID, Guid orgID, Guid productID, string systemName, string baseUrl)
+        {
+            //Get user authorized product function tree data
+            string sql = string.Format("select * from dbo.GetDebugUserSystemFunctionTree('{0}','{1}','{2}','{3}','{4}')",
+                userID, orgID, productID, systemName, baseUrl);
+            List<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO> functionList = WFKDb.FromSql(sql).ToEntityQuery().ToList<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO>();
+            return GetFunctionTreeXml(functionList, true);
+        }
         private MenuDTO getMenuFromWfk(List<Guid> BookmarkIdList)
         {
             MenuDTO cubeMenu = new MenuDTO();
-            try {
-                string menuXmlStr = menuXmlStr = PermissionService.GetAuthorizedProductFunctionTree(CubeSSOContext.Current.WfkSSOContext.UserID,
-                    CubeSSOContext.Current.WfkSSOContext.OrgID,
-                    CubeSSOContext.Current.WfkSSOContext.ProductID, true);
-                if (!string.IsNullOrEmpty(menuXmlStr))
+            string menuXmlStr = "";
+            if (DebugHelper.IsDebugMode)
+            {
+                string systemName = SSOContext.Current.Session["SystemName"].ToString();
+                string baseUrl = SSOContext.Current.Session["BaseUrl"].ToString();                
+                menuXmlStr = GetDebugUserSystemFunctionTree(SSOContext.Current.UserID,
+                        SSOContext.Current.OrgID,
+                        SSOContext.Current.ProductID,
+                        systemName, baseUrl);
+            }
+            else
+            {
+                try
                 {
-                    Model.DTO.ProductDTO bachProduct = new Model.DTO.ProductDTO()
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "BACH",
-                        DomainList = new List<Model.DTO.DomainDTO>()
-                    };
+                    menuXmlStr = PermissionService.GetAuthorizedProductFunctionTree(CubeSSOContext.Current.WfkSSOContext.UserID,
+                        CubeSSOContext.Current.WfkSSOContext.OrgID,
+                        CubeSSOContext.Current.WfkSSOContext.ProductID, true);                    
+                }
+                catch (Exception ex) { }
+            }
 
-                    XmlDocument xmlDoc = new XmlDocument();
-                    xmlDoc.LoadXml(menuXmlStr);
-                    XmlNodeList domainNodes = xmlDoc.SelectNodes("/Tree/TreeNode");
-                    foreach (XmlNode domainNode in domainNodes)
+            if (!string.IsNullOrEmpty(menuXmlStr))
+            {
+                Model.DTO.ProductDTO bachProduct = new Model.DTO.ProductDTO()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "BACH",
+                    DomainList = new List<Model.DTO.DomainDTO>()
+                };
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(menuXmlStr);
+                XmlNodeList domainNodes = xmlDoc.SelectNodes("/Tree/TreeNode");
+                foreach (XmlNode domainNode in domainNodes)
+                {
+                    if (domainNode.HasChildNodes)
                     {
-                        if (domainNode.HasChildNodes)
+                        Model.DTO.DomainDTO domain = new Model.DTO.DomainDTO()
                         {
-                            Model.DTO.DomainDTO domain = new Model.DTO.DomainDTO()
+                            Id = Guid.Parse(domainNode.Attributes["NodeID"].Value),
+                            Code = domainNode.Attributes["Text"].Value
+                        };
+
+                        foreach (XmlNode systemNode in domainNode.ChildNodes)
+                        {
+                            Model.DTO.SystemDTO system = new Model.DTO.SystemDTO()
                             {
-                                Id = Guid.Parse(domainNode.Attributes["NodeID"].Value),
-                                Code = domainNode.Attributes["Text"].Value
+                                Id = Guid.Parse(systemNode.Attributes["NodeID"].Value),
+                                Code = systemNode.Attributes["Text"].Value
                             };
 
-                            foreach (XmlNode systemNode in domainNode.ChildNodes)
+                            foreach (XmlNode functionNode in systemNode.ChildNodes)
                             {
-                                Model.DTO.SystemDTO system = new Model.DTO.SystemDTO()
+                                Model.DTO.FunctionDTO function = new Model.DTO.FunctionDTO()
                                 {
-                                    Id = Guid.Parse(systemNode.Attributes["NodeID"].Value),
-                                    Code = systemNode.Attributes["Text"].Value
+                                    Id = Guid.Parse(functionNode.Attributes["NodeID"].Value),
+                                    Code = functionNode.Attributes["Text"].Value,
+                                    Url = functionNode.Attributes["NavigateUrl"] != null ? functionNode.Attributes["NavigateUrl"].Value : "",
+                                    System_Id = system.Id.ToString()
                                 };
-
-                                foreach (XmlNode functionNode in systemNode.ChildNodes)
+                                foreach (XmlNode subFunctionNode in functionNode.ChildNodes)
                                 {
-                                    Model.DTO.FunctionDTO function = new Model.DTO.FunctionDTO()
+                                    Model.DTO.FunctionDTO subFunction = new Model.DTO.FunctionDTO()
                                     {
-                                        Id = Guid.Parse(functionNode.Attributes["NodeID"].Value),
-                                        Code = functionNode.Attributes["Text"].Value,
-                                        Url = functionNode.Attributes["NavigateUrl"] != null ? functionNode.Attributes["NavigateUrl"].Value : "",
+                                        Id = Guid.Parse(subFunctionNode.Attributes["NodeID"].Value),
+                                        Code = subFunctionNode.Attributes["Text"].Value,
+                                        Url = subFunctionNode.Attributes["NavigateUrl"] != null ? subFunctionNode.Attributes["NavigateUrl"].Value : "",
                                         System_Id = system.Id.ToString()
                                     };
-                                    foreach (XmlNode subFunctionNode in functionNode.ChildNodes)
+                                    if (BookmarkIdList.Contains(subFunction.Id))
                                     {
-                                        Model.DTO.FunctionDTO subFunction = new Model.DTO.FunctionDTO()
-                                        {
-                                            Id = Guid.Parse(subFunctionNode.Attributes["NodeID"].Value),
-                                            Code = subFunctionNode.Attributes["Text"].Value,
-                                            Url = subFunctionNode.Attributes["NavigateUrl"] != null ? subFunctionNode.Attributes["NavigateUrl"].Value : "",
-                                            System_Id = system.Id.ToString()
-                                        };
-                                        if (BookmarkIdList.Contains(subFunction.Id))
-                                        {
-                                            cubeMenu.BookmarkList.Add(subFunction);
-                                        }
-                                        function.SubFunctionList.Add(subFunction);
+                                        cubeMenu.BookmarkList.Add(subFunction);
                                     }
-
-                                    if (BookmarkIdList.Contains(function.Id))
-                                    {
-                                        cubeMenu.BookmarkList.Add(function);
-                                    }
-
-                                    system.FunctionList.Add(function);
+                                    function.SubFunctionList.Add(subFunction);
                                 }
 
-                                domain.SystemList.Add(system);
+                                if (BookmarkIdList.Contains(function.Id))
+                                {
+                                    cubeMenu.BookmarkList.Add(function);
+                                }
+
+                                system.FunctionList.Add(function);
                             }
 
-                            bachProduct.DomainList.Add(domain);
+                            domain.SystemList.Add(system);
                         }
+
+                        bachProduct.DomainList.Add(domain);
                     }
-                    cubeMenu.ProductList.Add(bachProduct);
                 }
+                cubeMenu.ProductList.Add(bachProduct);
             }
-            catch (Exception ex) { }
-            
             return cubeMenu;
+        }
+
+        private static string GetFunctionTreeXml(List<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO> functionList, bool isInternal)
+        {
+            if (functionList == null || functionList.Count == 0)
+            {
+                return "";
+            }
+            //Get domain list
+            List<string> domainList = functionList
+                .Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, string>(f => f.domain_name)
+                .Distinct<string>().ToList<string>();
+            if (domainList == null)
+            {
+                return string.Empty;
+            }
+            //Get domain,system list
+            Dictionary<string, List<string>> domainSystemDicinary = new Dictionary<string, List<string>>();
+            domainList.ForEach(d =>
+                domainSystemDicinary.Add(d,
+                    functionList.Where<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO>(f1 => f1.domain_name == d)
+                        .Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, string>(f2 => f2.system_name)
+                    .Distinct<string>().ToList<string>()));
+
+            var productFunctionTreeDocument = new XDocument();
+            XAttribute clickExpandAttribute = new XAttribute("SingleClickExpand", true);
+            try
+            {
+                Func<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, XElement> getSubTree = null;
+                getSubTree = delegate (ITS.WebFramework.PermissionComponent.DTO.FunctionDTO function)
+                {
+                    XElement subTree = new XElement("TreeNode");
+
+                    XAttribute nodeId = new XAttribute("NodeID", function.function_id == null ? Guid.Empty : function.function_id);
+                    XAttribute text = new XAttribute("Text", GetDefaultValueIfNull(function.function_name));
+                    XAttribute code = new XAttribute("Code", GetDefaultValueIfNull(function.function_code));
+                    XAttribute description = new XAttribute("Description", GetDefaultValueIfNull(function.function_description));
+                    XAttribute assembly = new XAttribute("Assembly", GetDefaultValueIfNull(function.assembly));
+                    XAttribute formClass = new XAttribute("FormClass", GetDefaultValueIfNull(function.form_class));
+                    XAttribute target = new XAttribute("Target", GetDefaultValueIfNull(function.target));
+                    XAttribute instanceType = new XAttribute("InstanceType", GetDefaultValueIfNull(function.instance_type));
+                    XAttribute isPublic = new XAttribute("IsPublic", function.is_public);
+                    XAttribute systemIconName = new XAttribute("SystemIconName", GetDefaultValueIfNull(function.system_icon_name));
+                    XAttribute customIconUrl = new XAttribute("CustomIconUrl", GetDefaultValueIfNull(function.custom_icon_url));
+                    XAttribute nodeType = new XAttribute("NodeType", GetDefaultValueIfNull(function.node_type));
+                    XAttribute nodeLevelCode = new XAttribute("NodeLevelCode", GetDefaultValueIfNull(function.node_level_code));
+                    XAttribute sortCode = new XAttribute("SortCode", function.function_sort_code == null ? 0 : function.function_sort_code);
+                    if (string.Compare(function.node_type, "Function", StringComparison.OrdinalIgnoreCase) == 0)
+                    {
+                        XAttribute navigateUrl;
+                        if (isInternal)
+                        {
+                            navigateUrl = new XAttribute("NavigateUrl", GetDefaultValueIfNull(function.navigate_url));
+                        }
+                        else
+                        {
+                            navigateUrl = new XAttribute("NavigateUrl", GetDefaultValueIfNull(function.external_navigate_url));
+
+                        }
+                        subTree.Add(nodeId, text, navigateUrl, code, description, assembly, formClass, target, instanceType, isPublic, systemIconName, customIconUrl, nodeType, nodeLevelCode, sortCode);
+                    }
+                    else
+                    {
+                        subTree.Add(nodeId, text, code, description, assembly, formClass, target, instanceType, isPublic, systemIconName, customIconUrl, nodeType, nodeLevelCode, sortCode, clickExpandAttribute);
+                    }
+                    subTree.Add(functionList.Where(f1 =>
+                        f1.parent_function_id == function.function_id)
+                        .Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, XElement>(f2 => getSubTree(f2)));
+                    return subTree;
+                };
+
+                //Generate XML tree structure using Linq to XML      
+                productFunctionTreeDocument.Add(
+                    new XElement("Tree", domainList.Select<string, XElement>(domain_name =>
+                        new XElement("TreeNode", new XAttribute("NodeID", functionList.Where<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO>(f => f.domain_name == domain_name).Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, Guid?>(d => d.domain_id).FirstOrDefault<Guid?>()),
+                                new XAttribute("Text", GetDefaultValueIfNull(domain_name)),
+                                new XAttribute("NodeType", "Domain"),
+                                clickExpandAttribute,
+                                domainSystemDicinary[domain_name].Select<string, XElement>(system_name =>
+                            new XElement("TreeNode", new XAttribute("Text", system_name),
+                                new XAttribute("NodeID", functionList.Where<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO>(f => f.system_name == system_name).Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, Guid?>(s => s.system_id).FirstOrDefault<Guid?>()),
+                                new XAttribute("DomainID", functionList.Where<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO>(f => f.system_name == system_name).Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, Guid?>(s => s.domain_id).FirstOrDefault<Guid?>()),
+                                new XAttribute("Domain", GetDefaultValueIfNull(domain_name)),
+                                new XAttribute("Description", functionList.Where<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO>(f => f.system_name == system_name).Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, string>(s => s.system_description).FirstOrDefault<string>()),
+                                new XAttribute("InstanceName", functionList.Where<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO>(f => f.system_name == system_name).Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, string>(s => s.instance_name).FirstOrDefault<string>()),
+                                new XAttribute("SystemType", functionList.Where<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO>(f => f.system_name == system_name).Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, string>(s => s.system_type).FirstOrDefault<string>()),
+                                new XAttribute("NodeType", "System"),
+                                clickExpandAttribute,
+                                functionList.Where<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO>(f1 => f1.domain_name == domain_name
+                                                                    && f1.system_name == system_name
+                                                                    && f1.parent_function_id == null)
+                                    .Select<ITS.WebFramework.PermissionComponent.DTO.FunctionDTO, XElement>(f2 => getSubTree(f2))))))));
+                //productFunctionTreeDocument.Save("filename.xml");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productFunctionTreeDocument.ToString();
+        }
+
+        private static string GetDefaultValueIfNull(string str)
+        {
+            return string.IsNullOrEmpty(str) ? "" : str;
         }
 
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -331,7 +458,16 @@ namespace Cube.Web
             UserInfoDTO result = new UserInfoDTO();
             result.Id = SSOContext.Current.UserID;
             result.Name = SSOContext.Current.UserName;
-                        
+            List<Guid> deptIdList = WFKDb.From<Base_Staff_Department>()
+                .Where(Base_Staff_Department._.Staff_Id == SSOContext.Current.UserID)
+                .Select(Base_Staff_Department._.Department_Id).ToList<Guid>();
+            result.DepartmentList = WFKDb.From<Base_Department>()
+                .Where(Base_Department._.Id.In(deptIdList))
+                .Select(Base_Department._.Department_Name).ToList<String>();
+            Base_Staff userEntity = WFKDb.From<Base_Staff>()
+                .Where(Base_Staff._.Id == SSOContext.Current.UserID).FirstDefault();
+            result.Extension = userEntity.Extension;
+
             result.LoginTime = GetLoginTime(SSOContext.Current.ProductName, SSOContext.Current.OrgName, SSOContext.Current.UserName);
 
             Mc_User_Image userImage = CubeDb.From<Mc_User_Image>().Where(Mc_User_Image._.User_Id == SSOContext.Current.UserID).ToList<Mc_User_Image>().FirstOrDefault();

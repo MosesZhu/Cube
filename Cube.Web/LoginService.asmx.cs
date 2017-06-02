@@ -178,6 +178,35 @@ namespace Cube.Web
             return result;
         }
 
+        public ResultDTO wfkLoginForDebug(LogonInfo logonInfo)
+        {
+            ResultDTO result = new ResultDTO();
+
+            SSOTicket ssoTicket = GetSSOTicketFromCookie();           
+            logonInfo.IsSSOTicketAleadyExisted = true;
+
+            try
+            {
+                string url = new SSOAuthentication().LogonWithPortalUrl(logonInfo);
+                if (url == null)
+                {
+                    result.success = false;
+                    result.message = "user name or password error!";//MessageUserPasswordError;
+                }
+                else
+                {
+                    result.success = true;
+                    result.data = url;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.success = false;
+                result.message = ex.Message;
+            }
+
+            return result;
+        }
         /// <summary>
         /// 用户登录安全性验证
         /// </summary>
@@ -227,5 +256,7 @@ namespace Cube.Web
             };
             return TokenUtility.GenerateToken(token);
         }
+
+
     }
 }

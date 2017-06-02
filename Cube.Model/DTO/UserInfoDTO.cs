@@ -19,6 +19,8 @@ namespace Cube.Model.DTO
         public string LoginTime { get; set; }
 
         public List<string> DepartmentList { get; set; }
+
+        public string Extension { get; set; }
         /// <summary>
         /// 用户设置
         /// </summary>

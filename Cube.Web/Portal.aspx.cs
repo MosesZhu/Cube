@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using Cube.Base;
 using System.Web.UI.HtmlControls;
 using Cube.Base.Config;
+using ITS.WebFramework.Common;
+using ITS.WebFramework.SSO.Common;
 
 namespace Cube.Web
 {

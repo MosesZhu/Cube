@@ -138,7 +138,7 @@
                                 $("#_FunctionMenu").addClass("SingleModeMenu");
                             } catch (error) { }
                             
-                        }
+                        }                       
 						
 						$("#_FunctionMenu").html(menuHtml);
 
@@ -616,7 +616,7 @@
 								}
 							});
 						}
-					}
+                    }
 				},
 				"context_menu": {
 					"bindTabContextMenu": function () {
@@ -967,7 +967,21 @@
 					$("#lblUserName").text(_PortalContext.UserInfo.Name);
                     $("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
 
-                    $("#lblUserDepartment").text(_PortalContext.UserInfo.Name + "-"  + _PortalContext.UserInfo.Department);
+                    var deptStr = "";
+                    if (_PortalContext.UserInfo.DepartmentList && _PortalContext.UserInfo.DepartmentList.length > 0) {
+                        $.each(_PortalContext.UserInfo.DepartmentList, function (i, dept) {
+                            deptStr += dept + "; ";
+                        });
+                        if (deptStr.length > 0) {
+                            deptStr = deptStr.substring(0, deptStr.length - 2);
+                        }
+                    }                    
+                    $("#lblUserDepartment").text(_PortalContext.UserInfo.Name + "-" + deptStr);
+
+                    if (_PortalContext.UserInfo.Extension)
+                    {
+                        $("#lblUserTel").text(_PortalContext.UserInfo.Extension);
+                    }
 
                     var imgBinary = _PortalContext.UserInfo.ImageUrl;
                     if (imgBinary && imgBinary.length > 0) {

@@ -53,7 +53,7 @@
                                     <img src="img/user.jpg" class="img-circle userImage" alt="User Image">
                                     <p>
                                         <span id="lblUserDepartment">User Name - Department</span>
-                                        <small>tel: +00000000</small>
+                                        <small><span lang="lang_extension"></span>: <span id="lblUserTel">+00000000</span></small>
                                         <small id="lblLoginTime"></small>
                                     </p>
                                 </li>

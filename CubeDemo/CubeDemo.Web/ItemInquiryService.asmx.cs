@@ -21,6 +21,7 @@ namespace CubeDemo.Web
         [WebMethod(EnableSession = true)]
         public List<Item> Inquiry(string itemNo)
         {
+
             List<Item> result = Db.From<Item>().Where(Item._.Item_No.Contain(itemNo)).Select().ToList();
             return result;
         }
