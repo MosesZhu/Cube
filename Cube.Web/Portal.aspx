@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Portal.Master" AutoEventWireup="true" CodeBehind="Portal.aspx.cs" Inherits="Cube.Web.Portal" %>
 
 <asp:Content ID="PageStyleContent" ContentPlaceHolderID="PageHeadContentHolder" runat="server">
-    <title>Portal</title>
+
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
@@ -141,7 +141,8 @@
             <!-- Create the tabs -->
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
                 <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+                <li><a href="#control-sidebar-portallink-tab" data-toggle="tab"><i class="fa fa-link"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>                
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -215,7 +216,18 @@
                     <!-- /.control-sidebar-menu -->
 
                 </div>
-                <!-- /.tab-pane -->
+                <!-- PortalLink tab content -->
+                <div class="tab-pane" id="control-sidebar-portallink-tab">
+                    <h3 class="control-sidebar-heading">Portal Link</h3>
+                    <div id="portal_link_container">
+                        <a href="www.baidu.com" class="list-group-item active">免费域名注册</a>
+                        <a href="#" class="list-group-item">24*7 支持</a>
+                    <a href="#" class="list-group-item">免费 Window 空间托管</a>
+                    <a href="#" class="list-group-item">图像的数量</a>
+                    <a href="#" class="list-group-item">每年更新成本</a>
+                    </div>                    
+
+                </div>
                 <!-- Settings tab content -->
                 <div class="tab-pane" id="control-sidebar-settings-tab">
                     <form method="post">
@@ -299,6 +311,7 @@
             "CurrentFunctionId": null,
             "UserInfo": null,
             "News": null,
+            "PortalLinkList": null,
             "HeaderVisible": true,
             "MenuVisible": function () {
                 return !$("body").hasClass("sidebar-collapse");

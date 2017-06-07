@@ -800,11 +800,13 @@
 											};
 											_menu.getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
 											if (searchFlag.found) {
-												found = true;
-                                                bread += //"<span class='text-gray'> > </span>
-                                                    "<span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
-													+ "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span>"
-												    + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
+                                                found = true;
+                                                if (_PortalContext.SystemMode != "Single") {
+                                                    bread +=
+                                                        "<span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
+                                                    + "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span><span class='text-gray'> > </span>";
+                                                }
+                                                bread += "<span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
 												$.each(searchFlag.founctionArray, function (k, f) {
 													bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
 												});
@@ -948,22 +950,22 @@
 
 						return false;
 					}
-				}
+                }                
 			},
 			"user": {
-				"initUserInfo": function () {
+				"init": function () {
 					var options = {
 						"success": function (d) {
 							if (d.success) {
 								_PortalContext.UserInfo = d.data;
-								_user.refreshUserInfo();
+								_user.refresh();
 							}
 						}
 					};
 
                     $.callWebService("getUserInfo", {}, options);
 				},
-				"refreshUserInfo": function () {
+				"refresh": function () {
 					$("#lblUserName").text(_PortalContext.UserInfo.Name);
                     $("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
 
@@ -990,12 +992,12 @@
 				}
 			},
 			"news": {
-				"initNews": function () {
+				"init": function () {
 					var options = {
 						"success": function (d) {
 							if (d.success) {
 								_PortalContext.News = d.data;
-								_news.refreshNews();
+								_news.refresh();
 							}
 						},
 						"show_mask": false
@@ -1005,10 +1007,10 @@
 
 					if (this.options.TIMER_ENABLE) {
 						clearInterval(this.timer);
-						this.timer = setInterval("this._news.initNews()", this.options.REFRESH_INTERVAL);
+						this.timer = setInterval("this._news.init()", this.options.REFRESH_INTERVAL);
 					}
 				},
-				"refreshNews": function () {
+				"refresh": function () {
 					var newsCount = _PortalContext.News.length;
 					if (newsCount > 0) {
 						if ($("#lblNewsCount").text() != newsCount) {
@@ -1049,7 +1051,25 @@
 					"TIMER_ENABLE": false,
 					"REFRESH_INTERVAL": 5000
 				}
-			},
+            },
+            "portalLink": {
+                "init": function () {
+                    var options = {
+                        "success": function (d) {
+                            if (d.success) {
+                                _PortalContext.PortalLinkList = d.data;
+                                _portalLink.refresh();
+                            }
+                        },
+                        "show_mask": false
+                    };
+
+                    $.callWebService("getPortalLinkList", {}, options);                    
+                },
+                "refresh": function () {
+                    alert(_PortalContext.PortalLinkList.length);
+                }
+            },
 			"init": function () {
 				this.ui.resetContentSize();
 				$(window).on("resize", function () {
@@ -1114,8 +1134,9 @@
 					borderRadius: '7px', //滚动条圆角
 				});
 
-				this.user.initUserInfo();
-				this.news.initNews();
+				this.user.init();
+                this.news.init();
+                this.portalLink.init();
 			},
 			"logout": function () {
 				var options = {
@@ -1161,4 +1182,5 @@ var _breadcrumb = _ui.breadcrumb;
 var _form = _ui.form;
 var _user = _portal.user;
 var _news = _portal.news;
+var _portalLink = _portal.portalLink;
 var _state = _portal.state;

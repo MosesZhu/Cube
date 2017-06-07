@@ -39,8 +39,27 @@ namespace Cube.Base
             //{
             //    context.BeginRequest += process;
             //}
+
+            //SSOModule wfkSSOModule = new SSOModule();
+            //context.BeginRequest += wfkSSOModule.BeginRequest;
+            context.BeginRequest += cubeProcess;
+        }
+
+        private static void cubeProcess(Object source, EventArgs args)
+        {
+#if DEBUG
+            //HttpApplication application = (HttpApplication)source;
+            //HttpContext context = application.Context;
+            //string requestPath = context.Request.AppRelativeCurrentExecutionFilePath;
+            //string requestFile = System.IO.Path.GetFileName(requestPath);
+            //if (!requestFile.Equals("@debug.aspx", StringComparison.CurrentCultureIgnoreCase))
+            //{
+            //    context.Response.Write("Hahaha");
+            //    context.Response.End();
+            //}            
+#endif
             SSOModule wfkSSOModule = new SSOModule();
-            context.BeginRequest += wfkSSOModule.BeginRequest;
+            wfkSSOModule.BeginRequest(source, args);
         }
 
         private static void process(Object source, EventArgs args)

@@ -759,6 +759,29 @@ namespace Cube.Web
             return user ?? new UserBasicInfoDTO();
         }
 
+        [WebMethod]
+        public ResultDTO getPortalLinkList()
+        {
+            ResultDTO result = new ResultDTO()
+            {
+                success = true
+            };
+
+            WhereClause where =
+                WhereClause.All.And(Portal_Link._.Active == 1
+                                    && Portal_Link._.Org_Id.In(SSOContext.Current.OrgID, Guid.Empty)
+                                    && Portal_Link._.Product_Id == SSOContext.Current.ProductID
+                                    && Portal_Link._.Position == "Top"
+                                    );
+            List<Portal_Link> listPortalLink =
+                WFKDb.From<Portal_Link>()
+                     .Where(where)
+                     .OrderBy(Portal_Link._.Sort_Code.Asc)
+                     .ToList<Portal_Link>();
+
+            result.data = listPortalLink;
+            return result;
+        }
         #endregion
     }
 }

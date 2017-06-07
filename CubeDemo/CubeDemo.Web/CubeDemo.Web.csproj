@@ -39,17 +39,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cube.Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Cube.Base">
       <HintPath>..\..\Cube.Base\bin\Debug\Cube.Base.dll</HintPath>
     </Reference>
-    <Reference Include="CubeDemo.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CubeDemo.Model">
       <HintPath>..\CubeDemo.Model\bin\Debug\CubeDemo.Model.dll</HintPath>
     </Reference>
     <Reference Include="ITS.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=49bcf0ef5ccc9012, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ITS.WebFramework.PermissionComponent.ServiceProxy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\WebFramework\PermissionComponent\ServiceProxy\bin\debug\ITS.WebFramework.PermissionComponent.ServiceProxy.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>\\10.85.10.2\bach30\Common\bin\log4net.dll</HintPath>
