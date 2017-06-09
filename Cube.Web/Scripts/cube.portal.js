@@ -998,7 +998,18 @@
                     "options": {
                         "SHOW_CONFIRM_WHEN_CLOSE" : false
                     }
-                }                
+                },
+                "footer": {
+                    "resetCopyrightLocation": function () {
+                        var footerWidth = $("footer").width();
+                        if (_PortalContext.MenuVisible()) {
+                            footerWidth -= $(".sidebar").width();
+                        }
+                        $("#footerContainer").animate({
+                            "padding-left": (footerWidth - $("#footerContainer").width()) / 2
+                        }, 200);
+                    }
+                }
 			},
 			"user": {
 				"init": function () {
@@ -1223,6 +1234,11 @@
 					_ui.resetContentSize();
                 });
 
+                _footer.resetCopyrightLocation();
+                $(".content-wrapper").resize(function () {
+                    _footer.resetCopyrightLocation();
+                });
+
                 window.onmessage = function (e) {                    
                     e = e || event;
                     try {
@@ -1334,3 +1350,4 @@ var _user = _portal.user;
 var _news = _portal.news;
 var _portalLink = _portal.portalLink;
 var _state = _portal.state;
+var _footer = _ui.footer;

@@ -126,7 +126,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer" style="position: fixed; bottom: 0px; width: 100%; padding: 8px;">
-            <div id="footerContainer"><asp:Literal ID="textFooterInfo" runat="server"></asp:Literal></div>
+            <div id="footerContainer" style="display:inline-block;"><asp:Literal ID="textFooterInfo" runat="server"></asp:Literal></div>
         </footer>
 
         <!-- Bookmark Sidebar -->
