@@ -57,23 +57,57 @@ namespace Cube.Web
                 if (CubeConfig.CubeSystemId != null)
                 {
                     string systemId = CubeConfig.CubeSystemId;
+                    string permissionSystemId = CubeConfig.PermissionSystemId;
                     Model.DTO.ProductDTO product = cubeMenu.ProductList.FirstOrDefault(p => 
                         p.DomainList.Exists(d => d.SystemList.Exists(s => s.Id.ToString().Equals(systemId, StringComparison.CurrentCultureIgnoreCase))));
+                    Model.DTO.ProductDTO permissionProduct = cubeMenu.ProductList.FirstOrDefault(p =>
+                        p.DomainList.Exists(d => d.SystemList.Exists(s => s.Id.ToString().Equals(permissionSystemId, StringComparison.CurrentCultureIgnoreCase))));
                     if (product != null)
                     {
                         Model.DTO.DomainDTO domain = product.DomainList.FirstOrDefault(d => d.SystemList.Exists(s => s.Id.ToString().Equals(systemId, StringComparison.CurrentCultureIgnoreCase)));
                         Model.DTO.SystemDTO system = domain.SystemList.FirstOrDefault(s => s.Id.ToString().Equals(systemId, StringComparison.CurrentCultureIgnoreCase));
 
+                        Model.DTO.DomainDTO permissionDomain = null;
+                        Model.DTO.SystemDTO permissionSystem = null;
+                        if (permissionProduct != null)
+                        {
+                            permissionDomain = permissionProduct.DomainList.FirstOrDefault(d => d.SystemList.Exists(s => s.Id.ToString().Equals(permissionSystemId, StringComparison.CurrentCultureIgnoreCase)));
+                            permissionSystem = permissionDomain.SystemList.FirstOrDefault(s => s.Id.ToString().Equals(permissionSystemId, StringComparison.CurrentCultureIgnoreCase));
+                            if (permissionDomain.Id != domain.Id)
+                            {
+                                permissionDomain = permissionProduct.DomainList.FirstOrDefault(d => d.SystemList.Exists(s => s.Id.ToString().Equals(permissionSystemId, StringComparison.CurrentCultureIgnoreCase)));
+                                permissionSystem = permissionDomain.SystemList.FirstOrDefault(s => s.Id.ToString().Equals(permissionSystemId, StringComparison.CurrentCultureIgnoreCase));
+                                permissionDomain.SystemList.Clear();
+                                permissionDomain.SystemList.Add(permissionSystem);
+                            }
+                            else
+                            {
+                                Model.DTO.DomainDTO tempPermissionDomain = new Model.DTO.DomainDTO();
+                                tempPermissionDomain.Id = permissionDomain.Id;
+                                tempPermissionDomain.Code = permissionDomain.Code;
+                                tempPermissionDomain.Language_Key = permissionDomain.Language_Key;
+                                tempPermissionDomain.Product_Id = permissionDomain.Product_Id;
+                                tempPermissionDomain.SystemList = new List<Model.DTO.SystemDTO>();
+                                tempPermissionDomain.SystemList.Add(permissionSystem);
+                                permissionDomain = tempPermissionDomain;
+                            }
+                        }
+
                         domain.SystemList.Clear();
-                        domain.SystemList.Add(system);
+                        domain.SystemList.Add(system);                        
                         product.DomainList.Clear();
                         product.DomainList.Add(domain);
+                        if (permissionDomain != null)
+                        {
+                            product.DomainList.Add(permissionDomain);
+                        }
 
-                        cubeMenu.BookmarkList.RemoveAll(b => ! b.System_Id.Equals(systemId, StringComparison.CurrentCultureIgnoreCase));
+                        cubeMenu.BookmarkList.RemoveAll(b => !b.System_Id.Equals(systemId, StringComparison.CurrentCultureIgnoreCase)
+                            && !b.System_Id.Equals(permissionSystemId, StringComparison.CurrentCultureIgnoreCase));
 
                         cubeMenu.CubeSystemMode = Base.Enums.CubeSystemModeEnum.Single.ToString();
                         result.data = cubeMenu;
-                    }
+                    }                    
                 }                
             }
 
@@ -116,7 +150,7 @@ namespace Cube.Web
                 Model.DTO.ProductDTO bachProduct = new Model.DTO.ProductDTO()
                 {
                     Id = Guid.NewGuid(),
-                    Name = "BACH",
+                    Name = CubeSSOContext.Current.ProductName,
                     DomainList = new List<Model.DTO.DomainDTO>()
                 };
 

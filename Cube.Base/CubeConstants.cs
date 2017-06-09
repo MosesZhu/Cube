@@ -18,8 +18,9 @@ namespace Cube.Common
     public class ConfigContents
     {
         public static readonly string AUTHORITY_MODE = "AuthorityMode";
-        public static readonly string CUBE_SYSTEM_MODE = "CubeSystemMode";
+        public static readonly string CUBE_SYSTEM_MODE = "CubeSystemMode";        
         public static readonly string CUBE_SYSTEM_ID = "CubeSystemId";
+        public static readonly string PERMISSION_SYSTEM_ID = "PermissionSystemId";
         public static readonly string CUBE_SYSTEM_NAME = "CubeSystemName";
         public static readonly string CUBE_PORTAL_TITLE = "CubePortalTitle";
         public static readonly string CUBE_PORTAL_HEADER_INFO = "CubePortalHeaderInfo";        

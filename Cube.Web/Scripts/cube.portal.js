@@ -135,6 +135,10 @@
                                 $.each(system.FunctionList, function (k, functionMenu) {
                                     menuHtml += _menu.getFunctionMenuHtml(functionMenu);
                                 });
+                                if (_PortalContext.MenuList[0].DomainList.length > 1) {
+                                    var permissionDomain = _PortalContext.MenuList[0].DomainList[1];
+                                    menuHtml += _menu.getDomainMenuHtml(permissionDomain);
+                                }
                                 $("#_FunctionMenu").addClass("SingleModeMenu");
                             } catch (error) { }
                             

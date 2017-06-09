@@ -94,6 +94,14 @@ namespace Cube.Base.Config
             }
         }
 
+        public static string PermissionSystemId
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[ConfigContents.PERMISSION_SYSTEM_ID];
+            }
+        }
+
         public static string CubePortalHeaderInfo
         {
             get
