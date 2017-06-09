@@ -47,6 +47,7 @@ namespace Cube.Web
                 .Select(Mc_Bookmark._.Function_Id).ToList<Guid>();
 
             MenuDTO cubeMenu = getMenuFromWfk(BookmarkIdList);
+            cubeMenu.WfkResourceUrl = CubeConfig.WfkResourceUrl; 
             if (CubeConfig.SystemMode == Base.Enums.CubeSystemModeEnum.Mulity)
             {
                 cubeMenu.CubeSystemMode = Base.Enums.CubeSystemModeEnum.Mulity.ToString();
@@ -801,6 +802,9 @@ namespace Cube.Web
                 success = true
             };
 
+            Model.DTO.PortalLinkDTO portalLinks = new Model.DTO.PortalLinkDTO();
+            portalLinks.WfkResourceUrl = CubeConfig.WfkResourceUrl;
+
             WhereClause where =
                 WhereClause.All.And(Portal_Link._.Active == 1
                                     && Portal_Link._.Org_Id.In(SSOContext.Current.OrgID, Guid.Empty)
@@ -813,7 +817,8 @@ namespace Cube.Web
                      .OrderBy(Portal_Link._.Sort_Code.Asc)
                      .ToList<Portal_Link>();
 
-            result.data = listPortalLink;
+            portalLinks.PortalLinkList = listPortalLink;
+            result.data = portalLinks;
             return result;
         }
         #endregion

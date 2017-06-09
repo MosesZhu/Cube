@@ -33,6 +33,9 @@
     <Reference Include="ITS.Data">
       <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
     </Reference>
+    <Reference Include="ITS.WebFramework.PermissionManagement.Entity">
+      <HintPath>..\..\WebFramework\PermissionManagement\Entity\bin\Debug\ITS.WebFramework.PermissionManagement.Entity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\PortalInfoDTO.cs" />
+    <Compile Include="DTO\PortalLinkDTO.cs" />
     <Compile Include="DTO\ProductDTO.cs" />
     <Compile Include="DTO\FunctionDTO.cs" />
     <Compile Include="DTO\MenuDTO.cs" />

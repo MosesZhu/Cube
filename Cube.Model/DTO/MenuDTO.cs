@@ -15,6 +15,8 @@ namespace Cube.DTO
         public List<FunctionDTO> BookmarkList { get; set; }
         public List<Mc_Language> LanguageList { get; set; }
 
+        public string WfkResourceUrl { get; set; }
+
         public string CubeSystemMode { get; set; }
         public MenuDTO()
         {

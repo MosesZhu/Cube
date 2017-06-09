@@ -218,13 +218,9 @@
                 </div>
                 <!-- PortalLink tab content -->
                 <div class="tab-pane" id="control-sidebar-portallink-tab">
-                    <h3 class="control-sidebar-heading">Portal Link</h3>
-                    <div id="portal_link_container">
-                        <a href="www.baidu.com" class="list-group-item active">免费域名注册</a>
-                        <a href="#" class="list-group-item">24*7 支持</a>
-                    <a href="#" class="list-group-item">免费 Window 空间托管</a>
-                    <a href="#" class="list-group-item">图像的数量</a>
-                    <a href="#" class="list-group-item">每年更新成本</a>
+                    <h3 class="control-sidebar-heading" lang="lang_portal_link">Portal Link</h3>
+                    <div class="nav sidebar-menu" id="portal_link_container">
+                        
                     </div>                    
 
                 </div>
@@ -309,10 +305,12 @@
             "MenuList": null,
             "BookmarkList": null,
             "CurrentFunctionId": null,
+            "IsCurrentFunctionPortalLink": false,
             "UserInfo": null,
             "News": null,
             "PortalLinkList": null,
             "HeaderVisible": true,
+            "WfkResourceUrl": "",
             "MenuVisible": function () {
                 return !$("body").hasClass("sidebar-collapse");
             }

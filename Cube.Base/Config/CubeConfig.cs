@@ -102,6 +102,14 @@ namespace Cube.Base.Config
             }
         }
 
+        public static string WfkResourceUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[ConfigContents.WFK_RESOURCE_URL] == null ? "" : ConfigurationManager.AppSettings[ConfigContents.WFK_RESOURCE_URL];
+            }
+        }
+
         public static string CubePortalHeaderInfo
         {
             get

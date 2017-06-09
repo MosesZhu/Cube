@@ -83,13 +83,13 @@
 
                     "_LastSearchKeywords": null,
 
-					"initMenu": function () {
+					"init": function () {
 						var options = {
 							"success": function (d) {
 								if (d.success) {
 									//menu muliti language
                                     if (d.data) {
-                                        _PortalContext.SystemMode = d.data.CubeSystemMode;
+                                        _PortalContext.SystemMode = d.data.CubeSystemMode;                                        
                                         $.each(d.data.LanguageList, function (i, lang) {
                                             _Lang_ZhCN[lang.Language_Key] = lang.Zh_Cn;
                                             _Lang_ZhTW[lang.Language_Key] = lang.Zh_Tw;
@@ -98,7 +98,7 @@
 
                                         _PortalContext.MenuList = d.data.ProductList;
                                         _PortalContext.BookmarkList = d.data.BookmarkList;
-                                        _menu.refreshMenu();
+                                        _menu.refresh();
                                     }									
 								}
 							}
@@ -107,7 +107,7 @@
 						$.callWebService("getMenu", {}, options);
 					},
 
-					"refreshMenu": function () {
+					"refresh": function () {
                         var menuHtml = "";
                         if (_PortalContext.SystemMode == "Mulity") {
                             try {
@@ -357,7 +357,7 @@
                             if (this._BeforeSearchMenu != null) {
                                 $("#_FunctionMenu").html(this._BeforeSearchMenu);
                             } else {
-                                _menu.refreshMenu();
+                                _menu.refresh();
                             }							
                         }
 
@@ -714,7 +714,7 @@
                                 } else if (menuIndex == "MENU_COLLAPSE_ALL") {
                                     _menu.collapseAllMenu();
                                 } else if (menuIndex == "MENU_REFRESH") {
-                                    _menu.initMenu();
+                                    _menu.init();
                                 }
 							}
 						});
@@ -756,7 +756,7 @@
                                         "title": _CurrentLang['lang_success'], 
                                         "content": _CurrentLang['msg_save_success']
                                     });
-									_menu.initMenu();
+									_menu.init();
 								}
 							}
 						};
@@ -775,7 +775,7 @@
                                         "title": _CurrentLang['lang_success'],
                                         "content": _CurrentLang['msg_save_success']
                                     });
-									_menu.initMenu();
+									_menu.init();
 								}
 							}
 						};
@@ -809,67 +809,76 @@
 
 					"changeBreadCrumb": function () {
 						var bread = "";
-						if (_PortalContext.CurrentFunctionId) {
-							$.each(_PortalContext.MenuList, function (i, product) {
-								var found = false;
-								$.each(product.DomainList, function (j, domainMenu) {
-									if (found) {
-										return false;
-									}
-									$.each(domainMenu.SystemList, function (j, systemMenu) {
-										if (found) {
-											return false;
-										}
-										$.each(systemMenu.FunctionList, function (j, functionMenu) {
-											var searchFlag = {
-												"found": false,
-												"founctionArray": new Array()
-											};
-											_menu.getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
-											if (searchFlag.found) {
-                                                found = true;
-                                                if (_PortalContext.SystemMode != "Single") {
-                                                    bread +=
-                                                        "<span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
-                                                    + "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span><span class='text-gray'> > </span>";
+                        if (_PortalContext.CurrentFunctionId) {
+                            if (_PortalContext.IsCurrentFunctionPortalLink) {
+                                bread +=
+                                    "<span lang='lang_portal_link'>Portal Link</span>";
+                                var linkItem = _portalLink.getLinkItem(_PortalContext.CurrentFunctionId);
+                                if (linkItem != null) {
+                                    bread += "<span class='text-gray'> > </span><span>" + linkItem.Name+ "</span>";
+                                }                                
+                            } else {
+                                $.each(_PortalContext.MenuList, function (i, product) {
+                                    var found = false;
+                                    $.each(product.DomainList, function (j, domainMenu) {
+                                        if (found) {
+                                            return false;
+                                        }
+                                        $.each(domainMenu.SystemList, function (j, systemMenu) {
+                                            if (found) {
+                                                return false;
+                                            }
+                                            $.each(systemMenu.FunctionList, function (j, functionMenu) {
+                                                var searchFlag = {
+                                                    "found": false,
+                                                    "founctionArray": new Array()
+                                                };
+                                                _menu.getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
+                                                if (searchFlag.found) {
+                                                    found = true;
+                                                    if (_PortalContext.SystemMode != "Single") {
+                                                        bread +=
+                                                            "<span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
+                                                            + "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span><span class='text-gray'> > </span>";
+                                                    }
+                                                    bread += "<span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
+                                                    $.each(searchFlag.founctionArray, function (k, f) {
+                                                        bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
+                                                    });
+                                                    return false;
                                                 }
-                                                bread += "<span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
-												$.each(searchFlag.founctionArray, function (k, f) {
-													bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
-												});
-												return false;
-											}
-										});
-									});
-								});
+                                            });
+                                        });
+                                    });
 
-								if (!found) {
-									$.each(product.SystemList, function (i, systemMenu) {
-										if (found) {
-											return false;
-										}
-										$.each(systemMenu.FunctionList, function (j, functionMenu) {
-											var searchFlag = {
-												"found": false,
-												"founctionArray": new Array()
-											};
-											_menu.getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
-											if (searchFlag.found) {
-												found = true;
-                                                bread +=  //"<span class='text-gray'> > </span>
-                                                      "< span lang= '" + product.Language_Key + "' > " + product.Name + "</span > "
-													  + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
-												$.each(searchFlag.founctionArray, function (k, f) {
-													bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
-												});
-												return false;
-											}
-										});
-									});
-								} else {
-									return false;
-								}
-							});
+                                    if (!found) {
+                                        $.each(product.SystemList, function (i, systemMenu) {
+                                            if (found) {
+                                                return false;
+                                            }
+                                            $.each(systemMenu.FunctionList, function (j, functionMenu) {
+                                                var searchFlag = {
+                                                    "found": false,
+                                                    "founctionArray": new Array()
+                                                };
+                                                _menu.getFunctionArray(_PortalContext.CurrentFunctionId, functionMenu, searchFlag);
+                                                if (searchFlag.found) {
+                                                    found = true;
+                                                    bread +=  //"<span class='text-gray'> > </span>
+                                                        "< span lang= '" + product.Language_Key + "' > " + product.Name + "</span > "
+                                                        + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
+                                                    $.each(searchFlag.founctionArray, function (k, f) {
+                                                        bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
+                                                    });
+                                                    return false;
+                                                }
+                                            });
+                                        });
+                                    } else {
+                                        return false;
+                                    }
+                                });
+                            }							
 						}
 						//$("#_BreadcrumbContent").hide().html(bread).show(300);
                         
@@ -939,7 +948,8 @@
 							if (thisFunctionId == functionid) {
 								opened = true;
 								$(tab).tab("show");
-								_PortalContext.CurrentFunctionId = functionid;
+                                _PortalContext.CurrentFunctionId = functionid;
+                                _PortalContext.IsCurrentFunctionPortalLink = false;
 								return false;
 							}
 						});
@@ -950,7 +960,8 @@
 					"closeFormByFunctionId": function (functionid) {
 						var preTab = $("a[functionid=" + functionid + "]").parent().prev();
 						var nextTab = $("a[functionid=" + functionid + "]").parent().next();
-						_PortalContext.CurrentFunctionId = null;
+                        _PortalContext.CurrentFunctionId = null;
+                        _PortalContext.IsCurrentFunctionPortalLink = false;
 						$("a[functionid=" + functionid + "]").parent().remove();
 						$("#" + functionid).remove();
 						_breadcrumb.changeBreadCrumb();
@@ -1094,7 +1105,8 @@
                     var options = {
                         "success": function (d) {
                             if (d.success) {
-                                _PortalContext.PortalLinkList = d.data;
+                                _PortalContext.WfkResourceUrl = d.data.WfkResourceUrl;
+                                _PortalContext.PortalLinkList = d.data.PortalLinkList;
                                 _portalLink.refresh();
                             }
                         },
@@ -1103,8 +1115,106 @@
 
                     $.callWebService("getPortalLinkList", {}, options);                    
                 },
-                "refresh": function () {
-                    alert(_PortalContext.PortalLinkList.length);
+                "refresh": function () {                   
+                    var portalLinksHtml = "";
+                    $.each(_PortalContext.PortalLinkList, function (i, link) {
+                        portalLinksHtml += _portalLink.getPortalLinkItemHtml(link);
+                    });
+                    $("#portal_link_container").html(portalLinksHtml);
+                },
+                "getPortalLinkItemHtml": function (link) {
+                    var resUrl = _PortalContext.WfkResourceUrl + "res.its?icon=";
+                    var html = "";
+                    html += '<li onclick="return _portalLink.openLink(this);" linktarget="'
+                         + link.Target
+                         + '"  linkid="' + link.Id + '" ';
+                    if (link.Navigate_Url) {
+                        html += ' linkurl="'
+                            + link.Navigate_Url + '" ';
+                    }
+                    html += '>'
+                        + '<a class="function_menu_item">';
+                    if (link.System_Icon_Name && link.System_Icon_Name.length > 0) {
+                        html += '<img src="' + resUrl + link.System_Icon_Name + '"></img>&nbsp;&nbsp;';
+                    } else {
+                        html += '<i class="fa fa-circle-o text-light-blue"></i>';
+                    }
+                    html += '<span data-toggle="tooltip" class="link_name_container" data-placement="top" title="'
+                        + link.Name + '">'
+                        + link.Name + '</span>'
+                        + '</a>'
+                        + '</li>';
+                    return html;
+                },
+                "openLink": function (link) {
+                    var linkid = $(link).attr("linkid");
+                    var linkurl = $(link).attr("linkurl");
+                    var linktarget = $(link).attr("linktarget");
+                    var linkname = $(link).find(".link_name_container").first().text();
+                    if (linktarget == "NewWindow") {
+                        window.open(linkurl);
+                    } else if (linktarget == "FullScreen") {
+                        window.open(linkurl, '', 'width=' + (window.screen.availWidth - 10) + ',height=' + (window.screen.availHeight - 30) + ',top=0,left=0,resizable=yes,status=yes,menubar=no,scrollbars=yes');
+                    } else if (linktarget == "Tab") {
+                        var opend = _portalLink.showPortalLinkFormById(linkid);
+
+                        if (!opend) {
+                            var tabHtml = '<li class="nav-item form-tab">'
+                                + '<a class="nav-link" data-toggle="tab" isportallink="true" href="#' + linkid + '" onclick="_portalLink.showPortalLinkFormById(\''
+                                + linkid + '\'); return false;" role="tab" aria-controls="' + linkid + '" functionid="' + linkid + '">'
+                                + '<table>'
+                                + '<tr>'
+                                + '<td>'
+                                + '<div>'
+                                + linkname + '</div>'
+                                + '</td>'
+                                + '<td style="padding-left:5px;">'
+                                + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="return _form.closeForm(this);">&times;</button >'//<span class="fa fa-times icon_close_form" onclick="return closeForm(this);">'
+                                + '</span>'
+                                + '</td>'
+                                + '</tr>'
+                                + '</table>'
+                                + '</a>'
+                                + '</li>';
+                            $("#_FormTabs").append(tabHtml);
+
+                            $("#_FormTabContent").append('<div class="tab-pane" id="'
+                                + linkid
+                                + '" role="tabpanel" style="height: 100%; padding: 0px;">'
+                                + '<iframe name="frm_' + linkid + '" src="' + linkurl + '?SSOToken=' + getQueryStringByName('SSOToken')
+                                + "#!lang=" + _Context.CurrentLang
+                                + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
+                            _cmenu.bindTabContextMenu();
+                            _portalLink.showPortalLinkFormById(linkid);
+
+                            _breadcrumb.toggleBreadcrumb();
+                        }
+                    }
+                },
+                "showPortalLinkFormById": function (linkid) {
+                    var opened = false;
+                    $("#_FormTabs a").each(function (i, tab) {
+                        var thisFunctionId = $(tab).attr("functionid");
+                        if (thisFunctionId == linkid) {
+                            opened = true;
+                            $(tab).tab("show");
+                            _PortalContext.CurrentFunctionId = linkid;
+                            _PortalContext.IsCurrentFunctionPortalLink = true;
+                            return false;
+                        }
+                    });
+                    _breadcrumb.changeBreadCrumb();
+                    return opened;
+                },
+                "getLinkItem": function (linkid) {
+                    var linkitem = null;
+                    $.each(_PortalContext.PortalLinkList, function (i, item) {
+                        if (item.Id == linkid) {
+                            linkitem = item;
+                            return false;
+                        }
+                    });
+                    return linkitem;
                 }
             },
 			"init": function () {
@@ -1146,12 +1256,15 @@
 
 				$("#ddlLanguage").val($.uriAnchor.makeAnchorMap()["lang"]);
 
-				this.ui.menu.initMenu();
+				this.ui.menu.init();
 
 				//Tabs Event
 				$('#_FormTabs').on('shown.bs.tab', function (e) {
-					var functionid = $(e.target).attr("functionid");
-					_menu.activeMenu(functionid);
+                    var functionid = $(e.target).attr("functionid");
+                    var isPortalLink = $(e.target).attr("isportallink");
+                    if (!isPortalLink) {
+                        _menu.activeMenu(functionid);
+                    }					
 				});
 
 				$('#tbxSearchMenu').on('keydown', function (e) {
