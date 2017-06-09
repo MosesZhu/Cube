@@ -245,23 +245,47 @@ jQuery.extend({
         "dialog": {},
         "showMessage": function (data) {
             if ($("#messageDialog") && $("#messageDialog").html()) {
-                $("#messageDialogTitle").text("");
-                $("#messageDialogContent").html("");
-                $("#messageDialogWarningContent").html("");
-
-                if (data.title) {
-                    $("#messageDialogTitle").text(data.title);
+                if (!alertify.cubeAlert) {
+                    alertify.dialog('cubeAlert', function () {
+                        return {
+                            main: function (message, title) {
+                                this.message = message;
+                                $(".ajs-header").html(title);
+                            },
+                            setup: function () {
+                                return {
+                                    buttons: [{
+                                        text: _CurrentLang["lang_close"],
+                                        key: 27/*Esc*/,
+                                        className: "btn btn-primary btn-flat btn-skin-primary"
+                                    }],
+                                    focus: { element: 0 }
+                                };
+                            },
+                            prepare: function () {
+                                this.setContent(this.message);
+                            }
+                        }
+                    });
                 }
+                alertify.cubeAlert(data.content, data.title);
+                //$("#messageDialogTitle").text("");
+                //$("#messageDialogContent").html("");
+                //$("#messageDialogWarningContent").html("");
 
-                if (data.content) {
-                    $("#messageDialogContent").html(data.content);
-                }
+                //if (data.title) {
+                //    $("#messageDialogTitle").text(data.title);
+                //}
 
-                if (data.warning) {
-                    $("#messageDialogWarningContent").html(data.warning);
-                }
+                //if (data.content) {
+                //    $("#messageDialogContent").html(data.content);
+                //}
 
-                $("#messageDialog").modal('show');
+                //if (data.warning) {
+                //    $("#messageDialogWarningContent").html(data.warning);
+                //}
+
+                //$("#messageDialog").modal('show');
             } else {
                 if (window.parent) {
                     var msg = {

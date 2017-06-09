@@ -79,6 +79,7 @@
                 <asp:ScriptReference Name="cookie" />
                 <asp:ScriptReference Name="bootstrap-contextmenu" />
                 <asp:ScriptReference Name="cube.portal" />
+                <asp:ScriptReference Name="alertifyjs" />
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>

@@ -54,7 +54,7 @@
                                     <p>
                                         <span id="lblUserDepartment">User Name - Department</span>
                                         <small><span lang="lang_extension"></span>: <span id="lblUserTel">+00000000</span></small>
-                                        <small id="lblLoginTime"></small>
+                                        <small><span lang="lang_last_logon_time"></span>: <span id="lblLoginTime">N/A</span></small>
                                     </p>
                                 </li>
                                 <li class="user-footer">

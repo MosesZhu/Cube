@@ -108,7 +108,14 @@ namespace Cube.Web
                 {
                     Path = "~/Scripts/bootstrap-contextmenu.js",
                 });
-            
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "alertifyjs",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/alertify.js",
+                });
+
         }
     }
 }

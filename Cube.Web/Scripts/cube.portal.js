@@ -633,38 +633,61 @@
 									var url = $("#" + functionid).find("iframe").attr("src");
 									window.open(url);
                                 } else if (menuIndex == "MENU_CLOSE") {
-                                    var confirmData = {
-                                        "content": _CurrentLang['msg_confirm_close_tab'],
-                                        "oktodo": function () {
-                                            _form.closeFormByFunctionId(functionid);
-                                            _breadcrumb.toggleBreadcrumb();
-                                        }
-                                    };
-                                    $.dialog.showConfirm(confirmData);
+                                    if (_form.options.SHOW_CONFIRM_WHEN_CLOSE) {
+                                        var confirmData = {
+                                            "content": _CurrentLang['msg_confirm_close_tab'],
+                                            "oktodo": function () {
+                                                _form.closeFormByFunctionId(functionid);
+                                                _breadcrumb.toggleBreadcrumb();
+                                            }
+                                        };
+                                        $.dialog.showConfirm(confirmData);
+                                    } else {
+                                        _form.closeFormByFunctionId(functionid);
+                                        _breadcrumb.toggleBreadcrumb();
+                                    }                               
                                 } else if (menuIndex == "MENU_CLOSE_OTHERS") {
-                                    var confirmData = {
-                                        "content": _CurrentLang['msg_confirm_close_tab'],
-                                        "oktodo": function () {
-                                            $("#_FormTabs a").each(function (i, tab) {
-                                                if ($(tab).attr("functionid") != functionid) {
-                                                    _form.closeFormByFunctionId($(tab).attr("functionid"));
-                                                }
-                                            });
-                                            _breadcrumb.toggleBreadcrumb();
-                                        }
-                                    };
-                                    $.dialog.showConfirm(confirmData);
-                                } else if (menuIndex == "MENU_CLOSE_ALL") {
-                                    var confirmData = {
-                                        "content": _CurrentLang['msg_confirm_close_tab'],
-                                        "oktodo": function () {
-                                            $("#_FormTabs a").each(function (i, tab) {
+                                    if (_form.options.SHOW_CONFIRM_WHEN_CLOSE) {
+                                        var confirmData = {
+                                            "content": _CurrentLang['msg_confirm_close_tab'],
+                                            "oktodo": function () {
+                                                $("#_FormTabs a").each(function (i, tab) {
+                                                    if ($(tab).attr("functionid") != functionid) {
+                                                        _form.closeFormByFunctionId($(tab).attr("functionid"));
+                                                    }
+                                                });
+                                                _breadcrumb.toggleBreadcrumb();
+                                            }
+                                        };
+                                        $.dialog.showConfirm(confirmData);
+                                    } else {
+                                        $("#_FormTabs a").each(function (i, tab) {
+                                            if ($(tab).attr("functionid") != functionid) {
                                                 _form.closeFormByFunctionId($(tab).attr("functionid"));
-                                            });
-                                            _breadcrumb.toggleBreadcrumb();
-                                        }
-                                    };
-                                    $.dialog.showConfirm(confirmData);									
+                                            }
+                                        });
+                                        _breadcrumb.toggleBreadcrumb();
+                                    }                                    
+                                } else if (menuIndex == "MENU_CLOSE_ALL") {
+                                    if (_form.options.SHOW_CONFIRM_WHEN_CLOSE) {
+                                        var confirmData = {
+                                            "content": _CurrentLang['msg_confirm_close_tab'],
+                                            "oktodo": function () {
+                                                $("#_FormTabs a").each(function (i, tab) {
+                                                    _form.closeFormByFunctionId($(tab).attr("functionid"));
+                                                });
+                                                _breadcrumb.toggleBreadcrumb();
+                                            }
+                                        };
+                                        $.dialog.showConfirm(confirmData);                                        
+                                    } else {
+                                        $("#_FormTabs a").each(function (i, tab) {
+                                            _form.closeFormByFunctionId($(tab).attr("functionid"));
+                                        });
+                                        _breadcrumb.toggleBreadcrumb();
+                                        $("#tab-context-menu").hide();
+                                    }
+                                    									
 								} else if (menuIndex == "MENU_REFRESH") {
 									var frameName = "frm_" + functionid;
 									var url = $("iframe[name=" + frameName + "]").attr("src");
@@ -942,18 +965,28 @@
 					},
 
                     "closeForm": function (ctrl) {
-                        var confirmData = {
-                            "content": _CurrentLang['msg_confirm_close_tab'],
-                            "oktodo": function () {
-                                var functionid = $(ctrl).parents('a').attr("functionid");
-                                _form.closeFormByFunctionId(functionid);
-                                _breadcrumb.toggleBreadcrumb();
-                            }
-                        };
-                        $.dialog.showConfirm(confirmData);
+                        if (this.options.SHOW_CONFIRM_WHEN_CLOSE) {
+                            var confirmData = {
+                                "content": _CurrentLang['msg_confirm_close_tab'],
+                                "oktodo": function () {
+                                    var functionid = $(ctrl).parents('a').attr("functionid");
+                                    _form.closeFormByFunctionId(functionid);
+                                    _breadcrumb.toggleBreadcrumb();
+                                }
+                            };
+                            $.dialog.showConfirm(confirmData);
+                        } else {
+                            var functionid = $(ctrl).parents('a').attr("functionid");
+                            _form.closeFormByFunctionId(functionid);
+                            _breadcrumb.toggleBreadcrumb();
+                        }                        
 
 						return false;
-					}
+                    },
+
+                    "options": {
+                        "SHOW_CONFIRM_WHEN_CLOSE" : false
+                    }
                 }                
 			},
 			"user": {
