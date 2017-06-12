@@ -1048,7 +1048,13 @@
                     var imgBinary = _PortalContext.UserInfo.ImageUrl;
                     if (imgBinary && imgBinary.length > 0) {
                         $(".userImage").hide(200).attr("src", imgBinary).show(200);
-                    }					
+                    }
+
+                    if (_PortalContext.UserInfo.IsAdmin) {
+                        $("#btnAdminLogin").show();
+                    } else {
+                        $("#btnAdminLogin").hide();
+                    }
 				}
 			},
 			"news": {
@@ -1098,7 +1104,7 @@
 						//+ "</h4>"
                         //+ "<p><i class='fa fa-user'></i>&nbsp;" + news.Created_By + "</p>"
                         + "<div>"
-                        + "<h4 style='overflow:hidden;text-overflow:ellipsis;'>" + news.Subject + "</h4>"
+                        + "<h4 style='overflow:hidden;text-overflow:ellipsis;'>" + escapeHtmlData(news.Subject) + "</h4>"
                         + "</div>"
                         + "<small><i class='fa fa-clock-o'></i>&nbsp;" + (new Date(date)).Format("yyyy-MM-dd") + "</small>"
                         + "&nbsp;&nbsp;<small><i class='fa fa-user'></i>&nbsp;" + news.Created_By + "</small>"
@@ -1333,6 +1339,9 @@
 				};
                 $.callWebService("logout", {}, options);
 				return false;
+            },
+            "adminLogin": function () {
+                window.location = "SSOAdminSimulate.aspx?SSOToken=" + getQueryStringByName("SSOToken");
             },
             "state": {
                 "changeLanguage": function () {

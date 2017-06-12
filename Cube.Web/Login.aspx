@@ -122,7 +122,12 @@
 
             initProductOrgList();
             initDomainList();          
-            
+
+            $("body").on("keydown", function (e) {
+                if (e.keyCode == 13) {
+                    login();
+                }                
+            });
         });
 
         var changeUserPosition = function () {

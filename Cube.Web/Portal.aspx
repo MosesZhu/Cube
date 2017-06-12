@@ -69,7 +69,8 @@
                                 </li>
                                 <li class="user-footer">
                                     <div class="pull-right">
-                                        <a class="btn btn-default btn-flat" lang="lang_logout" onclick="return _portal.logout();">Logout</a>
+                                        <a class="btn btn-flat btn-skin-primary" lang="lang_admin_login" id="btnAdminLogin" style="display:none;" onclick="return _portal.adminLogin();">Admin Login</a>
+                                        <a class="btn btn-flat btn-default" lang="lang_logout" onclick="return _portal.logout();">Logout</a>
                                     </div>
                                 </li>
                             </ul>

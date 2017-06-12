@@ -495,6 +495,8 @@ namespace Cube.Web
             {
                 result.ImageUrl = userImage.Image;
             }
+
+            result.IsAdmin = PermissionService.HasProductImpersonatePermission(UserInfo.User_ID, ProductId);
             return result;
 
             //UserInfoDTO user = new UserInfoDTO();

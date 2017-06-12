@@ -683,3 +683,16 @@ Date.prototype.Format = function (fmt) { //author: meizz
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }    
+
+function escapeHtmlData(data) {
+    if (typeof data == 'object' || $.isArray(data)) {
+        for (p in data) {
+            data[p] = escapeHtmlData(data[p]);
+        }
+    }
+    else if (typeof data == 'string') {
+        data = data.replace(/</g, "&lt;"); //把符号"<" 替换成"&lt;"
+        data = data.replace(/>/g, "&gt;"); //把符号">" 替换成"&gt;"
+    }
+    return data;
+}

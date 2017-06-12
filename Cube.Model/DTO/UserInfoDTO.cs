@@ -34,6 +34,8 @@ namespace Cube.Model.DTO
         /// </summary>
         public List<ProductDTO> MenuList { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         public UserInfoDTO()
         {
             this.DepartmentList = new List<string>();
