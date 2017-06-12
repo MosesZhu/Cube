@@ -22,6 +22,7 @@ using ITS.WebFramework.PermissionManagement.Entity;
 using ITS.WebFramework.PermissionManagement.DTO;
 using ITS.WebFramework.Common;
 using System.Xml.Linq;
+using ITS.Mapper;
 
 namespace Cube.Web
 {
@@ -322,43 +323,7 @@ namespace Cube.Web
         private static string GetDefaultValueIfNull(string str)
         {
             return string.IsNullOrEmpty(str) ? "" : str;
-        }
-
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        [WebMethod]
-        public ResultDTO getUnreadNews()
-        {
-            ResultDTO result = new ResultDTO();
-            List<Guid> readNewsIdList = WFKDb.From<Portal_News_Status>()
-                .Where(Portal_News_Status._.User_Id == UserInfo.User_ID && Portal_News_Status._.Status == "read")
-                .Select(Portal_News_Status._.News_Id).ToList<Guid>();
-
-            WhereClause where =
-                WhereClause.All.And(Portal_News._.Active == 1
-                                    && Portal_News._.Due_Date >= DateTime.Today
-                                    && Portal_News._.Org_Id == SSOContext.Current.OrgID
-                                    && Portal_News._.Product_Id == SSOContext.Current.ProductID
-                                    && Portal_News._.Id.NotIn(readNewsIdList));
-            result.data = WFKDb.From<Portal_News>().Where(where).ToList<PortalNewsDTO>();
-            result.success = true;
-            return result;
-        }
-
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        [WebMethod]
-        public ResultDTO getAllNews()
-        {
-            ResultDTO result = new ResultDTO();
-            WhereClause where =
-                WhereClause.All.And(Portal_News._.Active == 1
-                                    && Portal_News._.Due_Date >= DateTime.Today
-                                    && Portal_News._.Org_Id == SSOContext.Current.OrgID
-                                    && Portal_News._.Product_Id == SSOContext.Current.ProductID);
-            result.data = WFKDb.From<Portal_News>().Where(where).ToList<PortalNewsDTO>();
-            result.success = true;
-            return result;
-        }
-
+        }        
 
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         [WebMethod]
@@ -840,6 +805,124 @@ namespace Cube.Web
             portalLinks.PortalLinkList = listPortalLink;
             result.data = portalLinks;
             return result;
+        }
+
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
+        public ResultDTO getUnreadNews()
+        {
+            ResultDTO result = new ResultDTO();
+            List<Guid> readNewsIdList = WFKDb.From<Portal_News_Status>()
+                .Where(Portal_News_Status._.User_Id == UserInfo.User_ID && Portal_News_Status._.Status == "read")
+                .Select(Portal_News_Status._.News_Id).ToList<Guid>();
+
+            WhereClause where =
+                WhereClause.All.And(Portal_News._.Active == 1
+                                    && Portal_News._.Due_Date >= DateTime.Today
+                                    && Portal_News._.Org_Id == SSOContext.Current.OrgID
+                                    && Portal_News._.Product_Id == SSOContext.Current.ProductID
+                                    && Portal_News._.Id.NotIn(readNewsIdList));
+            result.data = WFKDb.From<Portal_News>().Where(where).ToList<PortalNewsDTO>();
+            result.success = true;
+            return result;
+        }
+
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
+        public ResultDTO getAllNews()
+        {
+            ResultDTO result = new ResultDTO();
+            WhereClause where =
+                WhereClause.All.And(Portal_News._.Active == 1
+                                    //&& Portal_News._.Due_Date >= DateTime.Today
+                                    && Portal_News._.Org_Id == SSOContext.Current.OrgID
+                                    && Portal_News._.Product_Id == SSOContext.Current.ProductID);
+            result.data = WFKDb.From<Portal_News>().Where(where).ToList<PortalNewsDTO>();
+            result.success = true;
+            return result;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public PortalNewsDTO GetPortalNewsDetail(Guid newsId)
+        {
+            WhereClause where = WhereClause.All.And(Portal_News._.Id == newsId && Portal_News._.Active == BooleanType.True);
+            EntityQuery entityQuery = GetPortalHomePageNewsEntityQuery(where);
+            PortalNewsDTO portalNewsDTO = entityQuery.First<PortalNewsDTO>();
+            return portalNewsDTO;
+        }
+
+        private EntityQuery GetPortalHomePageNewsEntityQuery(WhereClause where)
+        {
+            EntityQuery entityQuery =
+                WFKDb.From<Portal_News>()
+                    .LeftJoin<Portal_News_Status>(Portal_News_Status._.News_Id == Portal_News._.Id)
+                    .LeftJoin<View_Base_User>(View_Base_User._.Active == BooleanType.True && View_Base_User._.User_Id == Portal_News._.Post_User_Id)
+                    .Where(where)
+                    .Select(Portal_News._.All,
+                            Portal_News_Status._.Status.As("Status"),
+                            View_Base_User._.User_Name.As("PostUser")
+                            )
+                .OrderBy(Portal_News._.Created_Date.Desc);
+            return entityQuery;
+        }
+
+        [Serializable]
+        public class BooleanType
+        {
+            /// <summary>
+            /// 无效状态，假的，删除的
+            /// </summary>
+            public const int False = 0;
+
+            /// <summary>
+            /// 有效状态，真的，未删除的
+            /// </summary>
+            public const int True = 1;
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        public string InsertNewsStatus(PortalNewsStatusDTO portalNewsStatusDTO)
+        {
+            portalNewsStatusDTO.User_Id = SSOContext.Current.UserID;
+            //Check有效的NewsId+UserId组合不能重复(逻辑主键不能重复)
+            bool checkLogicKey = CheckLogicKey(portalNewsStatusDTO.News_Id, portalNewsStatusDTO.User_Id);
+            if (!checkLogicKey)
+            {
+                //存在，则返回提示信息
+                return "不能插入";
+            }
+            using (var transaction = WFKDb.BeginTransaction())
+            {
+
+                Portal_News_Status portalNewsStatus = MapperManager.Default.MapEntity<PortalNewsStatusDTO
+                            , Portal_News_Status>(portalNewsStatusDTO);
+                portalNewsStatus.Id = Guid.NewGuid();
+                portalNewsStatus.Created_User_Id = SSOContext.Current.UserID;
+                portalNewsStatus.Created_By = SSOContext.Current.UserName;
+                portalNewsStatus.Created_Date = WFKDb.DBDateTime;
+                portalNewsStatus.Modified_User_Id = null;
+                portalNewsStatus.Modified_By = null;
+                portalNewsStatus.Modified_Date = null;
+
+                WFKDb.Insert(portalNewsStatus);
+
+                transaction.Commit();
+                return string.Empty;
+            }
+        }
+
+        private bool CheckLogicKey(Guid newsId, Guid userId)
+        {
+            WhereClause where = Portal_News_Status._.News_Id == newsId
+                                && Portal_News_Status._.User_Id == userId;
+
+            int count =
+                WFKDb.From<Portal_News_Status>()
+                     .Where(where)
+                     .Count();
+
+            return count == 0;
         }
         #endregion
     }

@@ -40,12 +40,15 @@
                                     </ul>
                                 </li>
                                 <li class="footer">
-                                    <a onclick="return _news.showAllNewsList();">
+                                    <a onclick="return _news.toggleNewsList();" id="btnShowAllNews">
                                         <span lang="lang_show_all">Show All News</span>
                                         <!--<span>&nbsp;</span>
                                         <span lang="lang_total" style="float:right;"></span><span style="float:right;">: </span><span style="float:right;" id="lblTotalNews">0</span>
                                         -->
                                     </a>
+                                    <a onclick="return _news.toggleNewsList();" style="display:none;" id="btnShowUnreadNews">
+                                        <span lang="lang_show_unread">Show All News</span>                                        
+                                    </a>                                    
                                 </li>
                             </ul>
                         </li>                        
@@ -243,6 +246,15 @@
                                     target="OPT_SHOW_CONFIRM_WHEN_CLOSE" onchange="return _settings.change(this);">
                             </label>
                             <p lang="lang_show_confirm_when_close_tab_info">
+                                If you want to show a confirm dialog when close form tab.
+                            </p>
+
+                            <label class="control-sidebar-subheading">
+                                <span lang="lang_news_refresh_enable">News auto refresh</span>
+                                <input type="checkbox" class="pull-right" checked id="cbxNewsRefreshEnable"
+                                    target="OPT_NEWS_REFRESH_TIMER_ENABLE" onchange="return _settings.change(this);">
+                            </label>
+                            <p lang="lang_news_refresh_enable_info">
                                 If you want to show a confirm dialog when close form tab.
                             </p>
                         </div>

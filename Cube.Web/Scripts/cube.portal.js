@@ -23,6 +23,7 @@
 					//$(".content-wrapper").animate({
 					//	"padding-top": headerHeight + "px"
 					//}, 200);
+                    $("aside").height($(window).height() - headerHeight);
 				},
 				"header": {
 					"toggleHeader": function () {
@@ -1061,12 +1062,15 @@
 						},
 						"show_mask": false
 					};
+                    var serviceUrl = "getUnreadNews";
+                    if (this.status == this.STATUS.UNREAD) {
+                        serviceUrl = "getAllNews";
+                    }
+                    $.callWebService(serviceUrl, {}, options);
 
-                    $.callWebService("getUnreadNews", {}, options);
-
-					if (this.options.TIMER_ENABLE) {
-						clearInterval(this.timer);
-						this.timer = setInterval("this._news.init()", this.options.REFRESH_INTERVAL);
+                    if (_settings.OPT_NEWS_REFRESH_TIMER_ENABLE) {
+						clearInterval(_news.timer);
+                        this.timer = setInterval("_news.init()", _settings.OPT_NEWS_REFRESH_INTERVAL);
 					}
 				},
 				"refresh": function () {
@@ -1105,14 +1109,24 @@
 					var url = "PortalNewsDetail.aspx?" + $.param({ "id": newsId });
 					window.open(url, "PortalNewsDetail", '', "_blank");
                 },
-                "showAllNewsList": function () {
-                    alert();
+                "toggleNewsList": function () {
+                    if (this.status == this.STATUS.UNREAD) {
+                        this.status = this.STATUS.ALL;
+                        $("#btnShowUnreadNews").show();
+                        $("#btnShowAllNews").hide();
+                    } else {
+                        this.status = this.STATUS.UNREAD;
+                        $("#btnShowUnreadNews").hide();
+                        $("#btnShowAllNews").show();
+                    }
+                    this.init();
                 },
-				"timer": null,
-				"options": {
-					"TIMER_ENABLE": true,
-					"REFRESH_INTERVAL": 5000
-				}
+                "timer": null,
+                "status": "UNREAD",
+                "STATUS": {
+                    "ALL": "ALL",
+                    "UNREAD": "UNREAD"
+                }
             },
             "portalLink": {
                 "init": function () {
@@ -1339,15 +1353,24 @@
             },
             "settings": {
                 "OPT_SHOW_CONFIRM_WHEN_CLOSE": false,
+                "OPT_NEWS_REFRESH_TIMER_ENABLE": true,
+                "OPT_NEWS_REFRESH_INTERVAL": 5000,
                 "init": function () {
                     _settings.refresh();
                 },
                 "refresh": function () {
-
+                    $("#cbxShowConfirmWhenCloseTab").prop("checked", this.OPT_SHOW_CONFIRM_WHEN_CLOSE);
+                    $("#cbxNewsRefreshEnable").prop("checked", this.OPT_NEWS_REFRESH_TIMER_ENABLE);
                 },
                 "change": function (ctrl) {
                     var option = $(ctrl).attr("target");
-                    this[option] = $(ctrl).prop('checked');
+                    this[option] = $(ctrl).prop("checked");
+                    if (option == "OPT_NEWS_REFRESH_TIMER_ENABLE") {
+                        clearInterval(_news.timer);
+                        if (_settings.OPT_NEWS_REFRESH_TIMER_ENABLE) {                            
+                            _news.timer = setInterval("_news.init()", _settings.OPT_NEWS_REFRESH_INTERVAL);
+                        }
+                    }
                     return false;
                 },
                 "save": function () {

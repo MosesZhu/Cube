@@ -46,6 +46,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>\\10.85.10.2\bach30\Common\bin\ITS.Data.dll</HintPath>
     </Reference>
+    <Reference Include="ITS.Mapper, Version=3.5.100.1000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WebFramework\SSO\Business\bin\Debug\ITS.Mapper.dll</HintPath>
+    </Reference>
     <Reference Include="ITS.WebFramework.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\WebFramework\SSO\Business\bin\Debug\ITS.WebFramework.Common.dll</HintPath>
@@ -238,6 +242,8 @@
     <Content Include="Content\bootstrap-combined.min.css" />
     <Content Include="Content\cube.portal.css" />
     <Content Include="img\user.jpg" />
+    <Content Include="PortalNewsDetail.aspx" />
+    <Content Include="PortalNewsDetail.js" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\bootstrap-contextmenu.js" />
     <Content Include="Content\bootstrap-table.min.css" />
@@ -465,8 +471,10 @@
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\bak-jquery.slimscroll.min.js" />
+    <Content Include="Scripts\jquery.json-2.4.js" />
     <Content Include="Scripts\jquery.slimscroll.min.js" />
     <Content Include="Scripts\jquery.uriAnchor.js" />
+    <Content Include="Scripts\jquery.url-1.8.1.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
@@ -541,6 +549,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="PortalNewsDetail.aspx.cs">
+      <DependentUpon>PortalNewsDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PortalNewsDetail.aspx.designer.cs">
+      <DependentUpon>PortalNewsDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="PortalService.asmx.cs">
       <DependentUpon>PortalService.asmx</DependentUpon>
