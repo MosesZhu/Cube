@@ -326,7 +326,27 @@ namespace Cube.Web
 
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         [WebMethod]
-        public ResultDTO getNews()
+        public ResultDTO getUnreadNews()
+        {
+            ResultDTO result = new ResultDTO();
+            List<Guid> readNewsIdList = WFKDb.From<Portal_News_Status>()
+                .Where(Portal_News_Status._.User_Id == UserInfo.User_ID && Portal_News_Status._.Status == "read")
+                .Select(Portal_News_Status._.News_Id).ToList<Guid>();
+
+            WhereClause where =
+                WhereClause.All.And(Portal_News._.Active == 1
+                                    && Portal_News._.Due_Date >= DateTime.Today
+                                    && Portal_News._.Org_Id == SSOContext.Current.OrgID
+                                    && Portal_News._.Product_Id == SSOContext.Current.ProductID
+                                    && Portal_News._.Id.NotIn(readNewsIdList));
+            result.data = WFKDb.From<Portal_News>().Where(where).ToList<PortalNewsDTO>();
+            result.success = true;
+            return result;
+        }
+
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
+        public ResultDTO getAllNews()
         {
             ResultDTO result = new ResultDTO();
             WhereClause where =

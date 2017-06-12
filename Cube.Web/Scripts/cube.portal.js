@@ -633,7 +633,7 @@
 									var url = $("#" + functionid).find("iframe").attr("src");
 									window.open(url);
                                 } else if (menuIndex == "MENU_CLOSE") {
-                                    if (_form.options.SHOW_CONFIRM_WHEN_CLOSE) {
+                                    if (_settings.OPT_SHOW_CONFIRM_WHEN_CLOSE) {
                                         var confirmData = {
                                             "content": _CurrentLang['msg_confirm_close_tab'],
                                             "oktodo": function () {
@@ -647,7 +647,7 @@
                                         _breadcrumb.toggleBreadcrumb();
                                     }                               
                                 } else if (menuIndex == "MENU_CLOSE_OTHERS") {
-                                    if (_form.options.SHOW_CONFIRM_WHEN_CLOSE) {
+                                    if (_settings.OPT_SHOW_CONFIRM_WHEN_CLOSE) {
                                         var confirmData = {
                                             "content": _CurrentLang['msg_confirm_close_tab'],
                                             "oktodo": function () {
@@ -669,7 +669,7 @@
                                         _breadcrumb.toggleBreadcrumb();
                                     }                                    
                                 } else if (menuIndex == "MENU_CLOSE_ALL") {
-                                    if (_form.options.SHOW_CONFIRM_WHEN_CLOSE) {
+                                    if (_settings.OPT_SHOW_CONFIRM_WHEN_CLOSE) {
                                         var confirmData = {
                                             "content": _CurrentLang['msg_confirm_close_tab'],
                                             "oktodo": function () {
@@ -976,7 +976,7 @@
 					},
 
                     "closeForm": function (ctrl) {
-                        if (this.options.SHOW_CONFIRM_WHEN_CLOSE) {
+                        if (_settings.OPT_SHOW_CONFIRM_WHEN_CLOSE) {
                             var confirmData = {
                                 "content": _CurrentLang['msg_confirm_close_tab'],
                                 "oktodo": function () {
@@ -996,7 +996,7 @@
                     },
 
                     "options": {
-                        "SHOW_CONFIRM_WHEN_CLOSE" : false
+                        "SHOW_CONFIRM_WHEN_CLOSE" : true
                     }
                 },
                 "footer": {
@@ -1062,7 +1062,7 @@
 						"show_mask": false
 					};
 
-                    $.callWebService("getNews", {}, options);
+                    $.callWebService("getUnreadNews", {}, options);
 
 					if (this.options.TIMER_ENABLE) {
 						clearInterval(this.timer);
@@ -1104,10 +1104,13 @@
 				"openNews": function (newsId) {
 					var url = "PortalNewsDetail.aspx?" + $.param({ "id": newsId });
 					window.open(url, "PortalNewsDetail", '', "_blank");
-				},
+                },
+                "showAllNewsList": function () {
+                    alert();
+                },
 				"timer": null,
 				"options": {
-					"TIMER_ENABLE": false,
+					"TIMER_ENABLE": true,
 					"REFRESH_INTERVAL": 5000
 				}
             },
@@ -1303,6 +1306,7 @@
 				this.user.init();
                 this.news.init();
                 this.portalLink.init();
+                this.settings.init();
 			},
 			"logout": function () {
 				var options = {
@@ -1332,6 +1336,22 @@
                         $(f).attr("src", oldUrl + "#!" + mapStr);
                     });
                 }
+            },
+            "settings": {
+                "OPT_SHOW_CONFIRM_WHEN_CLOSE": false,
+                "init": function () {
+                    _settings.refresh();
+                },
+                "refresh": function () {
+
+                },
+                "change": function (ctrl) {
+                    var option = $(ctrl).attr("target");
+                    this[option] = $(ctrl).prop('checked');
+                    return false;
+                },
+                "save": function () {
+                }
             }
 		}
 	}
@@ -1351,3 +1371,4 @@ var _news = _portal.news;
 var _portalLink = _portal.portalLink;
 var _state = _portal.state;
 var _footer = _ui.footer;
+var _settings = _portal.settings;

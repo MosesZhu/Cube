@@ -39,9 +39,16 @@
                                         
                                     </ul>
                                 </li>
-                                <li class="footer"><a style="text-align: right;"><span lang="lang_total"></span><span>: </span><span id="lblTotalNews">0</span></a></li>
+                                <li class="footer">
+                                    <a onclick="return _news.showAllNewsList();">
+                                        <span lang="lang_show_all">Show All News</span>
+                                        <!--<span>&nbsp;</span>
+                                        <span lang="lang_total" style="float:right;"></span><span style="float:right;">: </span><span style="float:right;" id="lblTotalNews">0</span>
+                                        -->
+                                    </a>
+                                </li>
                             </ul>
-                        </li>
+                        </li>                        
                         <!-- User -->
                         <li class="dropdown user user-menu" id="navUser">
                             <a class="dropdown-toggle" data-toggle="dropdown">
@@ -226,17 +233,17 @@
                 </div>
                 <!-- Settings tab content -->
                 <div class="tab-pane" id="control-sidebar-settings-tab">
-                    <form method="post">
-                        <h3 class="control-sidebar-heading">General Settings</h3>
+                    <form>
+                        <h3 class="control-sidebar-heading" lang="lang_general_settings">General Settings</h3>
 
                         <div class="form-group">
                             <label class="control-sidebar-subheading">
-                                Report panel usage
-                  <input type="checkbox" class="pull-right" checked>
+                                <span lang="lang_show_confirm_when_close_tab">Report panel usage</span>
+                                <input type="checkbox" class="pull-right" checked id="cbxShowConfirmWhenCloseTab"
+                                    target="OPT_SHOW_CONFIRM_WHEN_CLOSE" onchange="return _settings.change(this);">
                             </label>
-
-                            <p>
-                                Some information about this general settings option
+                            <p lang="lang_show_confirm_when_close_tab_info">
+                                If you want to show a confirm dialog when close form tab.
                             </p>
                         </div>
                         <!-- /.form-group -->
