@@ -22,38 +22,45 @@ namespace Cube.Web
             {
                 InitializeSSORequest();
 
-                if (_SSORequest != null && _SSORequest.LoginType == LoginTypeEnum.Debug)
+                if (_SSORequest != null)
                 {
-                    string[] datas = _SSORequest.Data.Split(',');
-                    if (datas.Length >= 5)
+                    if (_SSORequest.LoginType == LoginTypeEnum.Debug)
                     {
-                        if (!string.IsNullOrWhiteSpace(datas[2]) && !string.IsNullOrWhiteSpace(datas[3]))
+                        string[] datas = _SSORequest.Data.Split(',');
+                        if (datas.Length >= 5)
                         {
-                            string productName = datas[2];
-                            string orgName = datas[3];
-                            string userName = datas[4];
-                            LoginService service = new LoginService();
-
-                            List<SimpleProductOrgDTO> productOrgList = (List<SimpleProductOrgDTO>)service.getProductOrgList().data;
-                            SimpleProductOrgDTO product = productOrgList.FirstOrDefault(p => p.Name.Equals(productName, StringComparison.CurrentCultureIgnoreCase));
-                            if (product != null)
+                            if (!string.IsNullOrWhiteSpace(datas[2]) && !string.IsNullOrWhiteSpace(datas[3]))
                             {
-                                OrgDTO org = product.OrgList.FirstOrDefault(o => o.Name.Equals(orgName, StringComparison.CurrentCultureIgnoreCase));
-                                if (org != null)
+                                string productName = datas[2];
+                                string orgName = datas[3];
+                                string userName = datas[4];
+                                LoginService service = new LoginService();
+
+                                List<SimpleProductOrgDTO> productOrgList = (List<SimpleProductOrgDTO>)service.getProductOrgList().data;
+                                SimpleProductOrgDTO product = productOrgList.FirstOrDefault(p => p.Name.Equals(productName, StringComparison.CurrentCultureIgnoreCase));
+                                if (product != null)
                                 {
-                                    LogonInfo logonInfo = new LogonInfo();
-                                    logonInfo.SSORequest = _SSORequest;
-                                    logonInfo.IsNT = true;
-                                    logonInfo.OrgID = org.Id;
-                                    logonInfo.OrgName = orgName;
-                                    logonInfo.ProductID = product.Id;
-                                    logonInfo.ProductName = productName;
-                                    logonInfo.UserName = userName;
-                                    logonInfo.Language = "zh-CN";
-                                    service.wfkLoginForDebug(logonInfo);
-                                }                                
-                            }                            
+                                    OrgDTO org = product.OrgList.FirstOrDefault(o => o.Name.Equals(orgName, StringComparison.CurrentCultureIgnoreCase));
+                                    if (org != null)
+                                    {
+                                        LogonInfo logonInfo = new LogonInfo();
+                                        logonInfo.SSORequest = _SSORequest;
+                                        logonInfo.IsNT = true;
+                                        logonInfo.OrgID = org.Id;
+                                        logonInfo.OrgName = orgName;
+                                        logonInfo.ProductID = product.Id;
+                                        logonInfo.ProductName = productName;
+                                        logonInfo.UserName = userName;
+                                        logonInfo.Language = "zh-CN";
+                                        service.wfkLoginForDebug(logonInfo);
+                                    }
+                                }
+                            }
                         }
+                    }
+                    else if (_SSORequest.LoginType == LoginTypeEnum.AdminSimulate)
+                    {
+                        Page.ClientScript.RegisterStartupScript(GetType(), "HidePassword", "$('#tbxPassword').hide();", true);
                     }
                 }
             }
