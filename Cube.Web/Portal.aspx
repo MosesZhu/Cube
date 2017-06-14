@@ -116,7 +116,7 @@
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="overflow:hidden;">
             <!-- Main content -->
             <section class="content body">
                 <div id="_FormTabsContainer">
