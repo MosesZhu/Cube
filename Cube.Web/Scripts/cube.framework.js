@@ -290,7 +290,8 @@ var CubeFrameworkMessage = {
     "CLOSE_CONFIRM": "CLOSE_CONFIRM",
     "SHOW_LOADING": "SHOW_LOADING",
     "CLOSE_LOADING": "CLOSE_LOADING",
-    "CUBE_CALLBACK": "CUBE_CALLBACK"
+    "CUBE_CALLBACK": "CUBE_CALLBACK",
+    "CHANGE_STATE": "CHANGE_STATE"
 };
 
 window.onmessage = function (e) {
@@ -302,6 +303,11 @@ window.onmessage = function (e) {
                 try {
                     eval("(" + msg.data + ")" + "()");
                 } catch (e) { }
+                break;
+            case CubeFrameworkMessage.CHANGE_STATE:
+                var state = msg.data;
+                setLanguage(state.language);
+                setSkin(state.skin);
                 break;
         }
     } catch (e) { }

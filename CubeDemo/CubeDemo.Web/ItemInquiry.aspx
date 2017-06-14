@@ -4,11 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
-    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com//CubePortal/Content/bootstrap.css">
-    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com//CubePortal/Content/bootstrap-table.min.css">
+    <title></title>    
+    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/bootstrap.css">
+    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/AdminLTE/skins/_all-skins.css">
+    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/bootstrap-table.min.css">
 </head>
-<body>
+<body class="skin-red">
     <form id="form1" runat="server">
         <div class="content-wrapper" style="padding: 20px;">
             <!--inquiry area & toolbar-->
@@ -27,7 +28,7 @@
 
                 <div class="col-lg-6 col-xs-6">
                     <div class="btn-toolbar" role="toolbar" style="float: right;">
-                        <button type="button" class="btn btn-primary" onclick="return inquiryItem();" lang="lang_inquiry">
+                        <button type="button" class="btn btn-skin-primary" onclick="return inquiryItem();" lang="lang_inquiry">
                             Inquiry
                         </button>
                         <button type="button" class="btn btn-danger" onclick="return deleteItem();" lang="lang_delete">

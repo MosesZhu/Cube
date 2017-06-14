@@ -170,7 +170,7 @@
                                         <option value="ZhTW">中文繁體</option>
                                     </select>
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-success btn-flat btn-skin-primary" onclick="return _state.changeLanguage();" lang="lang_confirm">Confirm</button>
+                                        <button type="button" class="btn btn-success btn-flat btn-skin-primary" onclick="return _state.setLanguage();" lang="lang_confirm">Confirm</button>
                                     </div>
                                 </div>
                             </a>
@@ -185,40 +185,40 @@
                                 <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
                                 <ul class="fc-color-picker" id="color-chooser">
                                     <li>
-                                        <div class="text-blue skin_button" onclick="setSkin('blue')"><i class="fa fa-square skin_button"></i></div>
+                                        <div class="text-blue skin_button" onclick="_state.setSkin('blue')"><i class="fa fa-square skin_button"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-blue alpha60 skin_button" onclick="setSkin('blue-light')"><i class="fa fa-square"></i></div>
+                                        <div class="text-blue alpha60 skin_button" onclick="_state.setSkin('blue-light')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-orange skin_button" onclick="setSkin('yellow')"><i class="fa fa-square"></i></div>
+                                        <div class="text-orange skin_button" onclick="_state.setSkin('yellow')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-orange alpha60 skin_button" onclick="setSkin('yellow-light')"><i class="fa fa-square"></i></div>
+                                        <div class="text-orange alpha60 skin_button" onclick="_state.setSkin('yellow-light')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-green skin_button" onclick="setSkin('green')"><i class="fa fa-square"></i></div>
+                                        <div class="text-green skin_button" onclick="_state.setSkin('green')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-green alpha60 skin_button" onclick="setSkin('green-light')"><i class="fa fa-square"></i></div>
+                                        <div class="text-green alpha60 skin_button" onclick="_state.setSkin('green-light')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-red skin_button" onclick="setSkin('red')"><i class="fa fa-square"></i></div>
+                                        <div class="text-red skin_button" onclick="_state.setSkin('red')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-red alpha60 skin_button" onclick="setSkin('red-light')"><i class="fa fa-square"></i></div>
+                                        <div class="text-red alpha60 skin_button" onclick="_state.setSkin('red-light')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-purple skin_button" onclick="setSkin('purple')"><i class="fa fa-square"></i></div>
+                                        <div class="text-purple skin_button" onclick="_state.setSkin('purple')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-purple alpha60 skin_button" onclick="setSkin('purple-light')"><i class="fa fa-square"></i></div>
+                                        <div class="text-purple alpha60 skin_button" onclick="_state.setSkin('purple-light')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-black skin_button" onclick="setSkin('black')"><i class="fa fa-square"></i></div>
+                                        <div class="text-black skin_button" onclick="_state.setSkin('black')"><i class="fa fa-square"></i></div>
                                     </li>
                                     <li>
-                                        <div class="text-black alpha60 skin_button" onclick="setSkin('black-light')"><i class="fa fa-square"></i></div>
+                                        <div class="text-black alpha60 skin_button" onclick="_state.setSkin('black-light')"><i class="fa fa-square"></i></div>
                                     </li>
                                 </ul>
                             </div>

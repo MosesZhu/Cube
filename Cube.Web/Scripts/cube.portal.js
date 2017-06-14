@@ -1344,20 +1344,38 @@
                 window.location = "SSOAdminSimulate.aspx?SSOToken=" + getQueryStringByName("SSOToken");
             },
             "state": {
-                "changeLanguage": function () {
+                "setLanguage": function () {
                     setLanguage($("#ddlLanguage").val());
                     this.syncFramesState();
                 },
+                "setSkin": function (color) {
+                    setSkin(color);
+                    this.syncFramesState();
+                },
                 "syncFramesState": function () {
-                    $("iframe").each(function (i, f) {
-                        var oldSrc = $(f).attr("src");
-                        var oldUrl = oldSrc.split("#!")[0];
-                        var map = {};
-                        map = $.uriAnchor.makeAnchorMap(oldSrc);
-                        map["lang"] = _Context.CurrentLang;
-                        var mapStr = $.uriAnchor.makeAnchorString(map);
-                        $(f).attr("src", oldUrl + "#!" + mapStr);
-                    });
+                    var msg = {
+                        "message": CubeFrameworkMessage.CHANGE_STATE,
+                        "data": {
+                            "language": _Context.CurrentLang,
+                            "skin": _Context.CurrentSkin
+                        }
+                    };
+                    var msgStr = JSON.stringify(msg);
+                    for (var i = 0; i < window.frames.length; i++)
+                    {
+                        var win = window.frames[i];
+                        win.postMessage(msgStr, "*");
+                    }
+
+                    //$("iframe").each(function (i, f) {
+                        //var oldSrc = $(f).attr("src");
+                        //var oldUrl = oldSrc.split("#!")[0];
+                        //var map = {};
+                        //map = $.uriAnchor.makeAnchorMap(oldSrc);
+                        //map["lang"] = _Context.CurrentLang;
+                        //var mapStr = $.uriAnchor.makeAnchorString(map);
+                        //$(f).attr("src", oldUrl + "#!" + mapStr);
+                    //});
                 }
             },
             "settings": {
