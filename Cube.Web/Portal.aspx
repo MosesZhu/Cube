@@ -156,9 +156,9 @@
                 <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>                
             </ul>
             <!-- Tab panes -->
-            <div class="tab-content">
+            <div class="tab-content" style="padding:0px;">
                 <!-- Home tab content -->
-                <div class="tab-pane active" id="control-sidebar-home-tab">
+                <div class="tab-pane active" id="control-sidebar-home-tab" style="margin:20px;">
                     <h3 class="control-sidebar-heading" lang="lang_language">Language</h3>
                     <ul class="control-sidebar-menu">
                         <li>
@@ -229,14 +229,14 @@
                 </div>
                 <!-- PortalLink tab content -->
                 <div class="tab-pane" id="control-sidebar-portallink-tab">
-                    <h3 class="control-sidebar-heading" lang="lang_portal_link">Portal Link</h3>
+                    <h3 class="control-sidebar-heading" lang="lang_portal_link" style="margin:20px;">Portal Link</h3>
                     <div class="nav sidebar-menu" id="portal_link_container">
                         
                     </div>                    
 
                 </div>
                 <!-- Settings tab content -->
-                <div class="tab-pane" id="control-sidebar-settings-tab">
+                <div class="tab-pane" id="control-sidebar-settings-tab" style="margin:20px;">
                     <form>
                         <h3 class="control-sidebar-heading" lang="lang_general_settings">General Settings</h3>
 
