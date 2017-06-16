@@ -297,23 +297,18 @@
             <li><a menuindex="MENU_REMOVE_FROM_FAVORITES" lang="lang_remove">remove</a></li>
         </ul>
     </div>
-    <div class="loader" id="loader">
+    <div class="cube-loader" id="loader">        
         <div class="loader-inner">
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
+            <div class="cube-loading">
+		        <h2>Loading</h2>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+	        </div>            
         </div>
     </div>
 </asp:Content>

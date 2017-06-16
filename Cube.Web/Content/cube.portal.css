@@ -61,7 +61,7 @@ body {
     opacity: .5;
 }
 
-.loader {
+.cube-loader {
     background: #000;
     background: -webkit-radial-gradient(#222, #000);
     background: radial-gradient(#222, #000);
@@ -84,120 +84,97 @@ body {
     position: absolute;
     right: 0;
     top: 0;
-    width: 100px;
+    width: 114px;
+    text-align: center;
 }
 
-.loader-line-wrap {
-    -webkit-animation: spin 2000ms cubic-bezier(.175, .885, .32, 1.275) infinite;
-    animation: spin 2000ms cubic-bezier(.175, .885, .32, 1.275) infinite;
-    box-sizing: border-box;
-    height: 50px;
-    left: 0;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    width: 100px;
+.cube-loading h2 {
+    color: #ccc;
+    margin: 0;
+    font: .8em verdana;
+    text-transform: uppercase;
+    letter-spacing: .1em;
 }
 
-.loader-line {
-    border: 4px solid transparent;
-    border-radius: 100%;
-    box-sizing: border-box;
-    height: 100px;
-    left: 0;
-    margin: 0 auto;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100px;
+/*
+ * Loading Dots
+ * Can we use pseudo elements here instead :after?
+ */
+.cube-loading span {
+    display: inline-block;
+    vertical-align: middle;
+    width: .6em;
+    height: .6em;
+    margin: .19em;
+    background: #007DB6;
+    border-radius: .6em;
+    -webkit-animation: loading 1s infinite alternate;
+    animation: loading 1s infinite alternate;
 }
 
-.loader-line-wrap:nth-child(1) {
-    -webkit-animation-delay: -50ms;
-    animation-delay: -50ms;
-}
+    /*
+ * Dots Colors
+ * Smarter targeting vs nth-of-type?
+ */
+    .cube-loading span:nth-of-type(2) {
+        background: #008FB2;
+        -webkit-animation-delay: 0.2s;
+        animation-delay: 0.2s;
+    }
 
-.loader-line-wrap:nth-child(2) {
-    -webkit-animation-delay: -100ms;
-    animation-delay: -100ms;
-}
+    .cube-loading span:nth-of-type(3) {
+        background: #009B9E;
+        -webkit-animation-delay: 0.4s;
+        animation-delay: 0.4s;
+    }
 
-.loader-line-wrap:nth-child(3) {
-    -webkit-animation-delay: -150ms;
-    animation-delay: -150ms;
-}
+    .cube-loading span:nth-of-type(4) {
+        background: #00A77D;
+        -webkit-animation-delay: 0.6s;
+        animation-delay: 0.6s;
+    }
 
-.loader-line-wrap:nth-child(4) {
-    -webkit-animation-delay: -200ms;
-    animation-delay: -200ms;
-}
+    .cube-loading span:nth-of-type(5) {
+        background: #00B247;
+        -webkit-animation-delay: 0.8s;
+        animation-delay: 0.8s;
+    }
 
-.loader-line-wrap:nth-child(5) {
-    -webkit-animation-delay: -250ms;
-    animation-delay: -250ms;
-}
+    .cube-loading span:nth-of-type(6) {
+        background: #5AB027;
+        -webkit-animation-delay: 1.0s;
+        animation-delay: 1.0s;
+    }
 
-.loader-line-wrap:nth-child(1) .loader-line {
-    border-color: hsl(0, 80%, 60%);
-    height: 90px;
-    width: 90px;
-    top: 7px;
-}
+    .cube-loading span:nth-of-type(7) {
+        background: #A0B61E;
+        -webkit-animation-delay: 1.2s;
+        animation-delay: 1.2s;
+    }
 
-.loader-line-wrap:nth-child(2) .loader-line {
-    border-color: hsl(60, 80%, 60%);
-    height: 76px;
-    width: 76px;
-    top: 14px;
-}
-
-.loader-line-wrap:nth-child(3) .loader-line {
-    border-color: hsl(120, 80%, 60%);
-    height: 62px;
-    width: 62px;
-    top: 21px;
-}
-
-.loader-line-wrap:nth-child(4) .loader-line {
-    border-color: hsl(180, 80%, 60%);
-    height: 48px;
-    width: 48px;
-    top: 28px;
-}
-
-.loader-line-wrap:nth-child(5) .loader-line {
-    border-color: hsl(240, 80%, 60%);
-    height: 34px;
-    width: 34px;
-    top: 35px;
-}
-
-@-webkit-keyframes spin {
-    0%, 15% {
-        -webkit-transform: rotate(0);
-        transform: rotate(0);
+/*
+ * Animation keyframes
+ * Use transition opacity instead of keyframes?
+ */
+@-webkit-keyframes loading {
+    0% {
+        opacity: 0;
     }
 
     100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
+        opacity: 1;
     }
 }
 
-@keyframes spin {
-    0%, 15% {
-        -webkit-transform: rotate(0);
-        transform: rotate(0);
+@keyframes loading {
+    0% {
+        opacity: 0;
     }
 
     100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
+        opacity: 1;
     }
 }
-
 /*.header-toggle {
             float: left;
             font-size: 14px;

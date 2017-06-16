@@ -16,7 +16,6 @@ namespace Cube.Base.Config
             //ConfigurationManager.AppSettings[];
             LastCacheTime = DateTime.Now;
             _cache = new Dictionary<string, string>();
-            _cache[ConfigContents.CUBE_LOGIN_URL] = ConfigurationManager.AppSettings[ConfigContents.CUBE_LOGIN_URL];
             _cache[ConfigContents.AUTHORITY_MODE] = Convert.ToInt32((AuthorityModeEnum)Enum.Parse(typeof(AuthorityModeEnum), ConfigurationManager.AppSettings[ConfigContents.AUTHORITY_MODE])).ToString();
         }
 
@@ -51,20 +50,6 @@ namespace Cube.Base.Config
             }
             set {
                 _cache = value;
-            }
-        }
-
-        public static bool IsDebugMode
-        {
-            get {
-                return String.Equals(FindCacheValue(ConfigContents.CUBE_IS_DEBUG_MODE), "true", StringComparison.CurrentCultureIgnoreCase);
-            }
-        }
-
-        public static string LoginUrl
-        {
-            get {
-                return FindCacheValue(ConfigContents.CUBE_LOGIN_URL);
             }
         }
 
