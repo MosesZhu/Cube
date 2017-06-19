@@ -1,0 +1,4 @@
+﻿.btn, .form-control, .bootstrap-table, .table, .fixed-table-container {
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+}

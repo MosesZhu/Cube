@@ -170,7 +170,7 @@
                                         <option value="ZhTW">中文繁體</option>
                                     </select>
                                     <div class="input-group-btn">
-                                        <button type="button" class="btn btn-success btn-flat btn-skin-primary" onclick="return _state.setLanguage();" lang="lang_confirm">Confirm</button>
+                                        <button type="button" class="btn btn-flat btn-skin-primary" onclick="return _state.setLanguage();" lang="lang_confirm">Confirm</button>
                                     </div>
                                 </div>
                             </a>
@@ -181,7 +181,8 @@
                     <h3 class="control-sidebar-heading" lang="lang_themes">Themes</h3>
                     <ul class="control-sidebar-menu">
                         <li>
-                            <div class="btn-group" style="width: 100%; padding: 20px;">
+                            <a>
+                                <div class="btn-group" style="width: 100%; padding: 20px;">
                                 <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
                                 <ul class="fc-color-picker" id="color-chooser">
                                     <li>
@@ -222,6 +223,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            </a>
                         </li>
                     </ul>
                     <!-- /.control-sidebar-menu -->

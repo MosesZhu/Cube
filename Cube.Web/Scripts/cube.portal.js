@@ -925,8 +925,8 @@
 								$("#_FormTabs").append(tabHtml);
 
 								$("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
-									+ '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
-									+ "#!lang=" + _Context.CurrentLang
+                                    + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
+                                    + "#!lang=" + _Context.CurrentLang + "&skin=" + _Context.CurrentSkin
 									+ '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
 								_cmenu.bindTabContextMenu();
 								this.showFormByFunctionId(functionid);

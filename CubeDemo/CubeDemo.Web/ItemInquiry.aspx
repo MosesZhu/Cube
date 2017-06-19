@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/bootstrap.css">
     <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/AdminLTE/skins/_all-skins.css">
     <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/bootstrap-table.min.css">
+    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/cube.framework.css">
 </head>
 <body class="skin-red">
     <form id="form1" runat="server">

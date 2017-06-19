@@ -27,11 +27,16 @@
 }
 .skin-blue .header-toggle, .skin-blue #btnShowHeader, .skin-blue .btn-skin-primary {
     color: #f6f6f6;
-    background-color: #367fa9;
+    background-color: #3c8dbc;
 }
-.skin-blue .header-toggle:hover {
-    background: rgba(0, 0, 0, 0.1);
-}
+
+    .skin-blue .btn-skin-primary:hover, .skin-blue .btn-skin-primary:active {
+        background-color: #367faa;
+    }
+    .skin-blue .btn-skin-primary:active {
+        background-color: #2b6181;
+    }
+
 .skin-blue #btnShowHeader:hover {
     background-color: #307095;
 }
@@ -178,6 +183,14 @@
     color: #ffffff;
     background-color: #3c8dbc;
 }
+    .skin-blue-light .btn-skin-primary:hover, .skin-blue-light .btn-skin-primary:active {
+        background-color: #367faa;
+    }
+
+    .skin-blue-light .btn-skin-primary:active {
+        background-color: #2b6181;
+    }
+
 .skin-blue-light .header-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
@@ -360,16 +373,37 @@
   color: #999999;
   background: #ffffff;
 }
-.skin-black .header-toggle, .skin-black #btnShowHeader, .skin-black .btn-skin-primary {
+
+
+
+.skin-black .header-toggle, .skin-black .btn-skin-primary {
     color: #999999;
-    background: #ffffff;
+    background: #181f23;
 }
-.skin-black .header-toggle:hover {
-    background: rgba(0, 0, 0, 0.1);
+
+    .skin-black .btn-skin-primary:hover, .skin-black .btn-skin-primary:active {
+        background-color: #222d32;
+    }
+    .skin-black .btn-skin-primary:active {
+        color: #ffffff;
+    }
+
+.skin-black #btnHideHeader {
+    background-color: #ffffff;
 }
+
 .skin-black #btnShowHeader:hover {
     background-color: #e3e3e3;
 }
+
+.skin-black-light #btnHideHeader {
+    background-color: #ffffff;
+}
+
+.skin-black-light #btnShowHeader:hover {
+    background-color: #e3e3e3;
+}
+
 .skin-black .main-header .navbar > .sidebar-toggle {
   color: #333;
   border-right: 1px solid #eee;
@@ -530,8 +564,16 @@
 }
 .skin-black-light .header-toggle, .skin-black-light #btnShowHeader, .skin-black-light .btn-skin-primary {
     color: #999999;
-    background: #ffffff;
+    background: #181f23;
 }
+    .skin-black-light .btn-skin-primary:hover, .skin-black-light .btn-skin-primary:active {
+        background-color: #222d32;
+    }
+
+    .skin-black-light .btn-skin-primary:active {
+        color: #ffffff;
+    }
+
 .skin-black-light .header-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
@@ -699,16 +741,18 @@
   color: #f6f6f6;
   background: rgba(0, 0, 0, 0.1);
 }
+
 .skin-green .header-toggle, .skin-green #btnShowHeader, .skin-green .btn-skin-primary {
     color: #f6f6f6;
-    background-color: #008d4c;
+    background-color: #00a65a;
 }
-.skin-green .header-toggle:hover {    
-    background: rgba(0, 0, 0, 0.1);
-}
-.skin-green #btnShowHeader:hover {
-    background-color: #007a42;
-}
+    .skin-green .btn-skin-primary:active, .skin-green .btn-skin-primary:hover {
+        background-color: #009651;        
+    }
+    .skin-green .btn-skin-primary:active {
+        background-color: #08894d;
+    }
+
 .skin-green .main-header .navbar .sidebar-toggle {
   color: #fff;
 }
@@ -844,6 +888,13 @@
     color: #f6f6f6;
     background-color: #00a65a;
 }
+    .skin-green-light .btn-skin-primary:active, .skin-green-light .btn-skin-primary:hover {
+        background-color: #009651;
+    }
+
+    .skin-green-light .btn-skin-primary:active {
+        background-color: #08894d;
+    }
 .skin-green-light .header-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
@@ -1005,8 +1056,15 @@
 }
 .skin-red .header-toggle, .skin-red #btnShowHeader, .skin-red .btn-skin-primary {
     color: #f6f6f6;
-    background-color: #d73925;
+    background-color: #dd4b39;
 }
+    .skin-red .btn-skin-primary:active, .skin-red .btn-skin-primary:hover {
+        background-color: #c74433;
+    }
+
+    .skin-red .btn-skin-primary:active {
+        background-color: #b43a2a;
+    }
 .skin-red .header-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
@@ -1148,6 +1206,13 @@
     color: #f6f6f6;
     background-color: #dd4b39;
 }
+    .skin-red-light .btn-skin-primary:active, .skin-red-light .btn-skin-primary:hover {
+        background-color: #c74433;
+    }
+
+    .skin-red-light .btn-skin-primary:active {
+        background-color: #b43a2a;
+    }
 .skin-red-light .header-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
@@ -1309,8 +1374,15 @@
 }
 .skin-yellow .header-toggle, .skin-yellow #btnShowHeader, .skin-yellow .btn-skin-primary {
     color: #f6f6f6;
-    background-color: #e08e0b;
+    background-color: #f39c12;
 }
+    .skin-yellow .btn-skin-primary:active, .skin-yellow .btn-skin-primary:hover {
+        background-color: #db8d10;
+    }
+
+    .skin-yellow .btn-skin-primary:active {
+        background-color: #b4812f;
+    }
 .skin-yellow .header-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
@@ -1452,6 +1524,13 @@
     color: #f6f6f6;
     background-color: #f39c12;
 }
+    .skin-yellow-light .btn-skin-primary:active, .skin-yellow-light .btn-skin-primary:hover {
+        background-color: #db8d10;
+    }
+
+    .skin-yellow-light .btn-skin-primary:active {
+        background-color: #b4812f;
+    }
 .skin-yellow-light .header-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
@@ -1613,8 +1692,15 @@
 }
 .skin-purple .header-toggle, .skin-purple #btnShowHeader, .skin-purple .btn-skin-primary {
     color: #f6f6f6;
-    background-color: #555299;
+    background-color: #605ca8;
 }
+    .skin-purple .btn-skin-primary:active, .skin-purple .btn-skin-primary:hover {
+        background-color: #575398;
+    }
+
+    .skin-purple .btn-skin-primary:active {
+        background-color: #3f3b7c;
+    }
 .skin-purple .header-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
@@ -1756,6 +1842,13 @@
     color: #f6f6f6;
     background-color: #605ca8;
 }
+    .skin-purple-light .btn-skin-primary:active, .skin-purple-light .btn-skin-primary:hover {
+        background-color: #575398;
+    }
+
+    .skin-purple-light .btn-skin-primary:active {
+        background-color: #3f3b7c;
+    }
 .skin-purple-light .header-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
