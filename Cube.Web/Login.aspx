@@ -76,23 +76,21 @@
   </div>
   <!-- /.login-box-body -->
 </div>
-    <div class="loader" id="loader">
+    <div class="cube-loader-mask" id="loader-mask">
+        &nbsp;
+    </div>
+    <div class="cube-loader" id="loader">        
         <div class="loader-inner">
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
-            <div class="loader-line-wrap">
-                <div class="loader-line"></div>
-            </div>
+            <div class="cube-loading">
+		        <h2>Loading</h2>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		        <span></span>
+	        </div>
         </div>
     </div>
 </asp:Content>

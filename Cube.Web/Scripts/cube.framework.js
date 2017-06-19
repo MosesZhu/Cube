@@ -503,6 +503,7 @@ jQuery.extend({
         },
         "showLoading": function () {
             if ($("#loader") && $("#loader").html()) {
+                $("#loader-mask").show();
                 $("#loader").show();
             } else {
                 if (window.parent) {
@@ -516,6 +517,7 @@ jQuery.extend({
         },
         "closeLoading": function () {
             if ($("#loader") && $("#loader").html()) {
+                $("#loader-mask").hide();
                 $("#loader").hide();
             } else {
                 if (window.parent) {
@@ -589,7 +591,7 @@ jQuery.extend({
 jQuery.extend({
     "skin": {
         "type": {
-            "default": "red",
+            "default": "blue-light",
             "blue": "blue",
             "blue-light": "blue-light",
             "yellow": "yellow",

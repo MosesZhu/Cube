@@ -27,7 +27,19 @@ namespace CubeDemo.Web
         }
 
         [WebMethod(EnableSession = true)]
-        public bool SaveItem(string id, string itemNo, string description)
+        public bool CreateItem(string itemNo, string description)
+        {
+            Item item = new Item();
+            item.Id = Guid.NewGuid();
+            item.Item_No = itemNo;
+            item.Description = description;
+            
+            Db.Insert<Item>(item);
+            return true;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public bool UpdateItem(string id, string itemNo, string description)
         {
             Item item = Db.From<Item>().Where(Item._.Id == id).Select().ToList().FirstOrDefault();
             if (item != null)
@@ -36,6 +48,19 @@ namespace CubeDemo.Web
                 item.Description = description;
             }
             Db.Update<Item>(item);
+            return true;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public bool DeleteItems(string[] idList)
+        {
+            //List<Item> items = Db.From<Item>().Where(Item._.Id.In(idList)).Select(Item._.All).ToList();
+            //Db.Delete<Item>(items);            
+            foreach (string id in idList)
+            {
+                string sql = "delete Item where Id = '" + id + "'";
+                Db.FromSql(sql).ExecuteNonQuery();
+            }
             return true;
         }
     }

@@ -299,6 +299,8 @@
             <li><a menuindex="MENU_REMOVE_FROM_FAVORITES" lang="lang_remove">remove</a></li>
         </ul>
     </div>
+    <div class="cube-loader-mask" id="loader-mask">
+    </div>
     <div class="cube-loader" id="loader">        
         <div class="loader-inner">
             <div class="cube-loading">
@@ -310,7 +312,7 @@
 		        <span></span>
 		        <span></span>
 		        <span></span>
-	        </div>            
+	        </div>
         </div>
     </div>
 </asp:Content>
