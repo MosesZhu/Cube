@@ -40,7 +40,7 @@
         <div class="row cube-page-row">
             <div style="padding: 15px;">
                 <table id="gridItem" class="bootstrapTable" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
-                    data-url="" data-height="450" data-pagination="true"
+                    data-url="" data-height="420" data-pagination="true"
                     data-show-refresh="true" data-row-style="rowStyle" data-search="false"
                     data-show-toggle="true" data-sortable="true"
                     data-striped="true" data-page-size="10" data-page-list="[5,10,20]"
@@ -55,7 +55,6 @@
                     </thead>
                 </table>
             </div>
-            >            
         </div>
 
         <!--edit dialog-->
