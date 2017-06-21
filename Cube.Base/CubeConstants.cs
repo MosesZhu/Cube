@@ -23,7 +23,9 @@ namespace Cube.Common
         public static readonly string PERMISSION_SYSTEM_ID = "PermissionSystemId";
         public static readonly string CUBE_SYSTEM_NAME = "CubeSystemName";
         public static readonly string CUBE_PORTAL_TITLE = "CubePortalTitle";
-        public static readonly string CUBE_PORTAL_HEADER_INFO = "CubePortalHeaderInfo";        
+        public static readonly string CUBE_PORTAL_HEADER_INFO = "CubePortalHeaderInfo";
+        public static readonly string CUBE_ENVIRONMENT = "CubeEnvironment";
+        public static readonly string CUBE_ENVIRONMENT_VISIBLE = "CubeEnvironmentVisible";
         public static readonly string CUBE_PORTAL_FOOTER_INFO = "CubePortalFooterInfo";
         public static readonly string TOKEN_OVERDUE_MINIUTE = "CubeTokenOverdueMiniute";
         public static readonly string WFK_RESOURCE_URL = "WfkResourceUrl";

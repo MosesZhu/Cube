@@ -1,4 +1,9 @@
-﻿#_BookmarkMenu > li.bookmark-item:hover > a, #_BookmarkMenu > li.active > a, #_BookmarkMenu li:hover > a:hover {
+﻿.cube-environment {
+    font-size: small;
+    font-style: italic;
+}
+
+#_BookmarkMenu > li.bookmark-item:hover > a, #_BookmarkMenu > li.active > a, #_BookmarkMenu li:hover > a:hover {
     background-color: lightgray;
 }
 

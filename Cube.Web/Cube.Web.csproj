@@ -477,6 +477,7 @@
     <Content Include="Scripts\jquery.uriAnchor.js" />
     <Content Include="Scripts\jquery.url-1.8.1.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\login_bg.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
     <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxApplicationServices.js" />

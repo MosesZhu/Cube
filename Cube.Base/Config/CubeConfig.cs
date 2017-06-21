@@ -106,6 +106,25 @@ namespace Cube.Base.Config
             }
         }
 
+        public static string CubeEnvironment
+        {
+            get
+            {
+                string env = ConfigurationManager.AppSettings[ConfigContents.CUBE_ENVIRONMENT] == null ? "" :
+                    ConfigurationManager.AppSettings[ConfigContents.CUBE_ENVIRONMENT];
+
+                return env;
+            }
+        }
+
+        public static bool CubeEnvironmentVisible
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[ConfigContents.CUBE_ENVIRONMENT_VISIBLE] != null && ConfigurationManager.AppSettings[ConfigContents.CUBE_ENVIRONMENT_VISIBLE] == "true";
+            }
+        }
+
         public static string CubePortalTitle
         {
             get

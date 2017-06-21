@@ -1,4 +1,5 @@
 ﻿using Cube.Base;
+using Cube.Base.Config;
 using Cube.DTO;
 using ITS.WebFramework.Configuration;
 using ITS.WebFramework.PermissionComponent.ServiceProxy;
@@ -62,6 +63,17 @@ namespace Cube.Web
                     {
                         Page.ClientScript.RegisterStartupScript(GetType(), "HidePassword", "$('#tbxPassword').hide();", true);
                     }
+                }
+
+                if (CubeConfig.SystemMode == Base.Enums.CubeSystemModeEnum.Single)
+                {
+                    lblSystemName.Text = CubeConfig.CubeSystemName;
+                    lblSystemName.Attributes["lang"] = "";
+                }
+
+                if (CubeConfig.CubeEnvironmentVisible)
+                {
+                    this.textEnvironmentInfo.Text = CubeConfig.CubeEnvironment;
                 }
             }
         }

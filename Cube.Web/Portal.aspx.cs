@@ -29,6 +29,10 @@ namespace Cube.Web
         {
             this.Title = CubeConfig.CubePortalTitle;
             this.textHeaderInfo.Text = CubeConfig.CubePortalHeaderInfo;
+            if (CubeConfig.CubeEnvironmentVisible)
+            {
+                this.textEnvironmentInfo.Text = CubeConfig.CubeEnvironment;
+            }            
             this.textFooterInfo.Text = CubeConfig.CubePortalFooterInfo;
         }
     }

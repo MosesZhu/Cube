@@ -82,7 +82,7 @@
                 <asp:ScriptReference Name="alertifyjs" />
                 <%--Site Scripts--%>
             </Scripts>
-        </asp:ScriptManager>
+        </asp:ScriptManager>        
     </form>
     <asp:ContentPlaceHolder ID="PageScriptContentHolder" runat="server">
 

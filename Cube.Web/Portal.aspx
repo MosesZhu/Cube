@@ -12,8 +12,11 @@
         <header class="main-header">
             <!-- Logo -->
             <div class="logo" style="padding: 0px;">
-                <span class="logo-lg">
+                <span class="cube-header">
                     <asp:Literal ID="textHeaderInfo" runat="server"></asp:Literal>
+                </span>
+                <span class="cube-environment">
+                    <asp:Literal ID="textEnvironmentInfo" runat="server"></asp:Literal>
                 </span>
             </div>
 
