@@ -179,6 +179,18 @@ var _Context = {
     "CurrentFunctionId": "",
     "CurrentLang": "EnUS",
     "CurrentSkin": "blue",
+    "init": function () {
+        $(".cube-operation-area").addClass("cube-page-row row");
+        $(".cube-data-area").addClass("cube-page-row row");
+        $(".cube-operation-bar").addClass("col-md-6 col-sm-12");
+        $(".cube-toolbar").addClass("col-md-6 col-sm-12");
+        $(".cube-btn-toolbar").addClass("btn col-xs-12  col-sm-2");
+        $.each($(".cube-data-area"), function (i, area) {
+            var ch = $(area).children().detach();
+            var added = $(area).append("<div style='padding:15px'></div>");
+            added.children().append(ch);
+        });
+    }
 };
 var _CurrentLang = window._Lang_ZhCN ? window._Lang_ZhCN : {};
 
@@ -207,6 +219,7 @@ $(function () {
 
     $.language.change(_Context.CurrentLang);
     $.skin.change(_Context.CurrentSkin);
+    _Context.init();
 });
 
 //start proxy function

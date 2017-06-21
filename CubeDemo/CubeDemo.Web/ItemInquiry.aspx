@@ -14,8 +14,8 @@
 <body class="skin-red">
     <form id="form1" runat="server">
         <!--inquiry area & toolbar-->
-        <div class="row cube-page-row">
-            <div class="col-md-6 col-sm-12">
+        <div class="cube-operation-area">
+            <div class="cube-operation-bar">
                 <div class="input-group cube-page-header-input">
                     <input type="text" data-clear-btn="true" name="tbxItemNoInquiry" class="form-control"
                         id="tbxItemNoInquiry" value="" placeholder="Item No." lang="lang_item_no" />
@@ -26,35 +26,33 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-12">
-                <button type="button" class="btn btn-danger col-xs-12  col-sm-2 cube-btn-toolbar" onclick="return deleteItem();" lang="lang_delete">
+            <div class="cube-toolbar">
+                <button type="button" class="btn-danger cube-btn-toolbar" onclick="return deleteItem();" lang="lang_delete">
                     Delete
                 </button>
-                <button type="button" class="btn btn-skin-primary col-xs-12 col-sm-2 cube-btn-toolbar" onclick="return createItem();" lang="lang_new">
+                <button type="button" class="btn-skin-primary cube-btn-toolbar" onclick="return createItem();" lang="lang_new">
                     Inquiry
-                </button>                
+                </button>
             </div>
         </div>
 
         <!--inquiry result grid-->
-        <div class="row cube-page-row">
-            <div style="padding: 15px;">
-                <table id="gridItem" class="bootstrapTable" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
-                    data-url="" data-height="420" data-pagination="true"
-                    data-show-refresh="true" data-row-style="rowStyle" data-search="false"
-                    data-show-toggle="true" data-sortable="true"
-                    data-striped="true" data-page-size="10" data-page-list="[5,10,20]"
-                    data-click-to-select="false" data-single-select="false">
-                    <thead>
-                        <tr>
-                            <th data-field="state" data-checkbox="true" data-width="10%"></th>
-                            <th data-field="Id" data-sortable="true" data-visible="false" data-searchable="false">ID</th>
-                            <th data-field="Item_No" data-sortable="true" data-formatter="itemNoFormatter" data-search-formatter="false" lang="lang_item_no" data-width="30%">Item NO.</th>
-                            <th data-field="Description" data-sortable="true" lang="lang_description" data-width="60%">Description</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+        <div class="cube-data-area">
+            <table id="gridItem" class="bootstrapTable" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
+                data-url="" data-height="420" data-pagination="true"
+                data-show-refresh="true" data-row-style="rowStyle" data-search="false"
+                data-show-toggle="true" data-sortable="true"
+                data-striped="true" data-page-size="10" data-page-list="[5,10,20]"
+                data-click-to-select="false" data-single-select="false">
+                <thead>
+                    <tr>
+                        <th data-field="state" data-checkbox="true" data-width="10%"></th>
+                        <th data-field="Id" data-sortable="true" data-visible="false" data-searchable="false">ID</th>
+                        <th data-field="Item_No" data-sortable="true" data-formatter="itemNoFormatter" data-search-formatter="false" lang="lang_item_no" data-width="30%">Item NO.</th>
+                        <th data-field="Description" data-sortable="true" lang="lang_description" data-width="60%">Description</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
 
         <!--edit dialog-->
