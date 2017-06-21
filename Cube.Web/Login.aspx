@@ -8,15 +8,15 @@
         }
 
         .login_system_name, .cube-environment {
-                text-shadow: 5px 2px 6px #000;
-                color: #fff;
-                font-style: italic;                
+            text-shadow: 5px 2px 6px gray;
+            color: #fff;
+            font-style: italic;
         }
     </style>
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
-    <div id="container" style="width:100%;height:700px;position:absolute;top:0px;opacity:.3;z-index: -99;">
+    <div id="container" style="width: 100%; height: 700px; position: absolute; top: 0px; opacity: .3; z-index: -99;">
         <div id="anitOut"></div>
     </div>
     <div class="login-box">
@@ -31,40 +31,73 @@
             <div class="form-group has-feedback">
                 <div class="col-md-6 col-lg-6 col-sm-6">
                     <input type="radio" name="isNT" checked="checked" value="Y" id="rdoInternalUser" onchange="return changeUserPosition();" />
-                    <label for="rdoInternalUser" lang="lang_for_internal_user">For Internal User</label>
+                    <label for="rdoInternalUser" lang="lang_for_internal_user" style="font-weight: normal;">For Internal User</label>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-6">
                     <input type="radio" name="isNT" value="N" id="rdoExternalUser" onchange="return changeUserPosition();" />
-                    <label for="rdoExternalUser" lang="lang_for_external_user">For External User</label>
+                    <label for="rdoExternalUser" lang="lang_for_external_user" style="font-weight: normal;">For External User</label>
                 </div>
             </div>
-            <div class="form-group has-feedback">
-                <select class="form-control select2" style="width: 100%; padding-right: 20px;" id="ddlProduct" onchange="changeProduct()">
-                </select>
-            </div>
-            <div class="form-group has-feedback">
-                <select class="form-control select2" style="width: 100%; padding-right: 20px;" id="ddlOrg" onchange="changeOrg()">
-                </select>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Name" id="tbxName" lang="lang_user_name">
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password" id="tbxPassword" lang="lang_password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <select class="form-control select2" style="width: 100%; padding-right: 20px;" id="ddlDomain">
-                </select>
-            </div>
-            <div class="form-group has-feedback">
-                <select class="form-control select2" style="width: 100%; padding-right: 20px;" id="ddlLanguage" onchange="return changeLanguage();">
-                    <option selected="selected" value="EnUS">English</option>
-                    <option value="ZhCN">中文简体</option>
-                    <option value="ZhTW">中文繁體</option>
-                </select>
-            </div>
+            <table style="width: 100%;">
+                <tr>
+                    <td style="padding-bottom: 14px;" lang="lang_product">Product</td>
+                    <td>
+                        <div class="form-group has-feedback">
+                            <select class="form-control select2" style="width: 100%; padding-right: 20px;" id="ddlProduct" onchange="changeProduct()">
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 14px;" lang="lang_org">Org</td>
+                    <td>
+                        <div class="form-group has-feedback">
+                            <select class="form-control select2" style="width: 100%; padding-right: 20px;" id="ddlOrg" onchange="changeOrg()">
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 14px;" lang="lang_user_name">User Name</td>
+                    <td>
+                        <div class="form-group has-feedback">
+                            <input type="text" class="form-control" placeholder="Name" id="tbxName" lang="lang_user_name">
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 14px;" lang="lang_password">Password</td>
+                    <td>
+                        <div class="form-group has-feedback">
+                            <input type="password" class="form-control" placeholder="Password" id="tbxPassword" lang="lang_password">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 14px;" lang="lang_domain">Domain</td>
+                    <td>
+                        <div class="form-group has-feedback">
+                            <select class="form-control select2" style="width: 100%; padding-right: 20px;" id="ddlDomain">
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 14px;" lang="lang_language">Language</td>
+                    <td>
+                        <div class="form-group has-feedback">
+                            <select class="form-control select2" style="width: 100%; padding-right: 20px;" id="ddlLanguage" onchange="return changeLanguage();">
+                                <option selected="selected" value="EnUS">English</option>
+                                <option value="ZhCN">中文简体</option>
+                                <option value="ZhTW">中文繁體</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
             <div class="row">
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
@@ -135,6 +168,22 @@
                     login();
                 }
             });
+
+            var productName = $("#ddlProduct").find("option:selected").text();
+            var orgId = $("#ddlOrg").val();
+            var orgName = $("#ddlOrg").find("option:selected").text();
+            var domain = $("#ddlDomain").val();
+            var isInternal = $("#rdoInternalUser").prop('checked');
+            var language = $("#ddlLanguage").val();
+            var needRemember = $("#cbxRememberMe").prop("checked");
+
+            //for demo
+            if ($("#MainContentHolder_lblSystemName").text() == "Cube Demo") {
+                $("#ddlProduct").parents("tr").hide();
+                $("#ddlOrg").parents("tr").hide();
+                $("#ddlDomain").parents("tr").hide();
+            }
+            //end for demo
         });
 
         var changeUserPosition = function () {
@@ -250,6 +299,16 @@
             var isInternal = $("#rdoInternalUser").prop('checked');
             var language = $("#ddlLanguage").val();
             var needRemember = $("#cbxRememberMe").prop("checked");
+
+            //for demo
+            if ($("#MainContentHolder_lblSystemName").text() == "Cube Demo") {
+                productId = "3202985d-ad51-428e-ac7e-9912de03c045";
+                productName = "Administration";
+                orgId = "ed9ac3f5-4d01-49d0-8c55-843e7e65110e";
+                orgName = "Global";
+                domain = "QGROUP";
+            }
+            //end for demo
 
             if (!needRemember) {
                 $.cookie("LastNeedRemember", false);

@@ -7,7 +7,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
     <div class="wrapper" style="height: 100%; background-color: transparent;">
         <a class="header-toggle" data-toggle="" role="button" id="btnShowHeader" onclick="return _header.toggleHeader();">
-            <i class="fa fa-sort-down"></i>
+            <i class="fa fa-chevron-down"></i>
         </a>
         <header class="main-header">
             <!-- Logo -->
@@ -87,7 +87,7 @@
                         </li>
                         <li>                           
                             <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return _header.toggleHeader();">
-                                <i class="fa fa-sort-up"></i>
+                                <i class="fa fa-chevron-up"></i>
                             </a>
                         </li>
                     </ul>

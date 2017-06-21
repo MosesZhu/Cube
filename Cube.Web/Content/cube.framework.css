@@ -1,4 +1,13 @@
-﻿.btn, .form-control, .bootstrap-table, .table, .fixed-table-container {
+﻿body {
+    font-family: Arial;
+}
+
+.login-box-body {
+    opacity: .8;
+    box-shadow: 2px 2px 6px grey;
+}
+
+.btn, .form-control, .bootstrap-table, .table, .fixed-table-container {
     border-radius: 0px;
     -moz-border-radius: 0px;
 }
@@ -154,7 +163,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 135px;
+    width: 145px;
     text-align: center;
     opacity: 1;
 }

@@ -31,7 +31,7 @@ namespace Cube.Web
             this.textHeaderInfo.Text = CubeConfig.CubePortalHeaderInfo;
             if (CubeConfig.CubeEnvironmentVisible)
             {
-                this.textEnvironmentInfo.Text = CubeConfig.CubeEnvironment;
+                this.textEnvironmentInfo.Text = "(" + CubeConfig.CubeEnvironment + ")";
             }            
             this.textFooterInfo.Text = CubeConfig.CubePortalFooterInfo;
         }

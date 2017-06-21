@@ -21,17 +21,17 @@
                         id="tbxItemNoInquiry" value="" placeholder="Item No." lang="lang_item_no" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-skin-primary" onclick="return inquiryItem();" lang="lang_inquiry">
-                            Inquiry
+                            <span class="glyphicon glyphicon-search"></span>Inquiry
                         </button>
                     </span>
                 </div>
             </div>
             <div class="cube-toolbar">
-                <button type="button" class="btn-danger cube-btn-toolbar" onclick="return deleteItem();" lang="lang_delete">
-                    Delete
+                <button type="button" class="btn-danger cube-btn-toolbar" onclick="return deleteItem();" lang="lang_delete" >
+                    <span class="glyphicon glyphicon-minus"></span>Delete
                 </button>
-                <button type="button" class="btn-skin-primary cube-btn-toolbar" onclick="return createItem();" lang="lang_new">
-                    Inquiry
+                <button type="button" class="btn-skin-primary cube-btn-toolbar" onclick="return createItem();" lang="lang_new" >
+                    <span class="glyphicon glyphicon-plus"></span>Inquiry
                 </button>
             </div>
         </div>

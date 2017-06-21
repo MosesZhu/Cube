@@ -586,7 +586,15 @@ jQuery.extend({
             for (key in _CurrentLang) {
                 $.each($("[lang=" + key + "]"), function (i, item) {
                     if (typeof ($(item).attr("placeholder")) == "undefined") {
-                        $(item).text(_CurrentLang[key]);
+                        if ($(item).children(".fa").length > 0) {
+                            var icons = $(item).children(".fa").detach();
+                            $(item).html("").append(icons).append("&nbsp;" + _CurrentLang[key]);
+                        } else if ($(item).children(".glyphicon").length > 0) {
+                            var icons = $(item).children(".glyphicon").detach();
+                            $(item).html("").append(icons).append("&nbsp;" + _CurrentLang[key]);
+                        } else {
+                            $(item).text(_CurrentLang[key]);
+                        }
                     } else {
                         $(item).attr("placeholder", _CurrentLang[key]);
                     }

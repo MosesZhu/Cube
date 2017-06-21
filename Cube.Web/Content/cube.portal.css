@@ -1,6 +1,6 @@
 ﻿.cube-environment {
-    font-size: small;
-    font-style: italic;
+    /*font-size: small;
+    font-style: italic;*/
 }
 
 #_BookmarkMenu > li.bookmark-item:hover > a, #_BookmarkMenu > li.active > a, #_BookmarkMenu li:hover > a:hover {
@@ -67,22 +67,6 @@ body {
 }
 
 
-
-
-
-#btnShowHeader {
-    position: fixed;
-    right: 0px;
-    top: -50px;
-    height: 20px;
-    text-align: center;
-    padding-bottom: 3px;
-    z-index: 9999;
-    width: 38px;
-    height: 34px;
-    font-size: 18px;
-}
-
 #_FunctionMenu > li:first-child {
     padding-top: 45px;
 }
@@ -140,10 +124,24 @@ section.content {
 }
 
 #btnHideHeader {
-    padding-bottom: 10px;
+    padding-bottom: 15px;
 }
 
 #btnHideHeader > i {
-    font-size: 18px;
+    font-size: 12px;
     padding-top: 5px;
+}
+
+#btnShowHeader {
+    position: fixed;
+    right: 0px;
+    top: -50px;
+    height: 20px;
+    text-align: center;
+    padding-bottom: 3px;
+    padding-top: 7px; 
+    z-index: 9999;
+    width: 38px;
+    height: 34px;
+    font-size: 12px;
 }

@@ -61,7 +61,10 @@ namespace Cube.Web
                     }
                     else if (_SSORequest.LoginType == LoginTypeEnum.AdminSimulate)
                     {
-                        Page.ClientScript.RegisterStartupScript(GetType(), "HidePassword", "$('#tbxPassword').hide();", true);
+                        Page.ClientScript.RegisterStartupScript(GetType(), "HidePassword", @"$('#tbxPassword').parents('tr').hide();
+$('#ddlProduct').parents('tr').hide();
+$('#ddlOrg').parents('tr').hide();
+$('#ddlDomain').parents('tr').hide();", true);
                     }
                 }
 
@@ -73,7 +76,7 @@ namespace Cube.Web
 
                 if (CubeConfig.CubeEnvironmentVisible)
                 {
-                    this.textEnvironmentInfo.Text = CubeConfig.CubeEnvironment;
+                    this.textEnvironmentInfo.Text = "(" + CubeConfig.CubeEnvironment + ")";
                 }
             }
         }
