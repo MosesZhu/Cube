@@ -110,6 +110,35 @@ namespace Cube.Web
                 });
 
             ScriptManager.ScriptResourceMapping.AddDefinition(
+                "bootstrap-table",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/bootstrap-table.js",
+                });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "bootstrap-table.en-US",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/bootstrap-table-en-US.js",
+                });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "bootstrap-table.zh-CN",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/bootstrap-table-zh-CN.js",
+                });
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "bootstrap-table.zh-TW",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/bootstrap-table-zh-TW.js",
+                });
+
+
+            ScriptManager.ScriptResourceMapping.AddDefinition(
                 "alertifyjs",
                 new ScriptResourceDefinition
                 {

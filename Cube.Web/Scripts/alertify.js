@@ -38,7 +38,7 @@
         pinnable:true,
         pinned:true,
         preventBodyShift:false, //global default not per instance, applies to all dialogs
-        resizable:true,
+        resizable:false,
         startMaximized:false,
         transition:'pulse',
         notifier:{
@@ -355,7 +355,7 @@
                 content: '<div class="ajs-content"></div>',
                 footer: '<div class="ajs-footer"></div>',
                 buttons: { primary: '<div class="ajs-primary ajs-buttons"></div>', auxiliary: '<div class="ajs-auxiliary ajs-buttons"></div>' },
-                button: '<button class="btn btn-primary btn-flat btn-skin-primary"></button>',
+                button: '<button class="btn btn-flat btn-skin-primary"></button>',
                 resizeHandle: '<div class="ajs-handle"></div>',
             },
             //common class names

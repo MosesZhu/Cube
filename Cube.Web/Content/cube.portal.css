@@ -11,6 +11,10 @@
     background-color: #dddddd;
 }
 
+.bookmark-item > a {
+    font-weight: 300 !important;
+}
+
 .bookmark-item a {
     padding-left: 30px;
 }
@@ -94,6 +98,7 @@ section.content {
     height: 20px;
     margin-left: 0px;
     margin-right: 1px;
+    overflow: hidden;
 }
 
 #_BreadcrumbContent {

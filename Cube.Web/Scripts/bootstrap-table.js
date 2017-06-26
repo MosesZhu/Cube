@@ -469,36 +469,91 @@
 
     BootstrapTable.LOCALES['en-US'] = BootstrapTable.LOCALES.en = {
         formatLoadingMessage: function () {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatLoadingMessage && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatLoadingMessage();
+            }
+            //End added by Moses Zhu on 20170623
             return 'Loading, please wait...';
         },
         formatRecordsPerPage: function (pageNumber) {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatRecordsPerPage && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatRecordsPerPage(pageNumber);
+            }
+            //End added by Moses Zhu on 20170623
             return sprintf('%s <span class="pagging_per_page">rows per page</span>', pageNumber);
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatShowingRows && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatShowingRows(pageFrom, pageTo, totalRows);
+            }
+            //End added by Moses Zhu on 20170623
             return sprintf('Showing %s to %s of %s rows', pageFrom, pageTo, totalRows);
         },
         formatDetailPagination: function (totalRows) {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatDetailPagination && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatDetailPagination(totalRows);
+            }
+            //End added by Moses Zhu on 20170623
             return sprintf('Showing %s rows', totalRows);
         },
         formatSearch: function () {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatSearch && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatSearch();
+            }
+            //End added by Moses Zhu on 20170623
             return 'Search';
         },
         formatNoMatches: function () {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatNoMatches && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatNoMatches();
+            }
+            //End added by Moses Zhu on 20170623
             return 'No matching records found';
         },
         formatPaginationSwitch: function () {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatPaginationSwitch && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatPaginationSwitch();
+            }
+            //End added by Moses Zhu on 20170623
             return 'Hide/Show pagination';
         },
         formatRefresh: function () {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatRefresh && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatRefresh();
+            }
+            //End added by Moses Zhu on 20170623
             return 'Refresh';
         },
         formatToggle: function () {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatToggle && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatToggle();
+            }
+            //End added by Moses Zhu on 20170623
             return 'Toggle';
         },
         formatColumns: function () {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatColumns && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatColumns();
+            }
+            //End added by Moses Zhu on 20170623
             return 'Columns';
         },
         formatAllRows: function () {
+            //Added by Moses Zhu on 20170623
+            if ($.fn.bootstrapTable.defaults.formatAllRows && $.fn.bootstrapTable.defaults !== this) {
+                return $.fn.bootstrapTable.defaults.formatAllRows();
+            }
+            //End added by Moses Zhu on 20170623
             return 'All';
         }
     };

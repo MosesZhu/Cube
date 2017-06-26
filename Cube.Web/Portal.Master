@@ -53,8 +53,8 @@
                         <p class="text-warning"><small id="confirmDialogWarningContent"></small></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button"  class="btn btn-primary btn-flat btn-skin-primary" data-dismiss="modal" data-dismiss="modal" lang="lang_confirm" id="btnConfirmDialogConfirm">Confirm</button>
-                        <button type="button"  class="btn btn-flat" data-dismiss="modal" data-dismiss="modal" lang="lang_cancel" id="btnConfirmDialogCancel">Cancel</button>
+                        <button class="cube-btn-confirm" data-dismiss="modal" id="btnConfirmDialogConfirm">Confirm</button>
+                        <button class="cube-btn-cancel" data-dismiss="modal" id="btnConfirmDialogCancel">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -70,16 +70,20 @@
                 <asp:ScriptReference Name="jquery" />
                 <asp:ScriptReference Name="uriAnchor" />
                 <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="bootstrap-table" />
+                <asp:ScriptReference Name="bootstrap-table.en-US" />
+                <asp:ScriptReference Name="bootstrap-table.zh-CN" />
+                <asp:ScriptReference Name="bootstrap-table.zh-TW" />
+                <asp:ScriptReference Name="bootstrap-contextmenu" />
                 <asp:ScriptReference Name="fastclick" />
                 <asp:ScriptReference Name="AdminLTE" />
                 <asp:ScriptReference Name="slimscroll" />
-                <asp:ScriptReference Name="respond" />
-                <asp:ScriptReference Name="cube.framework" />
+                <asp:ScriptReference Name="respond" />                
                 <asp:ScriptReference Name="icheck" />
-                <asp:ScriptReference Name="cookie" />
-                <asp:ScriptReference Name="bootstrap-contextmenu" />
-                <asp:ScriptReference Name="cube.portal" />
+                <asp:ScriptReference Name="cookie" />                
                 <asp:ScriptReference Name="alertifyjs" />
+                <asp:ScriptReference Name="cube.portal" />
+                <asp:ScriptReference Name="cube.framework" />                
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>        

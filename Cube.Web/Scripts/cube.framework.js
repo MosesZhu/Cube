@@ -180,16 +180,54 @@ var _Context = {
     "CurrentLang": "EnUS",
     "CurrentSkin": "blue",
     "init": function () {
-        $(".cube-operation-area").addClass("cube-page-row row");
+        $(".cube-input-area").addClass("cube-page-row row");
         $(".cube-data-area").addClass("cube-page-row row");
-        $(".cube-operation-bar").addClass("col-md-6 col-sm-12");
-        $(".cube-toolbar").addClass("col-md-6 col-sm-12");
-        $(".cube-btn-toolbar").addClass("btn col-xs-12  col-sm-2");
+        $(".cube-inputbar").addClass(" col-lg-6 col-md-6 col-sm-12 col-xs-12");
+        $(".cube-toolbar").addClass(" col-lg-6 col-md-6 col-sm-12 col-xs-12");
+
+        //btn style
+        $(".cube-btn-toolbar").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right");
+        $(".cube-btn-dlg-toolbar").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right");
+        
+        $(".cube-btn-inquiry").addClass("btn btn-skin-primary").attr("lang", "lang_inquiry").html("<span class='glyphicon glyphicon-search'></span>&nbsp;Inquiry");
+        $(".cube-btn-add").addClass("btn btn-skin-primary").attr("lang", "lang_new").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;New");
+        $(".cube-btn-create").addClass("btn btn-skin-primary").attr("lang", "lang_create").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Create");
+        $(".cube-btn-delete").addClass("btn btn-danger").attr("lang", "lang_delete").html("<span class='glyphicon glyphicon-minus'></span>&nbsp;Delete");
+        $(".cube-btn-save").addClass("btn btn-skin-primary").attr("lang", "lang_save").html("<span class='glyphicon glyphicon-floppy-saved'></span>&nbsp;Save");
+        $(".cube-btn-cancel").addClass("btn btn-default").attr("lang", "lang_cancel").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Cancel");
+        $(".cube-btn-confirm").addClass("btn btn-skin-primary").attr("lang", "lang_confirm").html("<span class='glyphicon glyphicon-ok'></span>&nbsp;Confirm");
+
+        $.each($("[class^='cube-btn']"), function (i, btn) {
+            if (!$(btn).attr("type")) {
+                $(btn).attr("type", "button");
+            }
+        });
+        //tbx style
+        $(".cube-tbx").addClass("form-control");
+
+        //dialog style
+        $.each($(".cube-modal"), function (i, modal) {
+            $(modal).addClass("modal fade");
+            var header = $(modal).find(".cube-modal-header");
+            var body = $(modal).find(".cube-modal-body");
+            var footer = $(modal).find(".cube-modal-footer");
+            $(modal).html("<div class='modal-dialog'><div class='modal-content'></div></div>");
+            $(modal).find(".modal-content").append(header).append(body).append(footer);
+
+            $(modal).find(".cube-modal-header").prepend('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>').addClass("modal-header");
+            $(modal).find(".cube-modal-body").addClass("modal-body");
+            $(modal).find(".cube-modal-footer").addClass("modal-footer");
+        });
+
+        //area
         $.each($(".cube-data-area"), function (i, area) {
             var ch = $(area).children().detach();
             var added = $(area).append("<div style='padding:15px'></div>");
             added.children().append(ch);
         });
+
+        $.language.change(this.CurrentLang);
+        $.skin.change(this.CurrentSkin);    
     }
 };
 var _CurrentLang = window._Lang_ZhCN ? window._Lang_ZhCN : {};
@@ -217,9 +255,7 @@ $(function () {
         $.uriAnchor.setAnchor(map);
     }    
 
-    $.language.change(_Context.CurrentLang);
-    $.skin.change(_Context.CurrentSkin);
-    _Context.init();
+    _Context.init();    
 });
 
 //start proxy function
@@ -342,8 +378,7 @@ jQuery.extend({
                                 return {
                                     buttons: [{
                                         text: _CurrentLang["lang_close"],
-                                        key: 27/*Esc*/,
-                                        className: "btn btn-primary btn-flat btn-skin-primary"
+                                        key: 27/*Esc*/
                                     }],
                                     focus: { element: 0 }
                                 };
@@ -600,6 +635,40 @@ jQuery.extend({
                     }
                 });                                                              
             }
+
+            switch (_Context.CurrentLang) {
+                case "ZhCN":
+                    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
+                    $(".bootstrapTable").bootstrapTable("refresh");
+                    //$.getScript("http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-CN.min.js", function () {
+                    //    $(".bootstrapTable").attr("data-local", "zh-CN");
+                    //    $(".bootstrapTable").bootstrapTable("refresh");
+                    //});
+                    break;
+                case "ZhTW":
+                    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-TW']);
+                    $(".bootstrapTable").bootstrapTable("refresh");
+                    //$.getScript("http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-TW.min.js", function () {
+                    //    $(".bootstrapTable").attr("data-local", "zh-TW");
+                    //    $(".bootstrapTable").bootstrapTable("refresh");
+                    //});
+                    break;
+                default:
+                    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['en-US']);
+                    $(".bootstrapTable").bootstrapTable("refresh");
+                    //$.getScript("http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table.js", function () {
+                    //    $(".bootstrapTable").attr("data-local", "en-US");
+                    //    $(".bootstrapTable").bootstrapTable("refresh");
+                    //});
+                    break;
+            }
+            //$.getScript("bootstrap-table.js", function (data, textStatus, jqxhr) {
+                //console.log(data); // Data returned
+                //console.log(textStatus); // Success
+                //console.log(jqxhr.status); // 200
+                //console.log("Load was performed.");
+            //});
+
             if (this.onchanged) {
                 this.onchanged();
             }

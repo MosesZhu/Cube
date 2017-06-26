@@ -110,7 +110,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <div class="btn btn-primary btn-block btn-flat" lang="lang_login" onclick="return login();">Login</div>
+                    <div class="btn btn-skin-primary btn-block btn-flat" lang="lang_login" onclick="return login();">Login</div>
                     <%--<div style="padding:10px; border:1px solid black;" lang="lang_login" onclick="return login();" >Login</div>--%>
                 </div>
                 <!-- /.col -->
@@ -189,9 +189,9 @@
         var changeUserPosition = function () {
             var isNT = $("#rdoInternalUser").prop('checked');
             if (!isNT) {
-                $("#ddlDomain").hide(200);
+                $("#ddlDomain").parents("tr").hide(200);
             } else {
-                $("#ddlDomain").show(200);
+                $("#ddlDomain").parents("tr").show(200);
             }
             return true;
         };

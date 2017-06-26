@@ -30,11 +30,18 @@
     margin-top: 5px;
 }
 
-.cube-btn-toolbar {
-    margin: 5px 0px 0px 0px;
-    float:right;
+.cube-btn-toolbar, .cube-btn-dlg-toolbar {
+    margin: 5px 0px 0px 15px;
 }
 
+.cube-tbx {
+    margin-top: 5px;
+}
+
+.cube-tbx-required {
+    border-color: #f39c12;
+    box-shadow: none;
+}
 /*bootstrap table*/
 .skin-blue .pagination > .active > a,
 .skin-blue .pagination > .active > span,

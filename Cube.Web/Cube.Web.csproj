@@ -240,6 +240,12 @@
     <Content Include="Content\alertify.css" />
     <Content Include="Content\alertifyjs.css" />
     <Content Include="Content\bootstrap-combined.min.css" />
+    <Content Include="Scripts\bootstrap-table-en-US.js" />
+    <Content Include="Scripts\bootstrap-table-en-US.min.js" />
+    <Content Include="Scripts\bootstrap-table-zh-CN.js" />
+    <Content Include="Scripts\bootstrap-table-zh-CN.min.js" />
+    <Content Include="Scripts\bootstrap-table-zh-TW.js" />
+    <Content Include="Scripts\bootstrap-table-zh-TW.min.js" />
     <Content Include="Content\cube.framework.css" />
     <Content Include="Content\cube.portal.css" />
     <Content Include="img\user.jpg" />
