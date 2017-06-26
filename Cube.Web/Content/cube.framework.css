@@ -1,5 +1,14 @@
-﻿body {
-    font-family: Arial;
+﻿body, h1, h2, h3, h4, h5, h6 {
+    font-family: Verdana;
+    font-size: 12px;
+}
+
+.form-control, .sidebar-menu li.header, .sidebar-menu .treeview-menu > li > a, .btn {
+    font-size: 12px;
+}
+
+.form-control {
+    height: 31px;
 }
 
 .login-box-body {
@@ -22,8 +31,16 @@
     border-top-right-radius: 0px;
 }
 
+.cube-toolbar {
+    text-align: center;
+}
+
+.cube-toolbar > button, .cube-toolbar > input {
+    margin: 15px 15px 0px 0px
+}
+
 .cube-page-row {
-    padding:15px;
+    padding: 15px;
 }
 
 .cube-page-header-input {
@@ -31,7 +48,15 @@
 }
 
 .cube-btn-toolbar, .cube-btn-dlg-toolbar {
-    margin: 5px 0px 0px 15px;
+    margin: 5px 0px 0px 0px;
+}
+
+.cube-btn-60 {
+    width: 60px;
+}
+
+.cube-btn-90 {
+    width: 90px;
 }
 
 .cube-tbx {

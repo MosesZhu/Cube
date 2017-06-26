@@ -182,20 +182,18 @@ var _Context = {
     "init": function () {
         $(".cube-input-area").addClass("cube-page-row row");
         $(".cube-data-area").addClass("cube-page-row row");
-        $(".cube-inputbar").addClass(" col-lg-6 col-md-6 col-sm-12 col-xs-12");
-        $(".cube-toolbar").addClass(" col-lg-6 col-md-6 col-sm-12 col-xs-12");
+        $(".cube-inputbar").addClass(" col-lg-12 col-md-12 col-sm-12 col-xs-12");
+        $(".cube-toolbar").addClass(" col-lg-12 col-md-12 col-sm-12 col-xs-12");        
 
         //btn style
-        $(".cube-btn-toolbar").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right");
-        $(".cube-btn-dlg-toolbar").addClass("col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right");
-        
-        $(".cube-btn-inquiry").addClass("btn btn-skin-primary").attr("lang", "lang_inquiry").html("<span class='glyphicon glyphicon-search'></span>&nbsp;Inquiry");
-        $(".cube-btn-add").addClass("btn btn-skin-primary").attr("lang", "lang_new").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;New");
-        $(".cube-btn-create").addClass("btn btn-skin-primary").attr("lang", "lang_create").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Create");
-        $(".cube-btn-delete").addClass("btn btn-danger").attr("lang", "lang_delete").html("<span class='glyphicon glyphicon-minus'></span>&nbsp;Delete");
-        $(".cube-btn-save").addClass("btn btn-skin-primary").attr("lang", "lang_save").html("<span class='glyphicon glyphicon-floppy-saved'></span>&nbsp;Save");
-        $(".cube-btn-cancel").addClass("btn btn-default").attr("lang", "lang_cancel").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Cancel");
-        $(".cube-btn-confirm").addClass("btn btn-skin-primary").attr("lang", "lang_confirm").html("<span class='glyphicon glyphicon-ok'></span>&nbsp;Confirm");
+        //$(".cube-toolbar>button, .cube-toolbar>input").addClass("");
+        $(".cube-btn-inquiry").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_inquiry").html("<span class='glyphicon glyphicon-search'></span>&nbsp;Inquiry");
+        $(".cube-btn-add").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_add").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Add");
+        $(".cube-btn-create").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_create").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Create");
+        $(".cube-btn-delete").addClass("btn btn-danger cube-btn-90").attr("lang", "lang_delete").html("<span class='glyphicon glyphicon-minus'></span>&nbsp;Delete");
+        $(".cube-btn-save").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_save").html("<span class='glyphicon glyphicon-floppy-saved'></span>&nbsp;Save");
+        $(".cube-btn-cancel").addClass("btn btn-default cube-btn-90").attr("lang", "lang_cancel").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Cancel");
+        $(".cube-btn-confirm").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_confirm").html("<span class='glyphicon glyphicon-ok'></span>&nbsp;Confirm");
 
         $.each($("[class^='cube-btn']"), function (i, btn) {
             if (!$(btn).attr("type")) {
@@ -256,6 +254,20 @@ $(function () {
     }    
 
     _Context.init();    
+
+    $(window).wresize(function () {
+        if ($(window).width() <= 768) {
+            //$(".cube-toolbar>button, .cube-toolbar>input").addClass("cube-btn-toolbar-md");
+            $(".cube-toolbar>button, .cube-toolbar>input").animate({ "width": "100%" }, 100);
+        } else {
+            //$(".cube-toolbar>button, .cube-toolbar>input").removeClass("cube-btn-toolbar-md");
+            $(".cube-toolbar>button, .cube-toolbar>input").each(function (i, btn) {
+                if ($(btn).hasClass("cube-btn-90")) {
+                    $(".cube-toolbar>button, .cube-toolbar>input").animate({ "width": "90px" }, 100);
+                }
+            });
+        }
+    });
 });
 
 //start proxy function
@@ -639,29 +651,37 @@ jQuery.extend({
             switch (_Context.CurrentLang) {
                 case "ZhCN":
                     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
-                    $(".bootstrapTable").bootstrapTable("refresh");
-                    //$.getScript("http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-CN.min.js", function () {
-                    //    $(".bootstrapTable").attr("data-local", "zh-CN");
-                    //    $(".bootstrapTable").bootstrapTable("refresh");
-                    //});
+                    $.each($(".cube-bootstrap-table"), function (i, tb) {
+                        if ($(tb).find("tbody").length > 0)
+                        {
+                            $(tb).bootstrapTable({ locale: 'zh-CN' });
+                            $(tb).bootstrapTable("changeLocale");
+                            //$(tb).bootstrapTable("refreshOptions");
+                        }
+                    });                    
                     break;
                 case "ZhTW":
                     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-TW']);
-                    $(".bootstrapTable").bootstrapTable("refresh");
-                    //$.getScript("http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-TW.min.js", function () {
-                    //    $(".bootstrapTable").attr("data-local", "zh-TW");
-                    //    $(".bootstrapTable").bootstrapTable("refresh");
-                    //});
+                    $.each($(".cube-bootstrap-table"), function (i, tb) {
+                        if ($(tb).find("tbody").length > 0) {
+                            $(tb).bootstrapTable({ locale: 'zh-TW' });
+                            $(tb).bootstrapTable("changeLocale");
+                            //$(tb).bootstrapTable("refreshOptions");
+                        }
+                    });  
                     break;
-                default:
+                case "EnUS":
                     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['en-US']);
-                    $(".bootstrapTable").bootstrapTable("refresh");
-                    //$.getScript("http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table.js", function () {
-                    //    $(".bootstrapTable").attr("data-local", "en-US");
-                    //    $(".bootstrapTable").bootstrapTable("refresh");
-                    //});
+                    $.each($(".cube-bootstrap-table"), function (i, tb) {
+                        if ($(tb).find("tbody").length > 0) {
+                            $(tb).bootstrapTable({ locale: 'en-US' });
+                            $(tb).bootstrapTable("changeLocale");
+                            //$(tb).bootstrapTable("refreshOptions");
+                        }
+                    });  
                     break;
             }
+            
             //$.getScript("bootstrap-table.js", function (data, textStatus, jqxhr) {
                 //console.log(data); // Data returned
                 //console.log(textStatus); // Success

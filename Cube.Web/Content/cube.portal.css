@@ -3,6 +3,10 @@
     font-style: italic;*/
 }
 
+.sidebar-toggle, .navbar-custom-menu .fa, .fa, .control-sidebar-heading {
+    font-size: 14px;
+}
+
 #_BookmarkMenu > li.bookmark-item:hover > a, #_BookmarkMenu > li.active > a, #_BookmarkMenu li:hover > a:hover {
     background-color: lightgray;
 }
@@ -23,8 +27,9 @@
     cursor: pointer;
 }
 
-.skin_button {
+.skin_button, .skin_button .fa {
     cursor: pointer;
+    font-size: 30px;
 }
 
 body {
@@ -99,12 +104,13 @@ section.content {
     margin-left: 0px;
     margin-right: 1px;
     overflow: hidden;
+    font-size: 8px;
 }
 
 #_BreadcrumbContent {
     float: left;
     padding-left: 10px;
-    font-size: 10px;
+    font-size: smaller;
 }
 
 #_FunctionMenu a {

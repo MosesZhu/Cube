@@ -470,89 +470,89 @@
     BootstrapTable.LOCALES['en-US'] = BootstrapTable.LOCALES.en = {
         formatLoadingMessage: function () {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatLoadingMessage && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatLoadingMessage();
-            }
+            //if ($.fn.bootstrapTable.defaults.formatLoadingMessage && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatLoadingMessage();
+            //}
             //End added by Moses Zhu on 20170623
             return 'Loading, please wait...';
         },
         formatRecordsPerPage: function (pageNumber) {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatRecordsPerPage && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatRecordsPerPage(pageNumber);
-            }
+            //if ($.fn.bootstrapTable.defaults.formatRecordsPerPage && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatRecordsPerPage(pageNumber);
+            //}
             //End added by Moses Zhu on 20170623
             return sprintf('%s <span class="pagging_per_page">rows per page</span>', pageNumber);
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatShowingRows && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatShowingRows(pageFrom, pageTo, totalRows);
-            }
+            //if ($.fn.bootstrapTable.defaults.formatShowingRows && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatShowingRows(pageFrom, pageTo, totalRows);
+            //}
             //End added by Moses Zhu on 20170623
             return sprintf('Showing %s to %s of %s rows', pageFrom, pageTo, totalRows);
         },
         formatDetailPagination: function (totalRows) {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatDetailPagination && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatDetailPagination(totalRows);
-            }
+            //if ($.fn.bootstrapTable.defaults.formatDetailPagination && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatDetailPagination(totalRows);
+            //}
             //End added by Moses Zhu on 20170623
             return sprintf('Showing %s rows', totalRows);
         },
         formatSearch: function () {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatSearch && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatSearch();
-            }
+            //if ($.fn.bootstrapTable.defaults.formatSearch && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatSearch();
+            //}
             //End added by Moses Zhu on 20170623
             return 'Search';
         },
         formatNoMatches: function () {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatNoMatches && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatNoMatches();
-            }
+            //if ($.fn.bootstrapTable.defaults.formatNoMatches && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatNoMatches();
+            //}
             //End added by Moses Zhu on 20170623
             return 'No matching records found';
         },
         formatPaginationSwitch: function () {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatPaginationSwitch && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatPaginationSwitch();
-            }
+            //if ($.fn.bootstrapTable.defaults.formatPaginationSwitch && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatPaginationSwitch();
+            //}
             //End added by Moses Zhu on 20170623
             return 'Hide/Show pagination';
         },
         formatRefresh: function () {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatRefresh && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatRefresh();
-            }
+            //if ($.fn.bootstrapTable.defaults.formatRefresh && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatRefresh();
+            //}
             //End added by Moses Zhu on 20170623
             return 'Refresh';
         },
         formatToggle: function () {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatToggle && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatToggle();
-            }
+            //if ($.fn.bootstrapTable.defaults.formatToggle && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatToggle();
+            //}
             //End added by Moses Zhu on 20170623
             return 'Toggle';
         },
         formatColumns: function () {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatColumns && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatColumns();
-            }
+            //if ($.fn.bootstrapTable.defaults.formatColumns && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatColumns();
+            //}
             //End added by Moses Zhu on 20170623
             return 'Columns';
         },
         formatAllRows: function () {
             //Added by Moses Zhu on 20170623
-            if ($.fn.bootstrapTable.defaults.formatAllRows && $.fn.bootstrapTable.defaults !== this) {
-                return $.fn.bootstrapTable.defaults.formatAllRows();
-            }
+            //if ($.fn.bootstrapTable.defaults.formatAllRows && $.fn.bootstrapTable.defaults !== this) {
+            //    return $.fn.bootstrapTable.defaults.formatAllRows();
+            //}
             //End added by Moses Zhu on 20170623
             return 'All';
         }
@@ -661,7 +661,7 @@
             '<div class="fixed-table-header"><table></table></div>',
             '<div class="fixed-table-body">',
             '<div class="fixed-table-loading">',
-            this.options.formatLoadingMessage(),
+            $.fn.bootstrapTable.defaults.formatLoadingMessage(),//Moses this.options.formatLoadingMessage(),
             '</div>',
             '</div>',
             '<div class="fixed-table-footer"><table><tr></tr></table></div>',
@@ -1117,7 +1117,7 @@
                     sprintf(' btn-%s', this.options.buttonsClass) +
                     sprintf(' btn-%s', this.options.iconSize) +
                     '" type="button" name="paginationSwitch" title="%s">',
-                this.options.formatPaginationSwitch()),
+                $.fn.bootstrapTable.defaults.formatPaginationSwitch()),//Moses this.options.formatPaginationSwitch()),
                 sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.paginationSwitchDown),
                 '</button>');
         }
@@ -1127,7 +1127,7 @@
                     sprintf(' btn-%s', this.options.buttonsClass) +
                     sprintf(' btn-%s', this.options.iconSize) +
                     '" type="button" name="refresh" title="%s">',
-                this.options.formatRefresh()),
+                $.fn.bootstrapTable.defaults.formatRefresh()),//Moses this.options.formatRefresh()),
                 sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.refresh),
                 '</button>');
         }
@@ -1137,14 +1137,14 @@
                     sprintf(' btn-%s', this.options.buttonsClass) +
                     sprintf(' btn-%s', this.options.iconSize) +
                     '" type="button" name="toggle" title="%s">',
-                this.options.formatToggle()),
+                $.fn.bootstrapTable.defaults.formatToggle()),//Moses this.options.formatToggle()),
                 sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.toggle),
                 '</button>');
         }
 
         if (this.options.showColumns) {
             html.push(sprintf('<div class="keep-open btn-group" title="%s">',
-                this.options.formatColumns()),
+                $.fn.bootstrapTable.defaults.formatColumns()),//Moses this.options.formatColumns()),
                 '<button type="button" class="btn' +
                 sprintf(' btn-%s', this.options.buttonsClass) +
                 sprintf(' btn-%s', this.options.iconSize) +
@@ -1225,7 +1225,7 @@
                 sprintf('<input class="form-control' +
                     sprintf(' input-%s', this.options.iconSize) +
                     '" type="text" placeholder="%s">',
-                    this.options.formatSearch()),
+                    $.fn.bootstrapTable.defaults.formatSearch()),//Moses this.options.formatSearch()),
                 '</div>');
 
             this.$toolbar.append(html.join(''));
@@ -1400,8 +1400,8 @@
         html.push(
             '<div class="pull-' + this.options.paginationDetailHAlign + ' pagination-detail">',
             '<span class="pagination-info">',
-            this.options.onlyInfoPagination ? this.options.formatDetailPagination(this.options.totalRows) :
-                this.options.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows),
+            this.options.onlyInfoPagination ? $.fn.bootstrapTable.defaults.formatDetailPagination(this.options.totalRows) ://Moses this.options.formatDetailPagination(this.options.totalRows) :
+                $.fn.bootstrapTable.defaults.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows),//Moses this.options.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows),
             '</span>');
 
         if (!this.options.onlyInfoPagination) {
@@ -1447,7 +1447,7 @@
             });
             pageNumber.push('</ul></span>');
 
-            html.push(this.options.formatRecordsPerPage(pageNumber.join('')));
+            html.push($.fn.bootstrapTable.defaults.formatRecordsPerPage(pageNumber.join('')));//Moses html.push(this.options.formatRecordsPerPage(pageNumber.join('')));
             html.push('</span>');
 
             html.push('</div>',
@@ -1839,7 +1839,7 @@
         if (!html.length) {
             html.push('<tr class="no-records-found">',
                 sprintf('<td colspan="%s">%s</td>',
-                    this.$header.find('th').length, this.options.formatNoMatches()),
+                    this.$header.find('th').length, $.fn.bootstrapTable.defaults.formatNoMatches()),//Moses this.options.formatNoMatches()),
                 '</tr>');
         }
 
@@ -2416,6 +2416,17 @@
         this.initPagination();
         this.initBody(fixedScroll);
     };
+
+    //Added by Moses
+    BootstrapTable.prototype.changeLocale = function () {
+        //this.$pagination.find(".pagination-info").text($.fn.bootstrapTable.defaults.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows));
+        this.initSearch();
+        this.initPagination();
+        this.initSort();
+        this.initBody(true);
+        //this.$pagination.find(".pagination-info").text($.fn.bootstrapTable.defaults.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows));
+    };
+    //End added by Moses 
 
     BootstrapTable.prototype.append = function (data) {
         this.initData(data, 'append');
@@ -3017,6 +3028,7 @@
         'resetSearch',
         'expandRow', 'collapseRow', 'expandAllRows', 'collapseAllRows',
         'updateFormatText'
+        ,'changeLocale' //Added by Moses
     ];
 
     $.fn.bootstrapTable = function (option) {

@@ -82,6 +82,7 @@
                 <asp:ScriptReference Name="icheck" />
                 <asp:ScriptReference Name="cookie" />                
                 <asp:ScriptReference Name="alertifyjs" />
+                <asp:ScriptReference Name="wresize" />
                 <asp:ScriptReference Name="cube.portal" />
                 <asp:ScriptReference Name="cube.framework" />                
                 <%--Site Scripts--%>

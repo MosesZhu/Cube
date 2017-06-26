@@ -1253,12 +1253,18 @@
             },
 			"init": function () {
 				this.ui.resetContentSize();
-				$(window).on("resize", function () {
-					_ui.resetContentSize();
+				//$(window).on("resize", function () {
+				//	_ui.resetContentSize();
+                //});
+                $(window).wresize(function () {
+                    _ui.resetContentSize();
                 });
 
                 _footer.resetCopyrightLocation();
-                $(".content-wrapper").resize(function () {
+                //$(".content-wrapper").resize(function () {
+                //    _footer.resetCopyrightLocation();
+                //});
+                $(".content-wrapper").wresize(function () {
                     _footer.resetCopyrightLocation();
                 });
 

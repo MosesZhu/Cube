@@ -482,6 +482,7 @@
     <Content Include="Scripts\jquery.slimscroll.min.js" />
     <Content Include="Scripts\jquery.uriAnchor.js" />
     <Content Include="Scripts\jquery.url-1.8.1.js" />
+    <Content Include="Scripts\jquery.wresize.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\login_bg.js" />
     <Content Include="Scripts\respond.js" />

@@ -106,7 +106,7 @@ namespace Cube.Base
             }
             MultiLanguageKeyList = MultiLanguageKeyList ?? new List<string>();
 
-            MultiLanguageKeyList.Add("lang_new");
+            MultiLanguageKeyList.Add("lang_add");
             MultiLanguageKeyList.Add("lang_create");
             MultiLanguageKeyList.Add("lang_delete");
             MultiLanguageKeyList.Add("lang_inquiry");

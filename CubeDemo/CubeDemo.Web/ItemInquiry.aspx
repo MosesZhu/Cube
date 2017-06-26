@@ -25,15 +25,15 @@
                 </div>
             </div>
             <div class="cube-toolbar">
-                <button class="cube-btn-create cube-btn-toolbar" onclick="return createItem();"></button>
-                <button class="cube-btn-delete cube-btn-toolbar" onclick="return deleteItem();"></button>
+                <button class="cube-btn-add" onclick="return createItem();"></button>
+                <button class="cube-btn-delete" onclick="return deleteItem();"></button>
             </div>
         </div>
 
         <!--inquiry result grid-->
         <div class="cube-data-area">
-            <table id="gridItem" class="bootstrapTable" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
-                data-url="" data-height="420" data-pagination="true"
+            <table id="gridItem" class="bootstrapTable cube-bootstrap-table" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
+                data-url="" data-height="391" data-pagination="true"
                 data-show-refresh="true" data-row-style="rowStyle" data-search="false"
                 data-show-toggle="true" data-sortable="true"
                 data-striped="true" data-page-size="10" data-page-list="[5,10,20]"
@@ -73,7 +73,8 @@
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-TW.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-CN.js"></script>
-    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-en-US.js"></script>    
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-en-US.js"></script>
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.wresize.js"></script>    
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/cube.framework.js"></script>
     <script>
         var _opt;

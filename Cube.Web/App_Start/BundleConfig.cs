@@ -145,6 +145,14 @@ namespace Cube.Web
                     Path = "~/Scripts/alertify.js",
                 });
 
+            ScriptManager.ScriptResourceMapping.AddDefinition(
+                "wresize",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/jquery.wresize.js",
+                });
+            
+
         }
     }
 }
