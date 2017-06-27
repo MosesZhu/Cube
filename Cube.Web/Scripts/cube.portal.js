@@ -24,6 +24,13 @@
 					//	"padding-top": headerHeight + "px"
 					//}, 200);
                     $("aside").height($(window).height() - headerHeight);
+
+
+                    $(".frm_loading_mask").each(function (i, mask) {
+                        var fid = $(mask).parent(".tab-pane").first().attr("id");
+                        $(mask).height($("#" + fid).height());
+                        $(mask).css("top", headerHeight + 63 + "px");
+                    });                    
 				},
 				"header": {
 					"toggleHeader": function () {
@@ -115,7 +122,7 @@
                                 $.each(_PortalContext.MenuList, function (i, product) {
                                     menuHtml
                                         += '<li class="header">'
-                                        + '<i class="fa fa-bank"></i>'
+                                        + '<i class="fa fa-share-alt"></i>'
                                         + '<span lang="' + product.LanguageID + '" style="padding-left:5px;">' + product.Name + '</span>'
                                         + '</li>';
                                     $.each(product.DomainList, function (j, domainMenu) {
@@ -287,11 +294,11 @@
                         if (this._LastSearchKeywords == null || this._LastSearchKeywords == "") {
                             this._BeforeSearchMenu = $("#_FunctionMenu").html();
                         }
-                        var searchKeywords = $("#tbxSearchMenu").val();
+                        var searchKeywords = $("#tbxSearchMenu").val().toUpperCase();
                         if (searchKeywords.length > 0) {
 							var tempMenuList = $.extend(true, {}, _PortalContext.MenuList);
 							$.each(tempMenuList, function (i, product) {
-                                if (product.Name.indexOf(searchKeywords) >= 0) {
+                                if (product.Name.toUpperCase().indexOf(searchKeywords) >= 0) {
                                     product.bingo = true;
                                     $.each(product.DomainList, function (i1, domain) {
                                         domain.bingo = true;
@@ -306,7 +313,7 @@
                                 }
 
                                 $.each(product.DomainList, function (j, domain) {
-                                    if (domain.Code.indexOf(searchKeywords) >= 0) {
+                                    if (domain.Code.toUpperCase().indexOf(searchKeywords) >= 0) {
                                         product.bingo = true;
                                         domain.bingo = true;
                                         $.each(domain.SystemList, function (j1, system) {
@@ -319,7 +326,7 @@
                                     }
 
                                     $.each(domain.SystemList, function (k, system) {
-                                        if (system.Code.indexOf(searchKeywords) >= 0) {
+                                        if (system.Code.toUpperCase().indexOf(searchKeywords) >= 0) {
                                             product.bingo = true;
                                             domain.bingo = true;
                                             system.bingo = true;
@@ -330,7 +337,7 @@
                                         }
 
                                         $.each(system.FunctionList, function (l, func) {
-                                            if (func.Code.indexOf(searchKeywords) >= 0
+                                            if (func.Code.toUpperCase().indexOf(searchKeywords) >= 0
                                                 || (_Lang_ZhCN[func.Language_Key] && _Lang_ZhCN[func.Language_Key].indexOf(search) >= 0)
                                                 || (_Lang_ZhTW[func.Language_Key] && _Lang_ZhTW[func.Language_Key].indexOf(search) >= 0)
                                                 || (_Lang_EnUS[func.Language_Key] && _Lang_EnUS[func.Language_Key].indexOf(search) >= 0)) {
@@ -476,10 +483,10 @@
 					},
 
                     "searchFunctionMenu": function (searchKeywords, subFunc, func, product, domain, system) {
-                        if (subFunc.Code.indexOf(searchKeywords) >= 0
-                            || (_Lang_ZhCN[subFunc.Language_Key] && _Lang_ZhCN[subFunc.Language_Key].indexOf(searchKeywords) >= 0)
-                            || (_Lang_ZhTW[subFunc.Language_Key] && _Lang_ZhTW[subFunc.Language_Key].indexOf(searchKeywords) >= 0)
-                            || (_Lang_EnUS[subFunc.Language_Key] && _Lang_EnUS[subFunc.Language_Key].indexOf(searchKeywords) >= 0)) {
+                        if (subFunc.Code.toUpperCase().indexOf(searchKeywords) >= 0
+                            || (_Lang_ZhCN[subFunc.Language_Key] && _Lang_ZhCN[subFunc.Language_Key].toUpperCase().indexOf(searchKeywords) >= 0)
+                            || (_Lang_ZhTW[subFunc.Language_Key] && _Lang_ZhTW[subFunc.Language_Key].toUpperCase().indexOf(searchKeywords) >= 0)
+                            || (_Lang_EnUS[subFunc.Language_Key] && _Lang_EnUS[subFunc.Language_Key].toUpperCase().indexOf(searchKeywords) >= 0)) {
                             product.bingo = true;
                             domain.bingo = true;
                             system.bingo = true;
@@ -816,7 +823,7 @@
                                     "<span lang='lang_portal_link'>Portal Link</span>";
                                 var linkItem = _portalLink.getLinkItem(_PortalContext.CurrentFunctionId);
                                 if (linkItem != null) {
-                                    bread += "<span class='text-gray'> > </span><span>" + linkItem.Name+ "</span>";
+                                    bread += "<span class='cube-text-gray'> > </span><span>" + linkItem.Name+ "</span>";
                                 }                                
                             } else {
                                 $.each(_PortalContext.MenuList, function (i, product) {
@@ -840,11 +847,11 @@
                                                     if (_PortalContext.SystemMode != "Single") {
                                                         bread +=
                                                             "<span lang='" + product.Language_Key + "'>" + product.Name + "</span>"
-                                                            + "<span class='text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span><span class='text-gray'> > </span>";
+                                                            + "<span class='cube-text-gray'> > </span><span lang='" + domainMenu.Language_Key + "'>" + domainMenu.Code + "</span><span class='cube-text-gray'> > </span>";
                                                     }
                                                     bread += "<span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
                                                     $.each(searchFlag.founctionArray, function (k, f) {
-                                                        bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
+                                                        bread += "<span class='cube-text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
                                                     });
                                                     return false;
                                                 }
@@ -924,12 +931,19 @@
 									+ '</li>';
 								$("#_FormTabs").append(tabHtml);
 
-								$("#_FormTabContent").append('<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
-                                    + '<iframe name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
+                                var frameHtml = '<div class="tab-pane" id="' + functionid + '" role="tabpanel" style="height: 100%; padding: 0px;">'
+                                    + '<iframe onload="return _form.closeLoading(this);" name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
                                     + "#!lang=" + _Context.CurrentLang + "&skin=" + _Context.CurrentSkin
-									+ '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;"></iframe></div>');
+                                    + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;" ></iframe>';
+                                frameHtml += "<div class='frm_loading_mask' id='frm_loading_mask_" + functionid + "'><div class='frm_loading_mask_inner loader-inner'>"
+                                    + '<div class="cube-loading"><h2>Loading</h2><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
+                                  + "</div></div>"; //loading mask
+                                frameHtml += "</div>";
+                                $("#_FormTabContent").append(frameHtml);                                
 								_cmenu.bindTabContextMenu();
-								this.showFormByFunctionId(functionid);
+                                this.showFormByFunctionId(functionid);
+                                //$("#frm_loading_mask_" + functionid).height($("#" + functionid).height());
+                                _ui.resetContentSize();
 							}
 						}
 						_breadcrumb.toggleBreadcrumb();
@@ -994,6 +1008,10 @@
                         }                        
 
 						return false;
+                    },
+
+                    "closeLoading": function (frame) {
+                        $("#frm_loading_mask_" + $(frame).parent(".tab-pane").first().attr("id")).hide();
                     },
 
                     "options": {

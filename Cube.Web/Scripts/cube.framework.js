@@ -220,7 +220,7 @@ var _Context = {
         //area
         $.each($(".cube-data-area"), function (i, area) {
             var ch = $(area).children().detach();
-            var added = $(area).append("<div style='padding:15px 15px 0px 15px'></div>");
+            var added = $(area).append("<div style='padding:0px 15px 0px 15px'></div>");
             added.children().append(ch);
         });
 
@@ -818,3 +818,21 @@ function escapeHtmlData(data) {
     }
     return data;
 }
+
+//(function showFrameLoading() {
+//    if ("undefined" == typeof _portal) {
+//        var loaderHtml = '<div class="cube-loader-mask" id="frame-loader-mask"></div >'
+//            + '<div class="cube-loader" id="frame-loader"><div class="loader-inner"><div class="cube-loading"><h2>Loading</h2>'
+//            + '<span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>';
+//        $("body").append(loaderHtml);
+//        $("#frame-loader-mask").show();
+//        $("#frame-loader").show();
+//    }
+//})();
+//var closeFrameLoading = function () {
+//    $("#frame-loader-mask").hide();
+//    $("#frame-loader").hide();
+//};
+//$(function () {
+//    closeFrameLoading();
+//});

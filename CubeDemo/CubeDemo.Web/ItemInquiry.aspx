@@ -37,7 +37,7 @@
                 data-show-refresh="true" data-row-style="rowStyle" data-search="false"
                 data-show-toggle="true" data-sortable="true"
                 data-striped="true" data-page-size="10" data-page-list="[5,10,20]"
-                data-click-to-select="false" data-single-select="false" >
+                data-click-to-select="false" data-single-select="false">
                 <thead>
                     <tr>
                         <th data-field="state" data-checkbox="true" data-width="10%"></th>
@@ -52,31 +52,33 @@
         <!--edit dialog-->
         <div id="itemMaintainDialog" class="cube-modal">
             <div class="cube-modal-header">
-                <h1 class="modal-title" lang="lang_edit"></h1>                
+                <h1 class="modal-title" lang="lang_edit"></h1>
             </div>
             <div class="cube-modal-body">
                 <input type="text" class="cube-tbx cube-tbx-required"
-                        placeholder="Item No." lang="lang_item_no" id="tbxItemNo" value=""/>  
-                <input type="text" class="cube-tbx" 
-                        placeholder="Description" lang="lang_description" id="tbxDescription" value=""/>
+                    placeholder="Item No." lang="lang_item_no" id="tbxItemNo" value="" />
+                <input type="text" class="cube-tbx"
+                    placeholder="Description" lang="lang_description" id="tbxDescription" value="" />
             </div>
             <div class="cube-modal-footer">
                 <button class="cube-btn-save cube-btn-dlg-toolbar" onclick="return saveItem()"></button>
                 <button class="cube-btn-cancel cube-btn-dlg-toolbar" data-dismiss="modal"></button>
             </div>
         </div>
+
+       
     </form>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery-2.2.3.min.js"></script>
-    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.uriAnchor.js"></script>    
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.uriAnchor.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.slimscroll.min.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-TW.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-CN.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-en-US.js"></script>
-    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.wresize.js"></script>    
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.wresize.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/cube.framework.js"></script>
-    <script>
+    <script>        
         var _opt;
         var currentMaintainItemId = null;
         var _SelectedItemIdList;
