@@ -3,6 +3,24 @@
     font-style: italic;*/
 }
 
+.content-wrapper {
+    background-color: #fff;
+}
+
+#bookmark_sidebar {
+    background-color: #fff;
+}
+
+#_FormTabsContainer .form-tab .nav-link {
+    /*background-color: #ecf0f5;*/ /*#e9ebef;*/
+    background-color: #fff;
+}
+
+#_FormTabsContainer .active .nav-link {
+    /*background-color: #fff;*/
+    background-color: #e9ebef;
+}
+
 .sidebar-toggle, .navbar-custom-menu .fa, .fa, .control-sidebar-heading {
     font-size: 14px;
 }
@@ -132,8 +150,12 @@ section.content {
     background: #e9ebef;
 }
 
+#_BreadcrumbBar {
+    margin-top: -1px;
+}
+
 #_BreadcrumbBar i {
-    font-size: 8px;
+    font-size: 8px;    
 }
 
 #_BreadcrumbContent {
