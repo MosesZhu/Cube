@@ -90,7 +90,11 @@ section.content {
 
 .nav-tabs > li > a {
     border-radius: 0px;
-    padding: 6px 15px;
+    padding: 7px 15px;
+}
+
+.body > .slimScrollDiv {
+    top: -1px;
 }
 
 #_FormTabs {
@@ -98,19 +102,31 @@ section.content {
     border-bottom: 0px;
 }
 
-#_BreadcrumbBar {
+#_FormTabs button {
+    font-size: 17px;
+}
+
+#_BreadcrumbBar, #_BreadcrumbBar span {
     background-color: white;
-    height: 20px;
+    height: 31px;
     margin-left: 0px;
     margin-right: 1px;
     overflow: hidden;
+    font-size: 8px;
+    font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif !important;
+    background: #e9ebef;
+}
+
+#_BreadcrumbBar i {
     font-size: 8px;
 }
 
 #_BreadcrumbContent {
     float: left;
+    padding: 7px;
     padding-left: 10px;
     font-size: smaller;
+    color: #777;
 }
 
 #_FunctionMenu a {

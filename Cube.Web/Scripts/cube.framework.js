@@ -220,7 +220,7 @@ var _Context = {
         //area
         $.each($(".cube-data-area"), function (i, area) {
             var ch = $(area).children().detach();
-            var added = $(area).append("<div style='padding:15px'></div>");
+            var added = $(area).append("<div style='padding:15px 15px 0px 15px'></div>");
             added.children().append(ch);
         });
 
@@ -256,19 +256,23 @@ $(function () {
     _Context.init();    
 
     $(window).wresize(function () {
-        if ($(window).width() <= 768) {
-            //$(".cube-toolbar>button, .cube-toolbar>input").addClass("cube-btn-toolbar-md");
-            $(".cube-toolbar>button, .cube-toolbar>input").animate({ "width": "100%" }, 100);
-        } else {
-            //$(".cube-toolbar>button, .cube-toolbar>input").removeClass("cube-btn-toolbar-md");
-            $(".cube-toolbar>button, .cube-toolbar>input").each(function (i, btn) {
-                if ($(btn).hasClass("cube-btn-90")) {
-                    $(".cube-toolbar>button, .cube-toolbar>input").animate({ "width": "90px" }, 100);
-                }
-            });
-        }
+        resizeButtons();
     });
+    resizeButtons();
 });
+var resizeButtons = function () {
+    if ($(window).width() <= 768) {
+        //$(".cube-toolbar>button, .cube-toolbar>input").addClass("cube-btn-toolbar-md");
+        $(".cube-toolbar>button, .cube-toolbar>input").animate({ "width": "100%" }, 100);
+    } else {
+        //$(".cube-toolbar>button, .cube-toolbar>input").removeClass("cube-btn-toolbar-md");
+        $(".cube-toolbar>button, .cube-toolbar>input").each(function (i, btn) {
+            if ($(btn).hasClass("cube-btn-90")) {
+                $(".cube-toolbar>button, .cube-toolbar>input").animate({ "width": "90px" }, 100);
+            }
+        });
+    }
+};
 
 //start proxy function
 var setSkin = function (skinName) {

@@ -1,5 +1,5 @@
 ﻿body, h1, h2, h3, h4, h5, h6 {
-    font-family: Verdana;
+    font-family: Verdana, Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;;
     font-size: 12px;
 }
 
@@ -31,6 +31,22 @@
     border-top-right-radius: 0px;
 }
 
+.pagination-detail, .pagination {
+    margin-bottom: 5px !important;
+}
+
+.clearfix {
+    height: 15px;
+}
+
+.pagination a {
+    padding: 5px 9px 5px 9px !important;
+}
+
+.page-list button {
+    padding: 5px 9px;
+}
+
 .cube-toolbar {
     text-align: center;
 }
@@ -40,7 +56,7 @@
 }
 
 .cube-page-row {
-    padding: 15px;
+    padding: 15px 15px 0px 15px;
 }
 
 .cube-page-header-input {

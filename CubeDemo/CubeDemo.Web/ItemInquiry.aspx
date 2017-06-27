@@ -33,7 +33,7 @@
         <!--inquiry result grid-->
         <div class="cube-data-area">
             <table id="gridItem" class="bootstrapTable cube-bootstrap-table" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
-                data-url="" data-height="391" data-pagination="true"
+                data-url="" data-height="410" data-pagination="true"
                 data-show-refresh="true" data-row-style="rowStyle" data-search="false"
                 data-show-toggle="true" data-sortable="true"
                 data-striped="true" data-page-size="10" data-page-list="[5,10,20]"

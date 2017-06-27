@@ -800,7 +800,7 @@
 						var hasForm = ($("#_FormTabs>li").length > 0);
 						var breadcrumbHeight = 0;
 						if (hasForm) {
-							breadcrumbHeight = 20;
+							breadcrumbHeight = 31;
 							$("#_BreadcrumbContent").show(200);
 						} else {
 							$("#_BreadcrumbContent").hide(200);
@@ -809,7 +809,7 @@
 					},
 
 					"changeBreadCrumb": function () {
-						var bread = "";
+                        var bread = "<i class='fa fa-dashboard'></i>&nbsp;&nbsp;";
                         if (_PortalContext.CurrentFunctionId) {
                             if (_PortalContext.IsCurrentFunctionPortalLink) {
                                 bread +=
@@ -1321,7 +1321,7 @@
 				});
 
 				$('#_FormTabsContainer').slimscroll({
-					height: '34px',
+					height: '32px',
 					width: '100%',
 					axis: 'x',
 					alwaysVisible: false,
