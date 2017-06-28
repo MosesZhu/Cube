@@ -124,14 +124,7 @@
     <div class="cube-loader" id="loader">
         <div class="loader-inner">
             <div class="cube-loading">
-                <h2>Loading</h2>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+                Loading...
             </div>
         </div>
     </div>
@@ -178,11 +171,11 @@
             var needRemember = $("#cbxRememberMe").prop("checked");
 
             //for demo
-            if ($("#MainContentHolder_lblSystemName").text() == "Cube Demo") {
-                $("#ddlProduct").parents("tr").hide();
-                $("#ddlOrg").parents("tr").hide();
-                $("#ddlDomain").parents("tr").hide();
-            }
+            //if ($("#MainContentHolder_lblSystemName").text() == "Cube Demo") {
+            //    $("#ddlProduct").parents("tr").hide();
+            //    $("#ddlOrg").parents("tr").hide();
+            //    $("#ddlDomain").parents("tr").hide();
+            //}
             //end for demo
         });
 
@@ -252,6 +245,8 @@
             $("#ddlOrg").html(orgHtml);
         };
 
+        var DomainList = null;
+
         var initDomainList = function () {
             $.ajax({
                 url: "LoginService.asmx/getDomainList",
@@ -262,6 +257,7 @@
                     var d = data.d;
                     $.dialog.closeLoading();
                     if (d.success) {
+                        DomainList = d.data;
                         var domainHtml = "";
                         $.each(d.data, function (i, domain) {
                             domainHtml += "<option value='" + domain + "'>" + domain + "</option>";
@@ -301,13 +297,13 @@
             var needRemember = $("#cbxRememberMe").prop("checked");
 
             //for demo
-            if ($("#MainContentHolder_lblSystemName").text() == "Cube Demo") {
-                productId = "3202985d-ad51-428e-ac7e-9912de03c045";
-                productName = "Administration";
-                orgId = "ed9ac3f5-4d01-49d0-8c55-843e7e65110e";
-                orgName = "Global";
-                domain = "QGROUP";
-            }
+            //if ($("#MainContentHolder_lblSystemName").text() == "Cube Demo") {
+            //    productId = "3202985d-ad51-428e-ac7e-9912de03c045";
+            //    productName = "Administration";
+            //    orgId = "ed9ac3f5-4d01-49d0-8c55-843e7e65110e";
+            //    orgName = "Global";
+            //    domain = "QGROUP";
+            //}
             //end for demo
 
             if (!needRemember) {
@@ -336,6 +332,7 @@
             }
 
             $.dialog.showLoading();
+
             var param = {
                 "userName": userName,
                 "password": password,
@@ -347,6 +344,27 @@
                 "isInternal": isInternal,
                 "language": language
             };
+            if ("undefined" != typeof SystemMode && SystemMode == "S") {                
+                $.each(DomainList, function (i, domain) {
+                    if (domain.Id == SingleModeDomain) {
+                        param.domain = domain.Name;
+                        return false;
+                    }
+                });
+                param.productId = SingleModeProductId;
+                param.orgId = SingleModeOrgId
+                $.each(ProductOrgList, function (i, product) {
+                    if (product.Id == SingleModeProductId) {
+                        param.productName = product.Name;
+                        $.each(product.OrgList, function (j, org) {
+                            if (org.Id = SingleModeOrgId) {
+                                param.orgName = org.Name;
+                                return false;
+                            }
+                        });
+                    }
+                });
+            }            
 
             $.ajax({
                 url: "LoginService.asmx/login",

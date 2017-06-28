@@ -307,14 +307,7 @@
     <div class="cube-loader" id="loader">        
         <div class="loader-inner">
             <div class="cube-loading">
-		        <h2>Loading</h2>
-		        <span></span>
-		        <span></span>
-		        <span></span>
-		        <span></span>
-		        <span></span>
-		        <span></span>
-		        <span></span>
+		        Loading...
 	        </div>
         </div>
     </div>

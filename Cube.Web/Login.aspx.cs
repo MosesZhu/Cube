@@ -21,6 +21,20 @@ namespace Cube.Web
         {
             if (!Page.IsPostBack)
             {
+                if (CubeConfig.SystemMode == Base.Enums.CubeSystemModeEnum.Single)
+                {
+                    Page.ClientScript.RegisterStartupScript(GetType(), "SwitchToSingleMode", @"SystemMode = 'S'; $('#ddlProduct').parents('tr').hide();
+$('#ddlOrg').parents('tr').hide();
+$('#ddlDomain').parents('tr').hide();", true);
+
+                    string systemId = CubeConfig.CubeSystemId;
+                    PermissionService permissionService = new PermissionService();
+                    permissionService.Url = Config.Global.PermissionServiceUrl;
+                    SystemDTO systemInfo = permissionService.GetSystemInfo(Guid.Parse(systemId));
+                    Page.ClientScript.RegisterStartupScript(GetType(), "SetSingleModeInfo", @"SingleModeProductId = '" + systemInfo.Product_Id 
+                        + "'; SingleModeOrgId = '" + systemInfo.Org_Id + "'; SingleModeDomain = '" + systemInfo.Domain_Id + "';", true);
+                }
+
                 InitializeSSORequest();
 
                 if (_SSORequest != null)

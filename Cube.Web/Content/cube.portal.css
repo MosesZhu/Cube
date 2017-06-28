@@ -163,7 +163,7 @@ section.content {
     padding: 7px;
     padding-left: 10px;
     font-size: smaller;
-    color: #555;
+    color: #111;
 }
 
 .cube-text-gray {
@@ -204,7 +204,7 @@ section.content {
     position: fixed;
     right: 0px;
     top: -50px;
-    height: 20px;
+    height: 31px !important;
     text-align: center;
     padding-bottom: 3px;
     padding-top: 7px; 

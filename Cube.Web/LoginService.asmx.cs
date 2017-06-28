@@ -81,7 +81,7 @@ namespace Cube.Web
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         [WebMethod]
         public ResultDTO login(string userName, string password, string productId, string productName, string orgId, string orgName, string domain, bool isInternal, string language)
-        {            
+        {
             return wfkLogin(userName, password, productId, productName, orgId, orgName, domain, isInternal, language);
         }
 

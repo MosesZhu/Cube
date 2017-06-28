@@ -936,7 +936,7 @@
                                     + "#!lang=" + _Context.CurrentLang + "&skin=" + _Context.CurrentSkin
                                     + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;" ></iframe>';
                                 frameHtml += "<div class='frm_loading_mask' id='frm_loading_mask_" + functionid + "'><div class='frm_loading_mask_inner loader-inner'>"
-                                    + '<div class="cube-loading"><h2>Loading</h2><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
+                                    + '<div class="cube-loading">Loading...</div>'
                                   + "</div></div>"; //loading mask
                                 frameHtml += "</div>";
                                 $("#_FormTabContent").append(frameHtml);                                
@@ -1086,9 +1086,9 @@
 						},
 						"show_mask": false
 					};
-                    var serviceUrl = "getUnreadNews";
+                    var serviceUrl = "getAllNews";
                     if (this.status == this.STATUS.UNREAD) {
-                        serviceUrl = "getAllNews";
+                        serviceUrl = "getUnreadNews";
                     }
                     $.callWebService(serviceUrl, {}, options);
 
