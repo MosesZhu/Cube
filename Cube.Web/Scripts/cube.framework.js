@@ -187,13 +187,7 @@ var _Context = {
 
         //btn style
         //$(".cube-toolbar>button, .cube-toolbar>input").addClass("");
-        $(".cube-btn-inquiry").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_inquiry").html("<span class='glyphicon glyphicon-search'></span>&nbsp;Inquiry");
-        $(".cube-btn-add").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_add").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Add");
-        $(".cube-btn-create").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_create").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Create");
-        $(".cube-btn-delete").addClass("btn btn-danger cube-btn-90").attr("lang", "lang_delete").html("<span class='glyphicon glyphicon-minus'></span>&nbsp;Delete");
-        $(".cube-btn-save").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_save").html("<span class='glyphicon glyphicon-floppy-saved'></span>&nbsp;Save");
-        $(".cube-btn-cancel").addClass("btn btn-default cube-btn-90").attr("lang", "lang_cancel").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Cancel");
-        $(".cube-btn-confirm").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_confirm").html("<span class='glyphicon glyphicon-ok'></span>&nbsp;Confirm");
+        this.initButtons();
 
         $.each($("[class^='cube-btn']"), function (i, btn) {
             if (!$(btn).attr("type")) {
@@ -226,6 +220,16 @@ var _Context = {
 
         $.language.change(this.CurrentLang);
         $.skin.change(this.CurrentSkin);    
+    },
+    "initButtons": function () {
+        $(".cube-btn-inquiry").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_inquiry").html("<span class='glyphicon glyphicon-search'></span>&nbsp;Inquiry");
+        $(".cube-btn-add").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_add").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Add");
+        $(".cube-btn-create").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_create").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Create");
+        $(".cube-btn-delete").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-danger cube-btn-90").attr("lang", "lang_delete").html("<span class='glyphicon glyphicon-minus'></span>&nbsp;Delete");
+        $(".cube-btn-save").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_save").html("<span class='glyphicon glyphicon-floppy-saved'></span>&nbsp;Save");
+        $(".cube-btn-cancel").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-default cube-btn-90").attr("lang", "lang_cancel").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Cancel");
+        $(".cube-btn-close").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-default cube-btn-90").attr("lang", "lang_close").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Close");
+        $(".cube-btn-confirm").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_confirm").html("<span class='glyphicon glyphicon-ok'></span>&nbsp;Confirm");
     }
 };
 var _CurrentLang = window._Lang_ZhCN ? window._Lang_ZhCN : {};
@@ -395,7 +399,7 @@ jQuery.extend({
                                     buttons: [{
                                         text: _CurrentLang["lang_close"],
                                         key: 27/*Esc*/,
-                                        classNames: "cube-btn-cancel"
+                                        className: "cube-btn-close"
                                     }],
                                     focus: { element: 0 }
                                 };
@@ -404,9 +408,10 @@ jQuery.extend({
                                 this.setContent(this.message);
                             }
                         }
-                    });
+                    });                    
                 }
                 alertify.cubeAlert(data.content, data.title);
+                _Context.initButtons();
                 //$("#messageDialogTitle").text("");
                 //$("#messageDialogContent").html("");
                 //$("#messageDialogWarningContent").html("");

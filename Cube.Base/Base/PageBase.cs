@@ -113,6 +113,7 @@ namespace Cube.Base
             MultiLanguageKeyList.Add("lang_save");
             MultiLanguageKeyList.Add("lang_cancel");
             MultiLanguageKeyList.Add("lang_confirm");
+            MultiLanguageKeyList.Add("lang_close");
             //获得DB中已维护的多语言数据
             List<Mc_Language> dbLangCollections = GetLanguageData();
 
