@@ -24,15 +24,16 @@ namespace Cube.Web
                 if (CubeConfig.SystemMode == Base.Enums.CubeSystemModeEnum.Single)
                 {
                     Page.ClientScript.RegisterStartupScript(GetType(), "SwitchToSingleMode", @"SystemMode = 'S'; $('#ddlProduct').parents('tr').hide();
-$('#ddlOrg').parents('tr').hide();
-$('#ddlDomain').parents('tr').hide();", true);
+$('#ddlOrg').parents('tr').hide();", true);
+//$('#ddlDomain').parents('tr').hide();", true);
 
                     string systemId = CubeConfig.CubeSystemId;
                     PermissionService permissionService = new PermissionService();
-                    permissionService.Url = Config.Global.PermissionServiceUrl;
+                    permissionService.Url = Config.Global.PermissionServiceUrl;                    
                     SystemDTO systemInfo = permissionService.GetSystemInfo(Guid.Parse(systemId));
+                    DomainDTO domain = permissionService.GetDomainInfo(systemInfo.Domain_Id);
                     Page.ClientScript.RegisterStartupScript(GetType(), "SetSingleModeInfo", @"SingleModeProductId = '" + systemInfo.Product_Id 
-                        + "'; SingleModeOrgId = '" + systemInfo.Org_Id + "'; SingleModeDomain = '" + systemInfo.Domain_Id + "';", true);
+                        + "'; SingleModeOrgId = '" + systemInfo.Org_Id + "'; SingleModeDomain = '" + domain.Name + "';", true);
                 }
 
                 InitializeSSORequest();

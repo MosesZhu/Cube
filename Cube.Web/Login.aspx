@@ -344,13 +344,8 @@
                 "isInternal": isInternal,
                 "language": language
             };
-            if ("undefined" != typeof SystemMode && SystemMode == "S") {                
-                $.each(DomainList, function (i, domain) {
-                    if (domain.Id == SingleModeDomain) {
-                        param.domain = domain.Name;
-                        return false;
-                    }
-                });
+            if ("undefined" != typeof SystemMode && SystemMode == "S") {
+                //param.domain = SingleModeDomain;
                 param.productId = SingleModeProductId;
                 param.orgId = SingleModeOrgId
                 $.each(ProductOrgList, function (i, product) {
@@ -615,13 +610,13 @@
 
                         function j(N) {
                             K(z.offsetWidth, z.offsetHeight);
-                            M()
+                            M();
+                            $("canvas").height($(window).height());
+                            $("canvas").width($(window).width());
                         }
 
                         C();
                     })
-            } else {
-                alert('调用cav.js失败');
             }
         });
     </script>

@@ -29,7 +29,7 @@
                     $(".frm_loading_mask").each(function (i, mask) {
                         var fid = $(mask).parent(".tab-pane").first().attr("id");
                         $(mask).height($("#" + fid).height());
-                        $(mask).css("top", headerHeight + 63 + "px");
+                        $(mask).css("top", headerHeight + 56 + "px");
                     });                    
 				},
 				"header": {
@@ -873,7 +873,7 @@
                                                 if (searchFlag.found) {
                                                     found = true;
                                                     bread +=  //"<span class='text-gray'> > </span>
-                                                        "< span lang= '" + product.Language_Key + "' > " + product.Name + "</span > "
+                                                        "<span lang= '" + product.Language_Key + "'> " + product.Name + "</span> "
                                                         + "<span class='text-gray'> > </span><span lang='" + systemMenu.Language_Key + "'>" + systemMenu.Code + "</span>";
                                                     $.each(searchFlag.founctionArray, function (k, f) {
                                                         bread += "<span class='text-gray'> > </span><span lang='" + f.Language_Key + "'>" + f.Code + "</span>";
@@ -935,8 +935,8 @@
                                     + '<iframe onload="return _form.closeLoading(this);" name="frm_' + functionid + '" src="' + functionurl + '?SSOToken=' + getQueryStringByName('SSOToken')
                                     + "#!lang=" + _Context.CurrentLang + "&skin=" + _Context.CurrentSkin
                                     + '" class="col-md-12 col-lg-12 col-sm-12" style="height: 100%; width:100%;padding: 0px;border:0px;" ></iframe>';
-                                frameHtml += "<div class='frm_loading_mask' id='frm_loading_mask_" + functionid + "'><div class='frm_loading_mask_inner loader-inner'>"
-                                    + '<div class="cube-loading">Loading...</div>'
+                                frameHtml += "<div class='frm_loading_mask' id='frm_loading_mask_" + functionid + "'><div class='frm_loading_mask_inner'>"
+                                    + '<div class="frm-loading">Loading...</div>'
                                   + "</div></div>"; //loading mask
                                 frameHtml += "</div>";
                                 $("#_FormTabContent").append(frameHtml);                                

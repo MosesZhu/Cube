@@ -16,15 +16,25 @@
         <!--inquiry area & toolbar-->
         <div class="cube-input-area">
             <div class="cube-inputbar">
-                <div class="input-group cube-page-header-input">
+                <div class="input-group">
                     <input type="text" class="form-control"
                         id="tbxItemNoInquiry" value="" placeholder="Item No." lang="lang_item_no" />
                     <span class="input-group-btn">
                         <button class="cube-btn-inquiry" onclick="return inquiryItem();"></button>
                     </span>
                 </div>
+                <%--<div class ="form-control-row col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <input type="text" class="cube-form-control " placeholder="Item No." lang="lang_item_no" />                    
+                </div>
+                <div class="form-control-row col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <input type="text" class="cube-form-control" placeholder="Description" lang="lang_description" />
+                </div>
+                <input type="text" class="cube-form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" placeholder="Item No." lang="lang_item_no" />
+                <input type="text" class="cube-form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" placeholder="Description" lang="lang_description" />
+                    --%>
             </div>
             <div class="cube-toolbar">
+                <%--<button class="cube-btn-inquiry" onclick="return inquiryItem();"></button>--%>
                 <button class="cube-btn-add" onclick="return createItem();"></button>
                 <button class="cube-btn-delete" onclick="return deleteItem();"></button>
             </div>
@@ -34,8 +44,8 @@
         <div class="cube-data-area">
             <table id="gridItem" class="bootstrapTable cube-bootstrap-table" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
                 data-url="" data-height="410" data-pagination="true"
-                data-show-refresh="true" data-row-style="rowStyle" data-search="false"
-                data-show-toggle="true" data-sortable="true"
+                data-show-refresh="false" data-row-style="rowStyle" data-search="false"
+                data-show-toggle="false" data-sortable="true"
                 data-striped="true" data-page-size="10" data-page-list="[5,10,20]"
                 data-click-to-select="false" data-single-select="false">
                 <thead>
@@ -61,8 +71,8 @@
                     placeholder="Description" lang="lang_description" id="tbxDescription" value="" />
             </div>
             <div class="cube-modal-footer">
-                <button class="cube-btn-save cube-btn-dlg-toolbar" onclick="return saveItem()"></button>
-                <button class="cube-btn-cancel cube-btn-dlg-toolbar" data-dismiss="modal"></button>
+                <button class="cube-btn-save" onclick="return saveItem()"></button>
+                <button class="cube-btn-cancel" data-dismiss="modal"></button>
             </div>
         </div>
 

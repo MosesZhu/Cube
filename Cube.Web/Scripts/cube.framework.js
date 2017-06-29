@@ -394,7 +394,8 @@ jQuery.extend({
                                 return {
                                     buttons: [{
                                         text: _CurrentLang["lang_close"],
-                                        key: 27/*Esc*/
+                                        key: 27/*Esc*/,
+                                        classNames: "cube-btn-cancel"
                                     }],
                                     focus: { element: 0 }
                                 };
