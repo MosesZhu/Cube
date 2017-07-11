@@ -98,6 +98,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ItemBusiness.cs" />
     <Compile Include="ItemInquiry.aspx.cs">
       <DependentUpon>ItemInquiry.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

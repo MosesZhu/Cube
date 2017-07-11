@@ -24,7 +24,7 @@
                         <button class="cube-btn-inquiry" onclick="return inquiryItem();"></button>
                     </span>
                 </div>
-                <%--<div class ="form-control-row col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class ="form-control-row col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <input type="text" class="cube-form-control " placeholder="Item No." lang="lang_item_no" />                    
                 </div>
                 <div class="form-control-row col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -32,13 +32,28 @@
                 </div>
                 <input type="text" class="cube-form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" placeholder="Item No." lang="lang_item_no" />
                 <input type="text" class="cube-form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" placeholder="Description" lang="lang_description" />
-                    --%>
+                    
             </div>
             <div class="cube-toolbar">
                 <%--<button class="cube-btn-inquiry" onclick="return inquiryItem();"></button>--%>
                 <button class="cube-btn-add" onclick="return createItem();"></button>
                 <button class="cube-btn-delete" onclick="return deleteItem();"></button>
-                <button class="cube-btn-test" onclick="return testHttpHandler();"></button>
+                <button class="cube-btn-edit" onclick=""></button>
+                <button class="cube-btn-test" onclick="return testHttpHandlerBase();"></button>
+                <button class="cube-btn-test" onclick="return testBusinessBase();"></button>
+                <button class="cube-btn-export" onclick=""></button>
+                <button class="cube-btn-import" onclick=""></button>
+                <button class="cube-btn-send" onclick=""></button>
+                <button class="cube-btn-mail" onclick=""></button>
+                <button class="cube-btn-confirm" onclick=""></button>
+                <button class="cube-btn-close" onclick=""></button>
+                <button class="cube-btn-cancel" onclick=""></button>
+                <button class="cube-btn-save" onclick=""></button>
+                <button class="cube-btn-inquiry" onclick=""></button>
+                <button class="cube-btn-detail" onclick=""></button>
+                <button class="cube-btn-info" onclick=""></button>
+                <button class="cube-btn-print" onclick=""></button>
+                <button class="cube-btn-config" onclick=""></button>
             </div>
         </div>
 
@@ -218,7 +233,7 @@
             return true;
         };
 
-        var testHttpHandler = function () {
+        var testHttpHandlerBase = function () {
             var options = {
                 "success": function (d) {
                     alert(d);
@@ -248,6 +263,22 @@
             //    }
             //});
             
+            return true;
+        };
+
+        var testBusinessBase = function () {
+            var options = {
+                "success": function (d) {
+                    alert(d);
+                }
+            };
+
+            var mydata = {};
+
+            var serviceFuncName = "GetUserInfo";
+
+            $.callWebService(serviceFuncName, mydata, options);
+
             return true;
         };
     </script>

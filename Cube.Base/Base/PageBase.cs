@@ -109,12 +109,22 @@ namespace Cube.Base
 
             MultiLanguageKeyList.Add("lang_add");
             MultiLanguageKeyList.Add("lang_create");
+            MultiLanguageKeyList.Add("lang_edit");
             MultiLanguageKeyList.Add("lang_delete");
             MultiLanguageKeyList.Add("lang_inquiry");
             MultiLanguageKeyList.Add("lang_save");
             MultiLanguageKeyList.Add("lang_cancel");
             MultiLanguageKeyList.Add("lang_confirm");
             MultiLanguageKeyList.Add("lang_close");
+            MultiLanguageKeyList.Add("lang_test");
+            MultiLanguageKeyList.Add("lang_export");
+            MultiLanguageKeyList.Add("lang_import");
+            MultiLanguageKeyList.Add("lang_send");
+            MultiLanguageKeyList.Add("lang_mail");
+            MultiLanguageKeyList.Add("lang_detail");
+            MultiLanguageKeyList.Add("lang_info");
+            MultiLanguageKeyList.Add("lang_print");
+            MultiLanguageKeyList.Add("lang_config");
             //获得DB中已维护的多语言数据
             List<Mc_Language> dbLangCollections = GetLanguageData();
 

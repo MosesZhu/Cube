@@ -1,5 +1,6 @@
 ﻿using Cube.Base;
 using CubeDemo.Model.Entity;
+using ITS.WebFramework.PermissionComponent.ServiceProxy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,13 @@ namespace CubeDemo.Web
                 Db.FromSql(sql).ExecuteNonQuery();
             }
             return true;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public UserDTO GetUserInfo()
+        {
+            ItemBusiness business = new ItemBusiness();
+            return business.getUserInfo();
         }
     }
 }

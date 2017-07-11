@@ -221,16 +221,44 @@ var _Context = {
         $.language.change(this.CurrentLang);
         $.skin.change(this.CurrentSkin);    
     },
+
     "initButtons": function () {
-        $(".cube-btn-inquiry").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_inquiry").html("<span class='glyphicon glyphicon-search'></span>&nbsp;Inquiry");
-        $(".cube-btn-add").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_add").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Add");
-        $(".cube-btn-create").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_create").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Create");
-        $(".cube-btn-delete").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-danger cube-btn-90").attr("lang", "lang_delete").html("<span class='glyphicon glyphicon-minus'></span>&nbsp;Delete");
-        $(".cube-btn-save").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_save").html("<span class='glyphicon glyphicon-floppy-saved'></span>&nbsp;Save");
-        $(".cube-btn-cancel").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-default cube-btn-90").attr("lang", "lang_cancel").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Cancel");
-        $(".cube-btn-close").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-default cube-btn-90").attr("lang", "lang_close").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Close");
-        $(".cube-btn-confirm").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_confirm").html("<span class='glyphicon glyphicon-ok'></span>&nbsp;Confirm");
-        $(".cube-btn-test").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-warning cube-btn-90").attr("lang", "lang_test").html("<span class='glyphicon glyphicon-warning-sign'></span>&nbsp;Test");
+        $(".cube-btn-inquiry").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_inquiry").html("<span class='glyphicon glyphicon-search'></span>&nbsp;Inquiry");
+        $(".cube-btn-add").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_add").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Add");
+        $(".cube-btn-create").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_create").html("<span class='glyphicon glyphicon-plus'></span>&nbsp;Create");
+        $(".cube-btn-delete").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-danger cube-btn-90")
+            .attr("lang", "lang_delete").html("<span class='glyphicon glyphicon-minus'></span>&nbsp;Delete");
+        $(".cube-btn-save").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_save").html("<span class='glyphicon glyphicon-floppy-saved'></span>&nbsp;Save");
+        $(".cube-btn-cancel").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-default cube-btn-90")
+            .attr("lang", "lang_cancel").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Cancel");
+        $(".cube-btn-close").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-default cube-btn-90")
+            .attr("lang", "lang_close").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Close");
+        $(".cube-btn-confirm").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_confirm").html("<span class='glyphicon glyphicon-ok'></span>&nbsp;Confirm");
+        $(".cube-btn-test").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-warning cube-btn-90")
+            .attr("lang", "lang_test").html("<span class='glyphicon glyphicon-warning-sign'></span>&nbsp;Test");
+        $(".cube-btn-export").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_export").html("<span class='glyphicon glyphicon-export'></span>&nbsp;Export");
+        $(".cube-btn-import").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_import").html("<span class='glyphicon glyphicon-import'></span>&nbsp;Import");
+        $(".cube-btn-send").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_send").html("<span class='glyphicon glyphicon-send'></span>&nbsp;Send");
+        $(".cube-btn-mail").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_mail").html("<span class='glyphicon glyphicon-envelope'></span>&nbsp;Mail");
+        $(".cube-btn-detail").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_detail").html("<span class='glyphicon glyphicon-list-alt'></span>&nbsp;Detail");
+        $(".cube-btn-edit").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_edit").html("<span class='glyphicon glyphicon-edit'></span>&nbsp;Edit");
+        $(".cube-btn-info").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-warning cube-btn-90")
+            .attr("lang", "lang_info").html("<span class='glyphicon glyphicon-info-sign'></span>&nbsp;Info");
+        $(".cube-btn-print").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_print").html("<span class='glyphicon glyphicon-print'></span>&nbsp;Print");
+        $(".cube-btn-config").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90")
+            .attr("lang", "lang_config").html("<span class='glyphicon glyphicon-cog'></span>&nbsp;Config");
     }
 };
 var _CurrentLang = window._Lang_ZhCN ? window._Lang_ZhCN : {};
