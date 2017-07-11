@@ -1,11 +1,13 @@
 ﻿using Cube.Base.Config;
 using Cube.Base.Utility;
+using ITS.WebFramework.Common;
 using ITS.WebFramework.SSO.SSOModule;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.SessionState;
 
 namespace Cube.Base
 {
@@ -18,7 +20,7 @@ namespace Cube.Base
         }
 
         private static void cubeProcess(Object source, EventArgs args)
-        {
+        {            
             SSOModule wfkSSOModule = new SSOModule();
             wfkSSOModule.BeginRequest(source, args);
         }

@@ -14,6 +14,7 @@ using Qisda.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
@@ -166,7 +167,7 @@ namespace Cube.Web
                 else
                 {
                     result.success = true;
-                    result.data = url;
+                    result.data = url;                    
                 }
             }
             catch (Exception ex)

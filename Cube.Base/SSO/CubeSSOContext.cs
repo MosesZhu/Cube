@@ -44,8 +44,52 @@ namespace Cube.Base.SSO
         {
             get
             {
-                return !string.IsNullOrEmpty(HttpContext.Current.Request.Headers["SSOToken"]) ? HttpContext.Current.Request.Headers["SSOToken"] : HttpContext.Current.Request["SSOToken"];
+                if (!string.IsNullOrEmpty(HttpContext.Current.Request.Headers["SSOToken"]))
+                {
+                    return HttpContext.Current.Request.Headers["SSOToken"];
+                }
+
+                if (!string.IsNullOrEmpty(HttpContext.Current.Request["SSOToken"]))
+                {
+                    return HttpContext.Current.Request["SSOToken"];
+                }
+
+                if (HttpContext.Current.Session["SSOToken"] != null)
+                {
+                    return HttpContext.Current.Session["SSOToken"].ToString();
+                }
+
+                if (HttpContext.Current.Request.UrlReferrer != null)
+                {
+                    string tempToken = getParam(HttpContext.Current.Request.UrlReferrer.ToString(), "SSOToken");
+                    if (!string.IsNullOrEmpty(tempToken))
+                    {
+                        return tempToken;
+                    }
+                }
+
+                return null;
             }
+        }
+
+        private static string getParam(string strHref, string strName)
+        {
+            int intPos = strHref.IndexOf("?");
+            if (intPos < 1)
+                return "";
+
+            string strRight = strHref.Substring(intPos + 1);
+
+            string[] arrPram = strRight.Split('&');
+            for (int i = 0; i < arrPram.Length; i++)
+            {
+                string[] arrPramName = arrPram[i].Split('=');
+                if (arrPramName[0].ToLower() == strName.ToLower())
+                {
+                    return arrPramName[1];
+                }
+            }
+            return "";
         }
         public static bool IsDebug
         {

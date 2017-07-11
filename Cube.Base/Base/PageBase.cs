@@ -12,6 +12,7 @@ using Cube.Model.Entity;
 using Cube.Base.Utility;
 using ITS.WebFramework.PermissionComponent.ServiceProxy;
 using Cube.Base.SSO;
+using ITS.WebFramework.Common;
 
 namespace Cube.Base
 {

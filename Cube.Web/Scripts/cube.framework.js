@@ -230,6 +230,7 @@ var _Context = {
         $(".cube-btn-cancel").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-default cube-btn-90").attr("lang", "lang_cancel").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Cancel");
         $(".cube-btn-close").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-default cube-btn-90").attr("lang", "lang_close").html("<span class='glyphicon glyphicon-share-alt'></span>&nbsp;Close");
         $(".cube-btn-confirm").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-skin-primary cube-btn-90").attr("lang", "lang_confirm").html("<span class='glyphicon glyphicon-ok'></span>&nbsp;Confirm");
+        $(".cube-btn-test").removeClass("btn btn-skin-primary btn-default").addClass("btn btn-warning cube-btn-90").attr("lang", "lang_test").html("<span class='glyphicon glyphicon-warning-sign'></span>&nbsp;Test");
     }
 };
 var _CurrentLang = window._Lang_ZhCN ? window._Lang_ZhCN : {};

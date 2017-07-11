@@ -137,7 +137,7 @@ select.form-control {
 }
 
 .cube-toolbar {
-    text-align: center;
+    text-align: left;
 }
 
 .cube-toolbar > button, .cube-toolbar > input {

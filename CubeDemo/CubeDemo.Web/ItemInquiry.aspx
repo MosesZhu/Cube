@@ -16,9 +16,10 @@
         <!--inquiry area & toolbar-->
         <div class="cube-input-area">
             <div class="cube-inputbar">
+                <label for="tbxItemNoInquiry" lang="lang_item_no"></label>
                 <div class="input-group">
                     <input type="text" class="form-control"
-                        id="tbxItemNoInquiry" value="" placeholder="Item No." lang="lang_item_no" />
+                        id="tbxItemNoInquiry" value="" />                    
                     <span class="input-group-btn">
                         <button class="cube-btn-inquiry" onclick="return inquiryItem();"></button>
                     </span>
@@ -37,6 +38,7 @@
                 <%--<button class="cube-btn-inquiry" onclick="return inquiryItem();"></button>--%>
                 <button class="cube-btn-add" onclick="return createItem();"></button>
                 <button class="cube-btn-delete" onclick="return deleteItem();"></button>
+                <button class="cube-btn-test" onclick="return testHttpHandler();"></button>
             </div>
         </div>
 
@@ -216,6 +218,38 @@
             return true;
         };
 
+        var testHttpHandler = function () {
+            var options = {
+                "success": function (d) {
+                    alert(d);
+                }
+            };
+
+            var mydata = {
+                'action': 'GetUserInfo'
+            };
+
+            $.post('ItemInquiryHandler.ashx', mydata, function (data) {
+                alert(data);
+
+            }, "json");
+
+            //$.ajax({
+            //    url: 'ItemInquiryHandler.ashx',
+            //    dataType: "json",
+            //    type: "POST",
+            //    contentType: "application/json;charset=utf-8",
+            //    data: mydata,
+            //    success: function (d) {
+            //        alert(d);
+            //    },
+            //    error: function (e) {
+            //        alert(e);
+            //    }
+            //});
+            
+            return true;
+        };
     </script>
 </body>
 </html>
