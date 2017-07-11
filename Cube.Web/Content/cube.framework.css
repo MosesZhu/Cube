@@ -72,6 +72,24 @@ select.form-control {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);*/
 }
 
+.datepicker.dropdown-menu, .bootstrap-timepicker-widget {
+    border-radius: 0px;
+}
+
+.cube-label {
+    margin: 20px 0px -12px 0px;
+    word-break: break-word;
+    padding-left: 15px;
+}
+
+.cube-form-row-1 .cube-form-control {
+    margin-top: 5px;
+}
+
+.cube-select {
+    padding-top: 3px;
+}
+
 .form-control-row {
     padding: 15px 0px 0px 0px;
 }
@@ -87,8 +105,8 @@ select.form-control {
 .form-control-row input {
     width: 100%;
 }
-    
-.cube-inputbar input, .cube-inputbar button {
+
+.cube-inputbar input, .cube-inputbar button, .cube-inputbar select {
     margin-top: 15px;
 }
 

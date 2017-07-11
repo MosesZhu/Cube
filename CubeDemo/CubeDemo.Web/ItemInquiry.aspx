@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/bootstrap.css">
     <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/AdminLTE/AdminLTE.css">
     <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/AdminLTE/skins/_all-skins.css">
+    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/timepicker/bootstrap-timepicker.css">
     <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/bootstrap-table.min.css">
     <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/cube.framework.css">
 </head>
@@ -16,26 +18,49 @@
         <!--inquiry area & toolbar-->
         <div class="cube-input-area">
             <div class="cube-inputbar">
-                <label for="tbxItemNoInquiry" lang="lang_item_no"></label>
-                <div class="input-group">
-                    <input type="text" class="form-control"
-                        id="tbxItemNoInquiry" value="" />                    
-                    <span class="input-group-btn">
-                        <button class="cube-btn-inquiry" onclick="return inquiryItem();"></button>
-                    </span>
+                <div class="cube-form-row-2">
+                    <label for="tbxDemo1" lang="lang_item_no"></label>
+                    <input type="text" id="tbxDemo1" />
+                    <label for="tbxDemo1" lang="lang_trans_time"></label>
+                    <input type="text" class="cube-datepicker" />
                 </div>
-                <div class ="form-control-row col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <input type="text" class="cube-form-control " placeholder="Item No." lang="lang_item_no" />                    
+
+                <div class="cube-form-row-2">
+                    <label for="ddlLanguage" lang="lang_language"></label>
+                    <select class="cube-select" id="ddlLanguage">
+                        <option selected="selected" value="EnUS">English</option>
+                        <option value="ZhCN">中文简体</option>
+                        <option value="ZhTW">中文繁體</option>
+                    </select>
+                    <label for="tbxDemo4" lang="lang_telephone_number"></label>
+                    <div class="bootstrap-timepicker">
+                        <input type="text" class="cube-timepicker" />
+                    </div>
                 </div>
-                <div class="form-control-row col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <input type="text" class="cube-form-control" placeholder="Description" lang="lang_description" />
+
+                <div class="cube-form-row-1">
+                    <label for="tbxDemo5" lang="lang_language"></label>
+                    <input type="text" id="tbxDemo5" />
                 </div>
-                <input type="text" class="cube-form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" placeholder="Item No." lang="lang_item_no" />
-                <input type="text" class="cube-form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" placeholder="Description" lang="lang_description" />
-                    
+
+                <div class="cube-form-row-1">
+                    <label for="tbxDemo6" lang="lang_telephone_number"></label>
+                    <input type="text" id="tbxDemo6" />
+                </div>
+
+                <div class="cube-form-row-1">
+                    <label for="tbxItemNoInquiry" lang="lang_item_no"></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                            id="tbxItemNoInquiry" value="" />
+                        <span class="input-group-btn">
+                            <button class="cube-btn-inquiry" onclick="return inquiryItem();"></button>
+                        </span>
+                    </div>
+                </div>
+
             </div>
             <div class="cube-toolbar">
-                <%--<button class="cube-btn-inquiry" onclick="return inquiryItem();"></button>--%>
                 <button class="cube-btn-add" onclick="return createItem();"></button>
                 <button class="cube-btn-delete" onclick="return deleteItem();"></button>
                 <button class="cube-btn-edit" onclick=""></button>
@@ -93,18 +118,22 @@
             </div>
         </div>
 
-       
+
     </form>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/cube.framework.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.uriAnchor.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.slimscroll.min.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap.js"></script>
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/timepicker/bootstrap-timepicker.js"></script>
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/datepicker/bootstrap-datepicker.js"></script>
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/input-mask/jquery.inputmask.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-TW.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-zh-CN.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/bootstrap-table-en-US.js"></script>
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/AdminLTE.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.wresize.js"></script>
-    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/cube.framework.js"></script>
     <script>        
         var _opt;
         var currentMaintainItemId = null;
@@ -262,7 +291,7 @@
             //        alert(e);
             //    }
             //});
-            
+
             return true;
         };
 

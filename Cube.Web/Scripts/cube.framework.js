@@ -183,7 +183,29 @@ var _Context = {
         $(".cube-input-area").addClass("cube-page-row row");
         $(".cube-data-area").addClass("cube-page-row row");
         $(".cube-inputbar").addClass(" col-lg-12 col-md-12 col-sm-12 col-xs-12");
-        $(".cube-toolbar").addClass(" col-lg-12 col-md-12 col-sm-12 col-xs-12");        
+        $(".cube-toolbar").addClass(" col-lg-12 col-md-12 col-sm-12 col-xs-12");       
+
+        //op area
+        $(".cube-input-area label").addClass("cube-label");
+        $(".cube-form-row-2 label").addClass("col-lg-2 col-md-2 col-sm-12 col-xs-12");
+        $(".cube-form-row-2 input[type='text'], .cube-form-row-2 select").addClass("col-lg-4 col-md-4 col-sm-12 col-xs-12");
+        $(".cube-form-row-1 input[type='text'], .cube-form-row-2 select").addClass("col-lg-12 col-md-12 col-sm-12 col-xs-12");
+        $(".cube-input-area input[type='text'], .cube-input-area select").addClass("cube-form-control");
+
+        //control
+        if ($('.cube-datepicker').length > 0) {
+            $('.cube-datepicker').datepicker({
+                autoclose: true
+            }); 
+        }
+
+        if ($('.cube-timepicker').length > 0) {
+            $('.cube-timepicker').addClass("timepicker");
+            $('.cube-timepicker').timepicker({
+                showInputs: false,
+                template: 'dropdown'
+            });
+        }
 
         //btn style
         //$(".cube-toolbar>button, .cube-toolbar>input").addClass("");
