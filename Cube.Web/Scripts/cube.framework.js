@@ -123,7 +123,9 @@ jQuery.extend({
                 }
             },
             success: function (d) {
-                $.dialog.closeLoading();
+                if (showMask) {
+                    $.dialog.closeLoading();
+                }                
                 var resultData = d.d;
                 if (!resultData.success && resultData.errorcode == "E0001") {
                     location.href = "Login";
@@ -194,9 +196,12 @@ var _Context = {
 
         //control
         if ($('.cube-datepicker').length > 0) {
-            $('.cube-datepicker').datepicker({
-                autoclose: true
-            }); 
+            $('.cube-datepicker').each(function () {
+                $(this).val($(this).val()).datepicker({
+                    autoclose: true,
+                    format: $(this).attr("data-format") ? $(this).attr("data-format") : "yyyy/mm/dd"
+                }); 
+            });
         }
 
         if ($('.cube-timepicker').length > 0) {
@@ -457,12 +462,32 @@ jQuery.extend({
                             },
                             prepare: function () {
                                 this.setContent(this.message);
+                            },
+                            hooks: {                               
+                                onshow: function () {
+                                    _Context.initButtons();
+                                    $(".alertify .cube-btn-close").setLanguage();
+                                    $(".alertify .cube-btn-close span").on("click", function () {
+                                        alertify.cubeAlert().close();
+                                    });
+                                }
                             }
                         }
                     });                    
                 }
+                //alertify.cubeAlert().setup = function () {
+                //    return {
+                //        buttons: [{
+                //            text: _CurrentLang["lang_close"],
+                //            key: 27/*Esc*/,
+                //            className: "cube-btn-close"
+                //        }],
+                //        focus: { element: 0 }
+                //    };
+                //};
+                
                 alertify.cubeAlert(data.content, data.title);
-                _Context.initButtons();
+                //$(".alertify .cube-btn-close").setLanguage();                
                 //$("#messageDialogTitle").text("");
                 //$("#messageDialogContent").html("");
                 //$("#messageDialogWarningContent").html("");
@@ -713,8 +738,7 @@ jQuery.extend({
                 case "ZhCN":
                     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
                     $.each($(".cube-bootstrap-table"), function (i, tb) {
-                        if ($(tb).find("tbody").length > 0)
-                        {
+                        if ($(tb).find("tbody").length > 0) {
                             $(tb).bootstrapTable({ locale: 'zh-CN' });
                             $(tb).bootstrapTable("changeLocale");
                             //$(tb).bootstrapTable("refreshOptions");
@@ -758,6 +782,43 @@ jQuery.extend({
         }
     }
 });
+
+jQuery.fn.extend({
+    setLanguage: function (lang) {
+        if ($(this).attr("lang") && $.trim($(this).attr("lang")) != "") {
+            var _TempLanguage;
+            if (lang) {                
+                switch (_Context.CurrentLang) {
+                    case "ZhCN":
+                        _TempLanguage = window._Lang_ZhCN;
+                        break;
+                    case "ZhTW":
+                        _TempLanguage = window._Lang_ZhTW;
+                        break;
+                    default:
+                        _TempLanguage = window._Lang_EnUS;
+                        break;
+                }
+            } else {
+                _TempLanguage = _CurrentLang;
+            }
+            var key = $(this).attr("lang");
+            if (typeof ($(this).attr("placeholder")) == "undefined") {
+                if ($(this).children(".fa").length > 0) {
+                    var icons = $(this).children(".fa").detach();
+                    $(this).html("").append(icons).append("&nbsp;" + _TempLanguage[key]);
+                } else if ($(this).children(".glyphicon").length > 0) {
+                    var icons = $(this).children(".glyphicon").detach();
+                    $(this).html("").append(icons).append("&nbsp;" + _TempLanguage[key]);
+                } else {
+                    $(this).text(_TempLanguage[key]);
+                }
+            } else {
+                $(this).attr("placeholder", _TempLanguage[key]);
+            }
+        }
+    }
+}); 
 
 jQuery.extend({
     "skin": {

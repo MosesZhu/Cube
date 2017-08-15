@@ -82,6 +82,7 @@
   <ItemGroup>
     <Content Include="Configuration\ITS.Data.config" />
     <Content Include="Configuration\log4net.config" />
+    <Content Include="Controls.aspx" />
     <Content Include="ItemInquiryHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -99,6 +100,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ItemBusiness.cs" />
+    <Compile Include="Controls.aspx.cs">
+      <DependentUpon>Controls.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls.aspx.designer.cs">
+      <DependentUpon>Controls.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ItemInquiry.aspx.cs">
       <DependentUpon>ItemInquiry.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

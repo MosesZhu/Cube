@@ -17,37 +17,7 @@
     <form id="form1" runat="server">
         <!--inquiry area & toolbar-->
         <div class="cube-input-area">
-            <div class="cube-inputbar">
-                <div class="cube-form-row-2">
-                    <label for="tbxDemo1" lang="lang_item_no"></label>
-                    <input type="text" id="tbxDemo1" />
-                    <label for="tbxDemo1" lang="lang_trans_time"></label>
-                    <input type="text" class="cube-datepicker" />
-                </div>
-
-                <div class="cube-form-row-2">
-                    <label for="ddlLanguage" lang="lang_language"></label>
-                    <select class="cube-select" id="ddlLanguage">
-                        <option selected="selected" value="EnUS">English</option>
-                        <option value="ZhCN">中文简体</option>
-                        <option value="ZhTW">中文繁體</option>
-                    </select>
-                    <label for="tbxDemo4" lang="lang_telephone_number"></label>
-                    <div class="bootstrap-timepicker">
-                        <input type="text" class="cube-timepicker" />
-                    </div>
-                </div>
-
-                <div class="cube-form-row-1">
-                    <label for="tbxDemo5" lang="lang_language"></label>
-                    <input type="text" id="tbxDemo5" />
-                </div>
-
-                <div class="cube-form-row-1">
-                    <label for="tbxDemo6" lang="lang_telephone_number"></label>
-                    <input type="text" id="tbxDemo6" />
-                </div>
-
+            <div class="cube-inputbar">                
                 <div class="cube-form-row-1">
                     <label for="tbxItemNoInquiry" lang="lang_item_no"></label>
                     <div class="input-group">
@@ -58,28 +28,8 @@
                         </span>
                     </div>
                 </div>
-
             </div>
-            <div class="cube-toolbar">
-                <button class="cube-btn-add" onclick="return createItem();"></button>
-                <button class="cube-btn-delete" onclick="return deleteItem();"></button>
-                <button class="cube-btn-edit" onclick=""></button>
-                <button class="cube-btn-test" onclick="return testHttpHandlerBase();"></button>
-                <button class="cube-btn-test" onclick="return testBusinessBase();"></button>
-                <button class="cube-btn-export" onclick=""></button>
-                <button class="cube-btn-import" onclick=""></button>
-                <button class="cube-btn-send" onclick=""></button>
-                <button class="cube-btn-mail" onclick=""></button>
-                <button class="cube-btn-confirm" onclick=""></button>
-                <button class="cube-btn-close" onclick=""></button>
-                <button class="cube-btn-cancel" onclick=""></button>
-                <button class="cube-btn-save" onclick=""></button>
-                <button class="cube-btn-inquiry" onclick=""></button>
-                <button class="cube-btn-detail" onclick=""></button>
-                <button class="cube-btn-info" onclick=""></button>
-                <button class="cube-btn-print" onclick=""></button>
-                <button class="cube-btn-config" onclick=""></button>
-            </div>
+           
         </div>
 
         <!--inquiry result grid-->
