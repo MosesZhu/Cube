@@ -125,6 +125,8 @@ namespace Cube.Base
             MultiLanguageKeyList.Add("lang_info");
             MultiLanguageKeyList.Add("lang_print");
             MultiLanguageKeyList.Add("lang_config");
+            MultiLanguageKeyList.Add("lang_message");
+            MultiLanguageKeyList.Add("lang_warnning");
             //获得DB中已维护的多语言数据
             List<Mc_Language> dbLangCollections = GetLanguageData();
 

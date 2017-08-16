@@ -212,6 +212,27 @@ var _Context = {
             });
         }
 
+        if ($(".cube-bootstrap-table").length > 0) {
+            $('.cube-bootstrap-table').each(function () {
+                $(this).attr({
+                    "data-toggle": $(this).attr("data-toggle") ? $(this).attr("data-toggle") : "table",
+                    "data-toolbar": $(this).attr("data-toolbar") ? $(this).attr("data-toolbar") : $(this).attr("id") + "_toolbar",
+                    "data-height": $(this).attr("data-height") ? $(this).attr("data-height") : "410",
+                    "data-pagination": $(this).attr("data-pagination") ? $(this).attr("data-pagination") : "true",
+                    "data-show-refresh": $(this).attr("data-show-refresh") ? $(this).attr("data-show-refresh") : "false",
+                    "data-search": $(this).attr("data-search") ? $(this).attr("data-search") : "false",
+                    "data-show-toggle": $(this).attr("data-show-toggle") ? $(this).attr("data-show-toggle") : "false",
+                    "data-show-refresh": $(this).attr("data-show-refresh") ? $(this).attr("data-show-refresh") : "false",
+                    "data-sortable": $(this).attr("data-sortable") ? $(this).attr("data-sortable") : "true",
+                    "data-striped": $(this).attr("data-striped") ? $(this).attr("data-striped") : "true",
+                    "data-page-size": $(this).attr("data-page-size") ? $(this).attr("data-page-size") : "10",
+                    "data-page-list": $(this).attr("data-page-list") ? $(this).attr("data-page-list") : "[5,10,20]",
+                    "data-click-to-select": $(this).attr("data-click-to-select") ? $(this).attr("data-click-to-select") : "true",
+                    "data-single-select": $(this).attr("data-single-select") ? $(this).attr("data-single-select") : "false"
+                });
+            });
+        }
+
         //btn style
         //$(".cube-toolbar>button, .cube-toolbar>input").addClass("");
         this.initButtons();
@@ -227,9 +248,9 @@ var _Context = {
         //dialog style
         $.each($(".cube-modal"), function (i, modal) {
             $(modal).addClass("modal fade");
-            var header = $(modal).find(".cube-modal-header");
-            var body = $(modal).find(".cube-modal-body");
-            var footer = $(modal).find(".cube-modal-footer");
+            var header = $(modal).find(".cube-modal-header").prop("outerHTML");
+            var body = $(modal).find(".cube-modal-body").prop("outerHTML");
+            var footer = $(modal).find(".cube-modal-footer").prop("outerHTML");
             $(modal).html("<div class='modal-dialog'><div class='modal-content'></div></div>");
             $(modal).find(".modal-content").append(header).append(body).append(footer);
 
@@ -475,36 +496,10 @@ jQuery.extend({
                         }
                     });                    
                 }
-                //alertify.cubeAlert().setup = function () {
-                //    return {
-                //        buttons: [{
-                //            text: _CurrentLang["lang_close"],
-                //            key: 27/*Esc*/,
-                //            className: "cube-btn-close"
-                //        }],
-                //        focus: { element: 0 }
-                //    };
-                //};
-                
+                if (!data.title) {
+                    data.title = _CurrentLang["lang_message"];
+                }
                 alertify.cubeAlert(data.content, data.title);
-                //$(".alertify .cube-btn-close").setLanguage();                
-                //$("#messageDialogTitle").text("");
-                //$("#messageDialogContent").html("");
-                //$("#messageDialogWarningContent").html("");
-
-                //if (data.title) {
-                //    $("#messageDialogTitle").text(data.title);
-                //}
-
-                //if (data.content) {
-                //    $("#messageDialogContent").html(data.content);
-                //}
-
-                //if (data.warning) {
-                //    $("#messageDialogWarningContent").html(data.warning);
-                //}
-
-                //$("#messageDialog").modal('show');
             } else {
                 if (window.parent) {
                     var msg = {
@@ -596,6 +591,9 @@ jQuery.extend({
                     }
                 }
 
+                $("#confirmDialog .cube-btn-90").each(function () {
+                    $(this).setLanguage();
+                });
                 $("#confirmDialog").modal('show');
             } else {
                 if (window.parent) {

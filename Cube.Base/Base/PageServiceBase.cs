@@ -23,6 +23,21 @@ namespace Cube.Base
     [System.Web.Script.Services.ScriptService]
     public class PageServiceBase : WebService
     {
+        public UserDTO _TempUser = null;
+
+        public PageServiceBase()
+        {
+            if (!Context.Request.Url.ToString().ToUpper().Contains(UNCHECK_URL.ToUpper()) && !ValidateToken())
+            {
+                throw new Exception("");
+            }
+        }
+
+        public PageServiceBase(UserDTO user)
+        {
+            _TempUser = user;
+        }
+
         public static DbSession mDBSession;
         public DbSession Db 
         {
@@ -88,6 +103,10 @@ namespace Cube.Base
                 //    }
                 //}
                 //return mUserInfo;
+                if (_TempUser != null)
+                {
+                    return _TempUser;
+                }
                 return CubeSSOContext.Current.UserInfo;
             }
         }
@@ -143,15 +162,6 @@ namespace Cube.Base
             get
             {
                 return CubeSSOContext.Language;
-            }
-        }
-
-        public PageServiceBase()
-        {
-
-            if (!Context.Request.Url.ToString().ToUpper().Contains(UNCHECK_URL.ToUpper()) && !ValidateToken())
-            {
-                throw new Exception("");
             }
         }
 

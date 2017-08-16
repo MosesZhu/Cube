@@ -34,12 +34,7 @@
 
         <!--inquiry result grid-->
         <div class="cube-data-area">
-            <table id="gridItem" class="bootstrapTable cube-bootstrap-table" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
-                data-url="" data-height="410" data-pagination="true"
-                data-show-refresh="false" data-row-style="rowStyle" data-search="false"
-                data-show-toggle="false" data-sortable="true"
-                data-striped="true" data-page-size="10" data-page-list="[5,10,20]"
-                data-click-to-select="false" data-single-select="false">
+            <table id="gridItem" class="cube-bootstrap-table" data-sort-name="item_no" data-url="" >
                 <thead>
                     <tr>
                         <th data-field="state" data-checkbox="true" data-width="10%"></th>

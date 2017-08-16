@@ -22,6 +22,7 @@ namespace Cube.Web
             _multyKeyArray.Add("lang_success");
             _multyKeyArray.Add("msg_save_success");
             _multyKeyArray.Add("lang_favorites");
+            _multyKeyArray.Add("lang_message");
             return _multyKeyArray;
         }
 

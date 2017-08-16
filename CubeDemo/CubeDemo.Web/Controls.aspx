@@ -1,8 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Controls.aspx.cs" Inherits="CubeDemo.Web.Controls" %>
 
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head runat="server">
     <title></title>
     <link rel="stylesheet" href="http://o-a3b2.qgroup.corp.com/CubePortal/Content/bootstrap.css">
@@ -22,7 +21,8 @@
                     <label for="tbxDemo1" lang="lang_item_no"></label>
                     <input type="text" id="tbxDemo1" />
                     <label for="tbxDemo1" lang="lang_trans_time"></label>
-                    <input type="text" class="cube-datepicker" data-format="yyyy/mm/dd" id="dateCallbackDate" value="2010/01/01" />
+                    <input type="text" class="cube-datepicker" data-format="yyyy/mm/dd" id="dateCallbackDate" 
+                        value="2010/01/01" onchange="return pickDate(this);" />
                 </div>
 
                 <div class="cube-form-row-2">
@@ -84,12 +84,7 @@
 
         <!--inquiry result grid-->
         <div class="cube-data-area">
-            <table id="gridItem" class="bootstrapTable cube-bootstrap-table" data-toggle="table" data-sort-name="item_no" data-toolbar="#toolbar"
-                data-url="" data-height="410" data-pagination="true"
-                data-show-refresh="false" data-row-style="rowStyle" data-search="false"
-                data-show-toggle="false" data-sortable="true"
-                data-striped="true" data-page-size="10" data-page-list="[5,10,20]"
-                data-click-to-select="false" data-single-select="false">
+            <table id="gridItem" class="cube-bootstrap-table" data-sort-name="item_no" >
                 <thead>
                     <tr>
                         <th data-field="state" data-checkbox="true" data-width="10%"></th>
@@ -153,7 +148,8 @@
 
 
     </form>
-    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery-2.2.3.min.js"></script>
+    <%--<script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery-2.2.3.min.js"></script>--%>
+    <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery-1.12.4.min.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/cube.framework.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.uriAnchor.js"></script>
     <script src="http://o-a3b2.qgroup.corp.com/CubePortal/Scripts/jquery.slimscroll.min.js"></script>
@@ -343,6 +339,10 @@
 
             return true;
         };
+
+        var pickDate = function (ctrl) {
+            $.dialog.showMessage({ "content": $(ctrl).val()});
+        }
     </script>
 </body>
 </html>
