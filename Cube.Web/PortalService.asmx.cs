@@ -439,6 +439,13 @@ namespace Cube.Web
             return result;
         }
 
+        public ResultDTO changePassword(string oldPwd, string newPwd)
+        {
+            ResultDTO result = new ResultDTO();
+
+            return result;
+        }
+
         private bool hasFunctionRight(string userId, string functionId)
         {
             List<Mc_User_Function> rightList = CubeDb.From<Mc_User_Function>()
@@ -475,22 +482,24 @@ namespace Cube.Web
         /// <returns></returns>
         private UserInfoDTO GetUserInfoImp()
         {
+            SSOContext currentContent = SSOContext.Current;
             UserInfoDTO result = new UserInfoDTO();
-            result.Id = SSOContext.Current.UserID;
-            result.Name = SSOContext.Current.UserName;
+            result.Id = currentContent.UserID;
+            result.Name = currentContent.UserName;
+            result.IsInternal = currentContent.Is_Internal;
             List<Guid> deptIdList = WFKDb.From<Base_Staff_Department>()
-                .Where(Base_Staff_Department._.Staff_Id == SSOContext.Current.UserID)
+                .Where(Base_Staff_Department._.Staff_Id == currentContent.UserID)
                 .Select(Base_Staff_Department._.Department_Id).ToList<Guid>();
             result.DepartmentList = WFKDb.From<Base_Department>()
                 .Where(Base_Department._.Id.In(deptIdList))
                 .Select(Base_Department._.Department_Name).ToList<String>();
             Base_Staff userEntity = WFKDb.From<Base_Staff>()
-                .Where(Base_Staff._.Id == SSOContext.Current.UserID).FirstDefault();
+                .Where(Base_Staff._.Id == currentContent.UserID).FirstDefault();
             result.Extension = userEntity.Extension;
 
-            result.LoginTime = GetLoginTime(SSOContext.Current.ProductName, SSOContext.Current.OrgName, SSOContext.Current.UserName);
+            result.LoginTime = GetLoginTime(currentContent.ProductName, currentContent.OrgName, currentContent.UserName);
 
-            Mc_User_Image userImage = CubeDb.From<Mc_User_Image>().Where(Mc_User_Image._.User_Id == SSOContext.Current.UserID).ToList<Mc_User_Image>().FirstOrDefault();
+            Mc_User_Image userImage = CubeDb.From<Mc_User_Image>().Where(Mc_User_Image._.User_Id == currentContent.UserID).ToList<Mc_User_Image>().FirstOrDefault();
             if (userImage != null)
             {
                 result.ImageUrl = userImage.Image;

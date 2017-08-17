@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Portal.Master" AutoEventWireup="true" CodeBehind="Portal.aspx.cs" Inherits="Cube.Web.Portal" %>
 
 <asp:Content ID="PageStyleContent" ContentPlaceHolderID="PageHeadContentHolder" runat="server">
-
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContentHolder" runat="server">
@@ -39,7 +38,6 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <ul class="menu" id="newsList">
-                                        
                                     </ul>
                                 </li>
                                 <li class="footer">
@@ -49,12 +47,12 @@
                                         <span lang="lang_total" style="float:right;"></span><span style="float:right;">: </span><span style="float:right;" id="lblTotalNews">0</span>
                                         -->
                                     </a>
-                                    <a onclick="return _news.toggleNewsList();" style="display:none;" id="btnShowUnreadNews">
-                                        <span lang="lang_show_unread">Show All News</span>                                        
-                                    </a>                                    
+                                    <a onclick="return _news.toggleNewsList();" style="display: none;" id="btnShowUnreadNews">
+                                        <span lang="lang_show_unread">Show All News</span>
+                                    </a>
                                 </li>
                             </ul>
-                        </li>                        
+                        </li>
                         <!-- User -->
                         <li class="dropdown user user-menu" id="navUser">
                             <a class="dropdown-toggle" data-toggle="dropdown">
@@ -72,8 +70,9 @@
                                 </li>
                                 <li class="user-footer">
                                     <div class="pull-right">
-                                        <a class="btn btn-flat btn-skin-primary" lang="lang_admin_login" id="btnAdminLogin" style="display:none;" onclick="return _portal.adminLogin();">Admin Login</a>
+                                        <a class="btn btn-flat btn-skin-primary" lang="lang_admin_login" id="btnAdminLogin" style="display: none;" onclick="return _portal.adminLogin();">Admin Login</a>
                                         <a class="btn btn-flat btn-default" lang="lang_logout" onclick="return _portal.logout();">Logout</a>
+                                        <a class="btn btn-flat btn-default" lang="lang_change_password" id="btnChangePassword" onclick="return _portal.changePassword();" style="display: none;">Change Password</a>
                                     </div>
                                 </li>
                             </ul>
@@ -83,9 +82,9 @@
                             <a data-toggle="control-sidebar" data-target="control_sidebar"><i class="fa fa-gears"></i></a>
                         </li>
                         <li id="btnToggleBookmarkSidebar" class="sidebar_button" onclick="return _bookmark.toggleBookmarkSidebar(this);">
-                            <a data-toggle="control-sidebar" data-target="bookmark_sidebar" ><i class="fa fa-star"></i></a>
+                            <a data-toggle="control-sidebar" data-target="bookmark_sidebar"><i class="fa fa-star"></i></a>
                         </li>
-                        <li>                           
+                        <li>
                             <a class="header-toggle" data-toggle="" role="button" id="btnHideHeader" onclick="return _header.toggleHeader();">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
@@ -119,7 +118,7 @@
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper" style="overflow:hidden;">
+        <div class="content-wrapper" style="overflow: hidden;">
             <!-- Main content -->
             <section class="content body">
                 <div id="_FormTabsContainer">
@@ -140,7 +139,8 @@
 
         <!-- Main Footer -->
         <footer class="main-footer" style="position: fixed; bottom: 0px; width: 100%; padding: 8px;">
-            <div id="footerContainer" style="display:inline-block;"><asp:Literal ID="textFooterInfo" runat="server"></asp:Literal></div>
+            <div id="footerContainer" style="display: inline-block;">
+                <asp:Literal ID="textFooterInfo" runat="server"></asp:Literal></div>
         </footer>
 
         <!-- Bookmark Sidebar -->
@@ -156,12 +156,12 @@
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
                 <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
                 <li><a href="#control-sidebar-portallink-tab" data-toggle="tab"><i class="fa fa-link"></i></a></li>
-                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>                
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
             </ul>
             <!-- Tab panes -->
-            <div class="tab-content" style="padding:0px;">
+            <div class="tab-content" style="padding: 0px;">
                 <!-- Home tab content -->
-                <div class="tab-pane active" id="control-sidebar-home-tab" style="margin:20px;">
+                <div class="tab-pane active" id="control-sidebar-home-tab" style="margin: 20px;">
                     <h3 class="control-sidebar-heading" lang="lang_language">Language</h3>
                     <ul class="control-sidebar-menu">
                         <li>
@@ -186,46 +186,46 @@
                         <li>
                             <a>
                                 <div class="btn-group" style="width: 100%; padding: 20px;">
-                                <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                                <ul class="fc-color-picker" id="color-chooser">
-                                    <li>
-                                        <div class="text-blue skin_button" onclick="_state.setSkin('blue')"><i class="fa fa-square skin_button"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-blue alpha60 skin_button" onclick="_state.setSkin('blue-light')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-orange skin_button" onclick="_state.setSkin('yellow')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-orange alpha60 skin_button" onclick="_state.setSkin('yellow-light')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-green skin_button" onclick="_state.setSkin('green')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-green alpha60 skin_button" onclick="_state.setSkin('green-light')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-red skin_button" onclick="_state.setSkin('red')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-red alpha60 skin_button" onclick="_state.setSkin('red-light')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-purple skin_button" onclick="_state.setSkin('purple')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-purple alpha60 skin_button" onclick="_state.setSkin('purple-light')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-black skin_button" onclick="_state.setSkin('black')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                    <li>
-                                        <div class="text-black alpha60 skin_button" onclick="_state.setSkin('black-light')"><i class="fa fa-square"></i></div>
-                                    </li>
-                                </ul>
-                            </div>
+                                    <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
+                                    <ul class="fc-color-picker" id="color-chooser">
+                                        <li>
+                                            <div class="text-blue skin_button" onclick="_state.setSkin('blue')"><i class="fa fa-square skin_button"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-blue alpha60 skin_button" onclick="_state.setSkin('blue-light')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-orange skin_button" onclick="_state.setSkin('yellow')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-orange alpha60 skin_button" onclick="_state.setSkin('yellow-light')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-green skin_button" onclick="_state.setSkin('green')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-green alpha60 skin_button" onclick="_state.setSkin('green-light')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-red skin_button" onclick="_state.setSkin('red')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-red alpha60 skin_button" onclick="_state.setSkin('red-light')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-purple skin_button" onclick="_state.setSkin('purple')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-purple alpha60 skin_button" onclick="_state.setSkin('purple-light')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-black skin_button" onclick="_state.setSkin('black')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                        <li>
+                                            <div class="text-black alpha60 skin_button" onclick="_state.setSkin('black-light')"><i class="fa fa-square"></i></div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -234,14 +234,13 @@
                 </div>
                 <!-- PortalLink tab content -->
                 <div class="tab-pane" id="control-sidebar-portallink-tab">
-                    <h3 class="control-sidebar-heading" lang="lang_portal_link" style="margin:20px;">Portal Link</h3>
+                    <h3 class="control-sidebar-heading" lang="lang_portal_link" style="margin: 20px;">Portal Link</h3>
                     <div class="nav sidebar-menu" id="portal_link_container">
-                        
-                    </div>                    
+                    </div>
 
                 </div>
                 <!-- Settings tab content -->
-                <div class="tab-pane" id="control-sidebar-settings-tab" style="margin:20px;">
+                <div class="tab-pane" id="control-sidebar-settings-tab" style="margin: 20px;">
                     <form>
                         <h3 class="control-sidebar-heading" lang="lang_general_settings">General Settings</h3>
 
@@ -294,7 +293,7 @@
             <li><a menuindex="MENU_COLLAPSE" lang="lang_collapse">collapse</a></li>
             <li><a menuindex="MENU_COLLAPSE_ALL" lang="lang_collapse_all">collapse all</a></li>
             <li class="divider"></li>
-            <li><a menuindex="MENU_REFRESH" lang="lang_refresh">collapse all</a></li>            
+            <li><a menuindex="MENU_REFRESH" lang="lang_refresh">collapse all</a></li>
         </ul>
     </div>
     <div id="bookmark-context-menu">
@@ -302,13 +301,38 @@
             <li><a menuindex="MENU_REMOVE_FROM_FAVORITES" lang="lang_remove">remove</a></li>
         </ul>
     </div>
+
+    <div id="dlgChangePassword" class="cube-modal">
+        <div class="cube-modal-header">
+            <h1 class="modal-title" lang="lang_change_password"></h1>
+        </div>
+        <div class="cube-modal-body">
+            <div class="cube-form-row-1">
+                <label for="tbxOldPassword" class="cube-label" lang="lang_old_password">Old Password</label>
+                <input type="password" class="form-control" id="tbxOldPassword" value="" />
+            </div>
+            <div class="cube-form-row-1">
+                <label for="tbxNewPassword" class="cube-label" lang="lang_new_password">New Password</label>
+                <input type="password" class="form-control" id="tbxNewPassword" value="" />
+            </div>
+            <div class="cube-form-row-1">
+                <label for="tbxConfirmPassword" class="cube-label" lang="lang_confirm_password">Confirm Password</label>
+                <input type="password" class="form-control" id="tbxConfirmPassword" value="" />
+            </div>
+        </div>
+        <div class="cube-modal-footer">
+            <button class="cube-btn-save" onclick="return _portal.doChangePassword()"></button>
+            <button class="cube-btn-cancel" data-dismiss="modal"></button>
+        </div>
+    </div>
+
     <div class="cube-loader-mask" id="loader-mask">
     </div>
-    <div class="cube-loader" id="loader">        
+    <div class="cube-loader" id="loader">
         <div class="loader-inner">
             <div class="cube-loading">
-		        Loading...
-	        </div>
+                Loading...
+            </div>
         </div>
     </div>
 </asp:Content>
@@ -332,7 +356,7 @@
         };
 
         $(function () {
-            _portal.init();           
+            _portal.init();
         });
     </script>
 </asp:Content>

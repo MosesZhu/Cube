@@ -36,6 +36,8 @@ namespace Cube.Model.DTO
 
         public bool IsAdmin { get; set; }
 
+        public bool IsInternal { get; set; }
+
         public UserInfoDTO()
         {
             this.DepartmentList = new List<string>();

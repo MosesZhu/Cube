@@ -1043,7 +1043,7 @@
 
                     $.callWebService("getUserInfo", {}, options);
 				},
-				"refresh": function () {
+                "refresh": function () {                   
 					$("#lblUserName").text(_PortalContext.UserInfo.Name);
                     $("#lblLoginTime").text(_PortalContext.UserInfo.LoginTime);
 
@@ -1072,6 +1072,16 @@
                         $("#btnAdminLogin").show();
                     } else {
                         $("#btnAdminLogin").hide();
+                    }
+
+                    if (!_PortalContext.UserInfo.isInternal) {
+                        $("#btnChangePassword").show();
+                        if (_PortalContext.UserInfo.IsAdmin) {
+                            $(".user-footer .pull-right, .user-footer .btn").css("width", "100%");
+                            $(".user-footer .btn-default").css("margin-top", "10px");                            
+                        }
+                    } else {
+                        $("#btnChangePassword").hide();
                     }
 				}
 			},
@@ -1366,6 +1376,29 @@
             },
             "adminLogin": function () {
                 window.location = "SSOAdminSimulate.aspx?SSOToken=" + getQueryStringByName("SSOToken");
+            },
+            "changePassword": function () {
+                $.dialog.showDialog("dlgChangePassword");
+            },
+            "doChangePassword": function () {
+                var options = {
+                    "success": function (d) {
+                        if (d.success) {
+                            $.dialog.showMessage({ "content": _CurrentLang["msg_change_pwd_successed"] });
+                        } else {
+                            $.dialog.showMessage({ "content": _CurrentLang["msg_change_pwd_failed"] + d.message });
+                        }
+                    },
+
+                    "error": function () {
+                        $.dialog.showMessage({ "content": _CurrentLang["msg_change_pwd_failed"] });
+                    }
+                };
+                $.callWebService("changePassword", {
+                    "oldPwd": $("#tbxOldPassword").val(),
+                    "newPwd": $("#tbxNewPassword").val()
+                }, options);
+                return false;
             },
             "state": {
                 "setLanguage": function () {

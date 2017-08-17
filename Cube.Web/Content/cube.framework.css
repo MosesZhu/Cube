@@ -82,8 +82,9 @@ select.form-control {
     padding-left: 15px;
 }
 
-.cube-modal-body .cube-label {
-    margin: 0px;
+.cube-modal-body .cube-form-row-1 .cube-label {
+    margin: 5px 1px;
+    padding: 0px;
 }
 
 .cube-form-row-1 .cube-form-control {
