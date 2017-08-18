@@ -439,10 +439,36 @@ namespace Cube.Web
             return result;
         }
 
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [WebMethod]
         public ResultDTO changePassword(string oldPwd, string newPwd)
         {
             ResultDTO result = new ResultDTO();
-
+            SSOContext currentContent = SSOContext.Current;
+            string encryptOldPwd = (new Cryptography()).Encrypt(oldPwd);
+            string encryptNewPwd = (new Cryptography()).Encrypt(newPwd);
+            Base_User user = WFKDb.From<Base_User>()
+                .Where(Base_User._.Id == currentContent.UserID)
+                .Select(Base_User._.All).FirstDefault();
+            if (user != null)
+            {
+                if (encryptOldPwd != user.Password)
+                {
+                    result.success = false;
+                    result.message = "Old password is not correct..";
+                }
+                else
+                {
+                    user.Password = encryptNewPwd;
+                    WFKDb.Update<Base_User>(user);
+                    result.success = true;
+                }
+            }
+            else
+            {
+                result.success = false;
+                result.message = "User not exist.";
+            }
             return result;
         }
 
@@ -487,15 +513,30 @@ namespace Cube.Web
             result.Id = currentContent.UserID;
             result.Name = currentContent.UserName;
             result.IsInternal = currentContent.Is_Internal;
-            List<Guid> deptIdList = WFKDb.From<Base_Staff_Department>()
-                .Where(Base_Staff_Department._.Staff_Id == currentContent.UserID)
-                .Select(Base_Staff_Department._.Department_Id).ToList<Guid>();
-            result.DepartmentList = WFKDb.From<Base_Department>()
-                .Where(Base_Department._.Id.In(deptIdList))
-                .Select(Base_Department._.Department_Name).ToList<String>();
-            Base_Staff userEntity = WFKDb.From<Base_Staff>()
-                .Where(Base_Staff._.Id == currentContent.UserID).FirstDefault();
-            result.Extension = userEntity.Extension;
+            List<Guid> deptIdList = new List<Guid>();
+            if (currentContent.Is_Internal)
+            {
+                deptIdList = WFKDb.From<Base_Staff_Department>()
+                    .Where(Base_Staff_Department._.Staff_Id == currentContent.UserID)
+                    .Select(Base_Staff_Department._.Department_Id).ToList<Guid>();
+                result.DepartmentList = WFKDb.From<Base_Department>()
+                    .Where(Base_Department._.Id.In(deptIdList))
+                    .Select(Base_Department._.Department_Name).ToList<String>();
+                Base_Staff userEntity = WFKDb.From<Base_Staff>()
+                    .Where(Base_Staff._.Id == currentContent.UserID).FirstDefault();
+                result.Extension = userEntity.Extension;
+            }
+            else
+            {
+                Base_User tempUser = WFKDb.From<Base_User>()
+                    .Where(Base_User._.Id == currentContent.UserID)
+                    .Select(Base_User._.Department).FirstDefault();
+                if (tempUser != null)
+                {
+                    result.DepartmentList.Add(tempUser.Department);
+                    result.Extension = tempUser.Telphone;
+                }
+            }                                   
 
             result.LoginTime = GetLoginTime(currentContent.ProductName, currentContent.OrgName, currentContent.UserName);
 

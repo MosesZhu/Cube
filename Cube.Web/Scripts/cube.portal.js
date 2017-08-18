@@ -1074,7 +1074,7 @@
                         $("#btnAdminLogin").hide();
                     }
 
-                    if (!_PortalContext.UserInfo.isInternal) {
+                    if (!_PortalContext.UserInfo.IsInternal) {
                         $("#btnChangePassword").show();
                         if (_PortalContext.UserInfo.IsAdmin) {
                             $(".user-footer .pull-right, .user-footer .btn").css("width", "100%");
